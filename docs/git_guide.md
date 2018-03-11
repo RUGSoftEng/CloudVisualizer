@@ -1,0 +1,10 @@
+### Mini-guide to using GIT.
+
+1. Select a location to install the repository. For example, I created the directory `~/Documents/Academics/Third Year/Block 3/Software Engineering/`.
+2. Within the directory, invoke `git init`.
+3. Use the URL at the repository page to clone the repository into the current directory (On the repository main page, you can usually get the URL by selecting the "Clone or Download" button). `git clone https://github.com/RUGSoftEng/CloudVisualizer.git`
+4. Navigate into the new subdirectory after git downloads the repository. From there, you can check what branch you're currently viewing: `git branch`. It should say something like `* master`.
+5. Because you're not supposed to make changes to the master branch, you should start right away by creating a copy of the master branch for yourself. Do so using: `git checkout -b <myBranchName> <origin_branch>`. For example, I did: `git checkout -b Charles_Development master`. You should get something like `Switched to a new branch 'Charles_Development' in reply.
+6. Make all the changes you want here. When you're done, be sure to add all non-included files using `git add` and commit changes with a message like `git commit --all -m "Did a lot of good work today"`. If you don't include the `-m` you risk being trapped in an editor called `vim`. There exist some resources on the internet for escaping this situation luckily, so be sure to look it up if you get stuck. 
+7. When you want to upload your work, use `git push origin <myBranchName>` to do so. For instance, I'll simply use `git push origin Charles_Development` to upload my work.
+8. [Additional]: When lots of people are busy doing work, it's pretty common to discard your branch after each pull-request. This is usually because student A and B might have branches branch_A and branch_B under development at the same time. When they both create pull-requests to merge their work with the master branch, then each of their individual branches are "out of date". Usually you just delete your branch in github and create a new branch of master after this point so both students are up to date on the project.
