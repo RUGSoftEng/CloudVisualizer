@@ -1,0 +1,46 @@
+<% include header.ejs%>
+<h1> Hosting Database</h1>
+<% if (errors!=undefined){%>
+<ul>
+    <% errors.forEach(function(error){ %>
+    <li><%= error.msg%></li>
+
+    <%
+    })%>
+</ul>
+<%}%>
+
+<form method="post" action="/users/find">
+    <label>Find all hosting with maximum prices</label>
+    <input type="range" name="price" id="priceid" value="<%= price%>" min="30" max="110" oninput="priceoutid.value = priceid.value">
+    <output name="priceout" id="priceoutid"><%= price%></output>
+    <br><br>
+    <input type="submit" value="Find">
+
+</form>
+<h1><%= title %></h1>
+<ul>
+    <% users.forEach(function(user){ %>
+    <li><%= user.name%> with type <%= user.type%>  costs <%= user.price%></li>
+
+    <%
+    })%>
+</ul>
+<% include footer.ejs%>
+
+
+
+<!--Adding a entry to the database-->
+<!--<form method="post" action="/users/add">
+    <label>First Name</label>
+    <input type="text" name="first_name">
+    <br>
+    <label>Last Name</label><br>
+    <input type="text" name="last_name">
+    <br>
+    <label>Email</label><br>
+    <input type="text" name="email">
+    <br><br>
+    <input type="submit" value="Submit">
+
+</form>-->
