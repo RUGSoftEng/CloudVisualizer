@@ -1,9 +1,0 @@
-08-03-2018
-Worked with Sjouke on a list of possible filters
-09-03-2018
-Meeting with group
-Sent e-mail to client to ask about how we should retrieve information (multiple or only one api) and asked some questions about providers.
-10-03-2018
-Setup own github branch
-14-03-2018
-Changed branch for new requirements
