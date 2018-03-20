@@ -14,4 +14,6 @@ Changed branch for new requirements
 16-03-2018
 13:00-13:30 Meeting with group and TA
 20-03-2018
-11:30... Started looking into the Json file received from the client, also started looking into graphs for representing the data. 
+11:30-12:00 Started looking into the Json file received from the client, also started looking into graphs for representing the data.
+12:00-12:30 Fixing the development branch for the new structure
+  
