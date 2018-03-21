@@ -1,0 +1,23 @@
+- added architecture document structure
+- meeting with client 
+- team meeting
+- updated meetings log
+- made chart.js example
+- made chart.js example
+- made chart.js example
+- created architecture document
+- team meeting
+- team meeting 
+- reinstall git to push timetracking pricelist.json
+- update architecture document
+- update architecture document
+- restructure github branches 
+- node js tutorial
+- node js tutorial
+- express tutorial
+- express tutorial
+- json crash course 
+- respresenting json pricelist as table
+- json pricelist as table
+- json pricelist as table
+- json pricelist as table
