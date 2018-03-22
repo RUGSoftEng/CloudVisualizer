@@ -1,0 +1,19 @@
+{
+  "name": "app2",
+  "version": "1.0.0",
+  "description": "Simple first app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "express-validator": "^5.0.3",
+    "mongojs": "^2.5.0",
+    "mongoose": "^5.0.10"
+  },
+  "author": "Ludger Visser",
+  "license": "ISC"
+}
