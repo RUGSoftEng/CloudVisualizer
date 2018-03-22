@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <title>HTML Table Generator</title>
+    </head>
+    <body>
+
+        <table id="tb" border="1px"></table>
+        <script>
+            
+
+        
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                // Typical action to be performed when the document is ready:
+                //document.getElementById("demo").innerHTML = xhttp.responseText;
+                    var result = JSON.parse(xhttp.responseText).gcp_price_list;
+                 
+                    var output = '';
+                    for(var prop in result){
+                        output += '<tr>';
+                        output += '<th>' + prop + '</th>';
+
+                        for(var item in result[prop]){
+                            output += '<td>' + item + '</td>';
+                            output += '<td>' + result[prop][item] + '</td>';
+                        }
+
+                        output += '</tr>';
+                    }
+                    document.getElementById('tb').innerHTML = output;
+                    
+
+                    // var output = '';
+                    // for(var i=0; i<pricelist.length; i++){
+                    //     output += '<tr>' + pricelist[i] + '</tr>';
+                    //     document.getElementById('tb').innerHTML = output;
+                    // }
+                }
+            };
+            xhttp.open("GET", "pricelist.json", true);
+            xhttp.send();
+        </script>
+
+      
+    </body>
+</html>

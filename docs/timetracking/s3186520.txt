@@ -12,3 +12,12 @@
 - update architecture document
 - update architecture document
 - restructure github branches 
+- node js tutorial
+- node js tutorial
+- express tutorial
+- express tutorial
+- json crash course 
+- respresenting json pricelist as table
+- json pricelist as table
+- json pricelist as table
+- json pricelist as table
