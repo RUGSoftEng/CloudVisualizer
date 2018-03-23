@@ -1,0 +1,7 @@
+db.users.insertMany([
+   { name: "HostingA", price: 25, type: "A" },
+   { name: "HostingB", price: 50, type: "B" },
+   { name: "HostingC", price: 100, type: "D" },
+   { name: "HostingD", price: 75, type: "C" },
+   { name: "HostingD", price: 45, type: "A" }
+]);
