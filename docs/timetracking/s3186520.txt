@@ -21,3 +21,7 @@
 - json pricelist as table
 - json pricelist as table
 - json pricelist as table
+- work on representing data
+- added kanban board github
+- team meeting
+- team meeting
