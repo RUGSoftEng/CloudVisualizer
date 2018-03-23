@@ -6,7 +6,7 @@ var mongojs = require('mongojs');
 var app = express();
 app.use(expressValidator());
 var db = mongojs('test', ['users']);
-var query = {};
+var JSONStream = require('JSONStream');
 /*
 var logger = function (req,res,next){
     console.log('Logging...');
@@ -34,6 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req,res,next){
     res.locals.errors = null;
     res.locals.price = 70;
+    res.locals.price2=75;
     return next();
 });
 
@@ -63,12 +64,14 @@ app.get('/', function(req,res){
     var query = {};
     db.users.find(query,function (err, docs) {
         res.render('index',{
-            title : 'Customers',
+            title : 'Available packages',
             users: docs
         });
     });
 
 });
+
+
 
 app.post('/users/find', function(req, res){
     var price= parseInt(req.body.price);
@@ -76,20 +79,37 @@ app.post('/users/find', function(req, res){
     var query = {price : {$lt: price}};
     db.users.find(query,function (err, docs) {
         res.render('index',{
-            title : 'Customers',
+            title : 'Available packages',
             users: docs,
             price: price
         });
     });
 
-
+    //Generating a JSON output file
+/*    res.set('Content-Type', 'application/json');
+    db.users.find(query).pipe(JSONStream.stringify()).pipe(res);*/
 
 });
 
 
-app.listen(3002, function(){
+app.listen(process.env.PORT || 3000, function(){
     console.log('Server Started on Port 3002...');
 });
+
+
+/*
+
+Mongo database
+Starting mongod database:
+sudo service mongod start
+Accessing database manual:
+    mongo --host 127.0.0.1:27017*/
+
+
+
+
+
+
 
 /* Adding a entry to the database
 
