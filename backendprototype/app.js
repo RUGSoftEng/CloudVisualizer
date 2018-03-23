@@ -5,7 +5,7 @@ var expressValidator = require('express-validator');
 var mongojs = require('mongojs');
 var app = express();
 app.use(expressValidator());
-var db = mongojs('test', ['users']);
+var db = mongojs('M-Frikken:cl0udvisualizer@ds121349.mlab.com:21349/cloudpricetest', ['users']);
 var JSONStream = require('JSONStream');
 /*
 var logger = function (req,res,next){
@@ -58,8 +58,6 @@ app.use(expressValidator({
 }));
 
 
-
-
 app.get('/', function(req,res){
     var query = {};
     db.users.find(query,function (err, docs) {
@@ -70,8 +68,6 @@ app.get('/', function(req,res){
     });
 
 });
-
-
 
 app.post('/users/find', function(req, res){
     var price= parseInt(req.body.price);
@@ -93,7 +89,7 @@ app.post('/users/find', function(req, res){
 
 
 app.listen(process.env.PORT || 3000, function(){
-    console.log('Server Started on Port 3002...');
+    console.log('Server Started on Port 3000...');
 });
 
 

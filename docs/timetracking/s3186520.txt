@@ -25,3 +25,6 @@
 - added kanban board github
 - team meeting
 - team meeting
+- running instance with mongoDB
+- running instance with mongoDB
+
