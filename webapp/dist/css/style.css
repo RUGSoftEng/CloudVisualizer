@@ -1,0 +1,25 @@
+.menu {
+  margin-bottom: 0px !important;
+  position: relative;
+  background-color: red;
+  padding: 20px; }
+
+.body {
+  margin-top: 0px !important;
+  position: relative;
+  background-color: yellow;
+  padding: 300px; }
+
+.footer {
+  margin-top: 0px !important;
+  position: relative;
+  background-color: blue;
+  padding: 20px; }
+
+.palette {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  z-index: 2;
+  background-color: #9acfea; }

@@ -14,6 +14,12 @@ gulp.task('html', function() {
         .pipe(gulp.dest('./dist'))
 });
 
+gulp.task('sass', function() {
+   return gulp.src('./work/scss/**/*.scss')
+       .pipe(sass())
+       .pipe(gulp.dest('./dist/css'));
+});
+
 gulp.task('styles', function() {
     return gulp.src('./work/scss/**/*.scss')
         .pipe(sass().on('error', sass.logError))
