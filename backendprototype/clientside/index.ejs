@@ -1,6 +1,5 @@
 <% include header.ejs%>
 
-<h1> Hosting Database</h1>
 <% if (errors!=undefined){%>
 <ul>
     <% errors.forEach(function(error){ %>
@@ -11,6 +10,9 @@
 </ul>
 <%}%>
 
+
+<!--Queries with non ajax example(with ejs)-->
+<h1> Database queries with non ajax</h1>
 <form method="post" action="/users/find">
     <label>Find all hosting with maximum prices</label>
     <input type="range" name="price" id="priceid" value="<%= price%>" min="30" max="110" oninput="priceoutid.value = priceid.value">
@@ -19,8 +21,6 @@
     <input type="submit" value="Find">
 
 </form>
-
-
 <h1><%= title %></h1>
 <ul>
     <% users.forEach(function(user){ %>
@@ -29,6 +29,19 @@
     <%
     })%>
 </ul>
+
+
+
+
+<!--AJAX queries(uses jquery, see javascript.ejs)-->
+<h1> Database queries with ajax</h1>
+<label>Find all hosting with maximum prices</label>
+<input type="range" name="price" id="priceid2" value="<%= price%>" min="30" max="110" oninput="priceoutid2.value = priceid2.value">
+<output name="priceout" id="priceoutid2"><%= price%></output>
+<br><br>
+<h1><%= title %></h1>
+<div id="output"></div>
+
 
 
 <% include footer.ejs%>

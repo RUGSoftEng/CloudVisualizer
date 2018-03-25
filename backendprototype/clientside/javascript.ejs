@@ -1,0 +1,37 @@
+<script>
+    ///Some random jquery function giving a window alert of the price
+    $(document).ready(function() {
+        //AJAX loading queries
+        getQueries();
+
+        //On change of slider reload queries
+        $('#priceid2').on('input', function () {
+            getQueries();
+        });
+    })
+
+
+    function getQueries(){
+        $.ajax({
+            data: {
+                price: $('#priceid2').val()
+            },
+            type: 'GET',
+            url: '/users/node',
+            contentType: 'application/json',
+            success: function(result) {
+                console.log('get message succes');
+                var times=Object.keys(result).length;
+                var i,x ="<ul>";
+                for (i in result) {
+                    x += "<li>" +result[i].name + " has type " + result[i].type + " with price " + result[i].price + "<br>" + "</li>" ;
+                }
+                x += "<ul>"
+                $('#output').html(x);
+            }
+        });
+    }
+</script>
+
+
+

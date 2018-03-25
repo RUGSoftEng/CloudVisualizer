@@ -5,7 +5,7 @@ var expressValidator = require('express-validator');
 var mongojs = require('mongojs');
 var app = express();
 app.use(expressValidator());
-var db = mongojs('test', ['users']);
+var db = mongojs('M-Frikken:cl0udvisualizer@ds121349.mlab.com:21349/cloudpricetest', ['users']);
 var JSONStream = require('JSONStream');
 /*
 var logger = function (req,res,next){
@@ -71,6 +71,15 @@ app.get('/', function(req,res){
 
 });
 
+app.get('/users/node', function (req, res) {
+    // var price= parseInt(req.body.price);
+    // var price = JSON.stringify(req2.body.price);
+    price = parseInt(req.query.price);
+    var query = {price : {$lt: price}};
+    res.set('Content-Type', 'application/json');
+    db.users.find(query).pipe(JSONStream.stringify()).pipe(res);
+    console.log('Finishing a get request');
+});
 
 
 app.post('/users/find', function(req, res){
@@ -84,7 +93,6 @@ app.post('/users/find', function(req, res){
             price: price
         });
     });
-
     //Generating a JSON output file
 /*    res.set('Content-Type', 'application/json');
     db.users.find(query).pipe(JSONStream.stringify()).pipe(res);*/
@@ -92,7 +100,7 @@ app.post('/users/find', function(req, res){
 });
 
 
-app.listen(process.env.PORT || 3000, function(){
+app.listen(process.env.PORT || 3002, function(){
     console.log('Server Started on Port 3002...');
 });
 
