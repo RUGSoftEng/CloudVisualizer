@@ -21,10 +21,10 @@
 </form>
 
 <h1><%= title %></h1>
-<table border="1px">
-        <th>Name</th>
-        <th>Type</th>
-        <th>Price</th>
+<table id="mainTable" border="1px">
+        <th onclick="sortTable(0)">Name</th>
+        <th onclick="sortTable(1)">Type</th>
+        <th onclick="sortTable(2)">Price</th>
     <% users.forEach(function(user){ %>
     <tr> 
         <td><%= user.name%></td>
