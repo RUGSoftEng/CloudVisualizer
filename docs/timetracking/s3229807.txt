@@ -17,4 +17,7 @@ Changed branch for new requirements
 12:00-12:30 Fixing the development branch for the new structure
 22-03-2018
 12:00-14:00 Started looking into chart.js
+26-03-2018
+16:30-17:30
+Working on the graph that is produced after filtering
   
