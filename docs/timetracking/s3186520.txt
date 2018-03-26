@@ -27,4 +27,5 @@
 - team meeting
 - running instance with mongoDB
 - running instance with mongoDB
+- change list to table
 
