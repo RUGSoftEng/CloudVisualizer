@@ -1,6 +1,7 @@
 <% include header.ejs%>
 
 <h1> Hosting Database</h1>
+<!-- error logging -->
 <% if (errors!=undefined){%>
 <ul>
     <% errors.forEach(function(error){ %>
@@ -11,6 +12,19 @@
 </ul>
 <%}%>
 
+<!--AJAX queries(uses jquery, see javascript.ejs)-->
+<h1> Database queries with ajax</h1>
+<label>Find all hosting with maximum prices</label>
+<input type="range" name="price" id="priceid2" value="<%= price%>" min="30" max="110" oninput="priceoutid2.value = priceid2.value">
+<output name="priceout" id="priceoutid2"><%= price%></output>
+<br><br>
+<h1><%= title %></h1>
+<div id="output"></div>
+
+
+<!--Queries with non ajax example(with ejs)-->
+<h1> Database queries with non ajax</h1>
+<!-- Adjustable slider for selecting (price)ranges -->
 <form method="post" action="/users/find">
     <label>Find all hosting with maximum prices</label>
     <input type="range" name="price" id="priceid" value="<%= price%>" min="30" max="110" oninput="priceoutid.value = priceid.value">
@@ -20,32 +34,31 @@
 
 </form>
 
-
+<!-- Table to display query results -->
 <h1><%= title %></h1>
-<ul>
-    <% users.forEach(function(user){ %>
-    <li><%= user.name%> with type <%= user.type%>  costs <%= user.price%></li>
 
+<table id="mainTable" border="1px">
+        <th onclick="sortTable(0)">Name</th>
+        <th onclick="sortTable(1)">Type</th>
+        <th onclick="sortTable(2)">Price</th>
+    <% users.forEach(function(user){ %>
+    <tr>
+        <td><%= user.name%></td>
+        <td><%= user.type%></td>
+        <td><%= user.price%></td>
+    </tr>
     <%
     })%>
-</ul>
+</table>
+
+<!-- Show graph after clicking plot button -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+<button onclick="plotData()">Plot</button>
+
+<div>
+    <canvas id="graph" width="400" height="400"></canvas>
+</div>
+
 
 
 <% include footer.ejs%>
-
-
-
-<!--Adding a entry to the database-->
-<!--<form method="post" action="/users/add">
-    <label>First Name</label>
-    <input type="text" name="first_name">
-    <br>
-    <label>Last Name</label><br>
-    <input type="text" name="last_name">
-    <br>
-    <label>Email</label><br>
-    <input type="text" name="email">
-    <br><br>
-    <input type="submit" value="Submit">
-
-</form>-->
