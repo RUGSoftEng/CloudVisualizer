@@ -1,32 +1,42 @@
-.header{
+html,body{
+height:100%;
+}
 
+.header{
     margin-bottom: 0px !important;
     position: relative;
     background-color: red;
     padding: 20px;
     padding-top: 50px;
-
+	height:150px;
 }
-.body {
+.content {
     margin-top: 0px !important;
     position: relative;
     background-color: yellow;
-    padding: 300px;
-
+	width:100%;
+	height:calc(100% - 250px);
+	min-height: 500px;
 }
+
+.filters{
+	width:200px;
+	height:100%;
+	background-color:purple;
+	float:left;
+}
+
+.canvas{
+	width:calc(100% - 200px);
+	height: 100%;
+	background-color:white;
+	float:left;
+}
+
 .footer {
     margin-top: 0px !important;
     position: relative;
     background-color: blue;
-    padding: 20px;
-
+	height:100px;
 }
-.palette {
-    position:absolute;
-    top:0px;
-    left:0px;
-    bottom: 0px;
-    z-index: 2;
-    background-color: #9acfea;
 
-}
