@@ -29,4 +29,5 @@
 - running instance with mongoDB
 - change list to table
 - sort table on columns
+- insert plotting data
 
