@@ -20,15 +20,20 @@
 
 </form>
 
-
 <h1><%= title %></h1>
-<ul>
+<table border="1px">
+        <th>Name</th>
+        <th>Type</th>
+        <th>Price</th>
     <% users.forEach(function(user){ %>
-    <li><%= user.name%> with type <%= user.type%>  costs <%= user.price%></li>
-
+    <tr> 
+        <td><%= user.name%></td>
+        <td><%= user.type%></td>
+        <td><%= user.price%></td>
+    </tr>
     <%
     })%>
-</ul>
+</table>
 
 
 <% include footer.ejs%>
