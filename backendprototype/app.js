@@ -93,6 +93,7 @@ app.post('/users/find', function(req, res){
             price: price
         });
     });
+
     //Generating a JSON output file
 /*    res.set('Content-Type', 'application/json');
     db.users.find(query).pipe(JSONStream.stringify()).pipe(res);*/
@@ -100,8 +101,8 @@ app.post('/users/find', function(req, res){
 });
 
 
-app.listen(process.env.PORT || 3002, function(){
-    console.log('Server Started on Port 3002...');
+app.listen(process.env.PORT || 3000, function(){
+    console.log('Server Started on Port 3000...');
 });
 
 
