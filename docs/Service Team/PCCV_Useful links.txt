@@ -1,0 +1,3 @@
+A few links to help us better understand how APIs work and how we should use them. 
+https://www.loggly.com/docs/api-retrieving-data/
+https://www.dataquest.io/blog/python-api-tutorial/

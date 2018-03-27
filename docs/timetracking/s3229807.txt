@@ -1,0 +1,20 @@
+08-03-2018
+Worked with Sjouke on a list of possible filters
+09-03-2018
+Meeting with group
+Sent e-mail to client to ask about how we should retrieve information (multiple or only one api) and asked some questions about providers.
+10-03-2018
+Setup own github branch
+14-03-2018
+Changed branch for new requirements
+15-03-2018
+12:00-12:30 Meeting with client
+13:30-14:00 Discussing afterwards
+16-03-2018
+13:00-13:30 Meeting with group and TA
+20-03-2018
+11:30-12:00 Started looking into the Json file received from the client, also started looking into graphs for representing the data.
+12:00-12:30 Fixing the development branch for the new structure
+22-03-2018
+12:00-14:00 Started looking into chart.js
+  
