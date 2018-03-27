@@ -57,9 +57,6 @@ app.use(expressValidator({
 
 }));
 
-
-
-
 app.get('/', function(req,res){
     var query = {};
     db.users.find(query,function (err, docs) {
@@ -71,7 +68,7 @@ app.get('/', function(req,res){
 
 });
 
-app.get('/users/node', function (req, res) {
+app.get('/users', function (req, res) {
     // var price= parseInt(req.body.price);
     // var price = JSON.stringify(req2.body.price);
     price = parseInt(req.query.price);

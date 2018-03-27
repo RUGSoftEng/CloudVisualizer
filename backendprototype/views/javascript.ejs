@@ -10,6 +10,9 @@
         });
     })
 
+    $( "#target" ).click(function() {
+        alert( "Handler for .click() called." );
+    });
 
     function getQueries(){
         $.ajax({
@@ -17,7 +20,7 @@
                 price: $('#priceid2').val()
             },
             type: 'GET',
-            url: '/users/node',
+            url: '/users',
             contentType: 'application/json',
             success: function(result) {
                 // console.log('get message succes');

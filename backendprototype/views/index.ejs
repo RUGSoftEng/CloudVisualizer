@@ -14,20 +14,18 @@
 
 <!--AJAX queries(uses jquery, see javascript.ejs)-->
 <label>Find all hosting with maximum prices</label>
-<input type="range" name="price" id="priceid2" value="<%= price%>" min="30" max="110" oninput="priceoutid2.value = priceid2.value">
+<input type="range" name="price" id="priceid2" value="" min="30" max="110" oninput="priceoutid2.value = priceid2.value">
 <output name="priceout" id="priceoutid2"><%= price%></output>
 <br><br>
 <h1><%= title %></h1>
 <div id="output"></div>
 
 <!-- Show graph after clicking plot button -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
-<button onclick="plotData()">Plot</button>
+
+<button id="target">Plot</button>
 
 <div>
     <canvas id="graph" width="400" height="400"></canvas>
 </div>
-
-
 
 <% include footer.ejs%>
