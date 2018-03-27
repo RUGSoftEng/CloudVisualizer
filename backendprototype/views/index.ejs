@@ -1,6 +1,5 @@
 <% include header.ejs%>
 
-<h1> Hosting Database</h1>
 <!-- error logging -->
 <% if (errors!=undefined){%>
 <ul>
@@ -12,20 +11,22 @@
 </ul>
 <%}%>
 
+<h1> Hosting Database</h1>
+
 <!--AJAX queries(uses jquery, see javascript.ejs)-->
 <label>Find all hosting with maximum prices</label>
 <input type="range" name="price" id="priceid2" value="" min="30" max="110" oninput="priceoutid2.value = priceid2.value">
 <output name="priceout" id="priceoutid2"><%= price%></output>
-<br><br>
+</br></br>
+
+<!-- result of the query -->
 <h1><%= title %></h1>
-<div id="output"></div>
+<div id="output" style="float:left"></div>
+
+<!-- area to hold the plot -->
+<div><canvas id="graph" style="float:left" width="400" height="400"></canvas></div>
 
 <!-- Show graph after clicking plot button -->
-
-<button id="target">Plot</button>
-
-<div>
-    <canvas id="graph" width="400" height="400"></canvas>
-</div>
+<div><button onclick="plotData()">Plot</button></div>
 
 <% include footer.ejs%>

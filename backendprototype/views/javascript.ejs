@@ -1,18 +1,18 @@
 <script>
-    ///Some random jquery function giving a window alert of the price
     $(document).ready(function() {
-        //AJAX loading queries
-        getQueries();
 
-        //On change of slider reload queries
+        // initial load the query with default values
+        getQueries();
+        createGraph();
+
+        //Actions on change of slider 
         $('#priceid2').on('input', function () {
             getQueries();
+            
+            // uncomment to automatically update on 
+            //plotData();
         });
     })
-
-    $( "#target" ).click(function() {
-        alert( "Handler for .click() called." );
-    });
 
     function getQueries(){
         $.ajax({
@@ -29,7 +29,7 @@
 
                 x += "<th onclick='sortTable(0)'>Name</th><th onclick='sortTable(1)'>Type</th><th onclick='sortTable(2)'>Price</th>";
                 for (i in result) {
-                    x += "<tr><td>" + result[i].name + "</td><td>" + result[i].type + "</td><td>" + result[i].price + "<td</tr>" ;
+                    x += "<tr><td data-type=name>" + result[i].name + "</td><td data-type=name>" + result[i].type + "</td><td data-type=int>" + result[i].price + "</td></tr>" ;
                 }
                 x += "</table>";
                 $('#output').html(x);
@@ -92,15 +92,47 @@
         }
     }
 
-    function plotData(){
+    function getCol(matrix, col){
+       var column = [];
+       for(var i=0; i<matrix.length; i++){
+          column.push(matrix[i][col]);
+       }
+       return column;
+    }
+
+    function getTableData(){
+        var table = document.getElementById("mainTable");
+        var tableData =new Array();
+        for(var r=1, n = table.rows.length; r<n ;r++){
+            var tableRow = new Array();
+            for(var c=0, m=table.rows[r].cells.length; c<m; c++){ 
+            
+                // insert correct datatype into array
+                if( table.rows[r].cells[c].getAttribute("data-type") == "name" ){
+                    tableRow.push(table.rows[r].cells[c].innerHTML);
+                } else {
+                    
+                    tableRow.push(parseInt(table.rows[r].cells[c].innerHTML));
+                }
+            }
+            tableData.push(tableRow);
+        }
+        return tableData;
+    }
+
+    // global variable to hold the graph
+    var chart;
+
+    function createGraph(){
+        // create graph in canvas area
         var ctx = document.getElementById("graph");
-        var chart1 = new Chart(ctx, {
+        chart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                labels: [],
                 datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
+                    label: 'Price',
+                    data: [],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -118,13 +150,14 @@
                         'rgba(255, 159, 64, 1)'
                     ], borderWidth: 1},
 
-                    {
-                        label: 'Line Dataset',
-                        data: [20, 15, 18, 12, 5, 25],
-                        type: 'line'
-                    }]
+                   ]
             },
             options: {
+                title:{
+                    display:true,
+                    text: 'Price comparison'
+                },
+                responsive: false,
                 scales: {
                     yAxes: [{
                         ticks: {
@@ -135,6 +168,16 @@
             }
         });
     }
+
+    function plotData(){
+        var tableData = getTableData();
+        chart.data.labels = getCol(tableData, 1);
+        chart.data.datasets[0].data = getCol(tableData,2);
+
+        // pass 0 as argument for instant updates
+        chart.update();
+    }
+
 </script>
 
 
