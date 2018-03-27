@@ -20,13 +20,15 @@
             url: '/users/node',
             contentType: 'application/json',
             success: function(result) {
-                console.log('get message succes');
+                // console.log('get message succes');
                 var times=Object.keys(result).length;
-                var i,x ="<ul>";
+                var i, x ="<table id='mainTable' border='1px'>";
+
+                x += "<th onclick='sortTable(0)'>Name</th><th onclick='sortTable(1)'>Type</th><th onclick='sortTable(2)'>Price</th>";
                 for (i in result) {
-                    x += "<li>" +result[i].name + " has type " + result[i].type + " with price " + result[i].price + "<br>" + "</li>" ;
+                    x += "<tr><td>" + result[i].name + "</td><td>" + result[i].type + "</td><td>" + result[i].price + "<td</tr>" ;
                 }
-                x += "<ul>"
+                x += "</table>";
                 $('#output').html(x);
             }
         });
@@ -86,9 +88,6 @@
             }
         }
     }
-
-    var plotButton = document.getElementById("plotButton");
-    plotButton.onclick
 
     function plotData(){
         var ctx = document.getElementById("graph");

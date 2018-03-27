@@ -78,13 +78,13 @@ app.get('/users/node', function (req, res) {
     var query = {price : {$lt: price}};
     res.set('Content-Type', 'application/json');
     db.users.find(query).pipe(JSONStream.stringify()).pipe(res);
-    console.log('Finishing a get request');
+    //console.log('Finishing a get request');
 });
 
 
 app.post('/users/find', function(req, res){
     var price= parseInt(req.body.price);
-    console.log(price);
+    //console.log(price);
     var query = {price : {$lt: price}};
     db.users.find(query,function (err, docs) {
         res.render('index',{

@@ -31,4 +31,5 @@
 - sort table on columns
 - insert plotting data
 - restructure and sync up with development branch
+- use only AJAX for showing the query result, work on plot
 
