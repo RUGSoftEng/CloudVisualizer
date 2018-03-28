@@ -16,7 +16,6 @@ var logger = function (req,res,next){
 app.use(logger);
 */
 
-
 // View Engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -57,9 +56,6 @@ app.use(expressValidator({
 
 }));
 
-
-
-
 app.get('/', function(req,res){
     var query = {};
     db.users.find(query,function (err, docs) {
@@ -80,7 +76,6 @@ app.get('/users/node', function (req, res) {
     db.users.find(query).pipe(JSONStream.stringify()).pipe(res);
     console.log('Finishing a get request');
 });
-
 
 app.post('/users/find', function(req, res){
     var price= parseInt(req.body.price);

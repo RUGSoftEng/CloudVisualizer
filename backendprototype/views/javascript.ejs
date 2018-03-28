@@ -3,14 +3,11 @@
     $(document).ready(function() {
         //AJAX loading queries
         getQueries();
-
         //On change of slider reload queries
         $('#priceid2').on('input', function () {
             getQueries();
         });
     })
-
-
     function getQueries(){
         $.ajax({
             data: {
@@ -31,7 +28,6 @@
             }
         });
     }
-
     function sortTable(n) {
         var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
         table = document.getElementById("mainTable");
@@ -86,16 +82,14 @@
             }
         }
     }
-
     var plotButton = document.getElementById("plotButton");
     plotButton.onclick
-
     function plotData(){
         var ctx = document.getElementById("graph");
         var chart1 = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                labels: ,
                 datasets: [{
                     label: '# of Votes',
                     data: [12, 19, 3, 5, 2, 3],
@@ -115,7 +109,6 @@
                         'rgba(153, 102, 255, 1)',
                         'rgba(255, 159, 64, 1)'
                     ], borderWidth: 1},
-
                     {
                         label: 'Line Dataset',
                         data: [20, 15, 18, 12, 5, 25],
@@ -134,6 +127,4 @@
         });
     }
 </script>
-
-
 
