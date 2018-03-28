@@ -68,14 +68,20 @@ app.get('/', function(req,res){
 });
 
 app.get('/users', function (req, res) {
-    // var price= parseInt(req.body.price);
-    // var price = JSON.stringify(req2.body.price);
     price = parseInt(req.query.price);
     var query = {price : {$lt: price}};
     res.set('Content-Type', 'application/json');
-    db.users.find(query).pipe(JSONStream.stringify()).pipe(res);
-    //console.log('Finishing a get request');
+    db.users.find(query,{price:1}).pipe(JSONStream.stringify()).pipe(res);
 });
+
+
+app.get('/users2', function (req, res) {
+    var query = {};
+    var query2 = {comment:1};
+    res.set('Content-Type', 'application/json');
+    db.googlepricelist.find({}, {"gcp_price_list.CP-COMPUTEENGINE-VMIMAGE-F1-MICRO.":1}).pipe(JSONStream.stringify()).pipe(res);
+});
+
 
 app.post('/users/find', function(req, res){
     var price= parseInt(req.body.price);
@@ -88,11 +94,6 @@ app.post('/users/find', function(req, res){
             price: price
         });
     });
-
-    //Generating a JSON output file
-/*    res.set('Content-Type', 'application/json');
-    db.users.find(query).pipe(JSONStream.stringify()).pipe(res);*/
-
 });
 
 

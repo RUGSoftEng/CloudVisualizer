@@ -4,6 +4,8 @@
         // initial load the query with default values
         getQueries();
         createGraph();
+        googlepricelist();
+
 
         //Actions on change of slider 
         $('#priceid2').on('input', function () {
@@ -13,7 +15,18 @@
             //plotData();
         });
     })
+    function googlepricelist(){
+        console.log("starting new google pricelist");
+        $.ajax({
+            type: 'GET',
+            url: '/users2',
+            contentType: 'application/json',
+            success: function (result) {
+                console.log(result[0].gcp_price_list["CP-COMPUTEENGINE-VMIMAGE-F1-MICRO"]["asia-south1"]);
 
+            }
+        });
+    }
     function getQueries(){
         $.ajax({
             data: {
@@ -33,6 +46,7 @@
                 }
                 x += "</table>";
                 $('#output').html(x);
+                console.log(result);
             }
         });
     }
