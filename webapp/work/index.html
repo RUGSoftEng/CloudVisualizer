@@ -9,15 +9,10 @@
 <link href="vendor/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet"  href="css/style.min.css">
 <link rel="shortcut icon" type="image/x-icon" href="images/logo.ico" />
-<link rel="stylesheet" href="vendor/js/jquery-ui.css">
+<link rel="stylesheet" href="vendor/js/jquery-ui.min.css">
 <script src="vendor/js/external/jquery/jquery.js"></script>
-<script src="vendor/js/jquery-ui.js"></script>
-<script>
-  $(document).ready(function(){
-       $("#myAccordion").accordion();
-  } );
-
-  </script>
+<script src="vendor/js/jquery-ui.min.js"></script>
+<script src="/js/scripts.min.js"></script>
 </head>
 <body>
 
@@ -58,35 +53,31 @@
      <h1>Options</h1>
 
 				<div class="filters" id="myAccordion" >
-          
           <h3>Data Base</h3>
-					<ul>
+					<ul class="source">
 						<li>Option 1</li>
 						<li>Option 2</li>
 						<li>Option 3</li>
 					</ul>
           <h3>Storage</h3>
 
-          <ul>
+          <ul class="source">
 						<li>Option 1</li>
 						<li>Option 2</li>
 						<li>Option 3</li>
 					</ul>
 
           <h3>VM</h3>
-          <ul>
+          <ul class="source">
 						<li>Option 1</li>
 						<li>Option 2</li>
 						<li>Option 3</li>
 					</ul>
-
 				</div>
 
-
-
-
-			<div class="canvas">
-
+			<div class="canvas" id="canvas">
+       <h2>My items</h2>
+       <ol id="items"></ol>
 			</div>
     </div>
 
@@ -96,6 +87,6 @@
 	  </div>
 
 	-->
-
+  
 </body>
 </html>

@@ -36,10 +36,11 @@ $filterwidth: 250px;
 }
 
 .canvas{
-	width:calc(100% - #{$filterwidth});
+	width:calc(75% - #{$filterwidth});
 	height: 100%;
 	background-color:white;
 	float:left;
+	border: 2px solid gray;
 }
 
 .footer {
