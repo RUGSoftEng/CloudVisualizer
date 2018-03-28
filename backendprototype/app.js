@@ -6,6 +6,7 @@ var mongojs = require('mongojs');
 var app = express();
 app.use(expressValidator());
 var db = mongojs('M-Frikken:cl0udvisualizer@ds121349.mlab.com:21349/cloudpricetest', ['users']);
+var db2 = mongojs('M-Frikken:cl0udvisualizer@ds121349.mlab.com:21349/cloudpricetest', ['googlepricelist']);
 var JSONStream = require('JSONStream');
 /*
 var logger = function (req,res,next){
@@ -15,6 +16,7 @@ var logger = function (req,res,next){
 
 app.use(logger);
 */
+
 
 // View Engine
 app.set('view engine', 'ejs');
@@ -67,14 +69,20 @@ app.get('/', function(req,res){
 });
 
 app.get('/users', function (req, res) {
-    // var price= parseInt(req.body.price);
-    // var price = JSON.stringify(req2.body.price);
     price = parseInt(req.query.price);
     var query = {price : {$lt: price}};
     res.set('Content-Type', 'application/json');
-    db.users.find(query).pipe(JSONStream.stringify()).pipe(res);
-    //console.log('Finishing a get request');
+    db.users.find(query,{price:1}).pipe(JSONStream.stringify()).pipe(res);
 });
+
+
+app.get('/users2', function (req, res) {
+    var query = {};
+    res.set('Content-Type', 'application/json');
+    var test;
+    test=db.googlepricelist.find({}, {"gcp_price_list":1}).pipe(JSONStream.stringify()).pipe(res);
+});
+
 
 app.post('/users/find', function(req, res){
     var price= parseInt(req.body.price);
@@ -87,11 +95,6 @@ app.post('/users/find', function(req, res){
             price: price
         });
     });
-
-    //Generating a JSON output file
-/*    res.set('Content-Type', 'application/json');
-    db.users.find(query).pipe(JSONStream.stringify()).pipe(res);*/
-
 });
 
 

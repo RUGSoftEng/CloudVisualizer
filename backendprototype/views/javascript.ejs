@@ -3,6 +3,7 @@
         // initial load the query with default values
         getQueries();
         createGraph();
+        googlepricelist();
         //Actions on change of slider
         $('#priceid2').on('input', function () {
             getQueries();
@@ -11,6 +12,25 @@
             //plotData();
         });
     })
+    function googlepricelist(){
+        console.log("starting new google pricelist");
+        $.ajax({
+            type: 'GET',
+            url: '/users2',
+            contentType: 'application/json',
+            success: function (result) {
+                var keys=Object.keys(result[0].gcp_price_list)
+                var substring="VMIMAGE"
+                var key;
+                for (var i=0; i<keys.length; i++) {
+                    key=keys[i];
+                    if (key.indexOf(substring)!=-1) {
+                        console.log(key);
+                    }
+                }
+            }
+        });
+    }
     function getQueries(){
         $.ajax({
             data: {
@@ -29,6 +49,7 @@
                 }
                 x += "</table>";
                 $('#output').html(x);
+                //console.log(result);
             }
         });
     }
