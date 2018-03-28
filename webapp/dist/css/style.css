@@ -1,30 +1,56 @@
+#aboutContent {
+  margin: 40px;
+  height: calc(100% - 2*40px);
+  width: calc(100% - 2*40px);
+  background-color: #eeeeee; }
+
+#abouttext {
+  margin: 20px;
+  background-color: white;
+  width: calc(100% - 4*20px - 500px);
+  float: left;
+  border-radius: 10px; }
+
+#intouch {
+  background-color: white;
+  padding: 20px;
+  width: 500px;
+  float: right;
+  margin: 20px;
+  border-radius: 10px; }
+
 html, body {
   height: 100%; }
 
 .header {
+  color: white;
   margin-bottom: 0px !important;
   position: relative;
-  background-color: red;
+  background-color: #343a40;
   padding: 20px;
   padding-top: 50px;
-  height: 150px; }
+  height: 150px;
+  border-bottom-style: solid;
+  border-bottom-color: #cccccc; }
 
 .content {
   margin-top: 0px !important;
   position: relative;
-  background-color: yellow;
+  background-color: white;
   width: 100%;
-  height: calc(100% - 250px);
+  height: calc(100% - 150px);
   min-height: 500px; }
 
 .filters {
-  width: 200px;
+  width: 250px;
   height: 100%;
-  background-color: purple;
+  background-color: #dddddd;
+  border-right-style: solid;
+  border-color: #cccccc;
   float: left; }
 
 .canvas {
-  width: calc(100% - 200px);
+  width: calc(100% - 250px);
   height: 100%;
   background-color: white;
   float: left; }
