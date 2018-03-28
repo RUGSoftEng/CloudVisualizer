@@ -1,33 +1,42 @@
+@import "about";
+
 html,body{
 height:100%;
 }
 
+$headerhight: 150px;
 .header{
+	color:white;
     margin-bottom: 0px !important;
     position: relative;
-    background-color: red;
+    background-color: #343a40;
     padding: 20px;
     padding-top: 50px;
-	height:150px;
+	height:$headerhight; 
+	border-bottom-style:solid;
+	border-bottom-color:#cccccc;
 }
 .content {
     margin-top: 0px !important;
     position: relative;
-    background-color: yellow;
+    background-color: white;
 	width:100%;
-	height:calc(100% - 250px);
+	height:calc(100% - #{$headerhight});
 	min-height: 500px;
 }
 
+$filterwidth: 250px;
 .filters{
-	width:200px;
+	width:$filterwidth;
 	height:100%;
-	background-color:purple;
+	background-color:#dddddd;
+	border-right-style:solid;
+	border-color:#cccccc;
 	float:left;
 }
 
 .canvas{
-	width:calc(100% - 200px);
+	width:calc(100% - #{$filterwidth});
 	height: 100%;
 	background-color:white;
 	float:left;
