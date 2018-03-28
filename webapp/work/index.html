@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<title>Cloudy</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,11 +13,11 @@
 <script src="vendor/js/external/jquery/jquery.js"></script>
 <script src="vendor/js/jquery-ui.js"></script>
 <script>
-  $( function() {
-    $( "#MyAccordion" ).accordion();
+  $(document).ready(function(){
+       $("#myAccordion").accordion();
   } );
+
   </script>
-<title>Title</title>
 </head>
 <body>
 
@@ -54,20 +55,35 @@
 
 	<!-- BODY -->
 	<div class="content">
-			
+     <h1>Options</h1>
 
-				<div class="filters" id=myAccordion >
-	      	<h3>Options</h3>
+				<div class="filters" id="myAccordion" >
+          
+          <h3>Data Base</h3>
 					<ul>
-						<li>Data Basee</li>
-						<li>Storage</li>
-						<li>VM</li>
+						<li>Option 1</li>
+						<li>Option 2</li>
+						<li>Option 3</li>
+					</ul>
+          <h3>Storage</h3>
+
+          <ul>
+						<li>Option 1</li>
+						<li>Option 2</li>
+						<li>Option 3</li>
+					</ul>
+
+          <h3>VM</h3>
+          <ul>
+						<li>Option 1</li>
+						<li>Option 2</li>
+						<li>Option 3</li>
 					</ul>
 
 				</div>
 
 
-			
+
 
 			<div class="canvas">
 
@@ -78,8 +94,8 @@
 	<div class="footer">
 	       <h3>The footer container</h3>
 	  </div>
-	
+
 	-->
-	
+
 </body>
 </html>
