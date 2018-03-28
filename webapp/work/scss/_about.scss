@@ -1,0 +1,26 @@
+#aboutContent{
+	$aboutMargin: 40px;
+	margin:$aboutMargin;
+	height: calc(100% - 2*#{$aboutMargin});
+	width: calc(100% - 2*#{$aboutMargin});
+	background-color:#eeeeee;
+}
+
+$contMargin: 20px;
+
+#abouttext{
+	margin:$contMargin;
+	background-color:white;
+	width: calc(100% - 4*#{$contMargin} - 500px);
+	float:left;
+	border-radius: 10px;
+}
+
+#intouch{
+	background-color:white;
+	padding:$contMargin;
+	width:500px;
+	float:right;
+	margin:$contMargin;
+	border-radius: 10px;
+}
