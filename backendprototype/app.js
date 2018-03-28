@@ -57,6 +57,12 @@ app.use(expressValidator({
 
 }));
 
+<<<<<<< HEAD
+
+
+
+=======
+>>>>>>> sjoukedevries
 app.get('/', function(req,res){
     var query = {};
     db.users.find(query,function (err, docs) {
@@ -68,14 +74,22 @@ app.get('/', function(req,res){
 
 });
 
+<<<<<<< HEAD
+app.get('/users/node', function (req, res) {
+=======
 app.get('/users', function (req, res) {
+>>>>>>> sjoukedevries
     // var price= parseInt(req.body.price);
     // var price = JSON.stringify(req2.body.price);
     price = parseInt(req.query.price);
     var query = {price : {$lt: price}};
     res.set('Content-Type', 'application/json');
     db.users.find(query).pipe(JSONStream.stringify()).pipe(res);
+<<<<<<< HEAD
+    console.log('Finishing a get request');
+=======
     //console.log('Finishing a get request');
+>>>>>>> sjoukedevries
 });
 
 
