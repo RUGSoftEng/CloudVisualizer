@@ -47,4 +47,6 @@
 - work with team
 - work with team
 - plot data with global variable 
+- show sort order of column in header
+- show sort order of column in header
 

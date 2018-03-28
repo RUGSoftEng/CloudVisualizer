@@ -42,12 +42,16 @@
         });
     }
 
+    //  up &#9650;
+    // down &#9660; 
+
     function sortTable(n) {
         var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
         table = document.getElementById("mainTable");
         switching = true;
         // Set the sorting direction to ascending:
         dir = "asc";
+
         /* Make a loop that will continue until
         no switching has been done: */
         while (switching) {
@@ -95,6 +99,14 @@
                 }
             }
         }
+
+        // set direction arrow of the column
+        if(dir == "asc"){
+            table.getElementsByTagName("TH")[n].innerHTML = table.getElementsByTagName("TH")[n].innerHTML.split(' ')[0] + ' ' + ' &#9650' ;
+        } else {
+            table.getElementsByTagName("TH")[n].innerHTML = table.getElementsByTagName("TH")[n].innerHTML.split(' ')[0] + ' ' + ' &#9660';
+        }
+       // console.log("new value " + table.getElementsByTagName("TH")[n].innerHTML.split(' '));
     }
 
     function getCol(attribute){
