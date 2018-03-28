@@ -11,29 +11,7 @@
 </ul>
 <%}%>
 
-<<<<<<< HEAD
-<!--AJAX queries(uses jquery, see javascript.ejs)-->
-<h1> Database queries with ajax</h1>
-<label>Find all hosting with maximum prices</label>
-<input type="range" name="price" id="priceid2" value="<%= price%>" min="30" max="110" oninput="priceoutid2.value = priceid2.value">
-<output name="priceout" id="priceoutid2"><%= price%></output>
-<br><br>
-<h1><%= title %></h1>
-<div id="output"></div>
-
-
-<!--Queries with non ajax example(with ejs)-->
-<h1> Database queries with non ajax</h1>
-<!-- Adjustable slider for selecting (price)ranges -->
-<form method="post" action="/users/find">
-    <label>Find all hosting with maximum prices</label>
-    <input type="range" name="price" id="priceid" value="<%= price%>" min="30" max="110" oninput="priceoutid.value = priceid.value">
-    <output name="priceout" id="priceoutid"><%= price%></output>
-    <br><br>
-    <input type="submit" value="Find">
-=======
 <h1> Hosting Database</h1>
->>>>>>> sjoukedevries
 
 <!--AJAX queries(uses jquery, see javascript.ejs)-->
 <label>Find all hosting with maximum prices</label>
@@ -43,31 +21,13 @@
 
 <!-- result of the query -->
 <h1><%= title %></h1>
-<<<<<<< HEAD
-
-<table id="mainTable" border="1px">
-        <th onclick="sortTable(0)">Name</th>
-        <th onclick="sortTable(1)">Type</th>
-        <th onclick="sortTable(2)">Price</th>
-    <% users.forEach(function(user){ %>
-    <tr>
-        <td><%= user.name%></td>
-        <td><%= user.type%></td>
-        <td><%= user.price%></td>
-    </tr>
-    <%
-    })%>
-</table>
-=======
 <div id="output" style="float:left"></div>
->>>>>>> sjoukedevries
 
 <!-- area to hold the plot -->
 <div><canvas id="graph" style="float:left" width="400" height="400"></canvas></div>
 
 <!-- Show graph after clicking plot button -->
 <div><button onclick="plotData()">Plot</button></div>
-
 
 
 <% include footer.ejs%>
