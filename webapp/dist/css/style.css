@@ -50,13 +50,17 @@ html, body {
   float: left; }
 
 .canvas {
-  width: calc(100% - 250px);
+  width: calc(75% - 250px);
   height: 100%;
-  background-color: white;
-  float: left; }
+  float: left;
+  border: 2px solid gray;
+  background-color: blue; }
 
 .footer {
   margin-top: 0px !important;
   position: relative;
   background-color: blue;
   height: 100px; }
+
+.source li {
+  list-style-position: inside; }

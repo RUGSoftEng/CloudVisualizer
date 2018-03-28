@@ -71,5 +71,4 @@ gulp.task('watch', function() {
     gulp.watch('./work/**/*').on('change', browserSync.reload);
 });
 
-gulp.task('default', ['html', 'styles', 'scripts', 'images', 'vendor', 'browser-sync', 'watch']);
-
+gulp.task('default', ['html', 'styles', 'scripts', 'images', 'vendor', 'browser-sync', 'watch','sass']);

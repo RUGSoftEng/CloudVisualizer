@@ -11,7 +11,7 @@ $headerhight: 150px;
     position: relative;
     background-color: #343a40;
     padding: 20px;
-    padding-top: 50px;
+    padding-top: 70px;
 	height:$headerhight;
 	border-bottom-style:solid;
 	border-bottom-color:#cccccc;
@@ -20,9 +20,9 @@ $headerhight: 150px;
     margin-top: 0px !important;
     position: relative;
     background-color: white;
-	width:100%;
-	height:calc(100% - #{$headerhight});
-	min-height: 500px;
+  	width:100%;
+  	height:calc(100% - #{$headerhight});
+	  min-height: 500px;
 }
 
 $filterwidth: 250px;
@@ -37,15 +37,21 @@ $filterwidth: 250px;
 
 .canvas{
 	width:calc(75% - #{$filterwidth});
-	height: 100%;
-	background-color:white;
+	height: 70%;
 	float:left;
 	border: 2px solid gray;
+	background-color: WhiteSmoke;
 }
 
 .footer {
     margin-top: 0px !important;
     position: relative;
     background-color: blue;
-	height:100px;
+	  height:100px;
+}
+ul.source {
+    list-style-type: circle;
+}
+a p,h4{
+	color:DarkCyan;
 }
