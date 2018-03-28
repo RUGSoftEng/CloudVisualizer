@@ -29,10 +29,7 @@
             contentType: 'application/json',
             success: function(result) {
                 latestResult = result;
-                //var times=Object.keys(result).length;
-                var x ="<table id='mainTable' border='1px'>";
-
-                x += "<th onclick='sortTable(0)'>Name</th><th onclick='sortTable(1)'>Type</th><th onclick='sortTable(2)'>Price</th>";
+                var x ="<table id='mainTable' border='1px'><th onclick='sortTable(0)'>Name</th><th onclick='sortTable(1)'>Type</th><th onclick='sortTable(2)'>Price</th>";
                 for (var i in result) {
                     x += "<tr><td data-type=name>" + result[i].name + "</td><td data-type=name>" + result[i].type + "</td><td data-type=int>" + result[i].price + "</td></tr>" ;
                 }
@@ -41,9 +38,6 @@
             }
         });
     }
-
-    //  up &#9650;
-    // down &#9660; 
 
     function sortTable(n) {
         var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
