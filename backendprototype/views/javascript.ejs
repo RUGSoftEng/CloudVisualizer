@@ -4,6 +4,7 @@
         // initial load the query with default values
         getQueries();
         createGraph();
+        fillDropdown();
 
         //Actions on change of slider 
         $('#priceid2').on('input', function () {
@@ -158,12 +159,24 @@
     }
 
     function plotData(xattribute, yattribute){
-        chart.data.labels = getCol(xattribute);
-        chart.data.datasets[0].data = getCol(yattribute);
+        chart.data.labels = getCol(document.getElementById("xDropdown").value);
+        chart.data.datasets[0].data = getCol(document.getElementById("yDropdown").value);
         // pass 0 as argument for instant updates
         chart.update();
+        console.log(document.getElementById("xDropdown").value);
     }
 
+    function fillDropdown(){
+        var table = document.getElementById("mainTable");
+        var output = "";
+        for(var c=0, m=table.rows[0].cells.length; c<m; c++){ 
+            output += "<option value='" + table.rows[0].cells[c].innerHTML + "'>" + table.rows[0].cells[c].innerHTML + "</option>";
+        }
+
+        document.getElementById("xDropdown").innerHTML = output;
+        document.getElementById("yDropdown").innerHTML = output;
+    }
+    
 </script>
 
 
