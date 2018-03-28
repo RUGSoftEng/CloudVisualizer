@@ -1,4 +1,5 @@
 <script>
+<<<<<<< HEAD
     ///Some random jquery function giving a window alert of the price
     $(document).ready(function() {
         //AJAX loading queries
@@ -11,12 +12,30 @@
     })
 
 
+=======
+    $(document).ready(function() {
+
+        // initial load the query with default values
+        getQueries();
+        createGraph();
+
+        //Actions on change of slider 
+        $('#priceid2').on('input', function () {
+            getQueries();
+            
+            // uncomment to automatically update on 
+            //plotData();
+        });
+    })
+
+>>>>>>> sjoukedevries
     function getQueries(){
         $.ajax({
             data: {
                 price: $('#priceid2').val()
             },
             type: 'GET',
+<<<<<<< HEAD
             url: '/users/node',
             contentType: 'application/json',
             success: function(result) {
@@ -27,6 +46,20 @@
                     x += "<li>" +result[i].name + " has type " + result[i].type + " with price " + result[i].price + "<br>" + "</li>" ;
                 }
                 x += "<ul>"
+=======
+            url: '/users',
+            contentType: 'application/json',
+            success: function(result) {
+                // console.log('get message succes');
+                var times=Object.keys(result).length;
+                var i, x ="<table id='mainTable' border='1px'>";
+
+                x += "<th onclick='sortTable(0)'>Name</th><th onclick='sortTable(1)'>Type</th><th onclick='sortTable(2)'>Price</th>";
+                for (i in result) {
+                    x += "<tr><td data-type=name>" + result[i].name + "</td><td data-type=name>" + result[i].type + "</td><td data-type=int>" + result[i].price + "</td></tr>" ;
+                }
+                x += "</table>";
+>>>>>>> sjoukedevries
                 $('#output').html(x);
             }
         });
@@ -83,15 +116,48 @@
                     dir = "desc";
                     switching = true;
                 }
+<<<<<<< HEAD
+=======
             }
         }
     }
 
-    var plotButton = document.getElementById("plotButton");
-    plotButton.onclick
+    function getCol(matrix, col){
+       var column = [];
+       for(var i=0; i<matrix.length; i++){
+          column.push(matrix[i][col]);
+       }
+       return column;
+    }
 
-    function plotData(){
+    function getTableData(){
+        var table = document.getElementById("mainTable");
+        var tableData =new Array();
+        for(var r=1, n = table.rows.length; r<n ;r++){
+            var tableRow = new Array();
+            for(var c=0, m=table.rows[r].cells.length; c<m; c++){ 
+            
+                // insert correct datatype into array
+                if( table.rows[r].cells[c].getAttribute("data-type") == "name" ){
+                    tableRow.push(table.rows[r].cells[c].innerHTML);
+                } else {
+                    
+                    tableRow.push(parseInt(table.rows[r].cells[c].innerHTML));
+                }
+>>>>>>> sjoukedevries
+            }
+            tableData.push(tableRow);
+        }
+        return tableData;
+    }
+
+    // global variable to hold the graph
+    var chart;
+
+    function createGraph(){
+        // create graph in canvas area
         var ctx = document.getElementById("graph");
+<<<<<<< HEAD
         var chart1 = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -99,6 +165,15 @@
                 datasets: [{
                     label: '# of Votes',
                     data: [12, 19, 3, 5, 2, 3],
+=======
+        chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Price',
+                    data: [],
+>>>>>>> sjoukedevries
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -116,6 +191,7 @@
                         'rgba(255, 159, 64, 1)'
                     ], borderWidth: 1},
 
+<<<<<<< HEAD
                     {
                         label: 'Line Dataset',
                         data: [20, 15, 18, 12, 5, 25],
@@ -129,11 +205,44 @@
                             beginAtZero:true
                         }
                     }]
+=======
+                   ]
+            },
+            options: {
+                title:{
+                    display:true,
+                    text: 'Price comparison'
+                },
+                responsive: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+>>>>>>> sjoukedevries
                 }
             }
         });
     }
+<<<<<<< HEAD
 </script>
 
 
 
+=======
+
+    function plotData(){
+        var tableData = getTableData();
+        chart.data.labels = getCol(tableData, 1);
+        chart.data.datasets[0].data = getCol(tableData,2);
+
+        // pass 0 as argument for instant updates
+        chart.update();
+    }
+
+</script>
+
+
+
+>>>>>>> sjoukedevries

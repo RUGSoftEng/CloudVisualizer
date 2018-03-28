@@ -30,4 +30,18 @@
 - change list to table
 - sort table on columns
 - insert plotting data
+- restructure and sync up with development branch
+- use only AJAX for showing the query result, work on plot
+- fixed plot dimensions
+- work on retrieving data from the table and plot it
+- work on retrieving data from the table and plot it
+- work on retrieving data from the table and plot it
+- work on retrieving data from the table and plot it
+- code refactoring
+- fix hovering over plot
+- fix hovering over plot
+- fix hovering over plot
+- fix hovering over plot
+- merge conflicts
+
 
