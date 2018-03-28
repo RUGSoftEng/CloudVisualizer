@@ -44,5 +44,7 @@
 - fix hovering over plot
 - merge conflicts
 - merge conflicts
-
+- work with team
+- work with team
+- plot data with global variable 
 

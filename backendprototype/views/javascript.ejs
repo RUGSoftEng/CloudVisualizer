@@ -14,6 +14,11 @@
         });
     })
 
+
+    // global variables
+    var chart;
+    var latestResult;
+
     function getQueries(){
         $.ajax({
             data: {
@@ -23,12 +28,12 @@
             url: '/users',
             contentType: 'application/json',
             success: function(result) {
-                // console.log('get message succes');
-                var times=Object.keys(result).length;
-                var i, x ="<table id='mainTable' border='1px'>";
+                latestResult = result;
+                //var times=Object.keys(result).length;
+                var x ="<table id='mainTable' border='1px'>";
 
                 x += "<th onclick='sortTable(0)'>Name</th><th onclick='sortTable(1)'>Type</th><th onclick='sortTable(2)'>Price</th>";
-                for (i in result) {
+                for (var i in result) {
                     x += "<tr><td data-type=name>" + result[i].name + "</td><td data-type=name>" + result[i].type + "</td><td data-type=int>" + result[i].price + "</td></tr>" ;
                 }
                 x += "</table>";
@@ -92,36 +97,13 @@
         }
     }
 
-    function getCol(matrix, col){
-       var column = [];
-       for(var i=0; i<matrix.length; i++){
-          column.push(matrix[i][col]);
-       }
-       return column;
-    }
-
-    function getTableData(){
-        var table = document.getElementById("mainTable");
-        var tableData =new Array();
-        for(var r=1, n = table.rows.length; r<n ;r++){
-            var tableRow = new Array();
-            for(var c=0, m=table.rows[r].cells.length; c<m; c++){ 
-            
-                // insert correct datatype into array
-                if( table.rows[r].cells[c].getAttribute("data-type") == "name" ){
-                    tableRow.push(table.rows[r].cells[c].innerHTML);
-                } else {
-                    
-                    tableRow.push(parseInt(table.rows[r].cells[c].innerHTML));
-                }
-            }
-            tableData.push(tableRow);
+    function getCol(attribute){
+        var column = [];
+        for(var obj in latestResult){
+            column.push(latestResult[obj][attribute]);
         }
-        return tableData;
+        return column;
     }
-
-    // global variable to hold the graph
-    var chart;
 
     function createGraph(){
         // create graph in canvas area
@@ -169,11 +151,9 @@
         });
     }
 
-    function plotData(){
-        var tableData = getTableData();
-        chart.data.labels = getCol(tableData, 1);
-        chart.data.datasets[0].data = getCol(tableData,2);
-
+    function plotData(xattribute, yattribute){
+        chart.data.labels = getCol(xattribute);
+        chart.data.datasets[0].data = getCol(yattribute);
         // pass 0 as argument for instant updates
         chart.update();
     }
