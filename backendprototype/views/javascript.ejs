@@ -1,18 +1,4 @@
 <script>
-<<<<<<< HEAD
-    ///Some random jquery function giving a window alert of the price
-    $(document).ready(function() {
-        //AJAX loading queries
-        getQueries();
-
-        //On change of slider reload queries
-        $('#priceid2').on('input', function () {
-            getQueries();
-        });
-    })
-
-
-=======
     $(document).ready(function() {
 
         // initial load the query with default values
@@ -28,25 +14,12 @@
         });
     })
 
->>>>>>> sjoukedevries
     function getQueries(){
         $.ajax({
             data: {
                 price: $('#priceid2').val()
             },
             type: 'GET',
-<<<<<<< HEAD
-            url: '/users/node',
-            contentType: 'application/json',
-            success: function(result) {
-                console.log('get message succes');
-                var times=Object.keys(result).length;
-                var i,x ="<ul>";
-                for (i in result) {
-                    x += "<li>" +result[i].name + " has type " + result[i].type + " with price " + result[i].price + "<br>" + "</li>" ;
-                }
-                x += "<ul>"
-=======
             url: '/users',
             contentType: 'application/json',
             success: function(result) {
@@ -59,7 +32,6 @@
                     x += "<tr><td data-type=name>" + result[i].name + "</td><td data-type=name>" + result[i].type + "</td><td data-type=int>" + result[i].price + "</td></tr>" ;
                 }
                 x += "</table>";
->>>>>>> sjoukedevries
                 $('#output').html(x);
             }
         });
@@ -116,8 +88,6 @@
                     dir = "desc";
                     switching = true;
                 }
-<<<<<<< HEAD
-=======
             }
         }
     }
@@ -144,7 +114,6 @@
                     
                     tableRow.push(parseInt(table.rows[r].cells[c].innerHTML));
                 }
->>>>>>> sjoukedevries
             }
             tableData.push(tableRow);
         }
@@ -157,15 +126,6 @@
     function createGraph(){
         // create graph in canvas area
         var ctx = document.getElementById("graph");
-<<<<<<< HEAD
-        var chart1 = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-=======
         chart = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -173,7 +133,6 @@
                 datasets: [{
                     label: 'Price',
                     data: [],
->>>>>>> sjoukedevries
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -191,21 +150,6 @@
                         'rgba(255, 159, 64, 1)'
                     ], borderWidth: 1},
 
-<<<<<<< HEAD
-                    {
-                        label: 'Line Dataset',
-                        data: [20, 15, 18, 12, 5, 25],
-                        type: 'line'
-                    }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero:true
-                        }
-                    }]
-=======
                    ]
             },
             options: {
@@ -220,17 +164,10 @@
                             beginAtZero:true
                         }
                     }]
->>>>>>> sjoukedevries
                 }
             }
         });
     }
-<<<<<<< HEAD
-</script>
-
-
-
-=======
 
     function plotData(){
         var tableData = getTableData();
@@ -245,4 +182,3 @@
 
 
 
->>>>>>> sjoukedevries

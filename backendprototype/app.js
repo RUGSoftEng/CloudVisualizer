@@ -57,12 +57,6 @@ app.use(expressValidator({
 
 }));
 
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> sjoukedevries
 app.get('/', function(req,res){
     var query = {};
     db.users.find(query,function (err, docs) {
@@ -71,27 +65,17 @@ app.get('/', function(req,res){
             users: docs
         });
     });
-
 });
 
-<<<<<<< HEAD
-app.get('/users/node', function (req, res) {
-=======
 app.get('/users', function (req, res) {
->>>>>>> sjoukedevries
     // var price= parseInt(req.body.price);
     // var price = JSON.stringify(req2.body.price);
     price = parseInt(req.query.price);
     var query = {price : {$lt: price}};
     res.set('Content-Type', 'application/json');
     db.users.find(query).pipe(JSONStream.stringify()).pipe(res);
-<<<<<<< HEAD
-    console.log('Finishing a get request');
-=======
     //console.log('Finishing a get request');
->>>>>>> sjoukedevries
 });
-
 
 app.post('/users/find', function(req, res){
     var price= parseInt(req.body.price);
@@ -115,57 +99,3 @@ app.post('/users/find', function(req, res){
 app.listen(process.env.PORT || 3000, function(){
     console.log('Server Started on Port 3000...');
 });
-
-
-/*
-
-Mongo database
-Starting mongod database:
-sudo service mongod start
-Accessing database manual:
-    mongo --host 127.0.0.1:27017*/
-
-
-
-
-
-
-
-/* Adding a entry to the database
-
-app.post('/users/add', function(req, res){
-
-    req.checkBody('first_name', 'First name is Required').notEmpty();
-    req.checkBody('last_name', ' name is Required').notEmpty();
-    req.checkBody('email', 'email is Required').notEmpty();
-
-    var errors = req.validationErrors();
-
-    if(errors){
-        res.render('index',{
-            title : 'Customers',
-            users: users,
-            errors: errors
-
-        });
-    }else{
-        var newUser = {
-            first_name: req.body.first_name,
-            last_name: req.body.last_name,
-            email: req.body.email
-        };
-
-        db.users.insert(newUser, function(err, result){
-            if(err){
-                console.log(err);
-            }else{
-                res.redirect('/');
-            }
-        });
-        console.log('Success');
-    }
-
-
-});
-*/
-

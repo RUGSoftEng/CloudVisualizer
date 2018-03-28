@@ -43,5 +43,6 @@
 - fix hovering over plot
 - fix hovering over plot
 - merge conflicts
+- merge conflicts
 
 
