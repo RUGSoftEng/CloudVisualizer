@@ -6,5 +6,10 @@
            $("#items").append($("<li></li>").text(ui.draggable.text()));
        }});
   });
+  
+  function clearBox(elementID){
+    document.getElementById(elementID).innerHTML = "";
+  }
 
+  
   

@@ -28,7 +28,7 @@ html, body {
   position: relative;
   background-color: #343a40;
   padding: 20px;
-  padding-top: 50px;
+  padding-top: 70px;
   height: 150px;
   border-bottom-style: solid;
   border-bottom-color: #cccccc; }
@@ -51,10 +51,10 @@ html, body {
 
 .canvas {
   width: calc(75% - 250px);
-  height: 100%;
+  height: 70%;
   float: left;
   border: 2px solid gray;
-  background-color: blue; }
+  background-color: WhiteSmoke; }
 
 .footer {
   margin-top: 0px !important;
@@ -62,5 +62,8 @@ html, body {
   background-color: blue;
   height: 100px; }
 
-.source li {
-  list-style-position: inside; }
+ul.source {
+  list-style-type: circle; }
+
+a p, h4 {
+  color: DarkCyan; }
