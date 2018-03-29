@@ -53,4 +53,5 @@
 - work with team
 - work with team
 - work on dropdown selecting column for plotting
+- dropdown for selecting axis for plotting
 
