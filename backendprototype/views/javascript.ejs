@@ -2,7 +2,7 @@
     $(document).ready(function() {
 
         // initial load the query with default values
-        getQueries();
+        fillTable();
         createGraph();
 
         //Actions on change of slider 
@@ -14,10 +14,30 @@
         });
     })
 
-
     // global variables
     var chart;
     var latestResult;
+
+    function fillTable(){
+        $.ajax({
+            data: {
+                price: $('#priceid2').val()
+            },
+            type: 'GET',
+            url: '/users',
+            contentType: 'application/json',
+            success: function(result) {
+                latestResult = result;
+                var x ="<table id='mainTable' border='1px'><th onclick='sortTable(0)'>Name</th><th onclick='sortTable(1)'>Type</th><th onclick='sortTable(2)'>Price</th>";
+                for (var i in result) {
+                    x += "<tr><td data-type=name>" + result[i].name + "</td><td data-type=name>" + result[i].type + "</td><td data-type=int>" + result[i].price + "</td></tr>" ;
+                }
+                x += "</table>";
+                $('#output').html(x);
+                fillDropdown();
+            }
+        });
+    }
 
     function getQueries(){
         $.ajax({
@@ -35,7 +55,6 @@
                 }
                 x += "</table>";
                 $('#output').html(x);
-                fillDropdown();
             }
         });
     }
@@ -116,7 +135,7 @@
         // create graph in canvas area
         var ctx = document.getElementById("graph");
         chart = new Chart(ctx, {
-            type: 'bar',
+            type: 'line',
             data: {
                 labels: [],
                 datasets: [{
@@ -159,16 +178,29 @@
     }
 
     function plotData(){
+        console.log(chart.data.labels.length);
+        console.log(chart.data.datasets[0].data);
+
         chart.data.labels = getCol(document.getElementById("xDropdown").value.toLowerCase());
+
         chart.data.datasets[0].data = getCol(document.getElementById("yDropdown").value.toLowerCase());
         // pass 0 as argument for instant updates
         chart.update();
     }
 
+    function removeData() {
+        chart.data.labels.pop();
+        chart.data.datasets.forEach((dataset) => {
+            dataset.data.pop();
+        });
+        
+        chart.update();
+    }
+
     function fillDropdown(){
         var table = document.getElementById("mainTable");
-        var outputX = "<option selected disabled hidden>Choose x-axis</option>";
-        var outputY = "<option selected disabled hidden>Choose y-axis</option>";
+        var outputX = "<option selected disabled hidden>Choose Label</option>";
+        var outputY = "<option selected disabled hidden>Choose Data</option>";
         for(var c=0, m=table.rows[0].cells.length; c<m; c++){  
             outputX += "<option value='" + table.rows[0].cells[c].innerHTML + "'/>" + table.rows[0].cells[c].innerHTML + "</option>" ;
             outputY += "<option value='" + table.rows[0].cells[c].innerHTML + "'/>" + table.rows[0].cells[c].innerHTML + "</option>" ;

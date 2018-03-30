@@ -54,4 +54,7 @@
 - work with team
 - work on dropdown selecting column for plotting
 - dropdown for selecting axis for plotting
+- ability to remove data points from the graph
+- work on displaying multiple datasets in a single graph
+- work on displaying multiple datasets in a single graph
 
