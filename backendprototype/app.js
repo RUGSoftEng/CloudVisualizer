@@ -68,33 +68,11 @@ app.get('/', function(req,res){
 });
 
 app.get('/users', function (req, res) {
-    // var price= parseInt(req.body.price);
-    // var price = JSON.stringify(req2.body.price);
     price = parseInt(req.query.price);
     var query = {price : {$lt: price}};
     res.set('Content-Type', 'application/json');
-    db.users.find(query).pipe(JSONStream.stringify()).pipe(res);
-    //console.log('Finishing a get request');
+    var result = db.users.find(query).pipe(JSONStream.stringify()).pipe(res);
 });
-
-app.post('/users/find', function(req, res){
-    var price= parseInt(req.body.price);
-    //console.log(price);
-    var query = {price : {$lt: price}};
-    db.users.find(query,function (err, docs) {
-        res.render('index',{
-            title : 'Available packages',
-            users: docs,
-            price: price
-        });
-    });
-
-    //Generating a JSON output file
-/*    res.set('Content-Type', 'application/json');
-    db.users.find(query).pipe(JSONStream.stringify()).pipe(res);*/
-
-});
-
 
 app.listen(process.env.PORT || 3000, function(){
     console.log('Server Started on Port 3000...');

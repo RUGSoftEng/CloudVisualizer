@@ -120,7 +120,6 @@
         } else {
             table.getElementsByTagName("TH")[n].innerHTML = table.getElementsByTagName("TH")[n].innerHTML.split(' ')[0] + ' ' + ' &#9660';
         }
-       // console.log("new value " + table.getElementsByTagName("TH")[n].innerHTML.split(' '));
     }
 
     function getCol(attribute){
@@ -178,11 +177,7 @@
     }
 
     function plotData(){
-        console.log(chart.data.labels.length);
-        console.log(chart.data.datasets[0].data);
-
         chart.data.labels = getCol(document.getElementById("xDropdown").value.toLowerCase());
-
         chart.data.datasets[0].data = getCol(document.getElementById("yDropdown").value.toLowerCase());
         // pass 0 as argument for instant updates
         chart.update();
