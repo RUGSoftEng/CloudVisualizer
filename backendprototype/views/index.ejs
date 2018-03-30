@@ -32,7 +32,9 @@
 </br></br>
 </br></br>
 <h2><%="Test"%></h2>
-<div> <button onclick="googlepricelist('/users2', 'VMIMAGE')"> Get virtual machines</button> <button onclick="googlepricelist('/users2', 'DATASTORE')"> Get data bases</button> <button onclick="googlepricelist('/users2', 'BIGSTORE')"> Get storages</button> </div>
+Datacenter location: <input type="text" name="Datacenter location" id="locationid" value="Insert location" oninput="locationid.value=value">
+<button > Submit</button>
+<div> <button onclick="googlepricelist('/users2', 'VMIMAGE', locationid.value)"> Get virtual machines</button> <button onclick="googlepricelist('/users2', 'DATASTORE', locationid.value)"> Get data bases</button> <button onclick="googlepricelist('/users2', 'BIGSTORE', locationid.value)"> Get storages</button> </div>
 <div id="output2" style="float:left"></div>
 
 <% include footer.ejs%>`

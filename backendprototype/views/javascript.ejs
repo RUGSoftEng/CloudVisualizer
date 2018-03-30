@@ -11,7 +11,7 @@
             //plotData();
         });
     })
-    function googlepricelist(usertype, substring){
+    function googlepricelist(usertype, substring, id){
         console.log("starting new google pricelist");
         $.ajax({
             data: {
@@ -21,15 +21,25 @@
             url: usertype,
             contentType: 'application/json',
             success: function (result) {
+                console.log(id);
                 var i, x="<table id='VMIMAGEOUTID' border='lpx'>";
                 var keys=Object.keys(result[0].gcp_price_list_as_array["v"]);
+
+                for (var i=0; i<result.length; i++) {
+                    console.log(result[i].gcp_price_list_as_array["k"]);
+                    console.log(result[i].gcp_price_list_as_array["v"]);
+                }
                 for (i in keys) {
-                    x += "<td >"+keys[i]+"</td>";
+                    if (ourCountryorNoCountry(keys[i], id)) {
+                        x += "<td >"+keys[i]+"</td>";
+                    }
                 }
                 for (var k=0; k<result.length; k++) {
                     x+="<tr><td";
-                    for (var j in keys) {
-                        x+="</td><td data-type=name>" + result[k].gcp_price_list_as_array["v"][keys[j]];
+                    for (var j=0; j<keys.length; j++) {
+                        if (ourCountryorNoCountry(keys[j], id)) {
+                            x += "</td><td data-type=name>" + result[k].gcp_price_list_as_array["v"][keys[j]];
+                        }
                     }
                     x+="</td></tr>"
                 }
@@ -37,6 +47,25 @@
                 $('#output2').html(x);
             }
         });
+    }
+    var countries=["us", "europe", "america", "asia", "australia"];
+    function ourCountryorNoCountry(j, location) {
+        if (j==location) {
+            return true;
+        }
+        var first=true, second=true;
+        for (var i=0; i<countries.length; i++) {
+            if (j.indexOf(countries[i])!=-1) {
+                first=false;
+            }
+            if (location.indexOf(countries[i])!=-1) {
+                second=false;
+            }
+            if (!first && !second) {
+                return false;
+            }
+        }
+        return true;
     }
     function getQueries(){
         $.ajax({

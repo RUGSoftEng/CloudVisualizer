@@ -87,6 +87,7 @@ app.get('/users2', function (req, res) {
     }, {
         $match: { "gcp_price_list_as_array.k": new RegExp(req.query.substring) } // like filter on the "k" (as in "key") field using regular expression
     }).pipe(JSONStream.stringify()).pipe(res);
+
 });
 
 
