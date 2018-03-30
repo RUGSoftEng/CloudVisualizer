@@ -75,12 +75,18 @@ app.get('/users', function (req, res) {
     db.users.find(query,{price:1}).pipe(JSONStream.stringify()).pipe(res);
 });
 
-
 app.get('/users2', function (req, res) {
-    var query = {};
+    //substring=req.query.substring;
     res.set('Content-Type', 'application/json');
-    var test;
-    test=db.googlepricelist.find({}, {"gcp_price_list":1}).pipe(JSONStream.stringify()).pipe(res);
+    db.googlepricelist.aggregate({
+        $project: {
+            "gcp_price_list_as_array": { $objectToArray: "$gcp_price_list" }, // transform "gcp_price_list" into an array of key-value pairs
+        }
+    }, {
+        $unwind: "$gcp_price_list_as_array" // flatten array
+    }, {
+        $match: { "gcp_price_list_as_array.k": new RegExp(req.query.substring) } // like filter on the "k" (as in "key") field using regular expression
+    }).pipe(JSONStream.stringify()).pipe(res);
 });
 
 
