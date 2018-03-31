@@ -1,0 +1,142 @@
+<script>
+    /*These are all strings except for preemptible, which is boolean
+*and days and hours which are integers. They should be in the same
+*format as in the database so they can be inserted between -'s.*/
+    var region="";/*user picked region*/;
+    var type="";/*user picked type*/;
+    var days=1;/*days per week used*/;
+    var hours=1;/*hours per day used*/;
+    var osType="";/*user picked OS*/;
+    var numGPU=0;/*number of GPUs*/
+    var GPUType="";/*user picked GPU*/;
+    var localSSDSize=0;/*user picked size*/;
+    var PDSSDSize=0;/*user picked size*/;
+    var PDSize=0;/*user picked size*/;
+    var PDSnapshot=0;/*user picked size*/;
+    var preemptible=false;/*true or false based on user input*/;
+    var committedUsage="";/*1-YEAR,3-YEAR or 0 string depending on user input*/;
+    var instanceType;
+    var pricelist=[];
+    function determineInstanceType() {
+        if (type == "custom") {
+            instanceType = {
+                "cores": 0/*user input*/,
+                "memory": 0/*user input*/
+            }
+        } else {
+            /*ik weet niet of dit zou werken. Zou nuttig zijn als instanceType
+             *dus verwijst naar het type dat gekozen is door de gebruiker of het
+             *type in het standaard profiel*/
+            if (preemptible) {
+                instanceType = pricelist["CP-COMPUTEENGINE-VMIMAGE-" + type + "-PREEMPTIBLE"];
+            } else {
+                instanceType = pricelist["CP-COMPUTEENGINE-VMIMAGE-" + type];
+            }
+        }
+    }
+    function resetAll() {
+        region="";
+        type="";
+        days=1;
+        hours=1;
+        osType="";
+        numGPU=0;
+        GPUType="";
+        localSSDSize=0;
+        PDSSDSize=0;
+        PDSize=0;
+        PDSnapshot=0;
+        preemptible=false;
+        committedUsage="0";
+    }
+    var sustainedUseHourly=function(instanceType,osType,type,region,GPUType,preemptible,committedUsage,localSSDSize,days,hours){
+        var disc=1;
+        if(committedUsage=="0"){
+        }else{
+            var k=1;
+            var f=days/7*hours/24;
+            disc=0;
+            while(f>k*pricelist["sustained_use_base"]){
+                //change the format of the database so the tiers are an array!!
+                disc+=pricelist["sustained_use_base"]*f>k*pricelist["sustained_use_tiers"][k-1];
+                k+=1;
+            }
+            disc+=f%pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"][k-1];
+            disc/=f;
+        }
+        console.log("osHourly:" + osHourly(instanceType,osType));
+        console.log("instanceHourly:" + instanceHourly(instanceType,preemptible,type,region));
+        console.log("localSSDHourly:" + localSSDHourly(preemptible,localSSDSize,region));
+        console.log("GPUHourly" + GPUHourly(preemptible,GPUType,numGPU,region));
+        console.log("sustainedUseHourly:" + (osHourly(instanceType,osType)+instanceHourly(instanceType,preemptible,type,region)
+            +localSSDHourly(preemptible,localSSDSize,region)+GPUHourly(preemptible,GPUType,region)));
+        return disc*(osHourly(instanceType,osType)+instanceHourly(instanceType,preemptible,type,region)
+            +localSSDHourly(preemptible,localSSDSize,region)+GPUHourly(preemptible,GPUType,region));
+    }
+    var osHourly= function(instanceType,osType){
+        if(instanceType.cores=="shared"){
+            return pricelist["CP-COMPUTEENGINE-OS"][osType]["low"];
+        }else if(pricelist["CP-COMPUTEENGINE-OS"][osType]["cores"]=="shared"){
+            var rate="high";
+        }else if(pricelist["CP-COMPUTEENGINE-OS"][osType]["cores"]>instanceType["cores"]){
+            var rate="high";
+        }else{
+            var rate="low";
+        }
+        if(pricelist["CP-COMPUTEENGINE-OS"][osType]["percore"]){
+            return pricelist["CP-COMPUTEENGINE-OS"][osType][rate]*instanceType["cores"];
+        }else{
+            return pricelist["CP-COMPUTEENGINE-OS"][osType][rate];
+        }
+    }
+    var instanceHourly=function(instanceType,preemptible,type,region){
+        if(committedUsage!="0"){
+            return pricelist["CP-CUD-"+committedUsage+"-CPU"][region]*instanceType["cores"]+
+                pricelist["CP-CUD-"+committedUsage+"-RAM"][region]*instanceType["memory"];
+        }else if(type=="custom"){
+            if(preemptible){
+                var pre="-PREEMPTIBLE";
+            }else{
+                var pre="";
+            }
+            if(instanceType["memory"]>instanceType["cores"]*6.5){
+                return pricelist["CP-COMPUTEENGINE-CUSTOM-VM-CORE"+pre][region]*instanceType["cores"]
+                    +(instanceType["memory"]-instanceType["cores"]*6.5)*pricelist["CP-COMPUTEENGINE-CUSTOM-VM-EXTENDED-RAM"+pre][region]
+                    +instanceType["cores"]*6.5*pricelist["CP-COMPUTEENGINE-CUSTOM-VM-RAM"+pre][region];
+            }else{
+                return pricelist["CP-COMPUTEENGINE-CUSTOM-VM-CORE"+pre][region]*instanceType["cores"]
+                    +instanceType["memory"]*6.5*pricelist["CP-COMPUTEENGINE-CUSTOM-VM-RAM"+pre][region];
+            }
+        }else{
+            return instanceType[region];
+        }
+    }
+    var localSSDHourly=function(preemptible,localSSDSize,region){
+        if(preemptible){
+            return localSSDSize*pricelist["CP-COMPUTEENGINE-LOCAL-SSD-PREEMPTIBLE"][region];
+        }else{
+            return localSSDSize*pricelist["CP-COMPUTEENGINE-LOCAL-SSD"][region];
+        }
+    }
+    var GPUHourly=function(preemptible,GPUType,numGPU,region){
+        if(preemptible){
+            return numGPU*pricelist["GPU_"+GPUType+"-PREEMPTIBLE"][region];
+        }else{
+            return numGPU*pricelist["GPU_"+GPUType][region];
+        }
+    }
+    var PDHourly=function(PDSSDSize,PDSize,PDSnapshot,region){
+        return (PDSSDSize*pricelist["CP-COMPUTEENGINE-STORAGE-PD-SSD"][region]+
+            PDSize*pricelist["CP-COMPUTEENGINE-STORAGE-PD-CAPACITY"][region]+
+            PDSnapshot*pricelist["CP-COMPUTEENGINE-STORAGE-PD-SNAPSHOT"][region])
+            *12/365/24;
+    }
+    var LBHourly=function(rules, region){
+        if(rules>5){
+            return pricelist["FORWARDING_RULE_CHARGE_BASE"][region]
+                +pricelist["FORWARDING_RULE_CHARGE_EXTRA"][region]*(rules-5);
+        }else{
+            return pricelist["FORWARDING_RULE_CHARGE_BASE"][region];
+        }
+    }
+</script>

@@ -90,6 +90,14 @@ app.get('/users2', function (req, res) {
 
 });
 
+app.get('/users3', function (req, res) {
+    //substring=req.query.substring;
+    res.set('Content-Type', 'application/json');
+    /*var pricelist=db.googlepricelist.gcp_price_list.find({},{});
+    pricelist.pipe(JSONStream.stringify()).pipe(res); */
+    db.googlepricelist.find({}, {"gcp_price_list":1}).pipe(JSONStream.stringify()).pipe(res);
+});
+
 
 app.post('/users/find', function(req, res){
     var price= parseInt(req.body.price);

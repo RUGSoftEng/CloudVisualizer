@@ -3,6 +3,7 @@
         // initial load the query with default values
         getQueries();
         createGraph();
+        googlepricelist2();
         //Actions on change of slider
         $('#priceid2').on('input', function () {
             getQueries();
@@ -21,30 +22,65 @@
             url: usertype,
             contentType: 'application/json',
             success: function (result) {
-                console.log(id);
                 var i, x="<table id='VMIMAGEOUTID' border='lpx'>";
-                var keys=Object.keys(result[0].gcp_price_list_as_array["v"]);
-
+                /* All the names of the objects */
+                objectNames=[];
+                /* The objects themselves in an array */
+                objects=[];
+                /* Push the information from the result in the arrays */
                 for (var i=0; i<result.length; i++) {
-                    console.log(result[i].gcp_price_list_as_array["k"]);
-                    console.log(result[i].gcp_price_list_as_array["v"]);
+                    objectNames.push(result[i].gcp_price_list_as_array["k"]);
+                    objects.push(result[i].gcp_price_list_as_array["v"]);
                 }
+                /* Keys of the objects */
+                var keys=Object.keys(objects[0]);
+                /* For the column names */
+                x += "<td >Name</td>";
                 for (i in keys) {
+                    /* We only want to show the location that is selected and all the non-country columns */
                     if (ourCountryorNoCountry(keys[i], id)) {
                         x += "<td >"+keys[i]+"</td>";
                     }
                 }
-                for (var k=0; k<result.length; k++) {
+                /* Information for in the table */
+                for (var k=0; k<objectNames.length; k++) {
                     x+="<tr><td";
+                    x += "</td><td data-type=name>" + objectNames[k];
                     for (var j=0; j<keys.length; j++) {
+                        /* We only want to show the location that is selected and all the non-country columns */
                         if (ourCountryorNoCountry(keys[j], id)) {
-                            x += "</td><td data-type=name>" + result[k].gcp_price_list_as_array["v"][keys[j]];
+                            x += "</td><td data-type=name>" + objects[k][keys[j]];
                         }
                     }
                     x+="</td></tr>"
                 }
                 x+="</table>";
                 $('#output2').html(x);
+            }
+        });
+    }
+    function googlepricelist2(){
+        console.log("starting new google pricelist");
+        $.ajax({
+            type: 'GET',
+            url: '/users3',
+            contentType: 'application/json',
+            success: function (result) {
+                pricelist=result[0].gcp_price_list;
+                region="us";
+                type="F1-MICRO";
+                days=1;
+                hours=1;
+                osType="win";
+                GPUType="NVIDIA_TESLA_K80";
+                localSSDSize=1;
+                PDSSDSize=1;
+                PDSize=1;
+                PDSnapshot=1;
+                preemptible=false;
+                committedUsage="1-YEAR";
+                determineInstanceType();
+                console.log(sustainedUseHourly(instanceType,osType,type,region,GPUType,preemptible,committedUsage,localSSDSize,days,hours));
             }
         });
     }
