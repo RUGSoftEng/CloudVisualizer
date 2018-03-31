@@ -24,7 +24,7 @@
 		<div class="collapse navbar-collapse" id="navbarResponsive">
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item active">
-					<a class="nav-link" href="index.html">Home
+					<a class="nav-link" href="index.html" style="color:#ffbb33">Home
 						<span class="sr-only">(current)</span>
 					</a>
 				</li>
@@ -42,7 +42,7 @@
 
 	<!-- HEADER DIV -->
   <div class="header">
-		<h1>Cloud Cost Visualizer</h1>
+		<h1 >Cloud Cost Visualizer</h1>
 	</div>
 
 
@@ -77,9 +77,10 @@
           <ul class="source" id="source">
 						<li>Number of instances:<span id="demo2"></span></li>
 						<input type="range" min="1" max="10" value="3" class="slider" id="myRange2">
-
-						<li>Option 8</li>
-						<li>Option 9</li>
+						<li>Days per week:<span id="demo"></span></li>
+						<input type="range" min="1" max="7" value="3" class="slider" id="myRange">
+						<li>Hours per day:<span id="demo3"></span></li>
+						<input type="range" min="1" max="24" value="3" class="slider" id="myRange3">
 					</ul>
 
 
@@ -93,8 +94,8 @@
 
 	   </ol>
 			</div>
-			<button type="button" style="float:left; margin-left:20px;margin-top:10px;">Calculate</button>
-
+			<button type="button" style="float:left; margin-left:0px;margin-top:0px;background-color: #ffaa00">Calculate</button>
+</div>
 
 
 
@@ -107,7 +108,25 @@ slider.oninput = function() {
   output.innerHTML = this.value;
 }
 </script>
-    </div>
+<script>
+var slider = document.getElementById("myRange");
+var output = document.getElementById("demo");
+output.innerHTML = slider.value;
+
+slider.oninput = function() {
+  output.innerHTML = this.value;
+}
+</script>
+<script>
+var slider = document.getElementById("myRange3");
+var output = document.getElementById("demo3");
+output.innerHTML = slider.value;
+
+slider.oninput = function() {
+  output.innerHTML = this.value;
+}
+</script>
+
 
 	<!--
 	<div class="footer">
