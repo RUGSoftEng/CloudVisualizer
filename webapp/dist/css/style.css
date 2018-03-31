@@ -1,11 +1,15 @@
 #aboutContent {
-  margin: 40px;
-  height: calc(100% - 2*40px);
-  width: calc(100% - 2*40px);
+  display: flex;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  min-height: calc(100% - 40px);
+  width: calc(100% - 40px);
   background-color: #eeeeee; }
 
 #abouttext {
   margin: 20px;
+  padding: 20px;
   background-color: white;
   width: calc(100% - 4*20px - 500px);
   float: left;
@@ -33,12 +37,15 @@ html, body {
   border-bottom-style: solid;
   border-bottom-color: #cccccc; }
 
+.header a:visited {
+  color: white; }
+
 .content {
   margin-top: 0px !important;
   position: relative;
   background-color: white;
   width: 100%;
-  height: calc(100% - 150px);
+  height: calc(100% - (150px + 36));
   min-height: 500px; }
 
 .filters {
@@ -50,7 +57,8 @@ html, body {
   float: left; }
 
 .canvas {
-  width: calc(100% - 250px);
+  margin-left: 20px;
+  width: calc(100% - (250px + 40px));
   height: 65%;
   float: left;
   border: 2px solid gray;
