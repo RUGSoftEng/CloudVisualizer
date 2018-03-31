@@ -1,8 +1,12 @@
+$aboutMargin: 40px;
+
 #aboutContent{
-	$aboutMargin: 40px;
-	margin:$aboutMargin;
-	height: calc(100% - 2*#{$aboutMargin});
-	width: calc(100% - 2*#{$aboutMargin});
+	display: flex;
+	margin-top: 20px;
+	margin-left: 20px;
+	margin-bottom: 20px;
+	min-height: calc(100% - 40px);
+	width: calc(100% - 40px);
 	background-color:#eeeeee;
 }
 
@@ -10,13 +14,14 @@ $contMargin: 20px;
 
 #abouttext{
 	margin:$contMargin;
+	padding: 20px;
 	background-color:white;
 	width: calc(100% - 4*#{$contMargin} - 500px);
 	float:left;
 	border-radius: 10px;
 }
 
-#intouch{
+#intouch{	
 	background-color:white;
 	padding:$contMargin;
 	width:500px;

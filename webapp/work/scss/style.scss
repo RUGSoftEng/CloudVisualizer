@@ -16,13 +16,17 @@ $headerhight: 150px;
 	border-bottom-style:solid;
 	border-bottom-color:#cccccc;
 }
+
+.header a:visited{
+	color:white;
+}
 .content {
     margin-top: 0px !important;
     position: relative;
     background-color: white;
   	width:100%;
-  	height:calc(100% - #{$headerhight});
-	  min-height: 500px;
+  	height:calc(100% - (#{$headerhight} + 36));
+	min-height: 500px;
 }
 
 $filterwidth: 250px;
@@ -36,7 +40,8 @@ $filterwidth: 250px;
 }
 
 .canvas{
-	width:calc(100% - #{$filterwidth});
+	margin-left: 20px;
+	width:calc(100% - (#{$filterwidth} + 40px);
 	height: 65%;
 	float:left;
 	border: 2px solid gray;
