@@ -37,4 +37,10 @@ Working on the graph again
 29-03-2018
 12:00-17:00 Working on filtering for Virtual Machines/Databases/Storages
 18:00-19:00 Working on filtering for Virtual Machines/Databases/Storages
+
+30-03-2018
+11:30 - 14:00 Meeting with Merlijn and Sjouke, worked on filtering on region
+
+31-03-2018
+11:30 - 16:00 Working on the calculations, with help from Emiel
   
