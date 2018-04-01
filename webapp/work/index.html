@@ -41,8 +41,8 @@
 
 
 	<!-- HEADER DIV -->
-  <div class="header">
-		<h1 >Cloud Cost Visualizer</h1>
+  <div class="header" >
+		<h1  >Cloud Cost Visualizer</h1>
 	</div>
 
 
@@ -60,7 +60,8 @@
 
 					<h3>Data Base</h3>
 					<ul class="source" id="source">
-						<li>Option 4</li>
+						<li>Amount of GB:<span id="demo4"></span></li>
+						<input type="range" min="1" max="50" value="3" class="slider" id="myRange4">
 						<li>Option 5</li>
 						<li>Option 6</li>
 					</ul>
@@ -71,6 +72,8 @@
 						<li>Regional Storage</li>
 						<li>Could Storage Nearline</li>
 						<li>Could Storage Coldline</li>
+						<li>Amount of GB:<span id="demo5"></span></li>
+						<input type="range" min="1" max="50" value="3" class="slider" id="myRange5">
 					</ul>
 
           <h3>Virtual Machine</h3>
@@ -98,34 +101,6 @@
 </div>
 
 
-
-<script>
-var slider = document.getElementById("myRange2");
-var output = document.getElementById("demo2");
-output.innerHTML = slider.value;
-
-slider.oninput = function() {
-  output.innerHTML = this.value;
-}
-</script>
-<script>
-var slider = document.getElementById("myRange");
-var output = document.getElementById("demo");
-output.innerHTML = slider.value;
-
-slider.oninput = function() {
-  output.innerHTML = this.value;
-}
-</script>
-<script>
-var slider = document.getElementById("myRange3");
-var output = document.getElementById("demo3");
-output.innerHTML = slider.value;
-
-slider.oninput = function() {
-  output.innerHTML = this.value;
-}
-</script>
 
 
 	<!--
