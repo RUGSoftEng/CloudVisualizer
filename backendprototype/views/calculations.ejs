@@ -1,36 +1,67 @@
 <script>
-    /*These are all strings except for preemptible, which is boolean
-*and days and hours which are integers. They should be in the same
-*format as in the database so they can be inserted between -'s.*/
-    var region="";/*user picked region*/;
-    var type="";/*user picked type*/;
-    var days=1;/*days per week used*/;
-    var hours=1;/*hours per day used*/;
-    var osType="";/*user picked OS*/;
-    var numGPU=0;/*number of GPUs*/
-    var GPUType="";/*user picked GPU*/;
-    var localSSDSize=0;/*user picked size*/;
-    var PDSSDSize=0;/*user picked size*/;
-    var PDSize=0;/*user picked size*/;
-    var PDSnapshot=0;/*user picked size*/;
-    var preemptible=false;/*true or false based on user input*/;
-    var committedUsage="";/*1-YEAR,3-YEAR or 0 string depending on user input*/;
-    var instanceType;
     var pricelist=[];
-    function determineInstanceType() {
+    function VirtualMachine() {
+        this.region="";/*user picked region*/;
+        this.type="";/*user picked type*/;
+        this.days=1;/*days per week the VM is used*/;
+        this.hours=1;/*hours per day the VM is used*/;
+        this.osType="";/*user picked OS*/;
+        this.numGPU=0;/*number of GPUs*/
+        this.GPUType="";/*user picked GPU*/;
+        this.localSSDSize=0;/*user picked size*/;
+        this.PDSSDSize=0;/*user picked size*/;
+        this.PDSize=0;/*user picked size*/;
+        this.PDSnapshot=0;/*user picked size*/;
+        this.numTPU=0;/*user picked number of cloud TPUs. only available in US*/;
+        this.TPUHours=0;/*hours per day the TPUS are used*/;
+        this.preemptible=false;/*true or false based on user input*/;
+        this.committedUsage="";/*1-YEAR,3-YEAR or 0 string depending on user input*/;
+        this.rules=0;
+        // Functions
+        this.instanceType=determineInstanceType(this.type);
+        this.costMonthly=VMCostMontly
+        this.sustainedUsePerHour=sustainedUseHourly;
+        this.osPerHour=osHourly;
+        this.instancePerHour=instanceHourly;
+        this.localSSDPerHour=localSSDHourly;
+        this.GPUPerHour=GPUHourly;
+        this.PDPerHour=PDHourly;
+        this.LBPerHour=LBHourly;
+        this.TPUPerHour=TPUHourly;
+    }
+    function Storage() {
+        /*The variables that influence the price of storage*/
+        this.region="";
+        this.multiRegional=0;/*user picked size of multi-regional storage*/;
+        this.regional=0;/*user picked size of regional storage*/;
+        this.nearline=0;/*user picked size of nearline storage*/;
+        this.coldline=0;/*user picked size of coldline storage*/;
+        this.classAOps=0;/*millions of class A operations per month*/;
+        this.classBOps=0;/*millions of class B operations per month*/;
+        // Functions
+        this.storageCostPerHour=storageCostHourly;
+    }
+    function Database() {
+        /*The variables that influence the price of databases*/
+        this.region="";
+        this.dataSize=0;/*user picked size of data storage*/;
+        this.dataReads=0;/*user picked number of entity reads per month*/;
+        this.dataWrites=0;/*user picked number of entity writes per month*/;
+        this.dataDeletes=0;/*user picked number of entity deletes per month*/;
+        // Functions
+        this.dataStorePerHour=dataStoreCostHourly;
+    }
+    function determineInstanceType(type) {
         if (type == "custom") {
-            instanceType = {
+            return {
                 "cores": 0/*user input*/,
                 "memory": 0/*user input*/
             }
         } else {
-            /*ik weet niet of dit zou werken. Zou nuttig zijn als instanceType
-             *dus verwijst naar het type dat gekozen is door de gebruiker of het
-             *type in het standaard profiel*/
-            if (preemptible) {
-                instanceType = pricelist["CP-COMPUTEENGINE-VMIMAGE-" + type + "-PREEMPTIBLE"];
+            if (this.preemptible) {
+                return pricelist["CP-COMPUTEENGINE-VMIMAGE-" + type + "-PREEMPTIBLE"];
             } else {
-                instanceType = pricelist["CP-COMPUTEENGINE-VMIMAGE-" + type];
+                return pricelist["CP-COMPUTEENGINE-VMIMAGE-" + type];
             }
         }
     }
@@ -49,15 +80,23 @@
         preemptible=false;
         committedUsage="0";
     }
-    var sustainedUseHourly=function(instanceType,osType,type,region,GPUType,preemptible,committedUsage,localSSDSize,days,hours, numGPU){
+    //input the results of running the other functions into these:
+    function VMCostMontly(){
+        return this.sustainedUsePerHour*this.hours*this.days/7*365/12+this.TPUPerHour*this.hours*365/12+(this.PDPerHour+this.LBPerHour)*24*365/12;
+    }
+    var totalCostMonthly=function(VMCostPerMonth,StoragePerHour,dataStorePerHour){
+        return VMCostPerMonth+(StoragePerHour+dataStorePerHour)*24*365/12;
+    }
+    function sustainedUseHourly(){
         var disc=1;
-        if(committedUsage=="0"){
+        var cud=1;
+        if(this.committedUsage!="0"){
+            cud=0.7;
         }else{
             var k=1;
-            var f=days/7*hours/24;
+            var f=this.days/7*this.hours/24;
             disc=0;
             while(f>k*pricelist["sustained_use_base"]){
-                //change the format of the database so the tiers are an array!!
                 disc+=pricelist["sustained_use_base"]*f>k*pricelist["sustained_use_tiers"][k-1];
                 console.log(k);
                 k+=1;
@@ -65,79 +104,106 @@
             disc+=f%pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"][k-1];
             disc/=f;
         }
-        console.log("osHourly:" + osHourly(instanceType,osType));
-        console.log("instanceHourly:" + instanceHourly(instanceType,preemptible,type,region));
-        console.log("localSSDHourly:" + localSSDHourly(preemptible,localSSDSize,region));
-        console.log("GPUHourly" + GPUHourly(preemptible,GPUType, numGPU, region));
-        console.log("sustainedUseHourly:" + disc*(osHourly(instanceType,osType)+instanceHourly(instanceType,preemptible,type,region)
-            +localSSDHourly(preemptible,localSSDSize,region)+GPUHourly(preemptible,GPUType,numGPU, region)));
-        return disc*(osHourly(instanceType,osType)+instanceHourly(instanceType,preemptible,type,region)
-            +localSSDHourly(preemptible,localSSDSize,region)+GPUHourly(preemptible,GPUType,numGPU, region));
+        console.log("osHourly:" + this.osPerHour());
+        console.log("instanceHourly:" + this.instancePerHour());
+        console.log("localSSDHourly:" + this.localSSDPerHour());
+        console.log("GPUHourly" + this.GPUPerHour());
+        console.log("sustainedUseHourly:" + disc*(this.osPerHour()+this.instancePerHour()
+            +this.localSSDPerHour()+cud*this.GPUPerHour()));
+        return disc*(this.osPerHour()+this.instancePerHour()
+            +this.localSSDPerHour()+cud*this.GPUPerHour());
     }
-    var osHourly= function(instanceType,osType){
-        if(instanceType.cores=="shared"){
-            return pricelist["CP-COMPUTEENGINE-OS"][osType]["low"];
-        }else if(pricelist["CP-COMPUTEENGINE-OS"][osType]["cores"]=="shared"){
+    function osHourly(){
+        if(this.instanceType["cores"]=="shared"){
+            return pricelist["CP-COMPUTEENGINE-OS"][this.osType]["low"];
+        }else if(pricelist["CP-COMPUTEENGINE-OS"][this.osType]["cores"]=="shared"){
             var rate="high";
-        }else if(pricelist["CP-COMPUTEENGINE-OS"][osType]["cores"]>instanceType["cores"]){
+        }else if(pricelist["CP-COMPUTEENGINE-OS"][this.osType]["cores"]>this.instanceType["cores"]){
             var rate="high";
         }else{
             var rate="low";
         }
-        if(pricelist["CP-COMPUTEENGINE-OS"][osType]["percore"]){
-            return pricelist["CP-COMPUTEENGINE-OS"][osType][rate]*instanceType["cores"];
+        if(pricelist["CP-COMPUTEENGINE-OS"][this.osType]["percore"]){
+            return pricelist["CP-COMPUTEENGINE-OS"][this.osType][rate]*this.instanceType["cores"];
         }else{
-            return pricelist["CP-COMPUTEENGINE-OS"][osType][rate];
+            return pricelist["CP-COMPUTEENGINE-OS"][this.osType][rate];
         }
     }
-    var instanceHourly=function(instanceType,preemptible,type,region){
-        if(committedUsage!="0"){
-            return pricelist["CP-CUD-"+committedUsage+"-CPU"][region]*instanceType["cores"]+
-                pricelist["CP-CUD-"+committedUsage+"-RAM"][region]*instanceType["memory"];
-        }else if(type=="custom"){
-            if(preemptible){
+    function instanceHourly(){
+        if(this.committedUsage!="0"){
+            return pricelist["CP-CUD-"+this.committedUsage+"-CPU"][this.region]*this.instanceType["cores"]+
+                pricelist["CP-CUD-"+this.committedUsage+"-RAM"][this.region]*this.instanceType["memory"];
+        }else if(this.type=="custom"){
+            if(this.preemptible){
                 var pre="-PREEMPTIBLE";
             }else{
                 var pre="";
             }
-            if(instanceType["memory"]>instanceType["cores"]*6.5){
-                return pricelist["CP-COMPUTEENGINE-CUSTOM-VM-CORE"+pre][region]*instanceType["cores"]
-                    +(instanceType["memory"]-instanceType["cores"]*6.5)*pricelist["CP-COMPUTEENGINE-CUSTOM-VM-EXTENDED-RAM"+pre][region]
-                    +instanceType["cores"]*6.5*pricelist["CP-COMPUTEENGINE-CUSTOM-VM-RAM"+pre][region];
+            if(this.instanceType["memory"]>this.instanceType["cores"]*6.5){
+                return pricelist["CP-COMPUTEENGINE-CUSTOM-VM-CORE"+pre][this.region]*this.instanceType["cores"]
+                    +(this.instanceType["memory"]-this.instanceType["cores"]*6.5)*pricelist["CP-COMPUTEENGINE-CUSTOM-VM-EXTENDED-RAM"+pre][this.region]
+                    +this.instanceType["cores"]*6.5*pricelist["CP-COMPUTEENGINE-CUSTOM-VM-RAM"+pre][this.region];
             }else{
-                return pricelist["CP-COMPUTEENGINE-CUSTOM-VM-CORE"+pre][region]*instanceType["cores"]
-                    +instanceType["memory"]*6.5*pricelist["CP-COMPUTEENGINE-CUSTOM-VM-RAM"+pre][region];
+                return pricelist["CP-COMPUTEENGINE-CUSTOM-VM-CORE"+pre][this.region]*this.instanceType["cores"]
+                    +this.instanceType["memory"]*6.5*pricelist["CP-COMPUTEENGINE-CUSTOM-VM-RAM"+pre][this.region];
             }
         }else{
-            return instanceType[region];
+            return this.instanceType[this.region];
         }
     }
-    var localSSDHourly=function(preemptible,localSSDSize,region){
-        if(preemptible){
-            return localSSDSize*pricelist["CP-COMPUTEENGINE-LOCAL-SSD-PREEMPTIBLE"][region];
+    function localSSDHourly(){
+        if(this.preemptible){
+            return this.localSSDSize*pricelist["CP-COMPUTEENGINE-LOCAL-SSD-PREEMPTIBLE"][this.region];
         }else{
-            return localSSDSize*pricelist["CP-COMPUTEENGINE-LOCAL-SSD"][region];
+            return this.localSSDSize*pricelist["CP-COMPUTEENGINE-LOCAL-SSD"][this.region];
         }
     }
-    var GPUHourly=function(preemptible,GPUType,numGPU,region){
-        if(preemptible){
-            return numGPU*pricelist["GPU_"+GPUType+"-PREEMPTIBLE"][region];
+    function GPUHourly(){
+        if(this.preemptible){
+            return this.numGPU*pricelist["GPU_"+this.GPUType+"-PREEMPTIBLE"][this.region];
         }else{
-            return numGPU*pricelist["GPU_"+GPUType][region];
+            return this.numGPU*pricelist["GPU_"+this.GPUType][this.region];
         }
     }
-    var PDHourly=function(PDSSDSize,PDSize,PDSnapshot,region){
-        return (PDSSDSize*pricelist["CP-COMPUTEENGINE-STORAGE-PD-SSD"][region]+
-            PDSize*pricelist["CP-COMPUTEENGINE-STORAGE-PD-CAPACITY"][region]+
-            PDSnapshot*pricelist["CP-COMPUTEENGINE-STORAGE-PD-SNAPSHOT"][region])
+    function PDHourly(){
+        return (this.PDSSDSize*pricelist["CP-COMPUTEENGINE-STORAGE-PD-SSD"][this.region]+
+            this.PDSize*pricelist["CP-COMPUTEENGINE-STORAGE-PD-CAPACITY"][this.region]+
+            this.PDSnapshot*pricelist["CP-COMPUTEENGINE-STORAGE-PD-SNAPSHOT"][this.region])
             *12/365/24;
     }
-    var LBHourly=function(rules, region){
-        if(rules>5){
-            return pricelist["FORWARDING_RULE_CHARGE_BASE"][region]
-                +pricelist["FORWARDING_RULE_CHARGE_EXTRA"][region]*(rules-5);
+    function LBHourly(){
+        if(this.rules>5){
+            return pricelist["FORWARDING_RULE_CHARGE_BASE"][this.region]
+                +pricelist["FORWARDING_RULE_CHARGE_EXTRA"][this.region]*(this.rules-5);
         }else{
-            return pricelist["FORWARDING_RULE_CHARGE_BASE"][region];
+            return pricelist["FORWARDING_RULE_CHARGE_BASE"][this.region];
         }
+    }
+    function TPUHourly(){
+        return this.numTPU*this.TPUHours/24*pricelist["CP-CLOUD-TPU"]["us-central1"];
+    }
+    function storageCostHourly(){
+        return (pricelist["CP-BIGSTORE-STORAGE-MULTI_REGIONAL"][this.region]*this.multiRegional
+            +pricelist["CP-BIGSTORE-STORAGE-REGIONAL"][this.region]*this.regional
+            +pricelist["CP-BIGSTORE-STORAGE-NEARLINE"][this.region]*this.nearline
+            +pricelist["CP-BIGSTORE-STORAGE-COLDLINE"][this.region]*this.coldline
+            +100*this.classAOps*pricelist["CP-BIGSTORE-CLASS-A-REQUEST"][this.region]
+            +100*this.classBOps*pricelist["CP-BIGSTORE-CLASS-B-REQUEST"][this.region])*12/365/24;
+    }
+    function dataStoreCostHourly(){
+        var cost=0;
+        if(this.dataReads>pricelist["CP-CLOUD-DATASTORE-ENTITY-READ"]["freequota"]["quantity"]){
+            cost+=(this.dataReads-pricelist["CP-CLOUD-DATASTORE-ENTITY-READ"]["freequota"]["quantity"])*pricelist["CP-CLOUD-DATASTORE-ENTITY-READ"]["us"]
+        }
+        if(this.dataWrites>pricelist["CP-CLOUD-DATASTORE-ENTITY-WRITE"]["freequota"]["quantity"]){
+            cost+=(this.dataWrites-pricelist["CP-CLOUD-DATASTORE-ENTITY-WRITE"]["freequota"]["quantity"])*pricelist["CP-CLOUD-DATASTORE-ENTITY-WRITE"]["us"]
+        }
+        if(this.dataDeletes>pricelist["CP-CLOUD-DATASTORE-ENTITY-DELETE"]["freequota"]["quantity"]){
+            cost+=(this.dataDeletes-pricelist["CP-CLOUD-DATASTORE-ENTITY-DELETE"]["freequota"]["quantity"])*pricelist["CP-CLOUD-DATASTORE-ENTITY-DELETE"]["us"]
+        }
+        if(this.dataSize>pricelist["CP-CLOUD-DATASTORE-INSTANCES"]["freequota"]["quantity"]){
+            cost+=(this.dataSize-pricelist["CP-CLOUD-DATASTORE-INSTANCES"]["freequota"]["quantity"])*pricelist["CP-CLOUD-DATASTORE-INSTANCES"]["us"]
+        }
+        return cost*12/365/24;
     }
 </script>

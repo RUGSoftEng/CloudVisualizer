@@ -67,22 +67,22 @@
             contentType: 'application/json',
             success: function (result) {
                 pricelist=result[0].gcp_price_list;
-                region="us";
-                type="N1-STANDARD-1";
-                days=1;
-                hours=1;
-                osType="win";
-                GPUType="NVIDIA_TESLA_K80";
-                localSSDSize=1*375;
-                PDSSDSize=1;
-                PDSize=1;
-                PDSnapshot=1;
-                preemptible=false;
-                committedUsage="1-YEAR";
-                numGPU=1;
-                determineInstanceType();
-                console.log(Object.keys(pricelist["sustained_use_tiers"]))
-                console.log(sustainedUseHourly(instanceType,osType,type,region,GPUType,preemptible,committedUsage,localSSDSize,days,hours, numGPU));
+                var VM= new VirtualMachine();
+                VM.region="us";
+                VM.type="N1-STANDARD-1";
+                VM.days=1;
+                VM.hours=1;
+                VM.osType="win";
+                VM.GPUType="NVIDIA_TESLA_K80";
+                VM.localSSDSize=1;
+                VM.PDSSDSize=1;
+                VM.PDSize=1;
+                VM.PDSnapshot=1;
+                VM.preemptible=false;
+                VM.committedUsage="1-YEAR";
+                VM.numGPU=1;
+                VM.instanceType=determineInstanceType(VM.type);
+                console.log(VM.sustainedUsePerHour());
             }
         });
     }
