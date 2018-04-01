@@ -49,7 +49,7 @@
         preemptible=false;
         committedUsage="0";
     }
-    var sustainedUseHourly=function(instanceType,osType,type,region,GPUType,preemptible,committedUsage,localSSDSize,days,hours){
+    var sustainedUseHourly=function(instanceType,osType,type,region,GPUType,preemptible,committedUsage,localSSDSize,days,hours, numGPU){
         var disc=1;
         if(committedUsage=="0"){
         }else{
@@ -59,6 +59,7 @@
             while(f>k*pricelist["sustained_use_base"]){
                 //change the format of the database so the tiers are an array!!
                 disc+=pricelist["sustained_use_base"]*f>k*pricelist["sustained_use_tiers"][k-1];
+                console.log(k);
                 k+=1;
             }
             disc+=f%pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"][k-1];
@@ -67,11 +68,11 @@
         console.log("osHourly:" + osHourly(instanceType,osType));
         console.log("instanceHourly:" + instanceHourly(instanceType,preemptible,type,region));
         console.log("localSSDHourly:" + localSSDHourly(preemptible,localSSDSize,region));
-        console.log("GPUHourly" + GPUHourly(preemptible,GPUType,numGPU,region));
-        console.log("sustainedUseHourly:" + (osHourly(instanceType,osType)+instanceHourly(instanceType,preemptible,type,region)
-            +localSSDHourly(preemptible,localSSDSize,region)+GPUHourly(preemptible,GPUType,region)));
+        console.log("GPUHourly" + GPUHourly(preemptible,GPUType, numGPU, region));
+        console.log("sustainedUseHourly:" + disc*(osHourly(instanceType,osType)+instanceHourly(instanceType,preemptible,type,region)
+            +localSSDHourly(preemptible,localSSDSize,region)+GPUHourly(preemptible,GPUType,numGPU, region)));
         return disc*(osHourly(instanceType,osType)+instanceHourly(instanceType,preemptible,type,region)
-            +localSSDHourly(preemptible,localSSDSize,region)+GPUHourly(preemptible,GPUType,region));
+            +localSSDHourly(preemptible,localSSDSize,region)+GPUHourly(preemptible,GPUType,numGPU, region));
     }
     var osHourly= function(instanceType,osType){
         if(instanceType.cores=="shared"){

@@ -73,14 +73,16 @@
                 hours=1;
                 osType="win";
                 GPUType="NVIDIA_TESLA_K80";
-                localSSDSize=1;
+                localSSDSize=1*375;
                 PDSSDSize=1;
                 PDSize=1;
                 PDSnapshot=1;
                 preemptible=false;
                 committedUsage="1-YEAR";
+                numGPU=1;
                 determineInstanceType();
-                console.log(sustainedUseHourly(instanceType,osType,type,region,GPUType,preemptible,committedUsage,localSSDSize,days,hours));
+                console.log(Object.keys(pricelist["sustained_use_tiers"]))
+                console.log(sustainedUseHourly(instanceType,osType,type,region,GPUType,preemptible,committedUsage,localSSDSize,days,hours, numGPU));
             }
         });
     }
