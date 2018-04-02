@@ -2,7 +2,11 @@
 var nrInstances;
 var days;
 var hours;
+var calculate;
 googlepricelist();
+var VirtualMachines=[];
+var Databases=[];
+var Storages=[];
 $(document).ready(function(){
     $("#myAccordion").accordion();
     $(".source li").draggable({helper:"clone"});
@@ -13,14 +17,12 @@ $(document).ready(function(){
             console.log("Virtual machine:");
         }
         $("#items").append($("<li></li>").html($text).on("click",function() { $(this).remove()}));
-        console.log(days.innerHTML);
-        console.log(nrInstances.innerHTML);
-        console.log(hours.innerHTML);
-        var testVM=new VirtualMachine();
-        testVM.days=parseInt(days.innerHTML);
-        testVM.hours=parseInt(hours.innerHTML);
-        testVM.instanceType=determineInstanceType(testVM.type);
-        console.log(testVM.costMonthly());
+        var newVM=new VirtualMachine();
+        newVM.days=parseInt(days.innerHTML);
+        newVM.hours=parseInt(hours.innerHTML);
+        newVM.nrInstances=parseInt(nrInstances.innerHTML);
+        newVM.instanceType=determineInstanceType(newVM.type);
+        VirtualMachines.push(newVM);
     }});
 });
 
@@ -29,19 +31,34 @@ $(document).ready(function(){
   }
    $(function(){
   var slider2 = document.getElementById("myRange2");
-  days = document.getElementById("demo2");
-  days.innerHTML = slider2.value;
+  nrInstances = document.getElementById("demo2");
+  nrInstances.innerHTML = slider2.value;
 
   slider2.oninput = function() {
-    days.innerHTML = this.value;
+    nrInstances.innerHTML = this.value;
+  }
+
+  calculate=document.getElementById("calculate");
+  calculate.onclick = function() {
+      var prices=[];
+      var totalprice=0;
+      for (var i in VirtualMachines) {
+          prices.push(VirtualMachines[i].costMonthly()*VirtualMachines[i].nrInstances);
+          totalprice=totalprice+VirtualMachines[i].costMonthly()*VirtualMachines[i].nrInstances;
+      }
+      var myString='';
+      for ( var i in prices ){
+          myString=myString+ '\n' + "Virtual machine " + i + "     " + Math.round(prices[i]*100)/100;
+      }
+      alert(myString + '\n' + "Total                          " + Math.round(totalprice*100)/100);
   }
 
   var slider = document.getElementById("myRange");
-  nrInstances = document.getElementById("demo");
-  nrInstances.innerHTML = slider.value;
+  days = document.getElementById("demo");
+  days.innerHTML = slider.value;
 
   slider.oninput = function() {
-    nrInstances.innerHTML = this.value;
+    days.innerHTML = this.value;
   }
 
   var slider3 = document.getElementById("myRange3");

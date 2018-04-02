@@ -16,9 +16,9 @@
         this.preemptible=false;/*true or false based on user input*/;
         this.committedUsage="0";/*1-YEAR,3-YEAR or 0 string depending on user input*/;
         this.rules=0;
+        this.nrInstances=1;
         // Functions
         this.instanceType=determineInstanceType(this.type);
-        this.costMonthly=VMCostMonthly;
         this.sustainedUsePerHour=sustainedUseHourly;
         this.osPerHour=osHourly;
         this.instancePerHour=instanceHourly;
@@ -27,6 +27,9 @@
         this.PDPerHour=PDHourly;
         this.LBPerHour=LBHourly;
         this.TPUPerHour=TPUHourly;
+        this.costMonthly=VMCostMonthly;
+        this.costQuarter=VMCostMonthly;
+        this.costYear=VMCostMonthly;
     }
     function Storage() {
         /*The variables that influence the price of storage*/
@@ -38,7 +41,10 @@
         this.classAOps=0;/*millions of class A operations per month*/;
         this.classBOps=0;/*millions of class B operations per month*/;
         // Functions
-        this.storageCostPerHour=storageCostHourly;
+        this.costHour=storageCostHourly;
+        this.costDay=storageCostHourly*24;
+        this.costMonthly=storageCostHourly*24*(365/12);
+        this.costYear=storageCostHourly*24*365;
     }
     function Database() {
         /*The variables that influence the price of databases*/
@@ -48,7 +54,10 @@
         this.dataWrites=0;/*user picked number of entity writes per month*/;
         this.dataDeletes=0;/*user picked number of entity deletes per month*/;
         // Functions
-        this.dataStorePerHour=dataStoreCostHourly;
+        this.costHour=dataStoreCostHourly;
+        this.costDay=dataStoreCostHourly*24;
+        this.costMonthly=dataStoreCostHourly*24*(365/12);
+        this.costYear=dataStoreCostHourly*24*365;
     }
     function googlepricelist (){
         console.log("starting new google pricelist");
@@ -58,8 +67,6 @@
             contentType: 'application/json',
             success: function (result) {
                 pricelist=result[0].gcp_price_list;
-                console.log(result);
-                console.log(pricelist["CP-COMPUTEENGINE-VMIMAGE-F1-MICRO"]);
             }
         });
     }
@@ -94,10 +101,6 @@
     }
     //input the results of running the other functions into these:
     function VMCostMonthly(){
-        console.log("Hours: " + this.hours);
-        console.log("Days: " + this.days);
-        console.log("Total hours per month " + this.hours*this.days/7*365/12);
-        console.log("Persistent disk per month: " + (this.PDPerHour()+this.LBPerHour())*24*365/12);
         return this.sustainedUsePerHour()*this.hours*this.days/7*365/12+this.TPUPerHour()*this.hours*365/12+(this.PDPerHour()+this.LBPerHour())*24*365/12;
     }
     var totalCostMonthly=function(VMCostPerMonth,StoragePerHour,dataStorePerHour){

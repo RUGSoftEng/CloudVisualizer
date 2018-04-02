@@ -43,4 +43,8 @@ Working on the graph again
 
 31-03-2018
 11:30 - 16:00 Working on the calculations, with help from Emiel
+
+02-04-2018
+14:00 - 18:30 Working on the MVP, combining front-end with back-end
+19:30 - 23:30 Working on the MVP, combining front-end with back-end
   
