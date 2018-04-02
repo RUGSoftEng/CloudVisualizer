@@ -57,10 +57,12 @@ html, body {
   float: left; }
 
 .canvas {
-  margin-left: 20px;
+  margin-left: 0px;
   width: calc(100% - (250px + 40px));
   height: 65%;
   float: left;
+  border-radius: 3px     5px      5px           3px;
+  border-style: solid;
   border: 2px solid gray;
   background-color: WhiteSmoke; }
 
@@ -78,7 +80,7 @@ a p, h4 {
 
 .content button {
   background-color: DarkCyan;
-  border-radius: 5px     5px      0           0;
+  border-radius: 5px     5px      5px           5px;
   border-style: solid;
   border-width: 2px;
   color: white;
