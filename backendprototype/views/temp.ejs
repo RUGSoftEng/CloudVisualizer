@@ -1,6 +1,6 @@
 <script>
     var pricelist=[];
-    function VirtualMachine() {
+    function VirtualMachine(region, type, days, hours, osType, numGPU, localSSDSize, PDSize, PDSnapshot, preemptible, committedUsage) {
         this.region="";/*user picked region*/;
         this.type="";/*user picked type*/;
         this.days=1;/*days per week the VM is used*/;
@@ -12,13 +12,13 @@
         this.PDSSDSize=0;/*user picked size*/;
         this.PDSize=0;/*user picked size*/;
         this.PDSnapshot=0;/*user picked size*/;
-        this.numTPU=0;/*user picked number of cloud TPUs. only available in US*/;
-        this.TPUHours=0;/*hours per day the TPUS are used*/;
+        this.numTPU;/*user picked number of cloud TPUs. only available in US*/;
+        this.TPUHours;/*hours per day the TPUS are used*/;
         this.preemptible=false;/*true or false based on user input*/;
         this.committedUsage="";/*1-YEAR,3-YEAR or 0 string depending on user input*/;
         this.rules=0;
         // Functions
-        this.instanceType=determineInstanceType(this.type);
+        this.instanceType=determineInstanceType;
         this.costMonthly=VMCostMontly
         this.sustainedUsePerHour=sustainedUseHourly;
         this.osPerHour=osHourly;
@@ -51,8 +51,8 @@
         // Functions
         this.dataStorePerHour=dataStoreCostHourly;
     }
-    function determineInstanceType(type) {
-        if (type == "custom") {
+    function determineInstanceType() {
+        if (this.type == "custom") {
             return {
                 "cores": 0/*user input*/,
                 "memory": 0/*user input*/
@@ -82,11 +82,7 @@
     }
     //input the results of running the other functions into these:
     function VMCostMontly(){
-        console.log("Hours: " + this.hours);
-        console.log("Days: " + this.days);
-        console.log("Total hours per month " + this.hours*this.days/7*365/12);
-        console.log("Persistent disk per month: " + (this.PDPerHour()+this.LBPerHour())*24*365/12);
-        return this.sustainedUsePerHour()*this.hours*this.days/7*365/12+this.TPUPerHour()*this.hours*365/12+(this.PDPerHour()+this.LBPerHour())*24*365/12;
+        return this.sustainedUsePerHour*this.hours*this.days/7*365/12+this.TPUPerHour*this.hours*365/12+(this.PDPerHour+this.LBPerHour)*24*365/12;
     }
     var totalCostMonthly=function(VMCostPerMonth,StoragePerHour,dataStorePerHour){
         return VMCostPerMonth+(StoragePerHour+dataStorePerHour)*24*365/12;
@@ -102,16 +98,23 @@
             disc=0;
             while(f>k*pricelist["sustained_use_base"]){
                 disc+=pricelist["sustained_use_base"]*f>k*pricelist["sustained_use_tiers"][k-1];
+                console.log(k);
                 k+=1;
             }
             disc+=f%pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"][k-1];
             disc/=f;
         }
-        return disc*(this.osPerHour()+this.instancePerHour()
-            +this.localSSDPerHour()+cud*this.GPUPerHour());
+        console.log("osHourly:" + osHourly(instanceType,osType));
+        console.log("instanceHourly:" + instanceHourly(instanceType,preemptible,type,region));
+        console.log("localSSDHourly:" + localSSDHourly(preemptible,localSSDSize,region));
+        console.log("GPUHourly" + GPUHourly(preemptible,GPUType, numGPU, region));
+        console.log("sustainedUseHourly:" + disc*(osHourly(instanceType,osType)+instanceHourly(instanceType,preemptible,type,region)
+            +localSSDHourly(preemptible,localSSDSize,region)+cud*GPUHourly(preemptible,GPUType,numGPU,region)));
+        return disc*(osHourly(instanceType,osType)+instanceHourly(instanceType,preemptible,type,region)
+            +localSSDHourly(preemptible,localSSDSize,region)+cud*GPUHourly(preemptible,GPUType,numGPU,region));
     }
     function osHourly(){
-        if(this.instanceType["cores"]=="shared"){
+        if(this.instanceType.cores=="shared"){
             return pricelist["CP-COMPUTEENGINE-OS"][this.osType]["low"];
         }else if(pricelist["CP-COMPUTEENGINE-OS"][this.osType]["cores"]=="shared"){
             var rate="high";
@@ -128,8 +131,8 @@
     }
     function instanceHourly(){
         if(this.committedUsage!="0"){
-            return pricelist["CP-CUD-"+this.committedUsage+"-CPU"][this.region]*this.instanceType["cores"]+
-                pricelist["CP-CUD-"+this.committedUsage+"-RAM"][this.region]*this.instanceType["memory"];
+            return pricelist["CP-CUD-"+committedUsage+"-CPU"][this.region]*this.instanceType["cores"]+
+                pricelist["CP-CUD-"+committedUsage+"-RAM"][this.region]*this.instanceType["memory"];
         }else if(this.type=="custom"){
             if(this.preemptible){
                 var pre="-PREEMPTIBLE";
@@ -172,10 +175,9 @@
         if(this.rules>5){
             return pricelist["FORWARDING_RULE_CHARGE_BASE"][this.region]
                 +pricelist["FORWARDING_RULE_CHARGE_EXTRA"][this.region]*(this.rules-5);
-        }else if(this.rules!=0){
+        }else{
             return pricelist["FORWARDING_RULE_CHARGE_BASE"][this.region];
         }
-        return 0;
     }
     function TPUHourly(){
         return this.numTPU*this.TPUHours/24*pricelist["CP-CLOUD-TPU"]["us-central1"];
