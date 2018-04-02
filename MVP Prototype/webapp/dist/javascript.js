@@ -1,4 +1,5 @@
-$(document).ready(function(){
+<script>
+    $(document).ready(function(){
     $("#myAccordion").accordion();
     $(".source li").draggable({helper:"clone"});
     $(".filters span").draggable({helper:"clone"});
@@ -113,3 +114,4 @@ $(document).ready(function(){
         chart.data.datasets[0].data = getCol(tableData,2);
         chart.update();
     }
+</script>

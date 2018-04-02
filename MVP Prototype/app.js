@@ -8,6 +8,9 @@ app.use(expressValidator());
 var db = mongojs('M-Frikken:cl0udvisualizer@ds121349.mlab.com:21349/cloudpricetest', ['users']);
 var db2 = mongojs('M-Frikken:cl0udvisualizer@ds121349.mlab.com:21349/cloudpricetest', ['googlepricelist']);
 var JSONStream = require('JSONStream');
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'ejs');
+
 /*
 var logger = function (req,res,next){
     console.log('Logging...');
@@ -20,16 +23,12 @@ app.use(logger);
 
 // View Engine
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'webapp'));
 
 
 //body parser middleware
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended: false}));
-
-
-/// Set Static Path
-app.use(express.static(path.join(__dirname, 'public')));
 
 ///Global Vars
 app.use(function(req,res,next){
@@ -58,21 +57,22 @@ app.use(expressValidator({
 
 }));
 
-app.get('/', function(req,res){
-    var query = {};
-    db.users.find(query,function (err, docs) {
-        res.render('index',{
-            title : 'Available packages',
-            users: docs
-        });
-    });
+app.use(express.static('webapp/dist/'));
+
+app.get('/index.html',function(req,res){
+    res.render('index.html');
+    //__dirname : It will resolve to your project folder.
+});
+
+app.get('/about.html',function(req,res){
+    res.render('about.html');
+    //res.sendFile(path.join(__dirname+'about.html'));
 });
 
 app.get('/users3', function (req, res) {
     res.set('Content-Type', 'application/json');
     db2.googlepricelist.find({}, {"gcp_price_list":1}).pipe(JSONStream.stringify()).pipe(res);
 });
-
 
 app.post('/users/find', function(req, res){
     var price= parseInt(req.body.price);
@@ -86,7 +86,6 @@ app.post('/users/find', function(req, res){
         });
     });
 });
-
 
 app.listen(process.env.PORT || 3000, function(){
     console.log('Server Started on Port 3000...');

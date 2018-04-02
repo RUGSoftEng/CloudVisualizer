@@ -1,11 +1,10 @@
-<script>
     var pricelist=[];
     function VirtualMachine() {
-        this.region="";/*user picked region*/;
-        this.type="";/*user picked type*/;
+        this.region="us-central1";/*user picked region*/;
+        this.type="F1-MICRO";/*user picked type*/;
         this.days=1;/*days per week the VM is used*/;
         this.hours=1;/*hours per day the VM is used*/;
-        this.osType="";/*user picked OS*/;
+        this.osType="win";/*user picked OS*/;
         this.numGPU=0;/*number of GPUs*/
         this.GPUType="";/*user picked GPU*/;
         this.localSSDSize=0;/*user picked size*/;
@@ -15,11 +14,11 @@
         this.numTPU=0;/*user picked number of cloud TPUs. only available in US*/;
         this.TPUHours=0;/*hours per day the TPUS are used*/;
         this.preemptible=false;/*true or false based on user input*/;
-        this.committedUsage="";/*1-YEAR,3-YEAR or 0 string depending on user input*/;
+        this.committedUsage="0";/*1-YEAR,3-YEAR or 0 string depending on user input*/;
         this.rules=0;
         // Functions
         this.instanceType=determineInstanceType(this.type);
-        this.costMonthly=VMCostMontly
+        this.costMonthly=VMCostMonthly;
         this.sustainedUsePerHour=sustainedUseHourly;
         this.osPerHour=osHourly;
         this.instancePerHour=instanceHourly;
@@ -51,6 +50,19 @@
         // Functions
         this.dataStorePerHour=dataStoreCostHourly;
     }
+    function googlepricelist (){
+        console.log("starting new google pricelist");
+        $.ajax({
+            type: 'GET',
+            url: '/users3',
+            contentType: 'application/json',
+            success: function (result) {
+                pricelist=result[0].gcp_price_list;
+                console.log(result);
+                console.log(pricelist["CP-COMPUTEENGINE-VMIMAGE-F1-MICRO"]);
+            }
+        });
+    }
     function determineInstanceType(type) {
         if (type == "custom") {
             return {
@@ -81,7 +93,7 @@
         committedUsage="0";
     }
     //input the results of running the other functions into these:
-    function VMCostMontly(){
+    function VMCostMonthly(){
         console.log("Hours: " + this.hours);
         console.log("Days: " + this.days);
         console.log("Total hours per month " + this.hours*this.days/7*365/12);
@@ -158,9 +170,10 @@
     function GPUHourly(){
         if(this.preemptible){
             return this.numGPU*pricelist["GPU_"+this.GPUType+"-PREEMPTIBLE"][this.region];
-        }else{
+        }else if (this.numGPU!=0){
             return this.numGPU*pricelist["GPU_"+this.GPUType][this.region];
         }
+        return 0;
     }
     function PDHourly(){
         return (this.PDSSDSize*pricelist["CP-COMPUTEENGINE-STORAGE-PD-SSD"][this.region]+
@@ -204,4 +217,3 @@
         }
         return cost*12/365/24;
     }
-</script>

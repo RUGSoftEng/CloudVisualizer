@@ -1,38 +1,55 @@
 //drag
-  $(document).ready(function(){
-       $("#myAccordion").accordion();
-       $(".source li").draggable({helper:"clone"});
-       $("#canvas").droppable({drop:function(event,ui){
-           $("#items").append($("<li></li>").text(ui.draggable.text()).on("click",function() { $(this).remove()}));
-       }});
-  });
+var nrInstances;
+var days;
+var hours;
+googlepricelist();
+$(document).ready(function(){
+    $("#myAccordion").accordion();
+    $(".source li").draggable({helper:"clone"});
+    $(".filters span").draggable({helper:"clone"});
+    $("#canvas").droppable({drop:function(event,ui){
+        $text = ui.draggable.html().replace(/(<in([^>]+)>)/ig,"");
+        if($text.substr(0,3)=="<ul"){
+            console.log("Virtual machine:");
+        }
+        $("#items").append($("<li></li>").html($text).on("click",function() { $(this).remove()}));
+        console.log(days.innerHTML);
+        console.log(nrInstances.innerHTML);
+        console.log(hours.innerHTML);
+        var testVM=new VirtualMachine();
+        testVM.days=parseInt(days.innerHTML);
+        testVM.hours=parseInt(hours.innerHTML);
+        testVM.instanceType=determineInstanceType(testVM.type);
+        console.log(testVM.costMonthly());
+    }});
+});
 
   function clearBox(elementID){
     document.getElementById(elementID).innerHTML = "";
   }
    $(function(){
   var slider2 = document.getElementById("myRange2");
-  var output2 = document.getElementById("demo2");
-  output2.innerHTML = slider2.value;
+  days = document.getElementById("demo2");
+  days.innerHTML = slider2.value;
 
   slider2.oninput = function() {
-    output2.innerHTML = this.value;
+    days.innerHTML = this.value;
   }
 
   var slider = document.getElementById("myRange");
-  var output = document.getElementById("demo");
-  output.innerHTML = slider.value;
+  nrInstances = document.getElementById("demo");
+  nrInstances.innerHTML = slider.value;
 
   slider.oninput = function() {
-    output.innerHTML = this.value;
+    nrInstances.innerHTML = this.value;
   }
 
   var slider3 = document.getElementById("myRange3");
-  var output3 = document.getElementById("demo3");
-  output3.innerHTML = slider3.value;
+  hours = document.getElementById("demo3");
+  hours.innerHTML = slider3.value;
 
   slider3.oninput = function() {
-    output3.innerHTML = this.value;
+    hours.innerHTML = this.value;
   }
   var slider4 = document.getElementById("myRange4");
   var output4 = document.getElementById("demo4");

@@ -6,7 +6,14 @@ var gulp         = require('gulp'),
     uglify       = require('gulp-uglify'),
     rename       = require('gulp-rename'),
     imagemin     = require('gulp-imagemin'),
-    browserSync  = require('browser-sync');
+    browserSync  = require('browser-sync'),
+    ejs          = require('gulp-ejs');
+
+gulp.task('ejs', function(){
+    return gulp.src('./work/**/*.ejs')
+        .pipe(ejs({}, {ext:'.html'}))
+        .pipe(gulp.dest('./dist'))
+});
 
 gulp.task('html', function() {
     return gulp.src('./work/**/*.html')
@@ -64,6 +71,7 @@ gulp.task('browser-sync', function() {
 
 gulp.task('watch', function() {
     gulp.watch('./work/**/*.html', ['html']);
+    gulp.watch('./work/**/*.ejs', ['ejs']);
     gulp.watch('./work/scss/**/*.scss', ['styles']);
     gulp.watch('./work/js/**/*.js', ['scripts']);
     gulp.watch('./work/images/**/*', ['images']);
@@ -71,4 +79,4 @@ gulp.task('watch', function() {
     gulp.watch('./work/**/*').on('change', browserSync.reload);
 });
 
-gulp.task('default', ['html', 'styles', 'scripts', 'images', 'vendor', 'browser-sync', 'watch','sass']);
+gulp.task('default', ['ejs','html', 'styles', 'scripts', 'images', 'vendor', 'browser-sync', 'watch','sass']);
