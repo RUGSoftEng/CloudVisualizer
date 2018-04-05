@@ -59,4 +59,7 @@
 - work on displaying multiple datasets in a single graph
 - work on displaying multiple datasets in a single graph
 - work on displaying multiple datasets in a single graph
+- meeting with client 
+- meeting with client
+- group discussion
 
