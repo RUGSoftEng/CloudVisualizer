@@ -1,31 +1,125 @@
 <script>
     $(document).ready(function() {
-
         // initial load the query with default values
         getQueries();
         createGraph();
-        googlepricelist();
-
-
-        //Actions on change of slider 
+        googlepricelist2();
+        //Actions on change of slider
         $('#priceid2').on('input', function () {
             getQueries();
-            
-            // uncomment to automatically update on 
+
+            // uncomment to automatically update on
             //plotData();
         });
     })
-    function googlepricelist(){
+    function googlepricelist(usertype, substring, id){
+        console.log("starting new google pricelist");
+        $.ajax({
+            data: {
+                substring: substring
+            },
+            type: 'GET',
+            url: usertype,
+            contentType: 'application/json',
+            success: function (result) {
+                var i, x="<table id='VMIMAGEOUTID' border='lpx'>";
+                /* All the names of the objects */
+                objectNames=[];
+                /* The objects themselves in an array */
+                objects=[];
+                /* Push the information from the result in the arrays */
+                for (var i=0; i<result.length; i++) {
+                    objectNames.push(result[i].gcp_price_list_as_array["k"]);
+                    objects.push(result[i].gcp_price_list_as_array["v"]);
+                }
+                /* Keys of the objects */
+                var keys=Object.keys(objects[0]);
+                /* For the column names */
+                x += "<td >Name</td>";
+                for (i in keys) {
+                    /* We only want to show the location that is selected and all the non-country columns */
+                    if (ourCountryorNoCountry(keys[i], id)) {
+                        x += "<td >"+keys[i]+"</td>";
+                    }
+                }
+                /* Information for in the table */
+                for (var k=0; k<objectNames.length; k++) {
+                    x+="<tr><td";
+                    x += "</td><td data-type=name>" + objectNames[k];
+                    for (var j=0; j<keys.length; j++) {
+                        /* We only want to show the location that is selected and all the non-country columns */
+                        if (ourCountryorNoCountry(keys[j], id)) {
+                            x += "</td><td data-type=name>" + objects[k][keys[j]];
+                        }
+                    }
+                    x+="</td></tr>"
+                }
+                x+="</table>";
+                $('#output2').html(x);
+            }
+        });
+    }
+    function googlepricelist2(){
         console.log("starting new google pricelist");
         $.ajax({
             type: 'GET',
-            url: '/users2',
+            url: '/users3',
             contentType: 'application/json',
             success: function (result) {
-                console.log(result[0].gcp_price_list["CP-COMPUTEENGINE-VMIMAGE-F1-MICRO"]["asia-south1"]);
-
+                pricelist=result[0].gcp_price_list;
+                /*var VM= new VirtualMachine();
+                VM.region="us-central1";
+                VM.type="N1-STANDARD-1";
+                VM.days=1;
+                VM.hours=1;
+                VM.osType="win";
+                VM.GPUType="NVIDIA_TESLA_K80";
+                VM.localSSDSize=1*375;
+                VM.PDSSDSize=1;
+                VM.PDSize=1;
+                VM.PDSnapshot=1;
+                VM.preemptible=false;
+                VM.committedUsage="0";
+                VM.numGPU=0;
+                VM.instanceType=determineInstanceType(VM.type); */
+                //console.log(VM.costMonthly());
+                /*var Stor=new Storage();
+                Stor.region="us-central1";
+                Stor.multiRegional=500;
+                Stor.regional=300;
+                Stor.nearline=30;
+                Stor.coldline=20;
+                Stor.classAOps=1;
+                Stor.classBOps=1;
+                console.log(24*Stor.storageCostPerHour()); */
+                var Data=new Database();
+                Data.region="us-central1";
+                Data.dataSize=50;
+                Data.dataReads=10;
+                Data.dataWrites=20;
+                Data.dataDeletes=5;
+                console.log(Data.dataStorePerHour()*24);
             }
         });
+    }
+    var countries=["us", "europe", "america", "asia", "australia"];
+    function ourCountryorNoCountry(j, location) {
+        if (j==location) {
+            return true;
+        }
+        var first=true, second=true;
+        for (var i=0; i<countries.length; i++) {
+            if (j.indexOf(countries[i])!=-1) {
+                first=false;
+            }
+            if (location.indexOf(countries[i])!=-1) {
+                second=false;
+            }
+            if (!first && !second) {
+                return false;
+            }
+        }
+        return true;
     }
     function getQueries(){
         $.ajax({
@@ -39,18 +133,15 @@
                 // console.log('get message succes');
                 var times=Object.keys(result).length;
                 var i, x ="<table id='mainTable' border='1px'>";
-
                 x += "<th onclick='sortTable(0)'>Name</th><th onclick='sortTable(1)'>Type</th><th onclick='sortTable(2)'>Price</th>";
                 for (i in result) {
                     x += "<tr><td data-type=name>" + result[i].name + "</td><td data-type=name>" + result[i].type + "</td><td data-type=int>" + result[i].price + "</td></tr>" ;
                 }
                 x += "</table>";
                 $('#output').html(x);
-                console.log(result);
             }
         });
     }
-
     function sortTable(n) {
         var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
         table = document.getElementById("mainTable");
@@ -105,27 +196,25 @@
             }
         }
     }
-
     function getCol(matrix, col){
-       var column = [];
-       for(var i=0; i<matrix.length; i++){
-          column.push(matrix[i][col]);
-       }
-       return column;
+        var column = [];
+        for(var i=0; i<matrix.length; i++){
+            column.push(matrix[i][col]);
+        }
+        return column;
     }
-
     function getTableData(){
         var table = document.getElementById("mainTable");
         var tableData =new Array();
         for(var r=1, n = table.rows.length; r<n ;r++){
             var tableRow = new Array();
-            for(var c=0, m=table.rows[r].cells.length; c<m; c++){ 
-            
+            for(var c=0, m=table.rows[r].cells.length; c<m; c++){
+
                 // insert correct datatype into array
                 if( table.rows[r].cells[c].getAttribute("data-type") == "name" ){
                     tableRow.push(table.rows[r].cells[c].innerHTML);
                 } else {
-                    
+
                     tableRow.push(parseInt(table.rows[r].cells[c].innerHTML));
                 }
             }
@@ -133,10 +222,8 @@
         }
         return tableData;
     }
-
     // global variable to hold the graph
     var chart;
-
     function createGraph(){
         // create graph in canvas area
         var ctx = document.getElementById("graph");
@@ -163,8 +250,7 @@
                         'rgba(153, 102, 255, 1)',
                         'rgba(255, 159, 64, 1)'
                     ], borderWidth: 1},
-
-                   ]
+                ]
             },
             options: {
                 title:{
@@ -182,17 +268,11 @@
             }
         });
     }
-
     function plotData(){
         var tableData = getTableData();
         chart.data.labels = getCol(tableData, 1);
         chart.data.datasets[0].data = getCol(tableData,2);
-
         // pass 0 as argument for instant updates
         chart.update();
     }
-
 </script>
-
-
-

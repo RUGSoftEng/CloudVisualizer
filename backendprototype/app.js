@@ -6,6 +6,7 @@ var mongojs = require('mongojs');
 var app = express();
 app.use(expressValidator());
 var db = mongojs('M-Frikken:cl0udvisualizer@ds121349.mlab.com:21349/cloudpricetest', ['users']);
+var db2 = mongojs('M-Frikken:cl0udvisualizer@ds121349.mlab.com:21349/cloudpricetest', ['googlepricelist']);
 var JSONStream = require('JSONStream');
 /*
 var logger = function (req,res,next){
@@ -74,12 +75,27 @@ app.get('/users', function (req, res) {
     db.users.find(query,{price:1}).pipe(JSONStream.stringify()).pipe(res);
 });
 
-
 app.get('/users2', function (req, res) {
-    var query = {};
-    var query2 = {comment:1};
+    //substring=req.query.substring;
     res.set('Content-Type', 'application/json');
-    db.googlepricelist.find({}, {"gcp_price_list.CP-COMPUTEENGINE-VMIMAGE-F1-MICRO.":1}).pipe(JSONStream.stringify()).pipe(res);
+    db.googlepricelist.aggregate({
+        $project: {
+            "gcp_price_list_as_array": { $objectToArray: "$gcp_price_list" }, // transform "gcp_price_list" into an array of key-value pairs
+        }
+    }, {
+        $unwind: "$gcp_price_list_as_array" // flatten array
+    }, {
+        $match: { "gcp_price_list_as_array.k": new RegExp(req.query.substring) } // like filter on the "k" (as in "key") field using regular expression
+    }).pipe(JSONStream.stringify()).pipe(res);
+
+});
+
+app.get('/users3', function (req, res) {
+    //substring=req.query.substring;
+    res.set('Content-Type', 'application/json');
+    /*var pricelist=db.googlepricelist.gcp_price_list.find({},{});
+    pricelist.pipe(JSONStream.stringify()).pipe(res); */
+    db.googlepricelist.find({}, {"gcp_price_list":1}).pipe(JSONStream.stringify()).pipe(res);
 });
 
 
