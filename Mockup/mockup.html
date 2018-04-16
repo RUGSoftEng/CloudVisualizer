@@ -1,119 +1,113 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+<!--stuff i need -->
 
-    <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-	<link rel="stylesheet" href="css/style.css">
-    <title>Cloud computing comparison</title>
-  </head>
-  <body>
-  <div id="top">
-  	<img src="img/cloudlogo.png" id="logo" >
-  	<h1>Cloud providers comparison</h1>
-
-  </div>
-  
-  <div id="sidebar">
-   <h2><a data-toggle="collapse" data-target="#demo">Filter</a></h2>
-   <ul id="demo" class="collapse">
-
-<li>
-<h3><a data-toggle="collapse" data-target="#demo1">Price</a></h3>
-</li>
-<div id="demo1" class="collapse">
-<form action="">
-  High to low <input type="radio" name="gender" value="male"><br>
-  Low to high <input type="radio" name="gender" value="female"> 
- </form>
-</div>
-
-<li><h3><a data-toggle="collapse" data-target="#demo2">Language</a></h3></li>
-<div id="demo2" class="collapse">
-  English <input type="radio" name="gender" value="male"><br>
-  Spanish <input type="radio" name="gender" value="female"><br>
-  Dutch <input type="radio" name="gender" value="kots">
-</div>
-
-<li><h3><a data-toggle="collapse" data-target="#demo">RAM</a></h3></li>
-<ul id="demo" class="collapse">
-  <li>Coffee</li>
-  <li>Tea</li>
-  <li>Milk</li>
-</ul>
-
-<li><h3><a data-toggle="collapse" data-target="#demo">Storage</a></h3></li>
-<ul id="demo" class="collapse">
-  <li>Coffee</li>
-  <li>Tea</li>
-  <li>Milk</li>
-</ul>
-
-<li><h3><a data-toggle="collapse" data-target="#demo17">Virtual machines</a></h3></li>
-<ul id="demo17" class="collapse">
-  <li>Coffee</li>
-  <li>Tea</li>
-  <li>Milk</li>
-</ul>
-
-  </ul>
-  
-  </div>
-  
-  <div id="content">
-	<div id="info">
-		<div id="company">
-		  	<img src="img/companies/amazon.png" id="logo" >
-			<h1>Amazon</h1>
-			<p>Payment type:</p>
-			<h2 style="margin-left:20px;">Hourly</h2>
-		</div>
-		<div id="company">
-			<img src="img/companies/microsoft.png" id="logo" >
-			<h1>Microsoft</h1>
-			<p>Payment type:</p>
-			<h2 style="margin-left:20px;">Yearly</h2>
-		</div>
-		<div id="company">
-			<img src="img/companies/google.png" id="logo" >
-			<h1>Google</h1>
-			<p>Payment type:</p>
-			<h2 style="margin-left:20px;">1 to 3 years</h2>
-		</div>
-		<div id="company">
-			<img src="img/companies/ibm.png" id="logo" >
-			<h1>IBM</h1>
-			<p>Payment type:</p>
-			<h2 style="margin-left:20px;">Monthly</h2>
-		</div>
-	</div>
-	
-	<div id="canvas">
-	<h2 style="text-align:center;">Drag and drop to compare:</h2>
-		<div id="graph1" class="rounded">
-			<img src="img/companies/amazon.png" id="logo" >
-			<img src="img/graph.jpg" style="height:250px; margin-left:auto; margin-right:auto; display:block;"><br>
-			<h5>Discounts:</h5>
-			50% for two hours
-		</div>
-		<div id="graph2" class="rounded">
-			<img src="img/companies/google.png" id="logo" >
-			<img src="img/graph.jpg" style="height:250px; margin-left:auto; margin-right:auto; display:block;"><br>
-			<h5>Discounts:</h5>
-			None
-		</div>
-	</div>
-  
-  
-  </div>
-  
-
-  </body>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        h3 {
+            border: 2px gray solid;
+            border-radius: 5px;
+            white-space:nowrap;
+            padding:5px;
+        }
+    </style>
+	<!-- drag and drop jquery -->
+    <script>
+        $(function () {
+            var diagram = [];
+            var canvas = $(".canvas");
+            var pageHtml = "<h3 class='node'>Tool 1</h3>";
+            var actionHtml = "<h3 class='node'>Tool 2</h3>";
+            var conditionalHtml = "<h3 class='node'>Tool 3</h3>";
+            $(".tool").draggable({
+                helper: "clone"
+            });
+            canvas.droppable({
+                drop: function (qq, ww) {
+                    var helper = $(ww.helper);
+                    var position = helper.position();
+                    position.left -= canvas.position().left;
+                    var node = {
+                        position: position,
+                        _id: (new Date()).getTime()
+                    };
+                    if (helper.hasClass('page')) {
+                        node.type = 'PAGE';
+                    } else if (helper.hasClass('action')) {
+                        node.type = 'ACTION';
+                    } else if (helper.hasClass('conditional')) {
+                        node.type = 'CONDITIONAL';
+                    } else {
+                        return;
+                    }
+                    diagram.push(node);
+                    renderDiagram(diagram);
+                }
+            });
+            function renderDiagram(diagram) {
+                canvas.empty();
+                for(var d in diagram) {
+                    var node = diagram[d];
+                    var newNode = {};
+                    if(node.type === 'PAGE') {
+                        newNode = $(pageHtml);
+                    } else if(node.type === 'ACTION') {
+                        newNode = $(actionHtml);
+                    } else if(node.type === 'CONDITIONAL') {
+                        newNode = $(conditionalHtml);
+                    }
+                    newNode.css({
+                        "position": "absolute",
+                        "top": node.position.top,
+                        "left": node.position.left,
+                    }).draggable({
+                        containment: "parent",
+                        stop: function(event, ui){
+                            var id = ui.helper.attr("id");
+                            for(var d in diagram) {
+                                var node = diagram[d];
+                                if(node._id == id) {
+                                    node.position.left = ui.position.left;
+                                    node.position.top = ui.position.top;
+                                }
+                            }
+                        }
+                    }).attr("id", node._id);
+                    canvas.append(newNode);
+                }
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container-fluid"
+         style="position: absolute; bottom: 0px; top:0px; right: 0px; left: 0px;">
+        <h1>Drag and Drop Tools Onto Canvas</h1>
+		<h3><a data-toggle="collapse" data-target="#demo2">Language</a></h3>
+        <div class="row"
+             style="position: relative; height: 100%;">
+            <div class="col-xs-3"
+                 style="position:absolute; top:0px; left:0px; bottom: 0px;z-index: 2; background-color: #9acfea" id="demo2">
+                <h2>Tools</h2>
+                <h3 class="tool page">Tool 1</h3>
+                <h3 class="tool action">Tool 2</h3>
+                <h3 class="tool conditional">Tool 3</h3>
+            </div>
+            <div class="canvas col-xs-9"
+                 style="overflow: hidden;position:absolute; bottom: 0px; top: 0px; right: 0px;background-color: beige">
+                <h2>Canvas</h2>
+            </div>
+        </div>
+    </div>
+</body>
 </html>

@@ -6,6 +6,7 @@ var mongojs = require('mongojs');
 var app = express();
 app.use(expressValidator());
 var db = mongojs('M-Frikken:cl0udvisualizer@ds121349.mlab.com:21349/cloudpricetest', ['users']);
+var db2 = mongojs('M-Frikken:cl0udvisualizer@ds121349.mlab.com:21349/cloudpricetest', ['googlepricelist']);
 var JSONStream = require('JSONStream');
 /*
 var logger = function (req,res,next){
@@ -71,8 +72,6 @@ app.get('/users', function (req, res) {
     price = parseInt(req.query.price);
     var query = {price : {$lt: price}};
     res.set('Content-Type', 'application/json');
-    var result = db.users.find(query).pipe(JSONStream.stringify()).pipe(res);
-});
 
 app.listen(process.env.PORT || 3000, function(){
     console.log('Server Started on Port 3000...');
