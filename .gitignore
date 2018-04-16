@@ -1,3 +1,6 @@
+# IntelliJ
+.idea
+
 # Prerequisites
 *.d
 
@@ -50,3 +53,6 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Ignore node_modules
+node_modules/
