@@ -2,33 +2,27 @@ var VirtualMachines=[];
 var Databases=[];
 var Storages=[];
 
-function VMExists(vm) {
-    var oldNrInstances=vm.nrInstances;
-    for (var i=0; i<VirtualMachines.length; i++) {
-        // They can be equal but have different number of instances, so we make them equal.
-        vm.nrInstances=VirtualMachines[i];
-        if (vm===VirtualMachines[i]) {
-            console.log(vm);
-            console.log(VirtualMachines[i]);
-            return true;
+function newObjectExists(newObject, objectList) {
+    var aProps=Object.getOwnPropertyNames(newObject);
+    for (var i=0; i<objectList.length; i++) {
+        var stop=false;
+        var bProps=Object.getOwnPropertyNames(objectList[i]);
+        if (aProps.length!=bProps.length) {
+            stop=true;
         }
-    }
-    vm.nrInstances=oldNrInstances;
-    return false;
-}
-
-function DatabaseExists(d) {
-    for (var i=0; i<Databases.length; i++) {
-        if (d===Databases.get(i)) {
-            return true;
+        for (var j=0; i<aProps.length; j++) {
+            var propName=aProps[j];
+            if (propName=="nrInstances") {
+                break;
+            }
+            if (newObject[propName]!==objectList[i][propName]) {
+                stop=true;
+            }
+            if (stop) {
+                break;
+            }
         }
-    }
-    return false;
-}
-
-function StorageExists(s) {
-    for (var i=0; i<Storages.length; i++) {
-        if (s===Storages.get(i)) {
+        if (!stop) {
             return true;
         }
     }
@@ -56,10 +50,28 @@ function createBasicStorage(size) {
 }
 
 function addVirtualMachine(newVM) {
-    if (VMExists(newVM)) {
+    if (newObjectExists(newVM, VirtualMachines)) {
         console.log("EXISTS");
     } else {
-        console.log("NEW VM !");
+        console.log("New virtual machine!");
         VirtualMachines.push(newVM);
+    }
+}
+
+function addDatabase(newDatabase) {
+    if (newObjectExists(newDatabase, Databases)) {
+        console.log("EXISTS");
+    } else {
+        console.log("New database!");
+        VirtualMachines.push(newDatabase);
+    }
+}
+
+function addStorage(newStorage) {
+    if (newObjectExists(newStorage, Storages)) {
+        console.log("EXISTS");
+    } else {
+        console.log("New storage!");
+        VirtualMachines.push(newStorage);
     }
 }
