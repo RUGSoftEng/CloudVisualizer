@@ -4,9 +4,6 @@ var days;
 var hours;
 var calculate;
 googlepricelist();
-var VirtualMachines=[];
-var Databases=[];
-var Storages=[];
 $(document).ready(function(){
     $("#myAccordion").accordion();
     $(".source li").draggable({helper:"clone"});
@@ -82,3 +79,5 @@ $(document).ready(function(){
     output5.innerHTML = this.value;
   }
   });
+
+
