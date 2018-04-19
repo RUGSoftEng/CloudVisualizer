@@ -9,22 +9,29 @@ var Databases=[];
 var Storages=[];
 $(document).ready(function(){
     $("#myAccordion").accordion();
-    $(".source li").draggable({helper:"clone"});
+    /*$(".source li").draggable({helper:"clone"});
     $(".filters span").draggable({helper:"clone"});
+	/*
     $("#canvas").droppable({drop:function(event,ui){
         $text = ui.draggable.html().replace(/(<in([^>]+)>)/ig,"");
-        if($text.substr(0,3)=="<ul"){
-            console.log("Virtual machine:");
-        }
+  
         $("#items").append($("<li></li>").html($text).on("click",function() { $(this).remove()}));
-        var newVM=new VirtualMachine();
-        newVM.days=parseInt(days.innerHTML);
-        newVM.hours=parseInt(hours.innerHTML);
-        newVM.nrInstances=parseInt(nrInstances.innerHTML);
-        newVM.instanceType=determineInstanceType(newVM.type);
-        VirtualMachines.push(newVM);
-    }});
+    }});*/
 });
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+jQuery.event.props.push('dataTransfer');
+    ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+    ev.preventDefault();
+    console.log("Lebronjames");
+}
 
   function clearBox(elementID){
     document.getElementById(elementID).innerHTML = "";
