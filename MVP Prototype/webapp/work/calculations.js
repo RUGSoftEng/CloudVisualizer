@@ -101,7 +101,7 @@
     }
     //input the results of running the other functions into these:
     function VMCostMonthly(){
-        return this.sustainedUsePerHour()*this.hours*this.days/7*365/12+this.TPUPerHour()*this.TPUhours*365/12+(this.PDPerHour()+this.LBPerHour())*24*365/12;
+        return this.sustainedUsePerHour()*this.hours*this.days/7*365/12*this.nrInstances+this.TPUPerHour()*this.TPUhours*365/12+(this.PDPerHour()+this.LBPerHour())*24*365/12;
     }
     var totalCostMonthly=function(VMCostPerMonth,StoragePerHour,dataStorePerHour){
         return VMCostPerMonth+(StoragePerHour+dataStorePerHour)*24*365/12;
