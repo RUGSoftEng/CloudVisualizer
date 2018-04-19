@@ -25,8 +25,22 @@ jQuery.event.props.push('dataTransfer');
     ev.dataTransfer.setData("text", ev.target.id);
 }
 
+function dragStorage(ev) {
+jQuery.event.props.push('dataTransfer');
+    ev.dataTransfer.setData("text", "Luc is super cool");
+}
+
+function dragVM(ev) {
+jQuery.event.props.push('dataTransfer');
+var newVM=new VirtualMachine();
+var j = JSON.stringify(newVM);
+    ev.dataTransfer.setData("foo", j);
+}
+
 function drop(ev) {
     ev.preventDefault();
+	var obj = JSON.parse(ev.dataTransfer.getData("foo"));
+	console.log(obj);
     console.log("Lebronjames");
 }
 
