@@ -21,25 +21,29 @@ function allowDrop(ev) {
 }
 
 function drag(ev) {
-jQuery.event.props.push('dataTransfer');
+    jQuery.event.props.push('dataTransfer');
     ev.dataTransfer.setData("text", ev.target.id);
 }
 
 function dragStorage(ev) {
-jQuery.event.props.push('dataTransfer');
+    jQuery.event.props.push('dataTransfer');
     ev.dataTransfer.setData("text", "Luc is super cool");
 }
 
 function dragVM(ev) {
-jQuery.event.props.push('dataTransfer');
-var newVM=new VirtualMachine();
-var j = JSON.stringify(newVM);
+    jQuery.event.props.push('dataTransfer');
+    var newVM=createBasicVirtualMachine(parseInt(nrInstances.innerHTML),parseInt(days.innerHTML),parseInt(hours.innerHTML));
+    var j = JSON.stringify(newVM);
     ev.dataTransfer.setData("foo", j);
 }
 
 function drop(ev) {
     ev.preventDefault();
 	var obj = JSON.parse(ev.dataTransfer.getData("foo"));
+	if (obj.objectName==="VirtualMachine") {
+	    addVirtualMachine(obj);
+    }
+	console.log(obj.objectName);
 	console.log(obj);
     console.log("Lebronjames");
 }

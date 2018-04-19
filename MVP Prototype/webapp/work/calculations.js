@@ -1,5 +1,6 @@
     var pricelist=[];
     function VirtualMachine() {
+        this.objectName="VirtualMachine";
         this.region="us-central1";/*user picked region*/;
         this.type="F1-MICRO";/*user picked type*/;
         this.days=1;/*days per week the VM is used*/;
@@ -32,6 +33,7 @@
         this.costYear=VMCostMonthly;
     }
     function Storage() {
+        this.objectName="Storage";
         /*The variables that influence the price of storage*/
         this.region="";
         this.multiRegional=0;/*user picked size of multi-regional storage*/;
@@ -47,6 +49,7 @@
         this.costYear=storageCostHourly*24*365;
     }
     function Database() {
+        this.objectName="Database";
         /*The variables that influence the price of databases*/
         this.region="";
         this.dataSize=0;/*user picked size of data storage*/;
