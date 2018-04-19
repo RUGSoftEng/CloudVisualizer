@@ -67,7 +67,10 @@
 					</ul>
 
 					<h3>Storage</h3>
+					<span id="drag1" draggable="true" ondragstart="drag(event)">
 					<ul class="source" id="source">
+					
+					<!--
 						<li>Multi-Regional Storage GB:<span id="multi-reg-res"></span></li>
 						<input type="range" min="1" max="50" value="3" class="slider" id="multi-reg">
 						<li>Regional Storage GB:<span id="reg-res"></span></li>
@@ -76,10 +79,11 @@
 						<input type="range" min="1" max="50" value="3" class="slider" id="cloud-near">
 						<li>Could Storage Coldline GB:<span id="cloud-cold-res"></span></li>
 						<input type="range" min="1" max="50" value="3" class="slider" id="cloud-cold">
+						-->
 						<li>Amount of GB:<span id="demo5"></span></li>
 						<input type="range" min="1" max="50" value="3" class="slider" id="myRange5">
 					</ul>
-
+					</span>
     <h3>Virtual Machine</h3>
 <span>
 <ul class="source" id="source">
@@ -95,7 +99,7 @@
     </span>
     </div>
 
-			<div class="canvas" id="canvas">
+			<div class="canvas" id="canvas" ondrop="drop(event)" ondragover="allowDrop(event)">
        <h2>My items</h2>
 
 
