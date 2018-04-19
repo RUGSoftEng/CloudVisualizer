@@ -1,25 +1,14 @@
-#aboutContent {
-  display: flex;
-  margin-top: 20px;
-  margin-left: 20px;
-  margin-bottom: 20px;
-  min-height: calc(100% - 40px);
-  width: calc(100% - 40px);
-  background-color: #eeeeee; }
-
 #abouttext {
   margin: 20px;
   padding: 20px;
   background-color: white;
-  width: calc(100% - 4*20px - 500px);
+  width: calc(100% - 20px - 500px);
   float: left;
   border-radius: 10px; }
 
 #intouch {
   background-color: white;
-  padding: 20px;
   width: 500px;
-  float: right;
   margin: 20px;
   border-radius: 10px; }
 

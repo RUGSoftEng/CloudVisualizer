@@ -1,14 +1,15 @@
 //drag
   $(document).ready(function(){
        $("#myAccordion").accordion();
-       $(".source li").draggable({helper:"clone"});
+       $(".source img").draggable({helper:"clone"});
        $("#canvas").droppable({drop:function(event,ui){
-           $("#items").append($("<li></li>").text(ui.draggable.text()).on("click",function() { $(this).remove()}));
+       $("#items").append($("<li></li>").img(ui.draggable.img()));
        }});
   });
 
   function clearBox(elementID){
-    document.getElementById(elementID).innerHTML = "";
+    document.getElementById(elementID).innerHTML ="";
+
   }
    $(function(){
   var slider2 = document.getElementById("myRange2");
@@ -43,7 +44,8 @@
   }
   var slider5 = document.getElementById("myRange5");
   var output5 = document.getElementById("demo5");
-  output5.innerHTML = slider5.value;
+  output5.innerHTML = slider4.value;
+
   slider5.oninput = function() {
     output5.innerHTML = this.value;
   }

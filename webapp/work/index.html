@@ -60,12 +60,14 @@
 
 					<h3>Data Base</h3>
 					<ul class="source" id="source">
+						<img src="images/DB.png" alt="DB">
 						<li>Amount of GB:<span id="demo4"></span></li>
 						<input type="range" min="1" max="50" value="3" class="slider" id="myRange4">
 					</ul>
 
           <h3>Storage</h3>
           <ul class="source" id="source">
+						<img src="images/CS.png" alt="CS">
 						<li>Multi-Regional Storage</li>
 						<li>Regional Storage</li>
 						<li>Could Storage Nearline</li>
@@ -76,6 +78,7 @@
 
           <h3>Virtual Machine</h3>
           <ul class="source" id="source">
+						<img src="images/VM.png" alt="VM">
 						<li>Number of instances:<span id="demo2"></span></li>
 						<input type="range" min="1" max="10" value="3" class="slider" id="myRange2">
 						<li>Days per week:<span id="demo"></span></li>
@@ -88,8 +91,10 @@
 				</div>
 
 			<div class="canvas" id="canvas">
-       <h2>My items</h2>
-       <ol id="items"></ol>
+       <h2>My items
+				 <div id="items" style="background-color:red"></div>
+			 </h2>
+
 			</div>
 
 			<button type="button" style="float:left; margin-left:0px;margin-top:0px;background-color: #ffaa00">Calculate</button>
