@@ -12,5 +12,13 @@ Cloud computing solutions are attractive to cloud customers because they offer t
 
 * Construct a solid back-end with a well defined API. 
 
+## How to use 
+
+* install <a href="https://nodejs.org/en/download/">NodeJS</a>
+* navigate to the "MVP Prototype" directory 
+* run "npm install" to get all the dependencies
+* start the NodeJS server by running "node app.js"
+* visit <a href="http://localhost:3000">localhost:3000</a>
+
 
 
