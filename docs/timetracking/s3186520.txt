@@ -62,4 +62,10 @@
 - meeting with client 
 - meeting with client
 - group discussion
+- work on back-end
+- work on back-end
+- work on back-end
+- work on back-end
+- team meeting
+- modified readme and package.json
 
