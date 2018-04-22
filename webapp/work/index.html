@@ -13,7 +13,6 @@
 <script src="vendor/js/external/jquery/jquery.js"></script>
 <script src="vendor/js/jquery-ui.min.js"></script>
 <script src="js/scripts.min.js"></script>
-
 </head>
 <body>
 
@@ -48,7 +47,28 @@
 
 	<!-- BODY -->
 	<div class="content">
-     <h4>Options</h4>
+
+    <h4> <button id="provider" style="color:#ffaa00">Provider</button> </h4>
+		 <!-- The Modal -->
+		<div id="myModal" class="modal">
+
+		 <!-- Modal content -->
+ 	 	 <div class="modal-content">
+	 	 		<div class="modal-header">
+		 			<span class="close">&times;</span>
+		 			<h2>Modal Header</h2>
+	 			</div>
+	 			<div class="modal-body">
+		 			<p>Some text in the Modal Body</p>
+		 			<p>providers list...</p>
+	 			</div>
+	 			<div class="modal-footer">
+		 			<h3>Modal Footer</h3>
+	 			</div>
+ 			</div>
+
+		</div>
+
 		 <button onclick="clearBox('items')" type="button">Clear canvas</button>
 				<div class="filters" id="myAccordion" >
           <h3>Language</h3>
@@ -92,7 +112,8 @@
 
 			<div class="canvas" id="canvas">
        <h2>My items
-				 <div id="items" style="background-color:red"></div>
+				 <ol id="items">
+		     </ol>
 			 </h2>
 
 			</div>
