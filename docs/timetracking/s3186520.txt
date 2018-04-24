@@ -68,4 +68,6 @@
 - work on back-end
 - team meeting
 - modified readme and package.json
+- setup virtual machine with docker
+- setup virtual machine with docker
 
