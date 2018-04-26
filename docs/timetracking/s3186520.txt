@@ -70,4 +70,16 @@
 - modified readme and package.json
 - setup virtual machine with docker
 - setup virtual machine with docker
+- meeting with client about cloudwatch 
+- meeting with client about cloudwatch 
+- trying to run the API in a VM
+- trying to run the API in a VM
+- trying to run the API in a VM
+- trying to run the API in a VM
+- trying to run the API in a VM
+- managed to get the API to run
+- managed to get the API to run
+- push files and documentation cloudwatch to github
+
+
 
