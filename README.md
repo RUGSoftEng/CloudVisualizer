@@ -12,7 +12,7 @@ Cloud computing solutions are attractive to cloud customers because they offer t
 
 * Construct a solid back-end with a well defined API. 
 
-## How to use 
+## Installing the Cloudvisualizer
 
 * install <a href="https://nodejs.org/en/download/">NodeJS</a>
 * navigate to the "MVP Prototype" directory 
@@ -20,5 +20,28 @@ Cloud computing solutions are attractive to cloud customers because they offer t
 * start the NodeJS server by running "node app.js"
 * visit <a href="http://localhost:3000">localhost:3000</a>
 
+## Installing the Cloudwatch API (fresh install Ubuntu 16.04)
+### curl
+* sudo apt-get upgrade
+* sudo apt-get install curl
 
+### Docker
+* curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+* sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+* sudo apt-get update
+* apt-cache policy docker-ce
+* sudo apt-get install -y docker-ce
+
+### Node-js
+* sudo apt-get update
+* sudo apt-get install --yes nodejs
+* sudo apt-get install --yes nodejs-legacy
+* sudo apt-get install --yes npm
+
+### Starting the API
+* navigate to "cloudwatch" folder
+* bash ./runapi.sh
+
+### How to use
+* see "cloudwatch/readme.md" 
 
