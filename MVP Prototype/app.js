@@ -10,6 +10,7 @@ var db2 = mongojs('M-Frikken:cl0udvisualizer@ds121349.mlab.com:21349/cloudpricet
 var JSONStream = require('JSONStream');
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs');
+const nodeFlags = require('node-flag')
 
 /*
 var logger = function (req,res,next){
@@ -20,6 +21,7 @@ var logger = function (req,res,next){
 app.use(logger);
 */
 
+console.log("Trying to connect to the 'Cloudwatch API' via address " + nodeFlags.get('a'));
 
 // View Engine
 app.set('view engine', 'ejs');

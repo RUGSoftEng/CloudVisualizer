@@ -62,4 +62,25 @@
 - meeting with client 
 - meeting with client
 - group discussion
+- work on back-end
+- work on back-end
+- work on back-end
+- work on back-end
+- team meeting
+- modified readme and package.json
+- setup virtual machine with docker
+- setup virtual machine with docker
+- meeting with client about cloudwatch 
+- meeting with client about cloudwatch 
+- trying to run the API in a VM
+- trying to run the API in a VM
+- trying to run the API in a VM
+- trying to run the API in a VM
+- trying to run the API in a VM
+- managed to get the API to run
+- managed to get the API to run
+- push files and documentation cloudwatch to github
+- added flags to app.js for setting the IP address of the cloudwatch API
+
+
 

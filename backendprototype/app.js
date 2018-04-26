@@ -72,6 +72,7 @@ app.get('/users', function (req, res) {
     price = parseInt(req.query.price);
     var query = {price : {$lt: price}};
     res.set('Content-Type', 'application/json');
+});
 
 app.listen(process.env.PORT || 3000, function(){
     console.log('Server Started on Port 3000...');
