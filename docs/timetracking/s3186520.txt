@@ -80,6 +80,7 @@
 - managed to get the API to run
 - managed to get the API to run
 - push files and documentation cloudwatch to github
+- added flags to app.js for setting the IP address of the cloudwatch API
 
 
 
