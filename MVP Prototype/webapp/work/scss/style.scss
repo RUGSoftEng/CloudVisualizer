@@ -50,6 +50,33 @@ $filterwidth: 250px;
 	background-color: WhiteSmoke;
 }
 
+#test{
+	height:auto;
+	width:auto;
+	background-color: white;
+	margin:10px;
+	color:black;
+	float:left;
+	position:relative;
+}
+
+
+
+#text{
+	 z-index:100;
+    position:absolute;    
+    color:black;
+    font-size:24px;
+    font-weight:bold;
+    left:0px;
+    top:0px;
+}
+
+#items{
+	display: inline-block;
+	background-color:red;
+}
+
 .footer {
     margin-top: 0px !important;
     position: relative;
