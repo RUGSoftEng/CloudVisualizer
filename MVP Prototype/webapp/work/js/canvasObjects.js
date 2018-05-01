@@ -2,6 +2,9 @@ var VirtualMachines=[];
 var Databases=[];
 var Storages=[];
 
+//Checks if the to be added object already exists.
+//If it exists, it will return the index where the duplicate object is located
+//If it doesn't exist already, it returns -1
 function newObjectExists(newObject, objectList) {
     var aProps=Object.getOwnPropertyNames(newObject);
     for (var i=0; i<objectList.length; i++) {
@@ -49,29 +52,38 @@ function createBasicStorage(size) {
     newStorage.multiRegional=size;
 }
 
+//Processes the new dropped Virtual machine
 function addVirtualMachine(newVM) {
+	//Will contain the index of the duplicate VM if it exists, else -1
 	var newVMID = newObjectExists(newVM, VirtualMachines);
     if (newVMID != -1) {
         console.log("EXISTS");
+		//Increments the duplicate with the number of to be added instances
 		incrementVM(newVMID,newVM.nrInstances);
+		//Updates the HTML in the canvas
 		changeVMHTML(newVMID);
     } else {
         console.log("New virtual machine!");
+		//Creates new VM
         VirtualMachines.push(newVM);
+		//Adds HTML for the new VM to the canvas
 		addVMHtml(VirtualMachines.length-1,"VM.png",newVM.nrInstances);
     }
 }
 
+//We have a basic HTML structure, where we fill in the details for each VM
 function addVMHtml(par1,par2,par3){
 	var vmhtml="<div id='vm_"+par1+"' class='icons'><img src='images/"+par2+"'><p>"+par3+"</p></div>";
 	$("#items").append(vmhtml);
 }
 
+//Since we incorperated the ID in the div of the VM, we can easily edit it now
 function changeVMHTML(VMId){
 	var curVM = VirtualMachines[VMId];
 	$("#vm_"+VMId+" p").text(curVM.nrInstances);
 }
 
+//Takes the VM at index VMId, and adds incr to it
 function incrementVM(VMId,incr){
 	var curVM = VirtualMachines[VMId];
 	curVM.nrInstances = curVM.nrInstances + incr;
