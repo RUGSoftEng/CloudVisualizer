@@ -66,23 +66,9 @@ html, body {
   border: 2px solid gray;
   background-color: WhiteSmoke; }
 
-.test {
-  background-color: white;
-  margin: 10px;
-  color: white;
-  float: left; }
-
-.test p {
-  position: absolute;
-  color: red;
-  top: 8px;
-  left: 16px; }
-
-#pinda {
-  min-width: 50px;
-  min-height: 50px;
-  background-color: blue;
-  display: none; }
+#items {
+  display: inline-block;
+  background-color: red; }
 
 .footer {
   margin-top: 0px !important;

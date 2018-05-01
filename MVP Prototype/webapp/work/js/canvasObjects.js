@@ -23,10 +23,10 @@ function newObjectExists(newObject, objectList) {
             }
         }
         if (!stop) {
-            return true;
+            return i;
         }
     }
-    return false;
+    return -1;
 }
 
 function createBasicVirtualMachine(nrInstances, days, hours) {
@@ -50,12 +50,31 @@ function createBasicStorage(size) {
 }
 
 function addVirtualMachine(newVM) {
-    if (newObjectExists(newVM, VirtualMachines)) {
+	var newVMID = newObjectExists(newVM, VirtualMachines);
+    if (newVMID != -1) {
         console.log("EXISTS");
+		incrementVM(newVMID,newVM.nrInstances);
+		changeVMHTML(newVMID);
     } else {
         console.log("New virtual machine!");
         VirtualMachines.push(newVM);
+		addVMHtml(VirtualMachines.length-1,"VM.png",newVM.nrInstances);
     }
+}
+
+function addVMHtml(par1,par2,par3){
+	var vmhtml="<div id='vm_"+par1+"' class='icons'><img src='images/"+par2+"'><p>"+par3+"</p></div>";
+	$("#items").append(vmhtml);
+}
+
+function changeVMHTML(VMId){
+	var curVM = VirtualMachines[VMId];
+	$("#vm_"+VMId+" p").text(curVM.nrInstances);
+}
+
+function incrementVM(VMId,incr){
+	var curVM = VirtualMachines[VMId];
+	curVM.nrInstances = curVM.nrInstances + incr;
 }
 
 function addDatabase(newDatabase) {

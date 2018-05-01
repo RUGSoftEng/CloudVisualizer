@@ -45,8 +45,9 @@ function drop(ev) {
     }
     //console.log(obj.objectName);
     console.log(obj);
-    refresh();
+    //refresh();
 }
+
 
 function refresh() {
     clearBox('items');
