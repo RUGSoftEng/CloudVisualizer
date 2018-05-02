@@ -61,6 +61,10 @@ function refresh() {
 function clearBox(elementID) {
     document.getElementById(elementID).innerHTML = "";
 }
+function removeIcon(elementID){
+	$(elementID).remove();
+}
+
 $(function() {
     var slider2 = document.getElementById("myRange2");
     nrInstances = document.getElementById("demo2");

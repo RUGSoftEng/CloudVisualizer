@@ -73,7 +73,7 @@ function addVirtualMachine(newVM) {
 
 //We have a basic HTML structure, where we fill in the details for each VM
 function addVMHtml(par1,par2,par3){
-	var vmhtml="<div id='vm_"+par1+"' class='icons'><img src='images/"+par2+"'><p>"+par3+"</p></div>";
+	var vmhtml="<div id='vm_"+par1+"' class='icons'><img src='images/"+par2+"'><p>"+par3+"</p> <a href='#' onclick='removeIcon(\"#vm_"+par1+"\");'>x</a></div>";
 	$("#items").append(vmhtml);
 }
 
