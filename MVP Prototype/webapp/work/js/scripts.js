@@ -3,6 +3,9 @@ var nrInstances;
 var days;
 var hours;
 var calculate;
+var storageSize;
+var DBSize;
+
 googlepricelist();
 $(document).ready(function() {
     $("#myAccordion").accordion();
@@ -30,6 +33,7 @@ function dragDatabase(ev) {
 function dragStorage(ev) {
     jQuery.event.props.push('dataTransfer');
     var newStorage = createBasicStorage(parseInt(storageSize.innerHTML));
+    console.log(newStorage);
     var j = JSON.stringify(newStorage);
     ev.dataTransfer.setData("foo", j);
 }
@@ -86,7 +90,7 @@ function removeIcon(elementID, idNumber, VM){
 $(function() {
     /** Virtual Machine Sliders */
 
-    // Instances
+        // Instances
     var VMInstancesSlider = document.getElementById("VMInstancesSliderID");
     nrInstances = document.getElementById("VMInstances");
     nrInstances.innerHTML = VMInstancesSlider.value;
@@ -112,15 +116,16 @@ $(function() {
 
     /** Storage Sliders */
     var StorageSlider = document.getElementById("StorageGBSliderID");
-    var StorageSize = document.getElementById("StorageGB");
-    StorageSize.innerHTML = StorageSlider.value;
+    storageSize = document.getElementById("StorageGB");
+    storageSize.innerHTML = StorageSlider.value;
     StorageSlider.oninput = function() {
-        StorageSize.innerHTML = this.value;
+        storageSize.innerHTML = this.value;
+        console.log(storageSize);
     }
 
     /** Database Sliders */
     var DBSlider = document.getElementById("DBGBSliderID");
-    var DBSize = document.getElementById("DBGB");
+    DBSize = document.getElementById("DBGB");
     DBSize.innerHTML = DBSlider.value;
     DBSlider.oninput = function() {
         DBSize.innerHTML = this.value;

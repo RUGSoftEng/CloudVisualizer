@@ -51,8 +51,8 @@ function createBasicDatabase(size) {
 function createBasicStorage(size) {
     var newStorage=new Storage();
     newStorage.multiRegional=size;
+    return newStorage;
 }
-
 //Processes the new dropped Virtual machine
 function addVirtualMachine(newVM) {
     //Will contain the index of the duplicate VM if it exists, else -1
@@ -60,9 +60,9 @@ function addVirtualMachine(newVM) {
     if (newVMID != -1) {
         console.log("EXISTS");
         //Increments the duplicate with the number of to be added instances
-        incrementVM(newVMID,newVM.nrInstances);
+        incrementNrInstances(newVMID,newVM.nrInstances, VirtualMachines);
         //Updates the HTML in the canvas
-        changeVMHTML(newVMID);
+        changeHTML(newVMID, VirtualMachines,"vm");
     } else {
         console.log("New virtual machine!");
         //Creates new VM
@@ -70,29 +70,28 @@ function addVirtualMachine(newVM) {
         console.log(newVM.numId);
         VirtualMachines.push(newVM);
         //Adds HTML for the new VM to the canvas
-        addVMHtml(VirtualMachines.length-1,"VM.png",newVM.nrInstances);
+        addHTML(VirtualMachines.length-1,newVM.nrInstances,"vm");
     }
 }
 
 //Processes the new dropped Database
 function addDatabase(newDB) {
     //Will contain the index of the duplicate VM if it exists, else -1
-    var newVMID = newObjectExists(newDB, Databases);
-    if (newVMID != -1) {
+    var newDBID = newObjectExists(newDB, Databases);
+    if (newDBID != -1) {
         console.log("EXISTS");
         //Increments the duplicate with the number of to be added instances
-        incrementDB(newVMID,newVM.nrInstances);
+        incrementNrInstances(newDBID,newDB.nrInstances, Databases);
         //Updates the HTML in the canvas
-        changeDBHTML(newVMID);
+        changeHTML(newDBID, Databases, "db");
     } else {
         console.log("New database!");
         //Creates new VM
         Databases.push(newDB);
         //Adds HTML for the new VM to the canvas
-        addVMHtml(VirtualMachines.length-1,"VM.png",newVM.nrInstances);
+        addHTML(Databases.length-1,newDB.nrInstances, "db");
     }
 }
-
 
 
 //We have a basic HTML structure, where we fill in the details for each VM
@@ -135,11 +134,38 @@ function addDatabase(newDatabase) {
     }
 }
 
+//Processes the new dropped Database
 function addStorage(newStorage) {
-    if (newObjectExists(newStorage, Storages)) {
+    //Will contain the index of the duplicate VM if it exists, else -1
+    var newStorageID = newObjectExists(newStorage, Storages);
+    if (newStorageID != -1) {
         console.log("EXISTS");
+        //Increments the duplicate with the number of to be added instances
+        incrementNrInstances(newStorageID,newStorage.nrInstances, Storages);
+        //Updates the HTML in the canvas
+        changeHTML(newStorageID, Storages, "storage");
     } else {
         console.log("New storage!");
-        VirtualMachines.push(newStorage);
+        //Creates new VM
+        Storages.push(newStorage);
+        //Adds HTML for the new VM to the canvas
+        addHTML(Storages.length-1,newStorage.nrInstances,"storage");
     }
+}
+
+//We have a basic HTML structure, where we fill in the details for each Object
+function addHTML(par1,par3, id){
+    var objectHTML="<div id='"+id+"_"+par1+"' class='icons'><img src='images/"+id+".png'><p>"+par3+"</p> <a href='#' onclick='removeIcon(\"#"+id+"_"+par1+"\");'>x</a></div>";
+    $("#items").append(objectHTML);
+}
+
+//Since we incorperated the ID in the div of the Object, we can easily edit it now
+function changeHTML(index, listOfObjects, id){
+    var curObject = listOfObjects[index];
+    $("#"+id+"_"+index+" p").text(curObject.nrInstances);
+}
+
+function incrementNrInstances(index, incr, listOfObjects) {
+    var curObject=listOfObjects[index];
+    curObject.nrInstances=curObject.nrInstances+incr;
 }
