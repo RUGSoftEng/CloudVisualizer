@@ -99,8 +99,20 @@ $(function() {
     }
 
     /** Storage Sliders */
+    var StorageSlider = document.getElementById("StorageGBSliderID");
+    var StorageSize = document.getElementById("StorageGB");
+    StorageSize.innerHTML = StorageSlider.value;
+    StorageSlider.oninput = function() {
+        StorageSize.innerHTML = this.value;
+    }
 
     /** Database Sliders */
+    var DBSlider = document.getElementById("DBGBSliderID");
+    var DBSize = document.getElementById("DBGB");
+    DBSize.innerHTML = DBSlider.value;
+    DBSlider.oninput = function() {
+        DBSize.innerHTML = this.value;
+    }
 
     calculate = document.getElementById("calculate");
     calculate.onclick = function() {
@@ -115,19 +127,5 @@ $(function() {
             myString = myString + '\n' + "Virtual machine " + i + "     " + Math.round(prices[i] * 100) / 100;
         }
         alert(myString + '\n' + "Total                          " + Math.round(totalprice * 100) / 100);
-    }
-
-    var slider4 = document.getElementById("myRange4");
-    var output4 = document.getElementById("demo4");
-    output4.innerHTML = slider4.value;
-
-    slider4.oninput = function() {
-        output4.innerHTML = this.value;
-    }
-    var slider5 = document.getElementById("myRange5");
-    var output5 = document.getElementById("demo5");
-    output5.innerHTML = slider5.value;
-    slider5.oninput = function() {
-        output5.innerHTML = this.value;
     }
 });
