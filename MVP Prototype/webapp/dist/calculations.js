@@ -18,6 +18,7 @@ function VirtualMachine() {
     this.committedUsage="0";/*1-YEAR,3-YEAR or 0 string depending on user input*/;
     this.rules=0;
     this.nrInstances=1;
+    this.numId = -1;
     // Functions
     this.instanceType=determineInstanceType(this.type);
     this.sustainedUsePerHour=sustainedUseHourly;

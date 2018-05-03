@@ -3,6 +3,9 @@ var nrInstances;
 var days;
 var hours;
 var calculate;
+var storageSize;
+var DBSize;
+
 googlepricelist();
 $(document).ready(function() {
     $("#myAccordion").accordion();
@@ -22,14 +25,17 @@ function allowDrop(ev) {
 
 function dragDatabase(ev) {
     jQuery.event.props.push('dataTransfer');
-    var newDB = createBasicDatabase(parseInt(dataSize.innerHTML));
+    var newDB = createBasicDatabase(parseInt(DBSize.innerHTML));
     var j = JSON.stringify(newDB);
     ev.dataTransfer.setData("foo", j);
 }
 
 function dragStorage(ev) {
     jQuery.event.props.push('dataTransfer');
-    ev.dataTransfer.setData("text", "Luc is super cool");
+    var newStorage = createBasicStorage(parseInt(storageSize.innerHTML));
+    console.log(newStorage);
+    var j = JSON.stringify(newStorage);
+    ev.dataTransfer.setData("foo", j);
 }
 
 function dragVM(ev) {
@@ -49,6 +55,10 @@ function drop(ev) {
         console.log(obj.objectName);
         addDatabase(obj);
     }
+    if (obj.objectName === "Storage") {
+        console.log(obj.objectName);
+        addStorage(obj);
+    }
     //console.log(obj.objectName);
     console.log(obj);
     //refresh();
@@ -67,14 +77,20 @@ function refresh() {
 function clearBox(elementID) {
     document.getElementById(elementID).innerHTML = "";
 }
-function removeIcon(elementID){
+function removeIcon(elementID, idNumber, VM){
 	$(elementID).remove();
+    for(var i = 0; i < VM.length; i++){
+        if(VM[i].numId = idNumber){
+            VM.splice(i,1);
+            break;
+        }
+    }
 }
 
 $(function() {
     /** Virtual Machine Sliders */
 
-    // Instances
+        // Instances
     var VMInstancesSlider = document.getElementById("VMInstancesSliderID");
     nrInstances = document.getElementById("VMInstances");
     nrInstances.innerHTML = VMInstancesSlider.value;
@@ -100,15 +116,16 @@ $(function() {
 
     /** Storage Sliders */
     var StorageSlider = document.getElementById("StorageGBSliderID");
-    var StorageSize = document.getElementById("StorageGB");
-    StorageSize.innerHTML = StorageSlider.value;
+    storageSize = document.getElementById("StorageGB");
+    storageSize.innerHTML = StorageSlider.value;
     StorageSlider.oninput = function() {
-        StorageSize.innerHTML = this.value;
+        storageSize.innerHTML = this.value;
+        console.log(storageSize);
     }
 
     /** Database Sliders */
     var DBSlider = document.getElementById("DBGBSliderID");
-    var DBSize = document.getElementById("DBGB");
+    DBSize = document.getElementById("DBGB");
     DBSize.innerHTML = DBSlider.value;
     DBSlider.oninput = function() {
         DBSize.innerHTML = this.value;
