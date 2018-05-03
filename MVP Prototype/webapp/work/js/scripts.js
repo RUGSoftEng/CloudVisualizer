@@ -22,14 +22,16 @@ function allowDrop(ev) {
 
 function dragDatabase(ev) {
     jQuery.event.props.push('dataTransfer');
-    var newDB = createBasicDatabase(parseInt(dataSize.innerHTML));
+    var newDB = createBasicDatabase(parseInt(DBSize.innerHTML));
     var j = JSON.stringify(newDB);
     ev.dataTransfer.setData("foo", j);
 }
 
 function dragStorage(ev) {
     jQuery.event.props.push('dataTransfer');
-    ev.dataTransfer.setData("text", "Luc is super cool");
+    var newStorage = createBasicStorage(parseInt(storageSize.innerHTML));
+    var j = JSON.stringify(newStorage);
+    ev.dataTransfer.setData("foo", j);
 }
 
 function dragVM(ev) {
@@ -49,6 +51,10 @@ function drop(ev) {
         console.log(obj.objectName);
         addDatabase(obj);
     }
+    if (obj.objectName === "Storage") {
+        console.log(obj.objectName);
+        addStorage(obj);
+    }
     //console.log(obj.objectName);
     console.log(obj);
     //refresh();
@@ -67,8 +73,14 @@ function refresh() {
 function clearBox(elementID) {
     document.getElementById(elementID).innerHTML = "";
 }
-function removeIcon(elementID){
+function removeIcon(elementID, idNumber, VM){
 	$(elementID).remove();
+    for(var i = 0; i < VM.length; i++){
+        if(VM[i].numId = idNumber){
+            VM.splice(i,1);
+            break;
+        }
+    }
 }
 
 $(function() {

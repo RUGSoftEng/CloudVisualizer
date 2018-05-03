@@ -1,6 +1,7 @@
 var VirtualMachines=[];
 var Databases=[];
 var Storages=[];
+var counterId = 0;
 
 //Checks if the to be added object already exists.
 //If it exists, it will return the index where the duplicate object is located
@@ -26,7 +27,7 @@ function newObjectExists(newObject, objectList) {
             }
         }
         if (!stop) {
-            return i;
+            return objectList[i].numId;
         }
     }
     return -1;
@@ -65,6 +66,8 @@ function addVirtualMachine(newVM) {
     } else {
         console.log("New virtual machine!");
         //Creates new VM
+        newVM.numId = counterId++;
+        console.log(newVM.numId);
         VirtualMachines.push(newVM);
         //Adds HTML for the new VM to the canvas
         addVMHtml(VirtualMachines.length-1,"VM.png",newVM.nrInstances);
@@ -94,7 +97,7 @@ function addDatabase(newDB) {
 
 //We have a basic HTML structure, where we fill in the details for each VM
 function addVMHtml(par1,par2,par3){
-	var vmhtml="<div id='vm_"+par1+"' class='icons'><img src='images/"+par2+"'><p>"+par3+"</p> <a href='#' onclick='removeIcon(\"#vm_"+par1+"\");'>x</a></div>";
+	var vmhtml="<div id='vm_"+par1+"' class='icons'><img src='images/"+par2+"'><p>"+par3+"</p> <a href='#' onclick='removeIcon(\"#vm_"+par1+"\","+par1+",VirtualMachines);'>x</a></div>";
 	$("#items").append(vmhtml);
 }
 
