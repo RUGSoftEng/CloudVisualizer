@@ -2,6 +2,8 @@
 
 html,body{
 height:100%;
+width: 100%;
+background-color:blue;
 }
 
 $headerhight: 150px;
@@ -12,9 +14,9 @@ $headerhight: 150px;
     background-color: #343a40;
     padding: 20px;
     padding-top: 70px;
-	height:$headerhight;
-	border-bottom-style:solid;
-	border-bottom-color:#cccccc;
+		height:$headerhight;
+		border-bottom-style:solid;
+		border-bottom-color:#cccccc;
 }
 
 .header a:visited{
@@ -23,17 +25,18 @@ $headerhight: 150px;
 .content {
     margin-top: 0px !important;
     position: relative;
-    background-color: white;
+    //background-color: white;
   	width:100%;
-  	height:calc(100% - (#{$headerhight} + 36));
-	min-height: 500px;
+  	height:calc(100% - (#{$headerhight}));
+	//	min-height: px;
+		background-color: red;
 }
 
 $filterwidth: 220px;
 .filters{
 	width:$filterwidth;
 	height:100%;
-	background-color:#dddddd;
+	background-color:green;
 	border-right-style:solid;
 	border-color:#cccccc;
 	float:left;
@@ -42,12 +45,19 @@ $filterwidth: 220px;
 .canvas{
 	margin-left: 0px;
 	width:calc(100% - (#{$filterwidth} );
-	height: 75.5%;
+	height: 86%;
 	float:left;
 	border-radius: 3px     5px      5px           3px;
 	border-style: solid;
 	border: 2px solid gray;
 	background-color: WhiteSmoke;
+}
+
+.canvas-pop-up{
+	width:calc(100% - (#{$filterwidth} );
+	float:left;
+	height:70%;
+
 }
 
 .footer {
@@ -146,7 +156,7 @@ a p,h4{
     position: fixed;
     bottom: 0;
     background-color: #fefefe;
-    width: 22%;
+    width: 19%;
     -webkit-animation-name: slideIn;
     -webkit-animation-duration: 0.4s;
     animation-name: slideIn;

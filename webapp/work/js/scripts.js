@@ -79,4 +79,14 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
+
+
   });
+  function Calculate() {
+    var x = document.getElementById("canvas-pop-up");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
