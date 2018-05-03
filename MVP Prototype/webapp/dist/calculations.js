@@ -42,6 +42,7 @@ function Storage() {
     this.coldline=0;/*user picked size of coldline storage*/;
     this.classAOps=0;/*millions of class A operations per month*/;
     this.classBOps=0;/*millions of class B operations per month*/;
+    this.nrInstances=1;
     // Functions
     this.costHour=storageCostHourly;
     this.costDay=storageCostHourly*24;
@@ -56,6 +57,7 @@ function Database() {
     this.dataReads=0;/*user picked number of entity reads per month*/;
     this.dataWrites=0;/*user picked number of entity writes per month*/;
     this.dataDeletes=0;/*user picked number of entity deletes per month*/;
+    this.nrInstances=1;
     // Functions
     this.costHour=dataStoreCostHourly;
     this.costDay=dataStoreCostHourly*24;

@@ -54,22 +54,43 @@ function createBasicStorage(size) {
 
 //Processes the new dropped Virtual machine
 function addVirtualMachine(newVM) {
-	//Will contain the index of the duplicate VM if it exists, else -1
-	var newVMID = newObjectExists(newVM, VirtualMachines);
+    //Will contain the index of the duplicate VM if it exists, else -1
+    var newVMID = newObjectExists(newVM, VirtualMachines);
     if (newVMID != -1) {
         console.log("EXISTS");
-		//Increments the duplicate with the number of to be added instances
-		incrementVM(newVMID,newVM.nrInstances);
-		//Updates the HTML in the canvas
-		changeVMHTML(newVMID);
+        //Increments the duplicate with the number of to be added instances
+        incrementVM(newVMID,newVM.nrInstances);
+        //Updates the HTML in the canvas
+        changeVMHTML(newVMID);
     } else {
         console.log("New virtual machine!");
-		//Creates new VM
+        //Creates new VM
         VirtualMachines.push(newVM);
-		//Adds HTML for the new VM to the canvas
-		addVMHtml(VirtualMachines.length-1,"VM.png",newVM.nrInstances);
+        //Adds HTML for the new VM to the canvas
+        addVMHtml(VirtualMachines.length-1,"VM.png",newVM.nrInstances);
     }
 }
+
+//Processes the new dropped Database
+function addDatabase(newDB) {
+    //Will contain the index of the duplicate VM if it exists, else -1
+    var newVMID = newObjectExists(newDB, Databases);
+    if (newVMID != -1) {
+        console.log("EXISTS");
+        //Increments the duplicate with the number of to be added instances
+        incrementDB(newVMID,newVM.nrInstances);
+        //Updates the HTML in the canvas
+        changeDBHTML(newVMID);
+    } else {
+        console.log("New database!");
+        //Creates new VM
+        Databases.push(newDB);
+        //Adds HTML for the new VM to the canvas
+        addVMHtml(VirtualMachines.length-1,"VM.png",newVM.nrInstances);
+    }
+}
+
+
 
 //We have a basic HTML structure, where we fill in the details for each VM
 function addVMHtml(par1,par2,par3){
@@ -83,11 +104,24 @@ function changeVMHTML(VMId){
 	$("#vm_"+VMId+" p").text(curVM.nrInstances);
 }
 
+//Since we incorperated the ID in the div of the DB, we can easily edit it now
+function changeDBHTML(DBId){
+    var curDB = Databases[DBId];
+    $("#vm_"+DBId+" p").text(curDB.nrInstances);
+}
+
 //Takes the VM at index VMId, and adds incr to it
 function incrementVM(VMId,incr){
 	var curVM = VirtualMachines[VMId];
 	curVM.nrInstances = curVM.nrInstances + incr;
 }
+
+//Takes the DB at index DBId, and adds incr to it
+function incrementDB(DBId,incr){
+    var curDB = Databases[DBId];
+    curDB.nrInstances = curDB.nrInstances + incr;
+}
+
 
 function addDatabase(newDatabase) {
     if (newObjectExists(newDatabase, Databases)) {

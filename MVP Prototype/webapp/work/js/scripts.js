@@ -20,9 +20,11 @@ function allowDrop(ev) {
     ev.preventDefault();
 }
 
-function drag(ev) {
+function dragDatabase(ev) {
     jQuery.event.props.push('dataTransfer');
-    ev.dataTransfer.setData("text", ev.target.id);
+    var newDB = createBasicDatabase(parseInt(dataSize.innerHTML));
+    var j = JSON.stringify(newDB);
+    ev.dataTransfer.setData("foo", j);
 }
 
 function dragStorage(ev) {
@@ -42,6 +44,10 @@ function drop(ev) {
     var obj = JSON.parse(ev.dataTransfer.getData("foo"));
     if (obj.objectName === "VirtualMachine") {
         addVirtualMachine(obj);
+    }
+    if (obj.objectName === "Database") {
+        console.log(obj.objectName);
+        addDatabase(obj);
     }
     //console.log(obj.objectName);
     console.log(obj);
@@ -66,13 +72,35 @@ function removeIcon(elementID){
 }
 
 $(function() {
-    var slider2 = document.getElementById("myRange2");
-    nrInstances = document.getElementById("demo2");
-    nrInstances.innerHTML = slider2.value;
+    /** Virtual Machine Sliders */
 
-    slider2.oninput = function() {
+    // Instances
+    var VMInstancesSlider = document.getElementById("VMInstancesSliderID");
+    nrInstances = document.getElementById("VMInstances");
+    nrInstances.innerHTML = VMInstancesSlider.value;
+    VMInstancesSlider.oninput = function() {
         nrInstances.innerHTML = this.value;
     }
+
+    // Days
+    var VMDaysSlider = document.getElementById("VMDaysSliderID");
+    days = document.getElementById("VMDays");
+    days.innerHTML = VMDaysSlider.value;
+    VMDaysSlider.oninput = function() {
+        days.innerHTML = this.value;
+    }
+
+    // Hours
+    var VMHoursSlider = document.getElementById("VMHoursSliderID");
+    hours = document.getElementById("VMHours");
+    hours.innerHTML = VMHoursSlider.value;
+    VMHoursSlider.oninput = function() {
+        hours.innerHTML = this.value;
+    }
+
+    /** Storage Sliders */
+
+    /** Database Sliders */
 
     calculate = document.getElementById("calculate");
     calculate.onclick = function() {
@@ -89,21 +117,6 @@ $(function() {
         alert(myString + '\n' + "Total                          " + Math.round(totalprice * 100) / 100);
     }
 
-    var slider = document.getElementById("myRange");
-    days = document.getElementById("demo");
-    days.innerHTML = slider.value;
-
-    slider.oninput = function() {
-        days.innerHTML = this.value;
-    }
-
-    var slider3 = document.getElementById("myRange3");
-    hours = document.getElementById("demo3");
-    hours.innerHTML = slider3.value;
-
-    slider3.oninput = function() {
-        hours.innerHTML = this.value;
-    }
     var slider4 = document.getElementById("myRange4");
     var output4 = document.getElementById("demo4");
     output4.innerHTML = slider4.value;
