@@ -2,7 +2,6 @@
 
 html,body{
 height:100%;
-width: 100%;
 background-color:blue;
 }
 
@@ -54,6 +53,7 @@ $filterwidth: 220px;
 }
 
 .canvas-pop-up{
+	display:none;
 	width:calc(100% - (#{$filterwidth} );
 	float:left;
 	height:70%;
@@ -156,7 +156,7 @@ a p,h4{
     position: fixed;
     bottom: 0;
     background-color: #fefefe;
-    width: 19%;
+    width: 17.6%;
     -webkit-animation-name: slideIn;
     -webkit-animation-duration: 0.4s;
     animation-name: slideIn;

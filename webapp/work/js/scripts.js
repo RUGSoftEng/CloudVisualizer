@@ -7,6 +7,7 @@ $(document).ready(function(){
        }});
   });
 
+//clear canvas 
   function clearBox(elementID){
     document.getElementById(elementID).innerHTML ="";
 
@@ -82,11 +83,10 @@ window.onclick = function(event) {
 
 
   });
+  //show div when calculate is clicked
   function Calculate() {
     var x = document.getElementById("canvas-pop-up");
-    if (x.style.display === "none") {
+    if (x.style.display = "none") {
         x.style.display = "block";
-    } else {
-        x.style.display = "none";
     }
 }

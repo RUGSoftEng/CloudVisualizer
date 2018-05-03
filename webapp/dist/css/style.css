@@ -13,7 +13,9 @@
   border-radius: 10px; }
 
 html, body {
-  height: 100%; }
+  height: 100%;
+  width: 100%;
+  background-color: blue; }
 
 .header {
   color: white;
@@ -32,28 +34,32 @@ html, body {
 .content {
   margin-top: 0px !important;
   position: relative;
-  background-color: white;
   width: 100%;
-  height: calc(100% - (150px + 36));
-  min-height: 500px; }
+  height: calc(100% - (150px));
+  background-color: red; }
 
 .filters {
-  width: 250px;
+  width: 220px;
   height: 100%;
-  background-color: #dddddd;
+  background-color: green;
   border-right-style: solid;
   border-color: #cccccc;
   float: left; }
 
 .canvas {
   margin-left: 0px;
-  width: calc(100% - (250px + 40px));
-  height: 65%;
+  width: calc(100% - (220px ));
+  height: 86%;
   float: left;
   border-radius: 3px     5px      5px           3px;
   border-style: solid;
   border: 2px solid gray;
   background-color: WhiteSmoke; }
+
+.canvas-pop-up {
+  width: calc(100% - (220px ));
+  float: left;
+  height: 70%; }
 
 .footer {
   margin-top: 0px !important;
@@ -153,7 +159,7 @@ a p, h4 {
   position: fixed;
   bottom: 0;
   background-color: #fefefe;
-  width: 22%;
+  width: 19%;
   -webkit-animation-name: slideIn;
   -webkit-animation-duration: 0.4s;
   animation-name: slideIn;
