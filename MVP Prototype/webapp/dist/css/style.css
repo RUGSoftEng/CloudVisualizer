@@ -66,6 +66,10 @@ html, body {
   border: 2px solid gray;
   background-color: WhiteSmoke; }
 
+#items {
+  display: inline-block;
+  background-color: red; }
+
 .footer {
   margin-top: 0px !important;
   position: relative;
