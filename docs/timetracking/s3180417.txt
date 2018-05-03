@@ -1,4 +1,0 @@
-- Meeting with group
-- Meeting with client
-- Setup Slack and Github
-- Working on requirements form

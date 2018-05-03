@@ -1,0 +1,7 @@
+node_modules/
+im/
+db/*
+!db/.placeholder
+backup/
+googleResp.txt
+googleVersion.txt
