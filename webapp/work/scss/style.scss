@@ -2,7 +2,7 @@
 
 html,body{
 height:100%;
-background-color:blue;
+background-color:blue
 }
 
 $headerhight: 150px;
@@ -211,4 +211,10 @@ a p,h4{
 @keyframes fadeIn {
     from {opacity: 0}
     to {opacity: 1}
+}
+.grab {cursor: -webkit-grab; cursor: grab;}
+.grab:active { 
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
 }
