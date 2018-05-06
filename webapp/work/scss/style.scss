@@ -2,7 +2,6 @@
 
 html,body{
 height:100%;
-background-color:blue
 }
 
 $headerhight: 150px;
@@ -28,14 +27,14 @@ $headerhight: 150px;
   	width:100%;
   	height:calc(100% - (#{$headerhight}));
 	//	min-height: px;
-		background-color: red;
+	//	background-color: red;
 }
 
 $filterwidth: 220px;
 .filters{
 	width:$filterwidth;
 	height:100%;
-	background-color:green;
+	//background-color:green;
 	border-right-style:solid;
 	border-color:#cccccc;
 	float:left;
@@ -44,7 +43,7 @@ $filterwidth: 220px;
 .canvas{
 	margin-left: 0px;
 	width:calc(100% - (#{$filterwidth} );
-	height: 86%;
+	height: 80.4%;
 	float:left;
 	border-radius: 3px     5px      5px           3px;
 	border-style: solid;
@@ -68,6 +67,7 @@ $filterwidth: 220px;
 }
 ul.source {
     list-style-type: circle;
+		background-color: WhiteSmoke;
 }
 
 a p,h4{
@@ -212,9 +212,33 @@ a p,h4{
     from {opacity: 0}
     to {opacity: 1}
 }
-.grab {cursor: -webkit-grab; cursor: grab;}
-.grab:active { 
+.grab {
+    cursor: move; /* fallback if grab cursor is unsupported */
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+		background: #fcfcfc;
+
+	height: 8em;
+	width: 350px;
+	max-width: 100%;
+
+	padding: 0.5em;
+	margin-bottom: 0.5em;
+
+	z-index: 1;
+
+	border-radius: 9px     9px      9px           9px;
+	background-color:  white;
+box-shadow: 0 0 10px rgba(0,0,0,0.6);
+-moz-box-shadow: 0 0 10px rgba(0,0,0,0.6);
+-webkit-box-shadow: 0 0 10px rgba(0,0,0,0.6);
+-o-box-shadow: 0 0 10px rgba(0,0,0,0.6);
+}
+
+.grab:active {
     cursor: grabbing;
     cursor: -moz-grabbing;
     cursor: -webkit-grabbing;
+
 }
