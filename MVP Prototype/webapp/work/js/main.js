@@ -2,6 +2,8 @@
 var nrInstances;
 var days;
 var hours;
+var storageSize;
+var DBSize;
 var calculate;
 
 // from canvasObject
@@ -69,6 +71,7 @@ function createBasicDatabase(size) {
 function createBasicStorage(size) {
     var newStorage=new Storage();
     newStorage.multiRegional=size;
+    return newStorage;
 }
 
 //Processes the new dropped Virtual machine
