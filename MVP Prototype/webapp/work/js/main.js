@@ -121,13 +121,13 @@ function addStorage(newStorage) {
         //Increments the duplicate with the number of to be added instances
         incrementNrInstances(newStorageID,newStorage.nrInstances, Storages);
         //Updates the HTML in the canvas
-        changeHTML(newStorageID, Storages, "storage");
+        changeHTML(newStorageID, Storages, "cs");
     } else {
         console.log("New storage!");
         //Creates new VM
         Storages.push(newStorage);
         //Adds HTML for the new VM to the canvas
-        addHTML(Storages.length-1,newStorage.nrInstances,"storage");
+        addHTML(Storages.length-1,newStorage.nrInstances,"cs");
     }
 }
 
