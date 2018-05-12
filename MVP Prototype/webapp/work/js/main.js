@@ -81,83 +81,71 @@ function addVirtualMachine(newVM) {
     if (newVMID != -1) {
         console.log("EXISTS");
         //Increments the duplicate with the number of to be added instances
-        incrementVM(newVMID,newVM.nrInstances);
+        incrementNrInstances(newVMID,newVM.nrInstances, VirtualMachines);
         //Updates the HTML in the canvas
-        changeVMHTML(newVMID);
+        changeHTML(newVMID, VirtualMachines,"vm");
     } else {
         console.log("New virtual machine!");
         //Creates new VM
         VirtualMachines.push(newVM);
         //Adds HTML for the new VM to the canvas
-        addVMHtml(VirtualMachines.length-1,"VM.png",newVM.nrInstances);
+        addHTML(VirtualMachines.length-1,newVM.nrInstances,"vm");
     }
-}
-
-//We have a basic HTML structure, where we fill in the details for each VM
-function addVMHtml(par1,par2,par3){
-	var vmhtml="<div id='vm_"+par1+"' class='icons'><img src='images/"+par2+"'><p>"+par3+"</p> <a href='#' onclick='removeIcon(\"#vm_"+par1+"\");'>x</a></div>";
-	$("#items").append(vmhtml);
-}
-
-//Since we incorperated the ID in the div of the VM, we can easily edit it now
-function changeVMHTML(VMId){
-	var curVM = VirtualMachines[VMId];
-	$("#vm_"+VMId+" p").text(curVM.nrInstances);
-}
-
-//Since we incorperated the ID in the div of the DB, we can easily edit it now
-function changeDBHTML(DBId){
-    var curDB = Databases[DBId];
-    $("#vm_"+DBId+" p").text(curDB.nrInstances);
-}
-
-//Takes the VM at index VMId, and adds incr to it
-function incrementVM(VMId,incr){
-	var curVM = VirtualMachines[VMId];
-	curVM.nrInstances = curVM.nrInstances + incr;
-}
-
-//Takes the DB at index DBId, and adds incr to it
-function incrementDB(DBId,incr){
-    var curDB = Databases[DBId];
-    curDB.nrInstances = curDB.nrInstances + incr;
 }
 
 //Processes the new dropped Database
 function addDatabase(newDB) {
     //Will contain the index of the duplicate VM if it exists, else -1
-    var newVMID = newObjectExists(newDB, Databases);
-    if (newVMID != -1) {
+    var newDBID = newObjectExists(newDB, Databases);
+    if (newDBID != -1) {
         console.log("EXISTS");
         //Increments the duplicate with the number of to be added instances
-        incrementDB(newVMID,newVM.nrInstances);
+        incrementNrInstances(newDBID,newDB.nrInstances, Databases);
         //Updates the HTML in the canvas
-        changeDBHTML(newVMID);
+        changeHTML(newDBID, Databases, "db");
     } else {
         console.log("New database!");
         //Creates new VM
         Databases.push(newDB);
         //Adds HTML for the new VM to the canvas
-        addVMHtml(VirtualMachines.length-1,"VM.png",newVM.nrInstances);
+        addHTML(Databases.length-1,newDB.nrInstances, "db");
     }
 }
 
-function addDatabase(newDatabase) {
-    if (newObjectExists(newDatabase, Databases)) {
-        console.log("EXISTS");
-    } else {
-        console.log("New database!");
-        VirtualMachines.push(newDatabase);
-    }
-}
-
+//Processes the new dropped Database
 function addStorage(newStorage) {
-    if (newObjectExists(newStorage, Storages)) {
+    //Will contain the index of the duplicate VM if it exists, else -1
+    var newStorageID = newObjectExists(newStorage, Storages);
+    if (newStorageID != -1) {
         console.log("EXISTS");
+        //Increments the duplicate with the number of to be added instances
+        incrementNrInstances(newStorageID,newStorage.nrInstances, Storages);
+        //Updates the HTML in the canvas
+        changeHTML(newStorageID, Storages, "storage");
     } else {
         console.log("New storage!");
-        VirtualMachines.push(newStorage);
+        //Creates new VM
+        Storages.push(newStorage);
+        //Adds HTML for the new VM to the canvas
+        addHTML(Storages.length-1,newStorage.nrInstances,"storage");
     }
+}
+
+//We have a basic HTML structure, where we fill in the details for each Object
+function addHTML(par1,par3, id){
+    var objectHTML="<div id='"+id+"_"+par1+"' class='icons'><img src='images/"+id+".png'><p>"+par3+"</p> <a href='#' onclick='removeIcon(\"#"+id+"_"+par1+"\");'>x</a></div>";
+    $("#items").append(objectHTML);
+}
+
+//Since we incorperated the ID in the div of the Object, we can easily edit it now
+function changeHTML(index, listOfObjects, id){
+    var curObject = listOfObjects[index];
+    $("#"+id+"_"+index+" p").text(curObject.nrInstances);
+}
+
+function incrementNrInstances(index, incr, listOfObjects) {
+    var curObject=listOfObjects[index];
+    curObject.nrInstances=curObject.nrInstances+incr;
 }
 
 function allowDrop(ev) {
@@ -166,14 +154,17 @@ function allowDrop(ev) {
 
 function dragDatabase(ev) {
     jQuery.event.props.push('dataTransfer');
-    var newDB = createBasicDatabase(parseInt(dataSize.innerHTML));
+    var newDB = createBasicDatabase(parseInt(DBSize.innerHTML));
+    console.log(newDB);
     var j = JSON.stringify(newDB);
     ev.dataTransfer.setData("foo", j);
 }
 
 function dragStorage(ev) {
     jQuery.event.props.push('dataTransfer');
-    ev.dataTransfer.setData("text", "Luc is super cool");
+    var newStorage = createBasicStorage(parseInt(storageSize.innerHTML));
+    var j = JSON.stringify(newStorage);
+    ev.dataTransfer.setData("foo", j);
 }
 
 function dragVM(ev) {
@@ -193,6 +184,10 @@ function drop(ev) {
         console.log(obj.objectName);
         addDatabase(obj);
     }
+    if (obj.objectName === "Storage") {
+        console.log(obj.objectName);
+        addStorage(obj);
+    }
     //console.log(obj.objectName);
     console.log(obj);
     //refresh();
@@ -201,9 +196,9 @@ function drop(ev) {
 function refresh() {
     clearBox('items');
     for (var i in VirtualMachines) {
-		var curVM  = VirtualMachines[i];
+        var curVM  = VirtualMachines[i];
         $("#items").append($('<div class="test"></div>').html('<img src="images/VM.png">'));
-		console.log(i.hours);
+        console.log(i.hours);
     }
 }
 
@@ -251,7 +246,7 @@ function calculate (){
 $(function() {
     /** Virtual Machine Sliders */
 
-    // Instances
+        // Instances
     var VMInstancesSlider = document.getElementById("VMInstancesSliderID");
     nrInstances = document.getElementById("VMInstances");
     nrInstances.innerHTML = VMInstancesSlider.value;
@@ -277,32 +272,33 @@ $(function() {
 
     /** Storage Sliders */
     var StorageSlider = document.getElementById("StorageGBSliderID");
-    var StorageSize = document.getElementById("StorageGB");
-    StorageSize.innerHTML = StorageSlider.value;
+    storageSize = document.getElementById("StorageGB");
+    storageSize.innerHTML = StorageSlider.value;
     StorageSlider.oninput = function() {
-        StorageSize.innerHTML = this.value;
+        storageSize.innerHTML = this.value;
+        console.log(storageSize);
     }
 
     /** Database Sliders */
     var DBSlider = document.getElementById("DBGBSliderID");
-    var DBSize = document.getElementById("DBGB");
+    DBSize = document.getElementById("DBGB");
     DBSize.innerHTML = DBSlider.value;
     DBSlider.oninput = function() {
         DBSize.innerHTML = this.value;
     }
 
-    // calculate = document.getElementById("calculate");
-    // calculate.onclick = function() {
-    //     var prices = [];
-    //     var totalprice = 0;
-    //     for (var i in VirtualMachines) {
-    //         prices.push(VirtualMachines[i].costMonthly() * VirtualMachines[i].nrInstances);
-    //         totalprice = totalprice + VirtualMachines[i].costMonthly() * VirtualMachines[i].nrInstances;
-    //     }
-    //     var myString = '';
-    //     for (var i in prices) {
-    //         myString = myString + '\n' + "Virtual machine " + i + "     " + Math.round(prices[i] * 100) / 100;
-    //     }
-    //     alert(myString + '\n' + "Total                          " + Math.round(totalprice * 100) / 100);
-    // }
+    calculate = document.getElementById("calculate");
+    calculate.onclick = function() {
+        var prices = [];
+        var totalprice = 0;
+        for (var i in VirtualMachines) {
+            prices.push(VirtualMachines[i].costMonthly() * VirtualMachines[i].nrInstances);
+            totalprice = totalprice + VirtualMachines[i].costMonthly() * VirtualMachines[i].nrInstances;
+        }
+        var myString = '';
+        for (var i in prices) {
+            myString = myString + '\n' + "Virtual machine " + i + "     " + Math.round(prices[i] * 100) / 100;
+        }
+        alert(myString + '\n' + "Total                          " + Math.round(totalprice * 100) / 100);
+    }
 });

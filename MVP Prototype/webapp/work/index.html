@@ -14,6 +14,7 @@
 	<script src="vendor/js/jquery-ui.min.js"></script>
 	<!--<script src="calculations.js"></script> -->
 	<script src="js/main.min.js"></script>
+	<script src="calculations.js"></script>
 	<!-- <script src="js/canvasObjects.min.js"></script>-->
 </head>
 <body>
@@ -60,15 +61,17 @@
 					</ul>
 
 					<h3>Data Base</h3>
+					<span id="dragDB" draggable="true" ondragstart="dragDatabase(event)">
 					<ul class="source" id="source">
 						<li>Amount of GB:<span id="DBGB"></span></li>
 						<input type="range" min="1" max="50" value="3" class="slider" id="DBGBSliderID">
 						<li>Option 5</li>
 						<li>Option 6</li>
 					</ul>
+					</span>
 
 					<h3>Storage</h3>
-					<span id="drag1" draggable="true" ondragstart="dragStorage(event)">
+					<span id="dragStorage" draggable="true" ondragstart="dragStorage(event)">
 					<ul class="source" id="source">
 					
 					<!--
