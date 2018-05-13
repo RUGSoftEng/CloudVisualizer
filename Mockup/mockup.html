@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--stuff i need -->
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        h3 {
+            border: 2px gray solid;
+            border-radius: 5px;
+            white-space:nowrap;
+            padding:5px;
+        }
+    </style>
+	<!-- drag and drop jquery -->
+    <script>
+        $(function () {
+            var diagram = [];
+            var canvas = $(".canvas");
+            var pageHtml = "<h3 class='node'>Tool 1</h3>";
+            var actionHtml = "<h3 class='node'>Tool 2</h3>";
+            var conditionalHtml = "<h3 class='node'>Tool 3</h3>";
+            $(".tool").draggable({
+                helper: "clone"
+            });
+            canvas.droppable({
+                drop: function (qq, ww) {
+                    var helper = $(ww.helper);
+                    var position = helper.position();
+                    position.left -= canvas.position().left;
+                    var node = {
+                        position: position,
+                        _id: (new Date()).getTime()
+                    };
+                    if (helper.hasClass('page')) {
+                        node.type = 'PAGE';
+                    } else if (helper.hasClass('action')) {
+                        node.type = 'ACTION';
+                    } else if (helper.hasClass('conditional')) {
+                        node.type = 'CONDITIONAL';
+                    } else {
+                        return;
+                    }
+                    diagram.push(node);
+                    renderDiagram(diagram);
+                }
+            });
+            function renderDiagram(diagram) {
+                canvas.empty();
+                for(var d in diagram) {
+                    var node = diagram[d];
+                    var newNode = {};
+                    if(node.type === 'PAGE') {
+                        newNode = $(pageHtml);
+                    } else if(node.type === 'ACTION') {
+                        newNode = $(actionHtml);
+                    } else if(node.type === 'CONDITIONAL') {
+                        newNode = $(conditionalHtml);
+                    }
+                    newNode.css({
+                        "position": "absolute",
+                        "top": node.position.top,
+                        "left": node.position.left,
+                    }).draggable({
+                        containment: "parent",
+                        stop: function(event, ui){
+                            var id = ui.helper.attr("id");
+                            for(var d in diagram) {
+                                var node = diagram[d];
+                                if(node._id == id) {
+                                    node.position.left = ui.position.left;
+                                    node.position.top = ui.position.top;
+                                }
+                            }
+                        }
+                    }).attr("id", node._id);
+                    canvas.append(newNode);
+                }
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container-fluid"
+         style="position: absolute; bottom: 0px; top:0px; right: 0px; left: 0px;">
+        <h1>Drag and Drop Tools Onto Canvas</h1>
+		<h3><a data-toggle="collapse" data-target="#demo2">Language</a></h3>
+        <div class="row"
+             style="position: relative; height: 100%;">
+            <div class="col-xs-3"
+                 style="position:absolute; top:0px; left:0px; bottom: 0px;z-index: 2; background-color: #9acfea" id="demo2">
+                <h2>Tools</h2>
+                <h3 class="tool page">Tool 1</h3>
+                <h3 class="tool action">Tool 2</h3>
+                <h3 class="tool conditional">Tool 3</h3>
+            </div>
+            <div class="canvas col-xs-9"
+                 style="overflow: hidden;position:absolute; bottom: 0px; top: 0px; right: 0px;background-color: beige">
+                <h2>Canvas</h2>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
