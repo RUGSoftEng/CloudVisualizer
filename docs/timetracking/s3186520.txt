@@ -110,6 +110,8 @@
 - adding file changes to backend branch
 - attempt to fix broken drag n drop
 - restructure folder
+- refactoring main.js
+- work on calculations part 
 
 
 

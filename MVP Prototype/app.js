@@ -55,7 +55,7 @@ app.get('/about.html',function(req,res){
     res.render('about.html');
 });
 
-app.get('/cloudwatch',function(req,result){
+app.post('/cloudwatch',function(req,result){
     // retrieve service from request
     var service = req.query.service;
 

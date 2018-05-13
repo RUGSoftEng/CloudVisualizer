@@ -11,18 +11,6 @@ var VirtualMachines=[];
 var Databases=[];
 var Storages=[];
 
-$(document).ready(function() {
-    $("#myAccordion").accordion();
-    /*$(".source li").draggable({helper:"clone"});
-    $(".filters span").draggable({helper:"clone"});
-	/*
-    $("#canvas").droppable({drop:function(event,ui){
-        $text = ui.draggable.html().replace(/(<in([^>]+)>)/ig,"");
-  
-        $("#items").append($("<li></li>").html($text).on("click",function() { $(this).remove()}));
-    }});*/
-});
-
 //Checks if the to be added object already exists.
 //If it exists, it will return the index where the duplicate object is located
 //If it doesn't exist already, it returns -1
@@ -212,41 +200,46 @@ function removeIcon(elementID){
 function calculate (){
     console.log("Calculate button pressed..", "sending AJAX request to cloudwatch");
 
-    var data ={'service' : 'google-cloud'};
     var result = '';
+    // placeholder for user's choice
+    var data ={'service' : 'google-cloud'};
 
-    // send HTTP request to Node so that it will receive from cloudwatch
+    // send HTTP request to Node so that it communicates with cloudwatch
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: '/cloudwatch',
         contentType: 'html/text',
         data: data,
         success: function (res) {
             result += res;
         }
-    }).done(function(){
+    })
+    // callback function when request is finished
+    .done(function(){
         console.log("Finished processing response of AJAX request to cloudwatch");
-        console.log("calculating price...");
 
-        // the actual calculation of the price
-        var prices=[];
+        // Stringified JSON data received from Cloudwatch
+        //console.log(result);
+
         var totalprice=0;
-        for (var i in VirtualMachines) {
-            prices.push(VirtualMachines[i].costMonthly()*VirtualMachines[i].nrInstances);
-            totalprice=totalprice+VirtualMachines[i].costMonthly()*VirtualMachines[i].nrInstances;
-        }
         var myString='';
-        for ( var i in prices ){
-            myString=myString+ '\n' + "Virtual machine " + i + "     " + Math.round(prices[i]*100)/100;
+
+        for (var i in VirtualMachines) {
+            var value = VirtualMachines[i].costMonthly() * VirtualMachines[i].nrInstances;
+            totalprice += value;
+            myString += '\n' + "Virtual machine " + i + "     " + Math.round(value*100)/100;
         }
-        alert(myString + '\n' + "Total                          " + Math.round(totalprice*100)/100);
+
+        console.log(myString + '\n' + "Total                          " + Math.round(totalprice*100)/100);
     });
 }
 
 $(function() {
+    $("#myAccordion").accordion();
+
     /** Virtual Machine Sliders */
 
-        // Instances
+    // Instances
     var VMInstancesSlider = document.getElementById("VMInstancesSliderID");
     nrInstances = document.getElementById("VMInstances");
     nrInstances.innerHTML = VMInstancesSlider.value;
@@ -285,20 +278,5 @@ $(function() {
     DBSize.innerHTML = DBSlider.value;
     DBSlider.oninput = function() {
         DBSize.innerHTML = this.value;
-    }
-
-    calculate = document.getElementById("calculate");
-    calculate.onclick = function() {
-        var prices = [];
-        var totalprice = 0;
-        for (var i in VirtualMachines) {
-            prices.push(VirtualMachines[i].costMonthly() * VirtualMachines[i].nrInstances);
-            totalprice = totalprice + VirtualMachines[i].costMonthly() * VirtualMachines[i].nrInstances;
-        }
-        var myString = '';
-        for (var i in prices) {
-            myString = myString + '\n' + "Virtual machine " + i + "     " + Math.round(prices[i] * 100) / 100;
-        }
-        alert(myString + '\n' + "Total                          " + Math.round(totalprice * 100) / 100);
     }
 });
