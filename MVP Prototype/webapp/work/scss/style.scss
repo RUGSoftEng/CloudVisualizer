@@ -12,9 +12,9 @@ $headerhight: 150px;
     background-color: #343a40;
     padding: 20px;
     padding-top: 70px;
-	height:$headerhight;
-	border-bottom-style:solid;
-	border-bottom-color:#cccccc;
+		height:$headerhight;
+		border-bottom-style:solid;
+		border-bottom-color:#cccccc;
 }
 
 .header a:visited{
@@ -23,17 +23,18 @@ $headerhight: 150px;
 .content {
     margin-top: 0px !important;
     position: relative;
-    background-color: white;
+    //background-color: white;
   	width:100%;
-  	height:calc(100% - (#{$headerhight} + 36));
-	min-height: 500px;
+  	height:calc(100% - (#{$headerhight}));
+	//	min-height: px;
+	//	background-color: red;
 }
 
-$filterwidth: 250px;
+$filterwidth: 220px;
 .filters{
 	width:$filterwidth;
 	height:100%;
-	background-color:#dddddd;
+	//background-color:green;
 	border-right-style:solid;
 	border-color:#cccccc;
 	float:left;
@@ -41,8 +42,8 @@ $filterwidth: 250px;
 
 .canvas{
 	margin-left: 0px;
-	width:calc(100% - (#{$filterwidth} + 40px);
-	height: 65%;
+	width:calc(100% - (#{$filterwidth} );
+	height: 80.4%;
 	float:left;
 	border-radius: 3px     5px      5px           3px;
 	border-style: solid;
@@ -50,7 +51,12 @@ $filterwidth: 250px;
 	background-color: WhiteSmoke;
 }
 
-
+.canvas-pop-up {
+  display: none;
+  width: calc(100% - (#{$filterwidth}));
+  float: left;
+  height: 70%;
+}
 
 #items{
 	display: inline-block;
@@ -65,6 +71,7 @@ $filterwidth: 250px;
 }
 ul.source {
     list-style-type: circle;
+		background-color: WhiteSmoke;
 }
 
 a p,h4{
@@ -82,6 +89,17 @@ a p,h4{
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+}
+#provider {
+    border-radius: 0px     0px      0px           0px;
+	  background:none!important;
+		color:#ffaa00;
+		border:none;
+		padding:0!important;
+		font: inherit;
+		/*border is optional*/
+		border-bottom:1px solid #444;
+		cursor: pointer;
 }
 .slidecontainer {
     width: 100%;
@@ -119,4 +137,112 @@ a p,h4{
     border-radius: 50%;
     background: DarkCyan;
     cursor: pointer;
+}
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    -webkit-animation-name: fadeIn; /* Fade in the background */
+    -webkit-animation-duration: 0.4s;
+    animation-name: fadeIn;
+    animation-duration: 0.4s
+}
+
+/* Modal Content */
+.modal-content {
+    position: fixed;
+    bottom: 0;
+    background-color: #fefefe;
+    width: 17.6%;
+    -webkit-animation-name: slideIn;
+    -webkit-animation-duration: 0.4s;
+    animation-name: slideIn;
+    animation-duration: 0.4s
+}
+
+/* The Close Button */
+.close {
+    color: DarkCyan;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-header {
+    padding: 2px 16px;
+    background-color: white;
+    color: #343a40;
+}
+
+.modal-body {padding: 2px 4px;}
+
+.modal-footer {
+    padding: 2px 16px;
+    background-color: white;
+    color: #343a40;
+}
+
+/* Add Animation */
+@-webkit-keyframes slideIn {
+    from {bottom: -300px; opacity: 0}
+    to {bottom: 0; opacity: 1}
+}
+
+@keyframes slideIn {
+    from {bottom: -300px; opacity: 0}
+    to {bottom: 0; opacity: 1}
+}
+
+@-webkit-keyframes fadeIn {
+    from {opacity: 0}
+    to {opacity: 1}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0}
+    to {opacity: 1}
+}
+.grab {
+    cursor: move; /* fallback if grab cursor is unsupported */
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+		background: #fcfcfc;
+
+	height: 8em;
+	width: 350px;
+	max-width: 100%;
+
+	padding: 0.5em;
+	margin-bottom: 0.5em;
+
+	z-index: 1;
+
+	border-radius: 9px     9px      9px           9px;
+	background-color:  white;
+box-shadow: 0 0 10px rgba(0,0,0,0.6);
+-moz-box-shadow: 0 0 10px rgba(0,0,0,0.6);
+-webkit-box-shadow: 0 0 10px rgba(0,0,0,0.6);
+-o-box-shadow: 0 0 10px rgba(0,0,0,0.6);
+}
+
+.grab:active {
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+
 }

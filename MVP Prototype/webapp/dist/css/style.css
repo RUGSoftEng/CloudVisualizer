@@ -1,25 +1,14 @@
-#aboutContent {
-  display: flex;
-  margin-top: 20px;
-  margin-left: 20px;
-  margin-bottom: 20px;
-  min-height: calc(100% - 40px);
-  width: calc(100% - 40px);
-  background-color: #eeeeee; }
-
 #abouttext {
   margin: 20px;
   padding: 20px;
   background-color: white;
-  width: calc(100% - 4*20px - 500px);
+  width: calc(100% - 20px - 500px);
   float: left;
   border-radius: 10px; }
 
 #intouch {
   background-color: white;
-  padding: 20px;
   width: 500px;
-  float: right;
   margin: 20px;
   border-radius: 10px; }
 
@@ -43,28 +32,31 @@ html, body {
 .content {
   margin-top: 0px !important;
   position: relative;
-  background-color: white;
   width: 100%;
-  height: calc(100% - (150px + 36));
-  min-height: 500px; }
+  height: calc(100% - (150px)); }
 
 .filters {
-  width: 250px;
+  width: 220px;
   height: 100%;
-  background-color: #dddddd;
   border-right-style: solid;
   border-color: #cccccc;
   float: left; }
 
 .canvas {
   margin-left: 0px;
-  width: calc(100% - (250px + 40px));
-  height: 65%;
+  width: calc(100% - (220px ));
+  height: 80.4%;
   float: left;
   border-radius: 3px     5px      5px           3px;
   border-style: solid;
   border: 2px solid gray;
   background-color: WhiteSmoke; }
+
+.canvas-pop-up {
+  display: none;
+  width: calc(100% - (220px));
+  float: left;
+  height: 70%; }
 
 #items {
   display: inline-block;
@@ -77,7 +69,8 @@ html, body {
   height: 100px; }
 
 ul.source {
-  list-style-type: circle; }
+  list-style-type: circle;
+  background-color: WhiteSmoke; }
 
 a p, h4 {
   color: DarkCyan; }
@@ -93,6 +86,17 @@ a p, h4 {
   text-decoration: none;
   display: inline-block;
   font-size: 16px; }
+
+#provider {
+  border-radius: 0px     0px      0px           0px;
+  background: none !important;
+  color: #ffaa00;
+  border: none;
+  padding: 0 !important;
+  font: inherit;
+  /*border is optional*/
+  border-bottom: 1px solid #444;
+  cursor: pointer; }
 
 .slidecontainer {
   width: 100%; }
@@ -126,3 +130,119 @@ a p, h4 {
   border-radius: 50%;
   background: DarkCyan;
   cursor: pointer; }
+
+.modal {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: black;
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */
+  -webkit-animation-name: fadeIn;
+  /* Fade in the background */
+  -webkit-animation-duration: 0.4s;
+  animation-name: fadeIn;
+  animation-duration: 0.4s; }
+
+/* Modal Content */
+.modal-content {
+  position: fixed;
+  bottom: 0;
+  background-color: #fefefe;
+  width: 17.6%;
+  -webkit-animation-name: slideIn;
+  -webkit-animation-duration: 0.4s;
+  animation-name: slideIn;
+  animation-duration: 0.4s; }
+
+/* The Close Button */
+.close {
+  color: DarkCyan;
+  float: right;
+  font-size: 28px;
+  font-weight: bold; }
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer; }
+
+.modal-header {
+  padding: 2px 16px;
+  background-color: white;
+  color: #343a40; }
+
+.modal-body {
+  padding: 2px 4px; }
+
+.modal-footer {
+  padding: 2px 16px;
+  background-color: white;
+  color: #343a40; }
+
+/* Add Animation */
+@-webkit-keyframes slideIn {
+  from {
+    bottom: -300px;
+    opacity: 0; }
+  to {
+    bottom: 0;
+    opacity: 1; } }
+
+@keyframes slideIn {
+  from {
+    bottom: -300px;
+    opacity: 0; }
+  to {
+    bottom: 0;
+    opacity: 1; } }
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
+.grab {
+  cursor: move;
+  /* fallback if grab cursor is unsupported */
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+  background: #fcfcfc;
+  height: 8em;
+  width: 350px;
+  max-width: 100%;
+  padding: 0.5em;
+  margin-bottom: 0.5em;
+  z-index: 1;
+  border-radius: 9px     9px      9px           9px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+  -o-box-shadow: 0 0 10px rgba(0, 0, 0, 0.6); }
+
+.grab:active {
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing; }
