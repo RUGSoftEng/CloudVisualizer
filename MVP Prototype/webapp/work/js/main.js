@@ -225,7 +225,7 @@ function calculate (){
         var myString='';
 
         for (var i in VirtualMachines) {
-            var value = VirtualMachines[i].costMonthly() * VirtualMachines[i].nrInstances;
+            var value = VirtualMachines[i].costMonthly();
             totalprice += value;
             myString += '\n' + "Virtual machine " + i + "     " + Math.round(value*100)/100;
         }
