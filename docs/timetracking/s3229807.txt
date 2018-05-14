@@ -47,4 +47,17 @@ Working on the graph again
 02-04-2018
 14:00 - 18:30 Working on the MVP, combining front-end with back-end
 19:30 - 23:30 Working on the MVP, combining front-end with back-end
+
+19-04-2018
+11:00 - 15:30 Worked with Luc, on designing functions for the drag and drop feature (e.g icon should increment when VM is exactly the same)
+
+03-05-2018
+11:30 - 15:30 Working with group on the project
+
+13-05-2018
+18:00 - 21:00 Attempting a merge with frontend
+
+14-05-2018
+16:30 - 17:15 Merging frontend and backend branches manually 
+18:15 - 19:00 Merging frontend and backend branches manually
   
