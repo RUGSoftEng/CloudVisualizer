@@ -44,5 +44,76 @@
 - fix hovering over plot
 - merge conflicts
 - merge conflicts
+- work with team
+- work with team
+- plot data with global variable 
+- show sort order of column in header
+- show sort order of column in header
+- work with team
+- work with team
+- work with team
+- work on dropdown selecting column for plotting
+- dropdown for selecting axis for plotting
+- ability to remove data points from the graph
+- work on displaying multiple datasets in a single graph
+- work on displaying multiple datasets in a single graph
+- work on displaying multiple datasets in a single graph
+- work on displaying multiple datasets in a single graph
+- meeting with client 
+- meeting with client
+- group discussion
+- work on back-end
+- work on back-end
+- work on back-end
+- work on back-end
+- team meeting
+- modified readme and package.json
+- setup virtual machine with docker
+- setup virtual machine with docker
+- meeting with client about cloudwatch 
+- meeting with client about cloudwatch 
+- trying to run the API in a VM
+- trying to run the API in a VM
+- trying to run the API in a VM
+- trying to run the API in a VM
+- trying to run the API in a VM
+- managed to get the API to run
+- managed to get the API to run
+- push files and documentation cloudwatch to github
+- added flags to app.js for setting the IP address of the cloudwatch API
+- worked with Emiel on integrating the Cloudwatch API
+- worked with Emiel on integrating the Cloudwatch API
+- worked with Emiel on integrating the Cloudwatch API
+- worked with Emiel on integrating the Cloudwatch API
+- worked with Emiel figure out Gulp
+- worked with Emiel figure out Gulp
+- worked with Emiel on integrating the Cloudwatch API
+- worked with Emiel on integrating the Cloudwatch API
+- clean up code app.js
+- looking into way around Access-Control-Allow-Origin
+- looking into way around Access-Control-Allow-Origin
+- looking into way around Access-Control-Allow-Origin
+- looking into way around Access-Control-Allow-Origin
+- update readme + new meeting with client + remove files
+- setup /cloudwatch route processing AJAX request from clientside JS
+- setup /cloudwatch route processing AJAX request from clientside JS
+- create example requests in Postman
+- create example requests in Postman
+- setup /cloudwatch route processing AJAX request from clientside JS
+- return data from /cloudwatch route
+- return data from /cloudwatch route
+- return data from /cloudwatch route
+- team meeting
+- team meeting
+- team meeting 
+- adding file changes to backend branch
+- adding file changes to backend branch
+- attempt to fix broken drag n drop
+- restructure folder
+- refactoring main.js
+- work on calculations part 
+
+
+
 
 
