@@ -88,7 +88,6 @@
                <li>Amount of GB:<span id="DBGB"></span></li>
                <input type="range" min="1" max="50" value="3" class="slider" id="DBGBSliderID">
             </ul>
-         </span>
 
 		<h3>Storage</h3>
             <ul class="source" id="source">
@@ -100,12 +99,10 @@
                <li>Amount of GB:<span id="StorageGB"></span></li>
                <input type="range" min="1" max="50" value="3" class="slider" id="StorageGBSliderID">
             </ul>
-         </span>
 
 		<h3>Virtual Machine</h3>
             <ul class="source" id="source">
                <img src="images/VM.png" class="grab" alt="VM" draggable="true" ondragstart="dragVM(event)" id="drag1">
-               Virtual machine:
                <li>Number of instances:<span id="VMInstances"></span></li>
                <input type="range" min="1" max="10" value="3" class="slider" id="VMInstancesSliderID">
                <li>Days per week:<span id="VMDays"></span></li>
@@ -113,7 +110,6 @@
                <li>Hours per day:<span id="VMHours"></span></li>
                <input type="range" min="1" max="24" value="3" class="slider" id="VMHoursSliderID">
             </ul>
-         </span>
 
 	</div>
 	<div class="canvas" id="canvas" ondrop="drop(event)" ondragover="allowDrop(event)">
