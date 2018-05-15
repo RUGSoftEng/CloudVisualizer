@@ -163,7 +163,7 @@ function attachVariable (variableName,variableObject) {
 				input.add(option);
 			}
 		}
-	}else if (variableName === "GPUType" && pricelist["GPU_NVIDIA_TESLA_K80"][variableObject.region] != 0){
+	}else if (variableName === "GPUType" /*&& pricelist["GPU_NVIDIA_TESLA_K80"][variableObject.region] != 0*/){
 		var option = document.createElement("option");
 		option.text = option.value = "NVIDIA_TESLA_K80";
 		input.add(option);
@@ -193,7 +193,7 @@ function openPopup(objectToEdit){
 
 //We have a basic HTML structure, where we fill in the details for each Object
 function addHTML(par1,par3, id, uniqueIdentifier, listOfObjects){
-    var objectHTML="<div id='"+id+"_"+uniqueIdentifier+"' class='icons'><img src='images/"+id+".png'><p>"+par3+"</p> <a href='#' onclick='removeIcon(\""+id+"\", \""+uniqueIdentifier+"\", \""+listOfObjects+"\");'>x</a><a href='#' onclick='showSettings(\""+id+"Edit\");'> S </a></div>";
+    var objectHTML="<div id='"+id+"_"+uniqueIdentifier+"' class='icons'><img src='images/"+id+".png'><p>"+par3+"</p> <a href='#' onclick='removeIcon(\""+id+"\", \""+uniqueIdentifier+"\", \""+listOfObjects+"\");'>x</a><a href='#' onclick='showSettings(\""+id+"\", "+uniqueIdentifier+");'> S </a></div>";
     $("#items").append(objectHTML);
 }
 
@@ -479,8 +479,21 @@ function topFunction() {
     document.documentElement.scrollTop = 0;
 }
 
-function showSettings(id){
-	document.getElementById(id).style.display = "block";
+function showSettings(id, uniqueIdentifier){
+	document.getElementById(id+"Edit").style.display = "block";
+    if (id=="vm") {
+        openPopup(VirtualMachines[getObjectById(uniqueIdentifier, VirtualMachines)]);
+        return;
+    }
+    if (id=="db") {
+        openPopup(Databases[getObjectById(uniqueIdentifier, Databases)]);
+        return;
+    }
+    if (id=="cs") {
+        openPopup(Storages[getObjectById(uniqueIdentifier, Storages)]);
+        return;
+    }
+    console.log("no reach here bitte");
 }
 
 function closeSettings(id){
