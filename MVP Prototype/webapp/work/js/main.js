@@ -151,6 +151,25 @@ function getObjectById(id, listOfObjects) {
 
 function attachVariable (variableName,variableObject) {
     var input = document.getElementById(variableName);
+    if (variableName === "type"){
+		var keys = pricelist.keys();
+		for (i=0;i<keys.length;i++){
+			var typeName = (keys[i]).replace("CP-COMPUTEENGINE-VMIMAGE-","");
+			if(keys[i] !== typeName && (keys[i])match("PREEMPTIBLE")==null){
+				var option = document.createElement("option");
+				option.text = typeName + " vCPUs: " + pricelist["CP-COMPUTEENGINE-VMIMAGE-"+typeName]["cores"] + " RAM: " + pricelist["CP-COMPUTEENGINE-VMIMAGE-"+typeName]["memory"];
+				option.value = typeName;
+				input.add(option);
+			}
+		}
+	}else if (variableName === "GPUType" && pricelist["GPU_NVIDIA_TESLA_K80"][variableObject.region] != 0){
+		var option = document.createElement("option");
+		option.text = option.value = "NVIDIA_TESLA_K80";
+		input.add(option);
+		option = document.createElement("option");
+		option.text = option.value = "NVIDIA_TESLA_P100";
+		input.add(option);
+    }
     if (input != null) {
         input.value = variableObject[variableName];
         input.onchange = function () {
@@ -159,6 +178,7 @@ function attachVariable (variableName,variableObject) {
         }
     }
 }
+
 function openPopup(objectToEdit){
     /*Insert code that shows the html of the popup*/
     for (var property in objectToEdit) {
