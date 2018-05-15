@@ -86,6 +86,7 @@ function addVirtualMachine(newVM) {
         //Creates new VM
         newVM.numId=idCounter++;
         VirtualMachines.push(newVM);
+        console.log(VirtualMachines[0]);
         //Adds HTML for the new VM to the canvas
         addHTML(VirtualMachines.length-1, newVM.nrInstances, "vm", newVM.numId, VirtualMachines);
         checkIcon(VirtualMachines, "vm", VirtualMachines.length-1);
@@ -153,9 +154,9 @@ function attachVariable (variableName,variableObject) {
     var input = document.getElementById(variableName);
     if (variableName === "type"){
 		var keys = pricelist.keys();
-		for (i=0;i<keys.length;i++){
+		for (var i=0;i<keys.length;i++){
 			var typeName = (keys[i]).replace("CP-COMPUTEENGINE-VMIMAGE-","");
-			if(keys[i] !== typeName && (keys[i])match("PREEMPTIBLE")==null){
+			if(keys[i] !== typeName && (keys[i]).match("PREEMPTIBLE")==null){
 				var option = document.createElement("option");
 				option.text = typeName + " vCPUs: " + pricelist["CP-COMPUTEENGINE-VMIMAGE-"+typeName]["cores"] + " RAM: " + pricelist["CP-COMPUTEENGINE-VMIMAGE-"+typeName]["memory"];
 				option.value = typeName;
@@ -247,13 +248,16 @@ function drop(ev) {
     ev.preventDefault();
     var obj = JSON.parse(ev.dataTransfer.getData("foo"));
     if (obj.objectName === "VirtualMachine") {
-        addVirtualMachine(obj);
+        var instance = Object.assign(new VirtualMachine(), obj);
+        addVirtualMachine(instance);
     }
     if (obj.objectName === "Database") {
-        addDatabase(obj);
+        var instance = Object.assign(new Database(), obj);
+        addDatabase(instance);
     }
     if (obj.objectName === "Storage") {
-        addStorage(obj);
+        var instance = Object.assign(new Storage(), obj);
+        addStorage(instance);
     }
     //refresh();
 }
@@ -337,7 +341,26 @@ function calculate (){
         var totalprice=0;
         var myString='';
 
-        // perform calculation(s) here 
+        // perform calculation(s) here
+
+        // Monthly
+        console.log(VirtualMachines);
+        for (var i in VirtualMachines) {
+            console.log(VirtualMachines[i]);
+            console.log(new VirtualMachine());
+            //console.log(new VirtualMachine().costMonthly());
+            //console.log(VirtualMachines[i].costMonthly()*VirtualMachines[i].nrInstances);
+            //console.log("Monthly costs: " + VirtualMachines[i].costMonthly());
+        }
+        for (var i in Databases) {
+            console.log("Monthly costs: " + Databases[i].costMonthly());
+        }
+        for (var i in Storages) {
+            console.log("Monthly costs: " + Storages[i].costMonthly());
+        }
+
+
+
 
         // for (var i in VirtualMachines) {
         //     var value = VirtualMachines[i].costMonthly() * VirtualMachines[i].nrInstances;
