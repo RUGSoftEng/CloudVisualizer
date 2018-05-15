@@ -76,7 +76,6 @@ function createBasicStorage(size) {
 function addVirtualMachine(newVM) {
     //Will contain the index of the duplicate VM if it exists, else -1
     var newVMID = newObjectExists(newVM, VirtualMachines);
-    console.log(VirtualMachines.length);
     var newVMIndex = getObjectById(newVMID, VirtualMachines);
     if (newVMID != -1) {
         console.log("EXISTS");
@@ -89,10 +88,9 @@ function addVirtualMachine(newVM) {
         console.log("New virtual machine!");
         //Creates new VM
         newVM.numId=idCounter++;
-        console.log(newVM.numId);
         VirtualMachines.push(newVM);
         //Adds HTML for the new VM to the canvas
-        addHTML(VirtualMachines.length-1, newVM.nrInstances, "vm", newVM.numId);
+        addHTML(VirtualMachines.length-1, newVM.nrInstances, "vm", newVM.numId, VirtualMachines);
         checkIcon(VirtualMachines, "vm", VirtualMachines.length-1);
         openPopup(newVM);
     }
@@ -102,9 +100,8 @@ function addVirtualMachine(newVM) {
 function addDatabase(newDB) {
     //Will contain the index of the duplicate DB if it exists, else -1
     var newDBID = newObjectExists(newDB, Databases);
-    console.log(Databases.length);
-    var newDBIndex = getObjectById(newDBID, Databases);
     if (newDBID != -1) {
+        var newDBIndex = getObjectById(newDBID, Databases);
         console.log("EXISTS");
         //Increments the duplicate with the number of to be added instances
         incrementNrInstances(newDBIndex,newDB.nrInstances, Databases);
@@ -115,10 +112,9 @@ function addDatabase(newDB) {
         console.log("New data base!");
         //Creates new DB
         newDB.numId=idCounter++;
-        console.log(newDB.numId);
         Databases.push(newDB);
         //Adds HTML for the new VM to the canvas
-        addHTML(Databases.length-1, newDB.nrInstances, "db", newDB.numId);
+        addHTML(Databases.length-1, newDB.nrInstances, "db", newDB.numId, Databases);
         checkIcon(Databases, "db", Databases.length-1);
     }
 }
@@ -127,7 +123,6 @@ function addDatabase(newDB) {
 function addStorage(newStorage) {
     //Will contain the index of the duplicate Storage if it exists, else -1
     var newStorageID = newObjectExists(newStorage, Storages);
-    console.log(Storages.length);
     var newStorageIndex = getObjectById(newStorageID, Storages);
     if (newStorageID != -1) {
         console.log("EXISTS");
@@ -140,21 +135,16 @@ function addStorage(newStorage) {
         console.log("New storage!");
         //Creates new storage
         newStorage.numId=idCounter++;
-        console.log(newStorage.numId);
         Storages.push(newStorage);
         //Adds HTML for the new VM to the canvas
-        addHTML(Storages.length-1, newStorage.nrInstances, "cs", newStorage.numId);
+        addHTML(Storages.length-1, newStorage.nrInstances, "cs", newStorage.numId, Storages);
         checkIcon(Storages, "cs", Storages.length-1);
     }
 }
 
 function getObjectById(id, listOfObjects) {
-    console.log(listOfObjects);
-    console.log(id);
     for (var i=0; i<listOfObjects.length; i++) {
-        console.log(listOfObjects[i].numId);
         if (listOfObjects[i].numId==id) {
-            console.log("found");
             return i;
         }
     }
@@ -184,11 +174,8 @@ function openPopup(objectToEdit){
 
 
 //We have a basic HTML structure, where we fill in the details for each Object
-function addHTML(par1,par3, id, uniqueIdentifier){
-    console.log(id);
-    console.log(uniqueIdentifier);
-    var objectHTML="<div id='"+id+"_"+uniqueIdentifier+"' class='icons'><img src='images/"+id+".png'><p>"+par3+"</p> <a href='#' onclick='removeIcon(\"#"+id+"_"+par1+"\",\"+par1+\",VirtualMachines);'>x</a></div>";
-    console.log(objectHTML);
+function addHTML(par1,par3, id, uniqueIdentifier, listOfObjects){
+    var objectHTML="<div id='"+id+"_"+uniqueIdentifier+"' class='icons'><img src='images/"+id+".png'><p>"+par3+"</p> <a href='#' onclick='removeIcon(\""+id+"\", \""+uniqueIdentifier+"\", \""+listOfObjects+"\");'>x</a></div>";
     $("#items").append(objectHTML);
 }
 
@@ -221,7 +208,6 @@ function allowDrop(ev) {
 function dragDatabase(ev) {
     jQuery.event.props.push('dataTransfer');
     var newDB = createBasicDatabase(parseInt(DBSize.innerHTML));
-    console.log(newDB);
     var j = JSON.stringify(newDB);
     ev.dataTransfer.setData("foo", j);
 }
@@ -241,22 +227,17 @@ function dragVM(ev) {
 }
 
 function drop(ev) {
-    console.log("jim");
     ev.preventDefault();
     var obj = JSON.parse(ev.dataTransfer.getData("foo"));
     if (obj.objectName === "VirtualMachine") {
         addVirtualMachine(obj);
     }
     if (obj.objectName === "Database") {
-        console.log(obj.objectName);
         addDatabase(obj);
     }
     if (obj.objectName === "Storage") {
-        console.log(obj.objectName);
         addStorage(obj);
     }
-    //console.log(obj.objectName);
-    console.log(obj);
     //refresh();
 }
 
@@ -275,14 +256,10 @@ function clearBox(elementID) {
     Storages = [];
     VirtualMachines = [];
 }
-function removeIcon(elementID, idNumber, listOfObjects){
-	$(elementID).remove();
-	for (var i=0; i<listOfObjects.length(); i++) {
-	    if (listOfObjects.get(i).numId==idNumber) {
-	        listOfObjects.splice(i, 1);
-	        break;
-        }
-    }
+function removeIcon(elementID, uniqueIdentifier, listOfObjects){
+    var divId = "#"+elementID + "_"+uniqueIdentifier;
+    $(divId).remove();
+	Databases.splice(getObjectById(uniqueIdentifier, Databases), 1);
 }
 
 
