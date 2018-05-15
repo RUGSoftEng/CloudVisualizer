@@ -25,25 +25,7 @@ app.set('views', path.join(__dirname, 'webapp'));
 
 //body parser middleware
 app.use(bodyparser.json());
-app.use(bodyparser.urlencoded({extended: false}));
-
-// Express Validtor Middleware
-app.use(expressValidator({
-    errorFormatter: function(param, msg, value){
-        var namespace = param.split('.'),
-            root = namespace.shift(),
-            formParam = root;
-        while(namespace.length){
-            formParam += '[' + namespace.shift() + ']' ;
-        }
-        return {
-            param: formParam,
-            msg: msg,
-            value: value
-        };
-    }
-
-}));
+app.use(bodyparser.urlencoded({extended: true}));
 
 app.use(express.static('webapp/dist/'));
 
@@ -57,7 +39,8 @@ app.get('/about.html',function(req,res){
 
 app.post('/cloudwatch',function(req,result){
     // retrieve service from request
-    var service = req.query.service;
+    var service = req.body.service;
+    console.log("service: " + service);
 
     var post_options = {
         host: ipAddressCloudwatch,
