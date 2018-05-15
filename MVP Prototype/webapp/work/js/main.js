@@ -94,6 +94,7 @@ function addVirtualMachine(newVM) {
         //Adds HTML for the new VM to the canvas
         addHTML(VirtualMachines.length-1, newVM.nrInstances, "vm", newVM.numId);
         checkIcon(VirtualMachines, "vm", VirtualMachines.length-1);
+        openPopup(newVM);
     }
 }
 
@@ -160,6 +161,27 @@ function getObjectById(id, listOfObjects) {
     console.log("Shouldn't reach here!");
     return null;
 }
+
+function attachVariable (variableName,variableObject) {
+    var input = document.getElementById(variableName);
+    if (input != null) {
+        input.value = variableObject[variableName];
+        input.onchange = function () {
+            variableObject[variableName] = this.value;
+            console.log(variableObject[variableName]);
+        }
+    }
+}
+function openPopup(objectToEdit){
+    /*Insert code that shows the html of the popup*/
+    for (var property in objectToEdit) {
+        if (objectToEdit.hasOwnProperty(property)) {
+            console.log(property);
+            attachVariable(property,objectToEdit);
+        }
+    }
+}
+
 
 //We have a basic HTML structure, where we fill in the details for each Object
 function addHTML(par1,par3, id, uniqueIdentifier){
@@ -262,6 +284,7 @@ function removeIcon(elementID, idNumber, listOfObjects){
         }
     }
 }
+
 
 function calculate (){
     console.log("Calculate button pressed..", "sending AJAX request to cloudwatch");
