@@ -126,7 +126,9 @@
             +this.localSSDPerHour()+cud*this.GPUPerHour());
     }
     function osHourly(){
-        if(this.instanceType["cores"]=="shared"){
+        if(osType==null){
+			return 0;
+        }else if(this.instanceType["cores"]=="shared"){
             return pricelist["CP-COMPUTEENGINE-OS"][this.osType]["low"];
         }else if(pricelist["CP-COMPUTEENGINE-OS"][this.osType]["cores"]=="shared"){
             var rate="high";
