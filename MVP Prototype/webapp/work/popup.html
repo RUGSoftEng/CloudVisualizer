@@ -1,0 +1,74 @@
+<!-- POPUP GOOGLE VM -->
+<div>
+    <h3>Edit selection</h3>
+    <h4>Virtual machine</h4>
+    <form>
+        Number of instances
+        <input type="number" id="nrInstances" min="0"><br>
+        Preemptible
+        <input type="checkbox" id="preemptible"><br>
+        Type
+        <select id="type">
+        </select><br>
+        Days per week used
+        <input type="number" id="days" min="0" max="7"><br>
+        Hours per day used
+        <input type="number" id="hours" min="0" max="24"><br>
+        Operating system
+        <select id="OSType">
+        </select><br>
+        Number of GPUs
+        <input type="number" id="numGPU" min="0"><br>
+        GPU type
+        <select id="GPUType">
+        </select><br>
+        Local SSD size (GB)
+        <input type="number" id="localSSDSize" min="0"><br>
+        Commitment period (years)
+        <select id="commitedUsage"><br>
+            <option value="0">0</option>
+            <option value="1-YEAR">1</option>
+            <option value="3-YEAR">3</option>
+        </select>
+    </form>
+    <h4>Persistent Disk</h4>
+    <form>
+        Persistent disk size (GB)
+        <input type="number" id="PDSize" min="0"><br>
+        Persistent SSD size (GB)
+        <input type="number" id="PDSSDSize" min="0"><br>
+        Snapshot storage size (GB)
+        <input type="number" id="PDSnapshot" min="0"><br>
+    </form>
+    <h4>Load balancing</h4>
+    <form>
+        Number of load balancing rules
+        <input type="number" id="rules" min="0">
+    </form>
+    <h4>Cloud TPUs</h4>
+    <form>
+        Number of TPUs
+        <input type="number" id="numTPU" min="0"><br>
+        Hours per day used
+        <input type="number" id="TPUHours" min="0">
+    </form>
+</div>
+<!-- POPUP GOOGLE STORAGE -->
+<div>
+    <h3>Edit selection</h3>
+    <h4>Storage</h4>
+    <form>
+        Multi-regional storage (GB)
+        <input type="number" id="multiRegional" min="0"><br>
+        Regional storage (GB)
+        <input type="number" id="regional" min="0"><br>
+        Nearline storage (GB)
+        <input type="number" id="nearline" min="0"><br>
+        Coldline storage (GB)
+        <input type="number" id="coldline" min="0"><br>
+        Millions of class A operations per month
+        <input type="number" id="classAOps" min="0"><br>
+        Millions of class B operations per month
+        <input type="number" id="classBOps" min="0">
+    </form>
+</div>
