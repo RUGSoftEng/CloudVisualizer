@@ -256,7 +256,20 @@ function clearBox(elementID) {
 function removeIcon(elementID, uniqueIdentifier, listOfObjects){
     var divId = "#"+elementID + "_"+uniqueIdentifier;
     $(divId).remove();
-	Databases.splice(getObjectById(uniqueIdentifier, Databases), 1);
+    console.log(elementID);
+    if (elementID=="vm") {
+        VirtualMachines.splice(getObjectById(uniqueIdentifier, VirtualMachines), 1);
+        return;
+    }
+    if (elementID=="db") {
+        Databases.splice(getObjectById(uniqueIdentifier, Databases), 1);
+        return;
+    }
+    if (elementID=="cs") {
+        Storages.splice(getObjectById(uniqueIdentifier, Storages), 1);
+        return;
+    }
+    console.log("NO THANKS");
 }
 
 //show the div when calculate is clicked
