@@ -5,15 +5,12 @@ var hours;
 var storageSize;
 var DBSize;
 var calculate;
+var service = 'google-cloud';
 
-//drag
-$(document).ready(function(){
-    $("#myAccordion").accordion();
-    $(".source li").draggable({helper:"clone"});
-    $("#canvas").droppable({drop:function(event,ui){
-        $("#items").append($("<li></li>").text(ui.draggable.text()).on("click",function() { $(this).remove()}));
-    }});
-});
+// //drag
+// $(document).ready(function(){
+   
+// });
 
 // from canvasObject
 var VirtualMachines=[];
@@ -262,13 +259,33 @@ function removeIcon(elementID, uniqueIdentifier, listOfObjects){
 	Databases.splice(getObjectById(uniqueIdentifier, Databases), 1);
 }
 
+//show the div when calculate is clicked
+function showCaculationDiv() {
+    var x = document.getElementById("canvas-pop-up");
+    if (x.style.display = "none") {
+        x.style.display = "block";
+    }
+}
+
+// set content of the calculationDiv
+function addCalculationToDiv(string, totalPrice){
+    var date = new Date();
+
+    // build new list item in HTML
+    var newListItem = '<a  class="list-group-item list-group-item-action flex-column align-items-start"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">';
+    newListItem += '<h5 class="mb-1">Calculation for ' + service + '</h5>';
+    newListItem += '<small>' + date.toTimeString() + '</small></div>';
+    newListItem += '<p class="mb-1">string: ' + string +  '</p>';
+    newListItem += '<small>Totalprice: ' + totalPrice+ '</small></a>';
+
+    var mainArea = document.getElementById("canvas-pop-up").children[0].innerHTML += newListItem;    
+}
 
 function calculate (){
-    console.log("Calculate button pressed..", "sending AJAX request to cloudwatch");
+    console.log("Querying cloudwatch for data from " + service);
 
     var result = '';
-    // placeholder for user's choice
-    var data ={'service' : 'google-cloud'};
+    var data ={'service' : service};
 
     // send HTTP request to Node so that it communicates with cloudwatch
     $.ajax({
@@ -290,18 +307,25 @@ function calculate (){
         var totalprice=0;
         var myString='';
 
-        for (var i in VirtualMachines) {
-            var value = VirtualMachines[i].costMonthly() * VirtualMachines[i].nrInstances;
-            totalprice += value;
-            myString += '\n' + "Virtual machine " + i + "     " + Math.round(value*100)/100;
-        }
+        // perform calculation(s) here 
 
-        console.log(myString + '\n' + "Total                          " + Math.round(totalprice*100)/100);
+        // for (var i in VirtualMachines) {
+        //     var value = VirtualMachines[i].costMonthly() * VirtualMachines[i].nrInstances;
+        //     totalprice += value;
+        //     myString += '\n' + "Virtual machine " + i + "     " + Math.round(value*100)/100;
+        // }
+
+        addCalculationToDiv(myString, Math.round(totalprice*100)/100);
+        showCaculationDiv();
     });
 }
 
 $(function() {
     $("#myAccordion").accordion();
+    $(".source li").draggable({helper:"clone"});
+    $("#canvas").droppable({drop:function(event,ui){
+        $("#items").append($("<li></li>").text(ui.draggable.text()).on("click",function() { $(this).remove()}));
+    }});
 
     /** Virtual Machine Sliders */
 
@@ -362,6 +386,11 @@ $(function() {
     }
 //When the user clicks on Save, close the modal
     btn1.onclick=function() {
+        // save current provider
+        $("input:checked").parent().each(function(){
+            service = this.innerText;
+        })
+    
         modal.style.display = "none";
     }
 // When the user clicks on <span> (x), close the modal
@@ -378,13 +407,6 @@ $(function() {
     }
 });
 
-//show div when calculate is clicked
-function Calculate() {
-    var x = document.getElementById("canvas-pop-up");
-    if (x.style.display = "none") {
-        x.style.display = "block";
-    }
-}
 // When the user scrolls down 20px from the top of the document, show the button
 window.onscroll = function() {scrollFunction()};
 
