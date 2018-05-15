@@ -73,8 +73,8 @@ function createBasicStorage(size) {
 function addVirtualMachine(newVM) {
     //Will contain the index of the duplicate VM if it exists, else -1
     var newVMID = newObjectExists(newVM, VirtualMachines);
-    var newVMIndex = getObjectById(newVMID, VirtualMachines);
     if (newVMID != -1) {
+        var newVMIndex = getObjectById(newVMID, VirtualMachines);
         console.log("EXISTS");
         //Increments the duplicate with the number of to be added instances
         incrementNrInstances(newVMIndex,newVM.nrInstances, VirtualMachines);
@@ -120,8 +120,8 @@ function addDatabase(newDB) {
 function addStorage(newStorage) {
     //Will contain the index of the duplicate Storage if it exists, else -1
     var newStorageID = newObjectExists(newStorage, Storages);
-    var newStorageIndex = getObjectById(newStorageID, Storages);
     if (newStorageID != -1) {
+        var newStorageIndex = getObjectById(newStorageID, Storages);
         console.log("EXISTS");
         //Increments the duplicate with the number of to be added instances
         incrementNrInstances(newStorageIndex,newStorage.nrInstances, Storages);
