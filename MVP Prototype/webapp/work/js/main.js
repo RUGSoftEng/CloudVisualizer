@@ -249,6 +249,9 @@ function refresh() {
 
 function clearBox(elementID) {
     document.getElementById(elementID).innerHTML = "";
+    Databases = [];
+    Storages = [];
+    VirtualMachines = [];
 }
 function removeIcon(elementID, idNumber, listOfObjects){
 	$(elementID).remove();
