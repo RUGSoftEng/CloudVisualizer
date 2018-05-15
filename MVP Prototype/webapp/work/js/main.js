@@ -19,6 +19,7 @@ $(document).ready(function(){
 var VirtualMachines=[];
 var Databases=[];
 var Storages=[];
+var idCounter=0;
 
 //Checks if the to be added object already exists.
 //If it exists, it will return the index where the duplicate object is located
@@ -44,7 +45,7 @@ function newObjectExists(newObject, objectList) {
             }
         }
         if (!stop) {
-            return i;
+            return objectList[i].numId;
         }
     }
     return -1;
@@ -75,69 +76,115 @@ function createBasicStorage(size) {
 function addVirtualMachine(newVM) {
     //Will contain the index of the duplicate VM if it exists, else -1
     var newVMID = newObjectExists(newVM, VirtualMachines);
+    console.log(VirtualMachines.length);
+    var newVMIndex = getObjectById(newVMID, VirtualMachines);
     if (newVMID != -1) {
         console.log("EXISTS");
         //Increments the duplicate with the number of to be added instances
-        incrementNrInstances(newVMID,newVM.nrInstances, VirtualMachines);
+        incrementNrInstances(newVMIndex,newVM.nrInstances, VirtualMachines);
         //Updates the HTML in the canvas
-        changeHTML(newVMID, VirtualMachines,"vm");
+        changeHTML(newVMIndex, VirtualMachines, "vm", newVMID);
+        checkIcon(VirtualMachines, "vm", newVMIndex);
     } else {
         console.log("New virtual machine!");
         //Creates new VM
+        newVM.numId=idCounter++;
+        console.log(newVM.numId);
         VirtualMachines.push(newVM);
         //Adds HTML for the new VM to the canvas
-        addHTML(VirtualMachines.length-1,newVM.nrInstances,"vm");
+        addHTML(VirtualMachines.length-1, newVM.nrInstances, "vm", newVM.numId);
+        checkIcon(VirtualMachines, "vm", VirtualMachines.length-1);
     }
 }
 
 //Processes the new dropped Database
 function addDatabase(newDB) {
-    //Will contain the index of the duplicate VM if it exists, else -1
+    //Will contain the index of the duplicate DB if it exists, else -1
     var newDBID = newObjectExists(newDB, Databases);
+    console.log(Databases.length);
+    var newDBIndex = getObjectById(newDBID, Databases);
     if (newDBID != -1) {
         console.log("EXISTS");
         //Increments the duplicate with the number of to be added instances
-        incrementNrInstances(newDBID,newDB.nrInstances, Databases);
+        incrementNrInstances(newDBIndex,newDB.nrInstances, Databases);
         //Updates the HTML in the canvas
-        changeHTML(newDBID, Databases, "db");
+        changeHTML(newDBIndex, Databases, "db", newDBID);
+        checkIcon(Databases, "db", newDBIndex);
     } else {
-        console.log("New database!");
-        //Creates new VM
+        console.log("New data base!");
+        //Creates new DB
+        newDB.numId=idCounter++;
+        console.log(newDB.numId);
         Databases.push(newDB);
         //Adds HTML for the new VM to the canvas
-        addHTML(Databases.length-1,newDB.nrInstances, "db");
+        addHTML(Databases.length-1, newDB.nrInstances, "db", newDB.numId);
+        checkIcon(Databases, "db", Databases.length-1);
     }
 }
 
-//Processes the new dropped Database
+//Processes the new dropped Storage
 function addStorage(newStorage) {
-    //Will contain the index of the duplicate VM if it exists, else -1
+    //Will contain the index of the duplicate Storage if it exists, else -1
     var newStorageID = newObjectExists(newStorage, Storages);
+    console.log(Storages.length);
+    var newStorageIndex = getObjectById(newStorageID, Storages);
     if (newStorageID != -1) {
         console.log("EXISTS");
         //Increments the duplicate with the number of to be added instances
-        incrementNrInstances(newStorageID,newStorage.nrInstances, Storages);
+        incrementNrInstances(newStorageIndex,newStorage.nrInstances, Storages);
         //Updates the HTML in the canvas
-        changeHTML(newStorageID, Storages, "cs");
+        changeHTML(newStorageIndex, Storages, "cs", newStorageID);
+        checkIcon(Storages, "cs", newStorageIndex);
     } else {
         console.log("New storage!");
-        //Creates new VM
+        //Creates new storage
+        newStorage.numId=idCounter++;
+        console.log(newStorage.numId);
         Storages.push(newStorage);
         //Adds HTML for the new VM to the canvas
-        addHTML(Storages.length-1,newStorage.nrInstances,"cs");
+        addHTML(Storages.length-1, newStorage.nrInstances, "cs", newStorage.numId);
+        checkIcon(Storages, "cs", Storages.length-1);
     }
 }
 
+function getObjectById(id, listOfObjects) {
+    console.log(listOfObjects);
+    console.log(id);
+    for (var i=0; i<listOfObjects.length; i++) {
+        console.log(listOfObjects[i].numId);
+        if (listOfObjects[i].numId==id) {
+            console.log("found");
+            return i;
+        }
+    }
+    console.log("Shouldn't reach here!");
+    return null;
+}
+
 //We have a basic HTML structure, where we fill in the details for each Object
-function addHTML(par1,par3, id){
-    var objectHTML="<div id='"+id+"_"+par1+"' class='icons'><img src='images/"+id+".png'><p>"+par3+"</p> <a href='#' onclick='removeIcon(\"#"+id+"_"+par1+"\");'>x</a></div>";
+function addHTML(par1,par3, id, uniqueIdentifier){
+    console.log(id);
+    console.log(uniqueIdentifier);
+    var objectHTML="<div id='"+id+"_"+uniqueIdentifier+"' class='icons'><img src='images/"+id+".png'><p>"+par3+"</p> <a href='#' onclick='removeIcon(\"#"+id+"_"+par1+"\",\"+par1+\",VirtualMachines);'>x</a></div>";
+    console.log(objectHTML);
     $("#items").append(objectHTML);
 }
 
 //Since we incorperated the ID in the div of the Object, we can easily edit it now
-function changeHTML(index, listOfObjects, id){
+function changeHTML(index, listOfObjects, id, uniqueIdentifier){
     var curObject = listOfObjects[index];
-    $("#"+id+"_"+index+" p").text(curObject.nrInstances);
+    $("#"+id+"_"+uniqueIdentifier+" p").text(curObject.nrInstances);
+}
+
+function changeImage(id, index, image, uniqueIdentifier) {
+    var divId = id + "_"+uniqueIdentifier;
+    document.getElementById(divId).getElementsByTagName('img')[0].src=image;
+}
+
+function checkIcon(listOfObjects, id, index) {
+    if (listOfObjects[index].nrInstances>1) {
+        changeImage(id, index, "images/multiple"+id+".png", listOfObjects[index].numId);
+    }
 }
 
 function incrementNrInstances(index, incr, listOfObjects) {
@@ -203,8 +250,14 @@ function refresh() {
 function clearBox(elementID) {
     document.getElementById(elementID).innerHTML = "";
 }
-function removeIcon(elementID){
+function removeIcon(elementID, idNumber, listOfObjects){
 	$(elementID).remove();
+	for (var i=0; i<listOfObjects.length(); i++) {
+	    if (listOfObjects.get(i).numId==idNumber) {
+	        listOfObjects.splice(i, 1);
+	        break;
+        }
+    }
 }
 
 function calculate (){
