@@ -122,10 +122,10 @@
 			
 		</div>
 	</div>
-
+	
 
 	<!-- POPUP GOOGLE VM -->
-	<div>
+	<div id="vmEdit" style="display:none">
 		<h3>Edit selection</h3>
 		<h4>Virtual machine</h4>
 		<form>
@@ -186,9 +186,11 @@
 			Hours per day used
 			<input type="number" id="TPUHours" min="0">
 		</form>
+<button type="button" onclick='closeSettings("vmEdit")'>Close VM settings</button>
+
 	</div>
 	<!-- POPUP GOOGLE STORAGE -->
-	<div>
+	<div id="csEdit" style="display:none">
 		<h3>Edit selection</h3>
 		<h4>Storage</h4>
 		<form>
@@ -205,9 +207,11 @@
 			Millions of class B operations per month
 			<input type="number" id="classBOps" min="0">
 		</form>
+		<button type="button" onclick='closeSettings("csEdit")'>Close CS settings</button>
+
 	</div>
 	<!-- POPUP GOOGLE STORAGE -->
-	<div>
+	<div id="dbEdit" style="display:none">
 		<h3>Edit selection</h3>
 		<h4>Storage</h4>
 		<form>
@@ -220,6 +224,7 @@
 			Entity deletes per month
 			<input type="number" id="dataDeletes" min="0"><br>
 		</form>
+		<button type="button" onclick='closeSettings("dbEdit")'>Close CS settings</button>
 	</div>
 
 
