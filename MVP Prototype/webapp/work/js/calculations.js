@@ -18,6 +18,7 @@ function VirtualMachine() {
     this.committedUsage="0";/*1-YEAR,3-YEAR or 0 string depending on user input*/;
     this.rules=0;
     this.nrInstances=1;
+    this.numId=-1;
     // Functions
     this.instanceType=determineInstanceType(this.type);
     this.sustainedUsePerHour=sustainedUseHourly;
@@ -43,6 +44,7 @@ function Storage() {
     this.classAOps=0;/*millions of class A operations per month*/;
     this.classBOps=0;/*millions of class B operations per month*/;
     this.nrInstances=1;
+    this.numId=-1;
     // Functions
     this.costHour=storageCostHourly;
     this.costDay=storageCostHourly*24;
@@ -58,6 +60,7 @@ function Database() {
     this.dataWrites=0;/*user picked number of entity writes per month*/;
     this.dataDeletes=0;/*user picked number of entity deletes per month*/;
     this.nrInstances=1;
+    this.numId=-1;
     // Functions
     this.costHour=dataStoreCostHourly;
     this.costDay=dataStoreCostHourly*24;
