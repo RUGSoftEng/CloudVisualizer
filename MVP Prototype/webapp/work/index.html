@@ -14,6 +14,7 @@
 <script src="vendor/js/jquery-ui.min.js"></script>
 	<script src="calculations.js"></script>
 	<script src="js/scripts.min.js"></script>
+	<script src="js/canvasObjects.min.js"></script>
 </head>
 <body>
 
@@ -60,14 +61,17 @@
 
 					<h3>Data Base</h3>
 					<ul class="source" id="source">
-						<li>Amount of GB:<span id="demo4"></span></li>
-						<input type="range" min="1" max="50" value="3" class="slider" id="myRange4">
+						<li>Amount of GB:<span id="DBGB"></span></li>
+						<input type="range" min="1" max="50" value="3" class="slider" id="DBGBSliderID">
 						<li>Option 5</li>
 						<li>Option 6</li>
 					</ul>
 
 					<h3>Storage</h3>
+					<span id="drag1" draggable="true" ondragstart="dragStorage(event)">
 					<ul class="source" id="source">
+					
+					<!--
 						<li>Multi-Regional Storage GB:<span id="multi-reg-res"></span></li>
 						<input type="range" min="1" max="50" value="3" class="slider" id="multi-reg">
 						<li>Regional Storage GB:<span id="reg-res"></span></li>
@@ -76,32 +80,33 @@
 						<input type="range" min="1" max="50" value="3" class="slider" id="cloud-near">
 						<li>Could Storage Coldline GB:<span id="cloud-cold-res"></span></li>
 						<input type="range" min="1" max="50" value="3" class="slider" id="cloud-cold">
-						<li>Amount of GB:<span id="demo5"></span></li>
-						<input type="range" min="1" max="50" value="3" class="slider" id="myRange5">
+						-->
+						<li>Amount of GB:<span id="StorageGB"></span></li>
+						<input type="range" min="1" max="50" value="3" class="slider" id="StorageGBSliderID">
 					</ul>
-
+					</span>
     <h3>Virtual Machine</h3>
-<span>
+<span id="drag1" draggable="true" ondragstart="dragVM(event)">
 <ul class="source" id="source">
     Virtual machine:
-    <li>Number of instances:<span id="demo2"></span></li>
-<input type="range" min="1" max="10" value="3" class="slider" id="myRange2">
-    <li>Days per week:<span id="demo"></span></li>
-<input type="range" min="1" max="7" value="3" class="slider" id="myRange">
-    <li>Hours per day:<span id="demo3"></span></li>
-<input type="range" min="1" max="24" value="3" class="slider" id="myRange3">
+    <li>Number of instances:<span id="VMInstances"></span></li>
+<input type="range" min="1" max="10" value="3" class="slider" id="VMInstancesSliderID">
+    <li>Days per week:<span id="VMDays"></span></li>
+<input type="range" min="1" max="7" value="3" class="slider" id="VMDaysSliderID">
+    <li>Hours per day:<span id="VMHours"></span></li>
+<input type="range" min="1" max="24" value="3" class="slider" id="VMHoursSliderID">
     </ul>
 
     </span>
     </div>
 
-			<div class="canvas" id="canvas">
+			<div class="canvas" id="canvas" ondrop="drop(event)" ondragover="allowDrop(event)">
        <h2>My items</h2>
 
 
-       <ol id="items">
+       <div id="items">
 
-	   </ol>
+	   </div>
 			</div>
 			<button type="button" id="calculate" style="float:left; margin-left:0px;margin-top:0px;background-color: #ffaa00">Calculate</button>
 </div>
