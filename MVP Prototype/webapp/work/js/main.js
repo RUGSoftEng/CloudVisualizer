@@ -253,7 +253,7 @@ function clearBox(elementID) {
     Storages = [];
     VirtualMachines = [];
 }
-function removeIcon(elementID, uniqueIdentifier, listOfObjects){
+function removeIcon(elementID, uniqueIdentifier){
     var divId = "#"+elementID + "_"+uniqueIdentifier;
     $(divId).remove();
     console.log(elementID);
