@@ -60,4 +60,9 @@ Working on the graph again
 14-05-2018
 16:30 - 17:15 Merging frontend and backend branches manually 
 18:15 - 19:00 Merging frontend and backend branches manually
+
+16-05-2018
+12:00 - 12:15 Meeting
+12:15 - 14:45 Working together on some functionality in Bernouilliborg
+21:00 - 00:15 Working on functionality for: deleting an item from canvas, calculations when clicking the calculate button
   
