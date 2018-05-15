@@ -275,7 +275,7 @@ function addCalculationToDiv(string, totalPrice){
     var newListItem = '<a  class="list-group-item list-group-item-action flex-column align-items-start"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">';
     newListItem += '<h5 class="mb-1">Calculation for ' + service + '</h5>';
     newListItem += '<small>' + date.toTimeString() + '</small></div>';
-    newListItem += '<p class="mb-1">string: ' + string +  '</p>';
+    newListItem += '<p class="mb-1">' + string +  '</p>';
     newListItem += '<small>Totalprice: ' + totalPrice+ '</small></a>';
 
     var mainArea = document.getElementById("canvas-pop-up").children[0].innerHTML += newListItem;    
@@ -285,24 +285,21 @@ function calculate (){
     console.log("Querying cloudwatch for data from " + service);
 
     var result = '';
-    var data ={'service' : service};
 
     // send HTTP request to Node so that it communicates with cloudwatch
     $.ajax({
         type: 'POST',
         url: '/cloudwatch',
-        contentType: 'html/text',
-        data: data,
+        contentType: 'application/json',
+        data: JSON.stringify({ "service": service }),
         success: function (res) {
             result += res;
         }
     })
     // callback function when request is finished
     .done(function(){
-        console.log("Finished processing response of AJAX request to cloudwatch");
 
-        // Stringified JSON data received from Cloudwatch
-        //console.log(result);
+        console.log("Finished processing response of AJAX request to cloudwatch ");
 
         var totalprice=0;
         var myString='';
@@ -315,7 +312,7 @@ function calculate (){
         //     myString += '\n' + "Virtual machine " + i + "     " + Math.round(value*100)/100;
         // }
 
-        addCalculationToDiv(myString, Math.round(totalprice*100)/100);
+        addCalculationToDiv(result.substring(0, 300), Math.round(totalprice*100)/100);
         showCaculationDiv();
     });
 }
@@ -373,18 +370,19 @@ $(function() {
     // Get the modal
     var modal = document.getElementById('myModal');
 
-// Get the button that opens the modal
+    // Get the button that opens the modal
     var btn = document.getElementById("provider");
     var btn1 = document.getElementById("save-modal");
 
-// Get the <span> element that closes the modal
+    // Get the <span> element that closes the modal
     var span = document.getElementsByClassName("close")[0];
 
-// When the user clicks the button, open the modal
+    // When the user clicks the button, open the modal
     btn.onclick = function() {
         modal.style.display = "block";
     }
-//When the user clicks on Save, close the modal
+    
+    //When the user clicks on Save, close the modal
     btn1.onclick=function() {
         // save current provider
         $("input:checked").parent().each(function(){
@@ -393,12 +391,13 @@ $(function() {
     
         modal.style.display = "none";
     }
-// When the user clicks on <span> (x), close the modal
+    
+    // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
         modal.style.display = "none";
     }
 
-// When the user clicks anywhere outside of the modal, close it
+    // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = "none";

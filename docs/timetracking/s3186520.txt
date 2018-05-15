@@ -112,6 +112,13 @@
 - restructure folder
 - refactoring main.js
 - work on calculations part 
+- refactoring main.js app.js
+- implementation user's provider choice
+- implementation user's provider choice
+- fix sending service parameter jquery
+- fix sending service parameter jquery
+- put data in list sections
+- put data in list sections
 
 
 
