@@ -230,6 +230,9 @@ function refresh() {
 
 function clearBox(elementID) {
     document.getElementById(elementID).innerHTML = "";
+    Databases = [];
+    Storages = [];
+    VirtualMachines = [];
 }
 function removeIcon(elementID, uniqueIdentifier, listOfObjects){
     var divId = "#"+elementID + "_"+uniqueIdentifier;
