@@ -119,6 +119,14 @@
 - fix sending service parameter jquery
 - put data in list sections
 - put data in list sections
+- work on graphjs example
+- work on graphjs example
+- work on graphjs example
+- work on graphjs example
+- set up cloudwatch forwarding at home
+- set up cloudwatch forwarding at home
+- fix broken code
+
 
 
 

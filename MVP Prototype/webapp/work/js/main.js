@@ -335,37 +335,25 @@ function calculate (){
     })
     // callback function when request is finished
     .done(function(){
-
         console.log("Finished processing response of AJAX request to cloudwatch ");
 
         var totalprice=0;
         var myString='';
 
-        // perform calculation(s) here
-
         // Monthly
-        console.log(VirtualMachines);
-        for (var i in VirtualMachines) {
-            console.log(VirtualMachines[i]);
-            console.log(new VirtualMachine());
-            //console.log(new VirtualMachine().costMonthly());
-            //console.log(VirtualMachines[i].costMonthly()*VirtualMachines[i].nrInstances);
-            //console.log("Monthly costs: " + VirtualMachines[i].costMonthly());
-        }
-        for (var i in Databases) {
-            console.log("Monthly costs: " + Databases[i].costMonthly());
-        }
-        for (var i in Storages) {
-            console.log("Monthly costs: " + Storages[i].costMonthly());
-        }
-
-
-
-
+        // console.log(VirtualMachines);
         // for (var i in VirtualMachines) {
-        //     var value = VirtualMachines[i].costMonthly() * VirtualMachines[i].nrInstances;
-        //     totalprice += value;
-        //     myString += '\n' + "Virtual machine " + i + "     " + Math.round(value*100)/100;
+        //     console.log(VirtualMachines[i]);
+        //     console.log(new VirtualMachine());
+        //     //console.log(new VirtualMachine().costMonthly());
+        //     //console.log(VirtualMachines[i].costMonthly()*VirtualMachines[i].nrInstances);
+        //     //console.log("Monthly costs: " + VirtualMachines[i].costMonthly());
+        // }
+        // for (var i in Databases) {
+        //     console.log("Monthly costs: " + Databases[i].costMonthly());
+        // }
+        // for (var i in Storages) {
+        //     console.log("Monthly costs: " + Storages[i].costMonthly());
         // }
 
         addCalculationToDiv(result.substring(0, 300), Math.round(totalprice*100)/100);
