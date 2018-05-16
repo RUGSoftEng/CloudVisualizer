@@ -86,7 +86,7 @@ function addVirtualMachine(newVM) {
         //Creates new VM
         newVM.numId=idCounter++;
         VirtualMachines.push(newVM);
-        console.log(VirtualMachines[0]);
+        //console.log(VirtualMachines[0]);
         //Adds HTML for the new VM to the canvas
         addHTML(VirtualMachines.length-1, newVM.nrInstances, "vm", newVM.numId, VirtualMachines);
         checkIcon(VirtualMachines, "vm", VirtualMachines.length-1);
@@ -184,7 +184,7 @@ function openPopup(objectToEdit){
     /*Insert code that shows the html of the popup*/
     for (var property in objectToEdit) {
         if (objectToEdit.hasOwnProperty(property)) {
-            console.log(property);
+            //console.log(property);
             attachVariable(property,objectToEdit);
         }
     }

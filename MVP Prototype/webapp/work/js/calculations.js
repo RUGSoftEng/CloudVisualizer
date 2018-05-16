@@ -67,17 +67,7 @@ function Database() {
     this.costMonthly=dataStoreCostHourly*24*(365/12);
     this.costYear=dataStoreCostHourly*24*365;
 }
-function googlepricelist (){
-    console.log("starting new google pricelist");
-    $.ajax({
-        type: 'GET',
-        url: '/users3',
-        contentType: 'application/json',
-        success: function (result) {
-            pricelist=result[0].gcp_price_list;
-        }
-    });
-}
+
 function determineInstanceType(type) {
     if (type == "custom") {
         return {
