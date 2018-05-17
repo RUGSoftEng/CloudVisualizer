@@ -126,6 +126,10 @@
 - set up cloudwatch forwarding at home
 - set up cloudwatch forwarding at home
 - fix broken code
+- meeting with client
+- talk with group afterwards
+- fix provider selecting 
+- create json files for the cloudwatch API
 
 
 

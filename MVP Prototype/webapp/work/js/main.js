@@ -7,11 +7,6 @@ var DBSize;
 var calculate;
 var service = 'google-cloud';
 
-// //drag
-// $(document).ready(function(){
-   
-// });
-
 // from canvasObject
 var VirtualMachines=[];
 var Databases=[];
@@ -340,16 +335,19 @@ function calculate (){
         var totalprice=0;
         var myString='';
 
+
         // Monthly
         // console.log(VirtualMachines);
         // for (var i in VirtualMachines) {
+        //     VirtualMachines[i].costMonthly=VMCostMonthly;
         //     console.log(VirtualMachines[i]);
         //     console.log(new VirtualMachine());
-        //     //console.log(new VirtualMachine().costMonthly());
-        //     //console.log(VirtualMachines[i].costMonthly()*VirtualMachines[i].nrInstances);
-        //     //console.log("Monthly costs: " + VirtualMachines[i].costMonthly());
+        //     console.log(new VirtualMachine().costMonthly());
+        //     console.log(VirtualMachines[i].costMonthly()*VirtualMachines[i].nrInstances);
+        //     console.log("Monthly costs: " + VirtualMachines[i].costMonthly());
         // }
         // for (var i in Databases) {
+        //    // Databases[i].costMonthly=VMCostMonthly;
         //     console.log("Monthly costs: " + Databases[i].costMonthly());
         // }
         // for (var i in Storages) {
@@ -444,6 +442,9 @@ $(function() {
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
         if (event.target == modal) {
+            $("input:checked").parent().each(function(){
+                service = this.innerText;
+            })
             modal.style.display = "none";
         }
 
