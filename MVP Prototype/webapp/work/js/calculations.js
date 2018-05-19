@@ -112,20 +112,46 @@ function sustainedUseHourly(){
         cud=0.7;
     }else{
         var k=1;
-        var f=this.days/7*this.hours/24;
+        var f=(this.days/7)*(this.hours/24);
         disc=0;
         while(f>k*pricelist["sustained_use_base"]){
-            disc+=pricelist["sustained_use_base"]*f>k*pricelist["sustained_use_tiers"][k-1];
-            console.log(disc);
+            switch (k-1) {
+                case 0:
+                    disc+=pricelist["sustained_use_base"]*f>k*pricelist["sustained_use_tiers"]["0.25"];
+                    break;
+                case 1:
+                    disc+=pricelist["sustained_use_base"]*f>k*pricelist["sustained_use_tiers"]["0.50"];
+                    break;
+                case 2:
+                    disc+=pricelist["sustained_use_base"]*f>k*pricelist["sustained_use_tiers"]["0.75"];
+                    break;
+                case 3:
+                    disc+=pricelist["sustained_use_base"]*f>k*pricelist["sustained_use_tiers"]["1.0"];
+                    break;
+            }
             k+=1;
         }
-        disc+=f%pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"][k-1];
-        console.log(pricelist["sustained_use_tiers"]);
-        console.log("The keys ofo sustained_use_tiers are: "+Object.keys(pricelist["sustained_use_tiers"]));
-        console.log("pricelist[sustained_use_tiers][k-1]: "+pricelist["sustained_use_tiers"][k-1]);
+        console.log(disc);
+        console.log(f);
+        switch (k-1) {
+            case 0:
+                disc+=f%pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"]["0.25"];
+                break;
+            case 1:
+                disc+=f%pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"]["0.50"];
+                break;
+            case 2:
+                disc+=f%pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"]["0.75"];
+                break;
+            case 3:
+                disc+=f%pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"]["1.0"];
+                break;
+        }
         disc/=f;
     }
-    console.log(disc);
+    if (disc==0) {
+        disc=1;
+    }
     return disc*(this.osPerHour()+this.instancePerHour()
         +this.localSSDPerHour()+cud*this.GPUPerHour());
 }
