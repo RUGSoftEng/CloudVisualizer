@@ -386,7 +386,6 @@ function calculateTemp (){
 
             for (var i in VirtualMachines) {
                 VirtualMachines[i].instanceType=determineInstanceType(VirtualMachines[i].type);
-                console.log(VirtualMachines[i].nrInstances);
                 console.log(VirtualMachines[i].costMonthly());
             }
             for (var i in Databases) {
