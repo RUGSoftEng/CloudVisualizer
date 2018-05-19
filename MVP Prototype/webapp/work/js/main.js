@@ -244,19 +244,14 @@ function drop(ev) {
     var obj = JSON.parse(ev.dataTransfer.getData("foo"));
     if (obj.objectName === "VirtualMachine") {
         var instance = Object.assign(new VirtualMachine(), obj);
-        console.log(instance);
-        console.log(new VirtualMachine());
         addVirtualMachine(instance);
     }
     if (obj.objectName === "Database") {
         var instance = Object.assign(new Database(), obj);
-        console.log(instance);
-        console.log(new Database());
         addDatabase(instance);
     }
     if (obj.objectName === "Storage") {
         var instance = Object.assign(new Storage(), obj);
-        console.log(instance);
         addStorage(instance);
     }
 }
@@ -381,6 +376,7 @@ function calculateTemp (){
             //callback(xobj.responseText);
             var variable=JSON.parse(xobj.responseText);
             pricelist=variable["gcp_price_list"];
+            console.log(pricelist);
 
             /** Calculations */
 
