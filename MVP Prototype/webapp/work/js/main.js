@@ -535,7 +535,6 @@ function topFunction() {
 }
 
 function showSettings(id, uniqueIdentifier){
-	document.getElementById(id+"Edit").style.display = "block";
     if (id=="vm") {
         openPopup(VirtualMachines[getObjectById(uniqueIdentifier, VirtualMachines)]);
         return;
