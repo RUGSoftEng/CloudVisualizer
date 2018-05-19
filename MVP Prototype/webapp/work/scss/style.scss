@@ -134,25 +134,27 @@ a p,h4{
     background: DarkCyan;
     cursor: pointer;
 }
+
+/*
 .modal {
     display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
+/*    position: fixed; /* Stay in place */
+/*    z-index: 1; /* Sit on top */
+/*    left: 0;
     top: 0;
     width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    -webkit-animation-name: fadeIn; /* Fade in the background */
-    -webkit-animation-duration: 0.4s;
+//    height: 100%; /* Full height */
+//    overflow: auto; /* Enable scroll if needed */
+//    background-color: rgb(0,0,0); /* Fallback color */
+//    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+//    -webkit-animation-name: fadeIn; /* Fade in the background */
+/*    -webkit-animation-duration: 0.4s;
     animation-name: fadeIn;
     animation-duration: 0.4s
 }
 
 /* Modal Content */
-.modal-content {
+/*.modal-content {
     position: fixed;
     bottom: 0;
     background-color: #fefefe;
@@ -164,7 +166,7 @@ a p,h4{
 }
 
 /* The Close Button */
-.close {
+/*.close {
     color: DarkCyan;
     float: right;
     font-size: 28px;
@@ -192,7 +194,7 @@ a p,h4{
     color: #343a40;
 }
 
-/* Add Animation */
+/* Add Animation *//*
 @-webkit-keyframes slideIn {
     from {bottom: -300px; opacity: 0}
     to {bottom: 0; opacity: 1}
@@ -211,7 +213,7 @@ a p,h4{
 @keyframes fadeIn {
     from {opacity: 0}
     to {opacity: 1}
-}
+}*/
 .grab {
     cursor: move; /* fallback if grab cursor is unsupported */
     cursor: grab;

@@ -7,11 +7,6 @@ var DBSize;
 var calculate;
 var service = 'google-cloud';
 
-// //drag
-// $(document).ready(function(){
-   
-// });
-
 // from canvasObject
 var VirtualMachines=[];
 var Databases=[];
@@ -86,7 +81,7 @@ function addVirtualMachine(newVM) {
         //Creates new VM
         newVM.numId=idCounter++;
         VirtualMachines.push(newVM);
-        console.log(VirtualMachines[0]);
+        //console.log(VirtualMachines[0]);
         //Adds HTML for the new VM to the canvas
         addHTML(VirtualMachines.length-1, newVM.nrInstances, "vm", newVM.numId, VirtualMachines);
         checkIcon(VirtualMachines, "vm", VirtualMachines.length-1);
@@ -193,7 +188,7 @@ function openPopup(objectToEdit){
 
 //We have a basic HTML structure, where we fill in the details for each Object
 function addHTML(par1,par3, id, uniqueIdentifier, listOfObjects){
-    var objectHTML="<div id='"+id+"_"+uniqueIdentifier+"' class='icons'><img src='images/"+id+".png'><p>"+par3+"</p> <a href='#' onclick='removeIcon(\""+id+"\", \""+uniqueIdentifier+"\", \""+listOfObjects+"\");'>x</a><a href='#' onclick='showSettings(\""+id+"\", "+uniqueIdentifier+");'> S </a></div>";
+    var objectHTML="<div id='"+id+"_"+uniqueIdentifier+"' class='icons'><img src='images/"+id+".png'><p>"+par3+"</p> <a href='#' onclick='removeIcon(\""+id+"\", \""+uniqueIdentifier+"\", \""+listOfObjects+"\");'><span class='glyphicon glyphicon-trash'></span></a><a href='#' data-toggle='modal' data-target='#"+id+"Settings'	onclick='showSettings(\""+id+"\", "+uniqueIdentifier+");'> <span class='glyphicon glyphicon-wrench'></span> </a></div>";
     $("#items").append(objectHTML);
 }
 
@@ -341,8 +336,6 @@ function calculate (){
 
     // callback function when request is finished
     .done(function(){
-
-
         console.log("Finished processing response of AJAX request to cloudwatch ");
 
         console.log(JSON.stringify("/google.json"));
@@ -350,31 +343,23 @@ function calculate (){
         var totalprice=0;
         var myString='';
 
-        // perform calculation(s) here
 
         // Monthly
-        console.log(VirtualMachines);
-        for (var i in VirtualMachines) {
-            console.log(VirtualMachines[i]);
-            console.log(new VirtualMachine());
-            //console.log(new VirtualMachine().costMonthly());
-            //console.log(VirtualMachines[i].costMonthly()*VirtualMachines[i].nrInstances);
-            //console.log("Monthly costs: " + VirtualMachines[i].costMonthly());
-        }
-        for (var i in Databases) {
-            console.log("Monthly costs: " + Databases[i].costMonthly());
-        }
-        for (var i in Storages) {
-            console.log("Monthly costs: " + Storages[i].costMonthly());
-        }
-
-
-
-
+        // console.log(VirtualMachines);
         // for (var i in VirtualMachines) {
-        //     var value = VirtualMachines[i].costMonthly() * VirtualMachines[i].nrInstances;
-        //     totalprice += value;
-        //     myString += '\n' + "Virtual machine " + i + "     " + Math.round(value*100)/100;
+        //     VirtualMachines[i].costMonthly=VMCostMonthly;
+        //     console.log(VirtualMachines[i]);
+        //     console.log(new VirtualMachine());
+        //     console.log(new VirtualMachine().costMonthly());
+        //     console.log(VirtualMachines[i].costMonthly()*VirtualMachines[i].nrInstances);
+        //     console.log("Monthly costs: " + VirtualMachines[i].costMonthly());
+        // }
+        // for (var i in Databases) {
+        //    // Databases[i].costMonthly=VMCostMonthly;
+        //     console.log("Monthly costs: " + Databases[i].costMonthly());
+        // }
+        // for (var i in Storages) {
+        //     console.log("Monthly costs: " + Storages[i].costMonthly());
         // }
 
         addCalculationToDiv(result.substring(0, 300), Math.round(totalprice*100)/100);
@@ -523,6 +508,9 @@ $(function() {
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
         if (event.target == modal) {
+            $("input:checked").parent().each(function(){
+                service = this.innerText;
+            })
             modal.style.display = "none";
         }
 
