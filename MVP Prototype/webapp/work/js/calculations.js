@@ -99,7 +99,7 @@ function resetAll() {
 }
 //input the results of running the other functions into these:
 function VMCostMonthly(){
-    return this.sustainedUsePerHour()*this.hours*this.days/7*365/12+this.TPUPerHour()*this.hours*365/12+(this.PDPerHour()+this.LBPerHour())*24*365/12*this.nrInstances;
+    return (this.sustainedUsePerHour()*this.hours*this.days/7*365/12+this.TPUPerHour()*this.hours*365/12+(this.PDPerHour()+this.LBPerHour())*24*365/12)*this.nrInstances;
 }
 var totalCostMonthly=function(VMCostPerMonth,StoragePerHour,dataStorePerHour){
     return VMCostPerMonth+(StoragePerHour+dataStorePerHour)*24*365/12;
@@ -131,8 +131,6 @@ function sustainedUseHourly(){
             }
             k+=1;
         }
-        console.log(disc);
-        console.log(f);
         switch (k-1) {
             case 0:
                 disc+=f%pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"]["0.25"];
@@ -227,7 +225,6 @@ function TPUHourly(){
     return this.numTPU*this.TPUHours/24*pricelist["CP-CLOUD-TPU"]["us-central1"];
 }
 function storageCostHourly(){
-    console.log()
     return ((pricelist["CP-BIGSTORE-STORAGE-MULTI_REGIONAL"][this.region]*this.multiRegional
         +pricelist["CP-BIGSTORE-STORAGE-REGIONAL"][this.region]*this.regional
         +pricelist["CP-BIGSTORE-STORAGE-NEARLINE"][this.region]*this.nearline

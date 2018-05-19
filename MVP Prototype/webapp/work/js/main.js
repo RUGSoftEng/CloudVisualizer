@@ -386,6 +386,7 @@ function calculateTemp (){
 
             for (var i in VirtualMachines) {
                 VirtualMachines[i].instanceType=determineInstanceType(VirtualMachines[i].type);
+                console.log(VirtualMachines[i].nrInstances);
                 console.log(VirtualMachines[i].costMonthly());
             }
             for (var i in Databases) {
@@ -399,29 +400,10 @@ function calculateTemp (){
         }
     };
     xobj.send(null);
-
-    // callback function when request is finished
-
-
-    console.log("Finished processing response of AJAX request to cloudwatch ");
-
     var totalprice=0;
     var myString='';
-    // perform calculation(s) here
-
-    // Monthly
-
-
-
-
-            // for (var i in VirtualMachines) {
-            //     var value = VirtualMachines[i].costMonthly() * VirtualMachines[i].nrInstances;
-            //     totalprice += value;
-            //     myString += '\n' + "Virtual machine " + i + "     " + Math.round(value*100)/100;
-            // }
-
-            addCalculationToDiv(result.substring(0, 300), Math.round(totalprice*100)/100);
-            showCaculationDiv();
+    addCalculationToDiv(result.substring(0, 300), Math.round(totalprice*100)/100);
+    showCaculationDiv();
 
 }
 
