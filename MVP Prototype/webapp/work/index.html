@@ -286,7 +286,13 @@
             var ctx = document.getElementById("myChart").getContext('2d');
             var myChart = new Chart(ctx, {
                 type: 'line',
-                data: {},
+                data: {data: [{
+                    x: 10,
+                    y: 20
+                }, {
+                    x: 15,
+                    y: 10
+                }]},
                 options: {
                     animation: 0,
                     responsive: false,
