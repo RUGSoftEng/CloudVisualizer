@@ -49,6 +49,8 @@ $filterwidth: 220px;
 	border-style: solid;
 	border: 2px solid gray;
 	background-color: WhiteSmoke;
+	display:flex;
+	overflow:auto;
 }
 
 .canvas-pop-up{
@@ -266,4 +268,16 @@ box-shadow: 0 0 10px rgba(0,0,0,0.6);
 
 #top:hover {
   background-color: #555;
+}
+#itemsdb {
+width: 33.3%;
+position: relative;
+}
+#itemsvm {
+width: 33.3%;
+position: relative;
+}
+#itemsst {
+width: 33.3%;
+position: relative;
 }

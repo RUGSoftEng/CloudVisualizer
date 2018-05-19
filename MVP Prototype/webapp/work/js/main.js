@@ -189,7 +189,14 @@ function openPopup(objectToEdit){
 //We have a basic HTML structure, where we fill in the details for each Object
 function addHTML(par1,par3, id, uniqueIdentifier, listOfObjects){
     var objectHTML="<div id='"+id+"_"+uniqueIdentifier+"' class='icons'><img src='images/"+id+".png'><p>"+par3+"</p> <a href='#' onclick='removeIcon(\""+id+"\", \""+uniqueIdentifier+"\", \""+listOfObjects+"\");'><span class='glyphicon glyphicon-trash'></span></a><a href='#' data-toggle='modal' data-target='#"+id+"Settings'	onclick='showSettings(\""+id+"\", "+uniqueIdentifier+");'> <span class='glyphicon glyphicon-wrench'></span> </a></div>";
-    $("#items").append(objectHTML);
+    if(id==="vm")
+      $("#itemsvm").append(objectHTML);
+    else if(id==="db")
+      $("#itemsdb").append(objectHTML);
+    else {
+        $("#itemsst").append(objectHTML);
+    }
+
 }
 
 //Since we incorperated the ID in the div of the Object, we can easily edit it now
@@ -257,16 +264,18 @@ function drop(ev) {
 }
 
 function refresh() {
-    clearBox('items');
+    clearBox('itemsvm');
     for (var i in VirtualMachines) {
         var curVM  = VirtualMachines[i];
-        $("#items").append($('<div class="test"></div>').html('<img src="images/VM.png">'));
+        $("#itemsvm").append($('<div class="test" ></div>').html('<img src="images/VM.png">'));
         console.log(i.hours);
     }
 }
 
-function clearBox(elementID) {
-    document.getElementById(elementID).innerHTML = "";
+function clearBox(elementID1,elementID2,elementID3) {
+    document.getElementById(elementID1).innerHTML = "";
+    document.getElementById(elementID2).innerHTML = "";
+    document.getElementById(elementID3).innerHTML = "";
     Databases = [];
     Storages = [];
     VirtualMachines = [];
@@ -309,7 +318,7 @@ function addCalculationToDiv(string, totalPrice){
     newListItem += '<p class="mb-1">' + string +  '</p>';
     newListItem += '<small>Totalprice: ' + totalPrice+ '</small></a>';
 
-    var mainArea = document.getElementById("canvas-pop-up").children[0].innerHTML += newListItem;    
+    var mainArea = document.getElementById("canvas-pop-up").children[0].innerHTML += newListItem;
 }
 
 function calculate (){
@@ -462,17 +471,17 @@ $(function() {
     btn.onclick = function() {
         modal.style.display = "block";
     }
-    
+
     //When the user clicks on Save, close the modal
     btn1.onclick=function() {
         // save current provider
         $("input:checked").parent().each(function(){
             service = this.innerText;
         })
-    
+
         modal.style.display = "none";
     }
-    
+
     // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
         modal.style.display = "none";

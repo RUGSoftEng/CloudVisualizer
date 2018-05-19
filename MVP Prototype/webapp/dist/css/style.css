@@ -50,7 +50,9 @@ html, body {
   border-radius: 3px     5px      5px           3px;
   border-style: solid;
   border: 2px solid gray;
-  background-color: WhiteSmoke; }
+  background-color: WhiteSmoke;
+  display: flex;
+  overflow: auto; }
 
 .canvas-pop-up {
   display: none;
@@ -247,3 +249,15 @@ a p, h4 {
 
 #top:hover {
   background-color: #555; }
+
+#itemsdb {
+  width: 33.3%;
+  position: relative; }
+
+#itemsvm {
+  width: 33.3%;
+  position: relative; }
+
+#itemsst {
+  width: 33.3%;
+  position: relative; }
