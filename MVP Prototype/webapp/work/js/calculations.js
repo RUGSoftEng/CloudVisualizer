@@ -30,8 +30,8 @@ function VirtualMachine() {
     this.LBPerHour=LBHourly;
     this.TPUPerHour=TPUHourly;
     this.costMonthly=VMCostMonthly;
-    this.costQuarter=VMCostMonthly;
-    this.costYear=VMCostMonthly;
+    this.costQuarter=VMCostMonthly; // Not correct
+    this.costYear=VMCostMonthly; // Not correct
 }
 function Storage() {
     this.objectName="Storage";
@@ -99,7 +99,7 @@ function resetAll() {
 }
 //input the results of running the other functions into these:
 function VMCostMonthly(){
-    return this.sustainedUsePerHour()*this.hours*this.days/7*365/12+this.TPUPerHour()*this.hours*365/12+(this.PDPerHour()+this.LBPerHour())*24*365/12;
+    return this.sustainedUsePerHour()*this.hours*this.days/7*365/12+this.TPUPerHour()*this.hours*365/12+(this.PDPerHour()+this.LBPerHour())*24*365/12*this.nrInstances;
 }
 var totalCostMonthly=function(VMCostPerMonth,StoragePerHour,dataStorePerHour){
     return VMCostPerMonth+(StoragePerHour+dataStorePerHour)*24*365/12;
@@ -228,12 +228,12 @@ function TPUHourly(){
 }
 function storageCostHourly(){
     console.log()
-    return (pricelist["CP-BIGSTORE-STORAGE-MULTI_REGIONAL"][this.region]*this.multiRegional
+    return ((pricelist["CP-BIGSTORE-STORAGE-MULTI_REGIONAL"][this.region]*this.multiRegional
         +pricelist["CP-BIGSTORE-STORAGE-REGIONAL"][this.region]*this.regional
         +pricelist["CP-BIGSTORE-STORAGE-NEARLINE"][this.region]*this.nearline
         +pricelist["CP-BIGSTORE-STORAGE-COLDLINE"][this.region]*this.coldline
         +100*this.classAOps*pricelist["CP-BIGSTORE-CLASS-A-REQUEST"][this.region]
-        +100*this.classBOps*pricelist["CP-BIGSTORE-CLASS-B-REQUEST"][this.region])*12/365/24;
+        +100*this.classBOps*pricelist["CP-BIGSTORE-CLASS-B-REQUEST"][this.region])*12/365/24)*this.nrInstances;
 }
 
 function storageCostDaily() {
@@ -263,7 +263,7 @@ function dataStoreCostHourly(){
     if(this.dataSize>pricelist["CP-CLOUD-DATASTORE-INSTANCES"]["freequota"]["quantity"]){
         cost+=(this.dataSize-pricelist["CP-CLOUD-DATASTORE-INSTANCES"]["freequota"]["quantity"])*pricelist["CP-CLOUD-DATASTORE-INSTANCES"]["us"]
     }
-    return cost*12/365/24;
+    return (cost*12/365/24)*nrInstances;
 }
 
 function dataStoreCostDaily() {
