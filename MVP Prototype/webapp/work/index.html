@@ -49,8 +49,12 @@
 			<h1  >Cloud Cost Visualizer</h1>
 		</div>
 		<!-- BODY -->
-		<div class="content">
-		<h4> <button id="provider" style="color:#ffaa00" data-toggle="modal" data-target="#exampleModal2">Provider</button> </h4>
+		<div class="content" >
+			<h4>
+		 <button id="provider"style="padding-right:150px;margin-left:0px;color:black;background-color:WhiteSmoke"   data-toggle="modal" data-target="#exampleModal2">Provider</button>
+			<button onclick="clearBox('itemsvm','itemsst','itemsdb')" type="button">Clear canvas</button>
+			<button onclick="calculateTemp()" type="button" style="margin-left:630px;background-color: #ffaa00">Calculate</button>
+		</h4>
 		<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -80,8 +84,7 @@
 				</div>
 			</div>
 		</div>
-		<button onclick="clearBox('itemsvm','itemsst','itemsdb')" type="button">Clear canvas</button>
-		<button onclick="calculateTemp()" type="button" style="float:right; margin-left:0px;margin-top:0px;background-color: #ffaa00">Calculate</button>
+
 		<div class="filters" id="myAccordion" >
 			<h3>Data Base</h3>
 			<ul class="source" id="source">
@@ -110,20 +113,16 @@
 				<input type="range" min="1" max="24" value="3" class="slider" id="VMHoursSliderID">
 			</ul>
 		</div>
-		<div class="canvas" id="canvas" ondrop="drop(event)" ondragover="allowDrop(event)">
+		<div class="canvas"  id="canvas" ondrop="drop(event)" ondragover="allowDrop(event)">
 
 
-			<div id="itemsdb" style=" padding-left:200px" >
-			</div>
-				<div id="itemsst" style=" padding-left:100px"  >
-				</div>
-
-				<div id="itemsvm" style=" padding-right: 200px"  >
-				</div>
+				<div id="itemsdb" style=" padding-left:10px"></div>
+				<div id="itemsst" style=" padding-left:75px"></div>
+				<div id="itemsvm" style=" padding-left: 170px"></div>
 
 		</div>
 		<button onclick="topFunction()" id="top" title="Go to top">Top</button>
-		<div class="canvas-pop-up" id="canvas-pop-up" style="background-color:yellow;">
+		<div class="canvas-pop-up" id="canvas-pop-up">
 			<div class="list-group">
 			</div>
 		</div>
@@ -283,9 +282,11 @@
     </div>
   </div>
 </div>
+   <div class="graph">
+		<canvas id="myChart" width="865" height="400"></canvas>
+ 		<button id="x">Button</button>
+   </div>
 
-		<canvas id="myChart" width="400" height="400"></canvas>
-		<button id="x">Button</button>
 
 		<script>
             // create (empty) graph in the canvas
