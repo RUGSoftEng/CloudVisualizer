@@ -153,7 +153,7 @@ function getObjectById(id, listOfObjects) {
 function attachVariable (variableName,variableObject) {
     var input = document.getElementById(variableName);
     if (variableName === "type"){
-		var keys = pricelist.keys();
+		var keys = Object.keys(pricelist);
 		for (var i=0;i<keys.length;i++){
 			var typeName = (keys[i]).replace("CP-COMPUTEENGINE-VMIMAGE-","");
 			if(keys[i] !== typeName && (keys[i]).match("PREEMPTIBLE")==null){
@@ -175,7 +175,7 @@ function attachVariable (variableName,variableObject) {
         input.value = variableObject[variableName];
         input.onchange = function () {
             variableObject[variableName] = this.value;
-            console.log(variableObject[variableName]);
+            //console.log(variableObject[variableName]);
         }
     }
 }
@@ -184,7 +184,7 @@ function openPopup(objectToEdit){
     /*Insert code that shows the html of the popup*/
     for (var property in objectToEdit) {
         if (objectToEdit.hasOwnProperty(property)) {
-            console.log(property);
+            //console.log(property);
             attachVariable(property,objectToEdit);
         }
     }
@@ -249,17 +249,21 @@ function drop(ev) {
     var obj = JSON.parse(ev.dataTransfer.getData("foo"));
     if (obj.objectName === "VirtualMachine") {
         var instance = Object.assign(new VirtualMachine(), obj);
+        console.log(instance);
+        console.log(new VirtualMachine());
         addVirtualMachine(instance);
     }
     if (obj.objectName === "Database") {
         var instance = Object.assign(new Database(), obj);
+        console.log(instance);
+        console.log(new Database());
         addDatabase(instance);
     }
     if (obj.objectName === "Storage") {
         var instance = Object.assign(new Storage(), obj);
+        console.log(instance);
         addStorage(instance);
     }
-    //refresh();
 }
 
 function refresh() {
@@ -323,6 +327,7 @@ function calculate (){
 
     var result = '';
 
+
     // send HTTP request to Node so that it communicates with cloudwatch
     $.ajax({
         type: 'POST',
@@ -333,10 +338,14 @@ function calculate (){
             result += res;
         }
     })
+
     // callback function when request is finished
     .done(function(){
 
+
         console.log("Finished processing response of AJAX request to cloudwatch ");
+
+        console.log(JSON.stringify("/google.json"));
 
         var totalprice=0;
         var myString='';
@@ -371,6 +380,64 @@ function calculate (){
         addCalculationToDiv(result.substring(0, 300), Math.round(totalprice*100)/100);
         showCaculationDiv();
     });
+}
+
+function calculateTemp (){
+    //console.log("Querying cloudwatch for data from " + service);
+
+    var result = '';
+
+    var xobj = new XMLHttpRequest();
+    xobj.overrideMimeType("application/json");
+    xobj.open('GET', 'google.json', true); // Replace 'my_data' with the path to your file
+    xobj.onreadystatechange = function () {
+        if (xobj.readyState == 4 && xobj.status == "200") {
+            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+            //callback(xobj.responseText);
+            var variable=JSON.parse(xobj.responseText);
+            pricelist=variable["gcp_price_list"];
+
+            /** Calculations */
+
+            for (var i in VirtualMachines) {
+                VirtualMachines[i].instanceType=determineInstanceType(VirtualMachines[i].type);
+                console.log(VirtualMachines[i].costMonthly());
+            }
+            for (var i in Databases) {
+                console.log("Monthly costs: " + Databases[i].costMonthly());
+            }
+            for (var i in Storages) {
+                console.log("Monthly costs: " + Storages[i].costMonthly());
+            }
+
+            /** */
+        }
+    };
+    xobj.send(null);
+
+    // callback function when request is finished
+
+
+    console.log("Finished processing response of AJAX request to cloudwatch ");
+
+    var totalprice=0;
+    var myString='';
+    // perform calculation(s) here
+
+    // Monthly
+
+
+
+
+            // for (var i in VirtualMachines) {
+            //     var value = VirtualMachines[i].costMonthly() * VirtualMachines[i].nrInstances;
+            //     totalprice += value;
+            //     myString += '\n' + "Virtual machine " + i + "     " + Math.round(value*100)/100;
+            // }
+
+            addCalculationToDiv(result.substring(0, 300), Math.round(totalprice*100)/100);
+            showCaculationDiv();
+
 }
 
 $(function() {
