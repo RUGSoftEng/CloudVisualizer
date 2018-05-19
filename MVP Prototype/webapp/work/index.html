@@ -13,6 +13,7 @@
 		<script src="vendor/js/jquery-ui.min.js"></script>
 		<script src="js/calculations.min.js"></script>
 		<script src="js/main.min.js"></script>
+		<script src="js/Chart.min.js"></script>
 		<script src="vendor/js/bootstrap.js"></script>
 		<link href="vendor/css/bootstrap.min.css" rel="stylesheet">
 		<link href="vendor/css/bootstrap-theme.min.css" rel="stylesheet">
@@ -276,6 +277,48 @@
     </div>
   </div>
 </div>
+
+		<canvas id="myChart" width="400" height="400"></canvas>
+		<button id="x">Button</button>
+
+		<script>
+            // create (empty) graph in the canvas
+            var ctx = document.getElementById("myChart").getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {},
+                options: {
+                    animation: 0,
+                    responsive: false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    }
+                }
+            });
+
+            // add click event to button
+            document.getElementById("x").addEventListener('click', function(){
+                console.log("button clicked");
+            })
+
+            // create array of points
+            function createLinearFunction(pricePerMonth){
+                var data = [];
+
+                for(var i=1; i<=12; i++){
+                    data.push(i*pricePerMonth);
+                }
+
+                return data;
+            }
+
+            // update graph
+            // ...
+		</script>
 		<!--
 			<div class="footer">
 			       <h3>The footer container</h3>

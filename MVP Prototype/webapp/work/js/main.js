@@ -366,7 +366,7 @@ function calculate (){
         showCaculationDiv();
     });
 }
-
+/* Wrote this function to work on the google json when the clouddata API is down */
 function calculateTemp (){
     //console.log("Querying cloudwatch for data from " + service);
 
