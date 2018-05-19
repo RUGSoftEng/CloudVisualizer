@@ -260,7 +260,7 @@ function dataStoreCostHourly(){
     if(this.dataSize>pricelist["CP-CLOUD-DATASTORE-INSTANCES"]["freequota"]["quantity"]){
         cost+=(this.dataSize-pricelist["CP-CLOUD-DATASTORE-INSTANCES"]["freequota"]["quantity"])*pricelist["CP-CLOUD-DATASTORE-INSTANCES"]["us"]
     }
-    return (cost*12/365/24)*nrInstances;
+    return (cost*12/365/24)*this.nrInstances;
 }
 
 function dataStoreCostDaily() {
