@@ -451,11 +451,7 @@ function calculateTemp (){
             /** Add canvas to list of canvas, so we can set it back later */
             if (listOfCanvasses.length<5) {
                 currentCanvas.numId = idCanvas++;
-                console.log(listOfCanvasses);
-                console.log(listOfCanvasses.length);
                 listOfCanvasses.push(copyCanvas(currentCanvas));
-                console.log(listOfCanvasses);
-                console.log(listOfCanvasses.length);
                 /** */
 
                 /** Calculations */
