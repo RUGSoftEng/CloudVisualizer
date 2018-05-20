@@ -160,7 +160,7 @@ function getObjectById(id, listOfObjects) {
 function resetCanvas(canvasID) {
     clearBox('itemsvm','itemsst','itemsdb');
     console.log("id is:"+canvasID);
-    currentCanvas=listOfCanvasses[getObjectById(canvasID, listOfCanvasses)];
+    currentCanvas=copyCanvas(listOfCanvasses[getObjectById(canvasID, listOfCanvasses)]);
     for (var i=0; i<currentCanvas.VirtualMachines.length; i++) {
         var VM=currentCanvas.VirtualMachines[i];
         addHTML(currentCanvas.VirtualMachines.length-1, VM.nrInstances, "vm", VM.numId, currentCanvas.VirtualMachines);
