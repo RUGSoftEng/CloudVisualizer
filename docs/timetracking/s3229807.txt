@@ -70,5 +70,10 @@ Working on the graph again
 10:30 - 13:00 Worked on calculations of google provider, fixed some bugs in calculation.js, made a start on implementing the graph
 13:30 - 16:00 Worked on calculations of google provider, fixed some bugs in calculation.js, made a start on implementing the graph
 
+20-05-2018
+12:00 - 13:30 Worked on adding some new icons to store and restore canvasses
+13:30 - 17:00 Redid some of the code so that everything is now stored in a nice Canvas object. Canvasses are now saved when calculate is clicked, up to 5 can be saved. Canvasses can be restored. Have to ask the client if he things this is a good idea
+17:30..
+
 
   
