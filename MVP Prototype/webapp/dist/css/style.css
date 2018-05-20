@@ -55,8 +55,8 @@ html, body {
   overflow: auto; }
 
 .graph {
-  width: calc(75% - (220px ));
-  float: left; }
+  width: calc(100% - (220px ));
+  float: right; }
 
 .canvas-pop-up {
   display: none;
