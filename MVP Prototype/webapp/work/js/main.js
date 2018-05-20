@@ -300,7 +300,7 @@ function removeIcon(elementID, uniqueIdentifier){
 }
 
 //show the div when calculate is clicked
-function showCaculationDiv() {
+function showCalculationDiv() {
     var x = document.getElementById("canvas-pop-up");
     if (x.style.display = "none") {
         x.style.display = "block";
@@ -316,7 +316,9 @@ function addCalculationToDiv(string, totalPrice){
     newListItem += '<h5 class="mb-1">Calculation for ' + service + '</h5>';
     newListItem += '<small>' + date.toTimeString() + '</small></div>';
     newListItem += '<p class="mb-1">' + string +  '</p>';
-    newListItem += '<small>Totalprice: ' + totalPrice+ '</small></a>';
+    newListItem += '<small>Totalprice: ' + totalPrice+ '</small>';
+    newListItem +=  '<br><p class="glyphicon glyphicon-share-alt" href="#" onclick="console.log(0) "float:right">'+ '</p>';
+    newListItem +=  '<p class="glyphicon glyphicon-trash" href="#" onclick="console.log(0)">'+ '</p></a>';
 
     var mainArea = document.getElementById("canvas-pop-up").children[0].innerHTML += newListItem;
 }
@@ -407,7 +409,7 @@ function calculateTemp (){
     var totalprice=0;
     var myString='';
     addCalculationToDiv(result.substring(0, 300), Math.round(totalprice*100)/100);
-    showCaculationDiv();
+    showCalculationDiv();
 
 }
 

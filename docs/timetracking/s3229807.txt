@@ -65,4 +65,10 @@ Working on the graph again
 12:00 - 12:15 Meeting
 12:15 - 14:45 Working together on some functionality in Bernouilliborg
 21:00 - 00:45 Working on functionality for: deleting an item from canvas, calculations when clicking the calculate button, pop-up functionality
+
+19-05-2018
+10:30 - 13:00 Worked on calculations of google provider, fixed some bugs in calculation.js, made a start on implementing the graph
+13:30 - 16:00 Worked on calculations of google provider, fixed some bugs in calculation.js, made a start on implementing the graph
+
+
   
