@@ -47,4 +47,33 @@ Working on the graph again
 02-04-2018
 14:00 - 18:30 Working on the MVP, combining front-end with back-end
 19:30 - 23:30 Working on the MVP, combining front-end with back-end
+
+19-04-2018
+11:00 - 15:30 Worked with Luc, on designing functions for the drag and drop feature (e.g icon should increment when VM is exactly the same)
+
+03-05-2018
+11:30 - 15:30 Working with group on the project
+
+13-05-2018
+18:00 - 21:00 Attempting a merge with frontend
+
+14-05-2018
+16:30 - 17:15 Merging frontend and backend branches manually 
+18:15 - 19:00 Merging frontend and backend branches manually
+
+15-05-2018
+12:00 - 12:15 Meeting
+12:15 - 14:45 Working together on some functionality in Bernouilliborg
+21:00 - 00:45 Working on functionality for: deleting an item from canvas, calculations when clicking the calculate button, pop-up functionality
+
+19-05-2018
+10:30 - 13:00 Worked on calculations of google provider, fixed some bugs in calculation.js, made a start on implementing the graph
+13:30 - 16:00 Worked on calculations of google provider, fixed some bugs in calculation.js, made a start on implementing the graph
+
+20-05-2018
+12:00 - 13:30 Worked on adding some new icons to store and restore canvasses
+13:30 - 17:00 Redid some of the code so that everything is now stored in a nice Canvas object. Canvasses are now saved when calculate is clicked, up to 5 can be saved. Canvasses can be restored. Have to ask the client if he things this is a good idea
+17:30-19:00 Worked on a couple of a different things
+
+
   
