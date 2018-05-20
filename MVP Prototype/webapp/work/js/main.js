@@ -7,11 +7,23 @@ var DBSize;
 var calculate;
 var service = 'google-cloud';
 
+function Canvas() {
+    this.VirtualMachines=[];
+    this.Databases=[];
+    this.Storages=[];
+    this.idCounter=0;
+    this.numId=0;
+}
+
+var listOfCanvasses=[];
+var idCanvas=0;
+var currentCanvas=new Canvas();
+/*
 // from canvasObject
 var VirtualMachines=[];
 var Databases=[];
 var Storages=[];
-var idCounter=0;
+var idCounter=0; */
 
 //Checks if the to be added object already exists.
 //If it exists, it will return the index where the duplicate object is located
@@ -67,24 +79,24 @@ function createBasicStorage(size) {
 //Processes the new dropped Virtual machine
 function addVirtualMachine(newVM) {
     //Will contain the index of the duplicate VM if it exists, else -1
-    var newVMID = newObjectExists(newVM, VirtualMachines);
+    var newVMID = newObjectExists(newVM, currentCanvas.VirtualMachines);
     if (newVMID != -1) {
-        var newVMIndex = getObjectById(newVMID, VirtualMachines);
+        var newVMIndex = getObjectById(newVMID, currentCanvas.VirtualMachines);
         console.log("EXISTS");
         //Increments the duplicate with the number of to be added instances
-        incrementNrInstances(newVMIndex,newVM.nrInstances, VirtualMachines);
+        incrementNrInstances(newVMIndex,newVM.nrInstances, currentCanvas.VirtualMachines);
         //Updates the HTML in the canvas
-        changeHTML(newVMIndex, VirtualMachines, "vm", newVMID);
-        checkIcon(VirtualMachines, "vm", newVMIndex);
+        changeHTML(newVMIndex, currentCanvas.VirtualMachines, "vm", newVMID);
+        checkIcon(currentCanvas.VirtualMachines, "vm", newVMIndex);
     } else {
         console.log("New virtual machine!");
         //Creates new VM
-        newVM.numId=idCounter++;
-        VirtualMachines.push(newVM);
+        newVM.numId=currentCanvas.idCounter++;
+        currentCanvas.VirtualMachines.push(newVM);
         //console.log(VirtualMachines[0]);
         //Adds HTML for the new VM to the canvas
-        addHTML(VirtualMachines.length-1, newVM.nrInstances, "vm", newVM.numId, VirtualMachines);
-        checkIcon(VirtualMachines, "vm", VirtualMachines.length-1);
+        addHTML(currentCanvas.VirtualMachines.length-1, newVM.nrInstances, "vm", newVM.numId, currentCanvas.VirtualMachines);
+        checkIcon(currentCanvas.VirtualMachines, "vm", currentCanvas.VirtualMachines.length-1);
         openPopup(newVM);
     }
 }
@@ -92,46 +104,46 @@ function addVirtualMachine(newVM) {
 //Processes the new dropped Database
 function addDatabase(newDB) {
     //Will contain the index of the duplicate DB if it exists, else -1
-    var newDBID = newObjectExists(newDB, Databases);
+    var newDBID = newObjectExists(newDB, currentCanvas.Databases);
     if (newDBID != -1) {
-        var newDBIndex = getObjectById(newDBID, Databases);
+        var newDBIndex = getObjectById(newDBID, currentCanvas.Databases);
         console.log("EXISTS");
         //Increments the duplicate with the number of to be added instances
-        incrementNrInstances(newDBIndex,newDB.nrInstances, Databases);
+        incrementNrInstances(newDBIndex,newDB.nrInstances, currentCanvas.Databases);
         //Updates the HTML in the canvas
-        changeHTML(newDBIndex, Databases, "db", newDBID);
-        checkIcon(Databases, "db", newDBIndex);
+        changeHTML(newDBIndex, currentCanvas.Databases, "db", newDBID);
+        checkIcon(currentCanvas.Databases, "db", newDBIndex);
     } else {
         console.log("New data base!");
         //Creates new DB
-        newDB.numId=idCounter++;
-        Databases.push(newDB);
+        newDB.numId=currentCanvas.idCounter++;
+        currentCanvas.Databases.push(newDB);
         //Adds HTML for the new VM to the canvas
-        addHTML(Databases.length-1, newDB.nrInstances, "db", newDB.numId, Databases);
-        checkIcon(Databases, "db", Databases.length-1);
+        addHTML(currentCanvas.Databases.length-1, newDB.nrInstances, "db", newDB.numId, currentCanvas.Databases);
+        checkIcon(currentCanvas.Databases, "db", currentCanvas.Databases.length-1);
     }
 }
 
 //Processes the new dropped Storage
 function addStorage(newStorage) {
     //Will contain the index of the duplicate Storage if it exists, else -1
-    var newStorageID = newObjectExists(newStorage, Storages);
+    var newStorageID = newObjectExists(newStorage, currentCanvas.Storages);
     if (newStorageID != -1) {
-        var newStorageIndex = getObjectById(newStorageID, Storages);
+        var newStorageIndex = getObjectById(newStorageID, currentCanvas.Storages);
         console.log("EXISTS");
         //Increments the duplicate with the number of to be added instances
-        incrementNrInstances(newStorageIndex,newStorage.nrInstances, Storages);
+        incrementNrInstances(newStorageIndex,newStorage.nrInstances, currentCanvas.Storages);
         //Updates the HTML in the canvas
-        changeHTML(newStorageIndex, Storages, "cs", newStorageID);
-        checkIcon(Storages, "cs", newStorageIndex);
+        changeHTML(newStorageIndex, currentCanvas.Storages, "cs", newStorageID);
+        checkIcon(currentCanvas.Storages, "cs", newStorageIndex);
     } else {
         console.log("New storage!");
         //Creates new storage
-        newStorage.numId=idCounter++;
-        Storages.push(newStorage);
+        newStorage.numId=currentCanvas.idCounter++;
+        currentCanvas.Storages.push(newStorage);
         //Adds HTML for the new VM to the canvas
-        addHTML(Storages.length-1, newStorage.nrInstances, "cs", newStorage.numId, Storages);
-        checkIcon(Storages, "cs", Storages.length-1);
+        addHTML(currentCanvas.Storages.length-1, newStorage.nrInstances, "cs", newStorage.numId, currentCanvas.Storages);
+        checkIcon(currentCanvas.Storages, "cs", currentCanvas.Storages.length-1);
     }
 }
 
@@ -143,6 +155,27 @@ function getObjectById(id, listOfObjects) {
     }
     console.log("Shouldn't reach here!");
     return null;
+}
+
+function resetCanvas(canvasID) {
+    clearBox('itemsvm','itemsst','itemsdb');
+    console.log("id is:"+canvasID);
+    currentCanvas=listOfCanvasses[getObjectById(canvasID, listOfCanvasses)];
+    for (var i=0; i<currentCanvas.VirtualMachines.length; i++) {
+        var VM=currentCanvas.VirtualMachines[i];
+        addHTML(currentCanvas.VirtualMachines.length-1, VM.nrInstances, "vm", VM.numId, currentCanvas.VirtualMachines);
+        checkIcon(currentCanvas.VirtualMachines, "vm", currentCanvas.VirtualMachines.length-1);
+    }
+    for (var i=0; i<currentCanvas.Databases.length; i++) {
+        var DB=currentCanvas.Databases[i];
+        addHTML(currentCanvas.Databases.length-1, DB.nrInstances, "db", DB.numId, currentCanvas.Databases);
+        checkIcon(currentCanvas.Databases, "db", currentCanvas.Databases.length-1);
+    }
+    for (var i=0; i<currentCanvas.Storages.length; i++) {
+        var storage=currentCanvas.Storages[i];
+        addHTML(currentCanvas.Storages.length-1, storage.nrInstances, "cs", storage.numId, currentCanvas.Storages);
+        checkIcon(currentCanvas.Storages, "cs", currentCanvas.Storages.length-1);
+    }
 }
 
 function attachVariable (variableName,variableObject) {
@@ -265,8 +298,8 @@ function drop(ev) {
 
 function refresh() {
     clearBox('itemsvm');
-    for (var i in VirtualMachines) {
-        var curVM  = VirtualMachines[i];
+    for (var i in currentCanvas.VirtualMachines) {
+        var curVM  = currentCanvas.VirtualMachines[i];
         $("#itemsvm").append($('<div class="test" ></div>').html('<img src="images/VM.png">'));
         console.log(i.hours);
     }
@@ -276,24 +309,22 @@ function clearBox(elementID1,elementID2,elementID3) {
     document.getElementById(elementID1).innerHTML = "";
     document.getElementById(elementID2).innerHTML = "";
     document.getElementById(elementID3).innerHTML = "";
-    Databases = [];
-    Storages = [];
-    VirtualMachines = [];
+    currentCanvas=new Canvas();
 }
 function removeIcon(elementID, uniqueIdentifier){
     var divId = "#"+elementID + "_"+uniqueIdentifier;
     $(divId).remove();
     console.log(elementID);
     if (elementID=="vm") {
-        VirtualMachines.splice(getObjectById(uniqueIdentifier, VirtualMachines), 1);
+        currentCanvas.VirtualMachines.splice(getObjectById(uniqueIdentifier, currentCanvas.VirtualMachines), 1);
         return;
     }
     if (elementID=="db") {
-        Databases.splice(getObjectById(uniqueIdentifier, Databases), 1);
+        currentCanvas.Databases.splice(getObjectById(uniqueIdentifier, currentCanvas.Databases), 1);
         return;
     }
     if (elementID=="cs") {
-        Storages.splice(getObjectById(uniqueIdentifier, Storages), 1);
+        currentCanvas.Storages.splice(getObjectById(uniqueIdentifier, currentCanvas.Storages), 1);
         return;
     }
     console.log("NO THANKS");
@@ -308,16 +339,16 @@ function showCalculationDiv() {
 }
 
 // set content of the calculationDiv
-function addCalculationToDiv(string, totalPrice){
+function addCalculationToDiv(string, totalPrice, canvasID){
     var date = new Date();
 
     // build new list item in HTML
-    var newListItem = '<a  class="list-group-item list-group-item-action flex-column align-items-start"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">';
+    var newListItem = '<a  id="pizza" class="list-group-item list-group-item-action flex-column align-items-start"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">';
     newListItem += '<h5 class="mb-1">Calculation for ' + service + '</h5>';
     newListItem += '<small>' + date.toTimeString() + '</small></div>';
     newListItem += '<p class="mb-1">' + string +  '</p>';
     newListItem += '<small>Totalprice: ' + totalPrice+ '</small>';
-    newListItem +=  '<br><p style="float:right" class="glyphicon glyphicon-share-alt" href="#" onclick="console.log(0)" >'+ '</p>';
+    newListItem +=  '<br><p id='+canvasID+' style="float:right" class="glyphicon glyphicon-share-alt" href="#" onclick="resetCanvas(id)" >'+ '</p>';
     newListItem +=  '<p style="float:right" class="glyphicon glyphicon-trash" href="#" onclick="console.log(0)">'+ '</p></a>';
 
     var mainArea = document.getElementById("canvas-pop-up").children[0].innerHTML += newListItem;
@@ -374,10 +405,15 @@ function calculate (){
 }
 /* Wrote this function to work on the google json when the clouddata API is down */
 function calculateTemp (){
-    //console.log("Querying cloudwatch for data from " + service);
+
+    /** Add canvas to list of canvas, so we can set it back later */
+    if (listOfCanvasses.length!=10) {
+        currentCanvas.numId=idCanvas++;
+        listOfCanvasses.push(currentCanvas);
+    }
+    /** */
 
     var result = '';
-
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
     xobj.open('GET', 'google.json', true); // Replace 'my_data' with the path to your file
@@ -391,15 +427,15 @@ function calculateTemp (){
 
             /** Calculations */
 
-            for (var i in VirtualMachines) {
-                VirtualMachines[i].instanceType=determineInstanceType(VirtualMachines[i].type);
-                console.log(VirtualMachines[i].costMonthly());
+            for (var i in currentCanvas.VirtualMachines) {
+                currentCanvas.VirtualMachines[i].instanceType=determineInstanceType(currentCanvas.VirtualMachines[i].type);
+                console.log(currentCanvas.VirtualMachines[i].costMonthly());
             }
-            for (var i in Databases) {
-                console.log("Monthly costs: " + Databases[i].costMonthly());
+            for (var i in currentCanvas.Databases) {
+                console.log("Monthly costs: " + currentCanvas.Databases[i].costMonthly());
             }
-            for (var i in Storages) {
-                console.log("Monthly costs: " + Storages[i].costMonthly());
+            for (var i in currentCanvas.Storages) {
+                console.log("Monthly costs: " + currentCanvas.Storages[i].costMonthly());
             }
 
             /** */
@@ -408,7 +444,7 @@ function calculateTemp (){
     xobj.send(null);
     var totalprice=0;
     var myString='';
-    addCalculationToDiv(result.substring(0, 300), Math.round(totalprice*100)/100);
+    addCalculationToDiv(result.substring(0, 300), Math.round(totalprice*100)/100, currentCanvas.numId);
     showCalculationDiv();
 
 }
@@ -520,15 +556,15 @@ function topFunction() {
 
 function showSettings(id, uniqueIdentifier){
     if (id=="vm") {
-        openPopup(VirtualMachines[getObjectById(uniqueIdentifier, VirtualMachines)]);
+        openPopup(currentCanvas.VirtualMachines[getObjectById(uniqueIdentifier, currentCanvas.VirtualMachines)]);
         return;
     }
     if (id=="db") {
-        openPopup(Databases[getObjectById(uniqueIdentifier, Databases)]);
+        openPopup(currentCanvas.Databases[getObjectById(uniqueIdentifier, currentCanvas.Databases)]);
         return;
     }
     if (id=="cs") {
-        openPopup(Storages[getObjectById(uniqueIdentifier, Storages)]);
+        openPopup(currentCanvas.Storages[getObjectById(uniqueIdentifier, currentCanvas.Storages)]);
         return;
     }
     console.log("no reach here bitte");
