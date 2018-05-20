@@ -95,7 +95,7 @@ function addVirtualMachine(newVM) {
         currentCanvas.VirtualMachines.push(newVM);
         //console.log(VirtualMachines[0]);
         //Adds HTML for the new VM to the canvas
-        addHTML(currentCanvas.VirtualMachines.length-1, newVM.nrInstances, "vm", newVM.numId, currentCanvas.VirtualMachines);
+        addHTML(newVM.nrInstances, "vm", newVM.numId, currentCanvas.VirtualMachines);
         checkIcon(currentCanvas.VirtualMachines, "vm", currentCanvas.VirtualMachines.length-1);
         openPopup(newVM);
     }
@@ -119,7 +119,7 @@ function addDatabase(newDB) {
         newDB.numId=currentCanvas.idCounter++;
         currentCanvas.Databases.push(newDB);
         //Adds HTML for the new VM to the canvas
-        addHTML(currentCanvas.Databases.length-1, newDB.nrInstances, "db", newDB.numId, currentCanvas.Databases);
+        addHTML(newDB.nrInstances, "db", newDB.numId, currentCanvas.Databases);
         checkIcon(currentCanvas.Databases, "db", currentCanvas.Databases.length-1);
     }
 }
@@ -142,7 +142,7 @@ function addStorage(newStorage) {
         newStorage.numId=currentCanvas.idCounter++;
         currentCanvas.Storages.push(newStorage);
         //Adds HTML for the new VM to the canvas
-        addHTML(currentCanvas.Storages.length-1, newStorage.nrInstances, "cs", newStorage.numId, currentCanvas.Storages);
+        addHTML(newStorage.nrInstances, "cs", newStorage.numId, currentCanvas.Storages);
         checkIcon(currentCanvas.Storages, "cs", currentCanvas.Storages.length-1);
     }
 }
@@ -159,23 +159,28 @@ function getObjectById(id, listOfObjects) {
 
 function resetCanvas(canvasID) {
     clearBox('itemsvm','itemsst','itemsdb');
-    console.log("id is:"+canvasID);
     currentCanvas=copyCanvas(listOfCanvasses[getObjectById(canvasID, listOfCanvasses)]);
     for (var i=0; i<currentCanvas.VirtualMachines.length; i++) {
         var VM=currentCanvas.VirtualMachines[i];
-        addHTML(currentCanvas.VirtualMachines.length-1, VM.nrInstances, "vm", VM.numId, currentCanvas.VirtualMachines);
-        checkIcon(currentCanvas.VirtualMachines, "vm", currentCanvas.VirtualMachines.length-1);
+        addHTML(VM.nrInstances, "vm", VM.numId, currentCanvas.VirtualMachines);
+        checkIcon(currentCanvas.VirtualMachines, "vm", i);
     }
     for (var i=0; i<currentCanvas.Databases.length; i++) {
         var DB=currentCanvas.Databases[i];
-        addHTML(currentCanvas.Databases.length-1, DB.nrInstances, "db", DB.numId, currentCanvas.Databases);
-        checkIcon(currentCanvas.Databases, "db", currentCanvas.Databases.length-1);
+        addHTML(DB.nrInstances, "db", DB.numId, currentCanvas.Databases);
+        checkIcon(currentCanvas.Databases, "db", i);
     }
     for (var i=0; i<currentCanvas.Storages.length; i++) {
         var storage=currentCanvas.Storages[i];
-        addHTML(currentCanvas.Storages.length-1, storage.nrInstances, "cs", storage.numId, currentCanvas.Storages);
-        checkIcon(currentCanvas.Storages, "cs", currentCanvas.Storages.length-1);
+        addHTML(storage.nrInstances, "cs", storage.numId, currentCanvas.Storages);
+        checkIcon(currentCanvas.Storages, "cs", i);
     }
+}
+
+function removeCanvas(canvasID, documentID) {
+    var divId = "#canvas_"+canvasID;
+    $(divId).remove();
+    listOfCanvasses.splice(getObjectById(canvasID, listOfCanvasses), 1);
 }
 
 function attachVariable (variableName,variableObject) {
@@ -220,7 +225,7 @@ function openPopup(objectToEdit){
 
 
 //We have a basic HTML structure, where we fill in the details for each Object
-function addHTML(par1,par3, id, uniqueIdentifier, listOfObjects){
+function addHTML(par3, id, uniqueIdentifier, listOfObjects){
     var objectHTML="<div id='"+id+"_"+uniqueIdentifier+"' class='icons'><img src='images/"+id+".png'><p>"+par3+"</p> <a href='#' onclick='removeIcon(\""+id+"\", \""+uniqueIdentifier+"\", \""+listOfObjects+"\");'><span class='glyphicon glyphicon-trash'></span></a><a href='#' data-toggle='modal' data-target='#"+id+"Settings'	onclick='showSettings(\""+id+"\", "+uniqueIdentifier+");'> <span class='glyphicon glyphicon-wrench'></span> </a></div>";
     if(id==="vm")
       $("#itemsvm").append(objectHTML);
@@ -244,7 +249,9 @@ function changeImage(id, index, image, uniqueIdentifier) {
 }
 
 function checkIcon(listOfObjects, id, index) {
+
     if (listOfObjects[index].nrInstances>1) {
+        console.log("changing it now sir!");
         changeImage(id, index, "images/multiple"+id+".png", listOfObjects[index].numId);
     }
 }
@@ -314,7 +321,6 @@ function clearBox(elementID1,elementID2,elementID3) {
 function removeIcon(elementID, uniqueIdentifier){
     var divId = "#"+elementID + "_"+uniqueIdentifier;
     $(divId).remove();
-    console.log(elementID);
     if (elementID=="vm") {
         currentCanvas.VirtualMachines.splice(getObjectById(uniqueIdentifier, currentCanvas.VirtualMachines), 1);
         return;
@@ -339,18 +345,18 @@ function showCalculationDiv() {
 }
 
 // set content of the calculationDiv
-function addCalculationToDiv(string, totalPrice, canvasID){
+function addCalculationToDiv(string, canvasID, yearPrice, monthPrice){
     var date = new Date();
-
     // build new list item in HTML
-    var newListItem = '<a  id="pizza" class="list-group-item list-group-item-action flex-column align-items-start"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">';
+    var newListItem = '<a  id='+"canvas_"+canvasID+' class="list-group-item list-group-item-action flex-column align-items-start"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">';
     newListItem += '<h5 class="mb-1">Calculation for ' + service + '</h5>';
     newListItem += '<small>' + date.toTimeString() + '</small></div>';
     newListItem += '<p class="mb-1">' + string +  '</p>';
-    newListItem += '<small>Totalprice: ' + totalPrice+ '</small>';
+    newListItem += '<small>Cost per year: ' + "$" + yearPrice+ '</small>';
     newListItem +=  '<p id='+canvasID+' style="float:right" class="glyphicon glyphicon-share-alt" href="#" onclick="resetCanvas(id)" >'+" &nbsp"+ '</p>';
     newListItem +=  '<p style="float:right" class="glyphicon glyphicon-signal" href="#" onclick="" >'+" &nbsp"+ '</p>';
-    newListItem +=  '<p style="float:right" class="glyphicon glyphicon-trash" href="#" onclick="console.log(0)">'+" &nbsp"+ '</p></a>';
+    newListItem +=  '<p id='+canvasID+' style="float:right" class="glyphicon glyphicon-trash" href="#" onclick="removeCanvas(id)">'+" &nbsp"+ '</p>';
+    newListItem += '<br><small>Cost per month: ' + "$" + monthPrice+ '</small></a>';
 
     var mainArea = document.getElementById("canvas-pop-up").children[0].innerHTML += newListItem;
 
@@ -445,28 +451,34 @@ function calculateTemp (){
             /** Add canvas to list of canvas, so we can set it back later */
             if (listOfCanvasses.length<5) {
                 currentCanvas.numId = idCanvas++;
-                console.log(idCanvas);
-                console.log(currentCanvas);
-                console.log(copyCanvas(currentCanvas));
+                console.log(listOfCanvasses);
+                console.log(listOfCanvasses.length);
                 listOfCanvasses.push(copyCanvas(currentCanvas));
                 console.log(listOfCanvasses);
+                console.log(listOfCanvasses.length);
                 /** */
 
                 /** Calculations */
-
+                var monthPrice=0;
+                var yearPrice=0;
                 for (var i in currentCanvas.VirtualMachines) {
                     currentCanvas.VirtualMachines[i].instanceType = determineInstanceType(currentCanvas.VirtualMachines[i].type);
                     console.log(currentCanvas.VirtualMachines[i].costMonthly());
+                    monthPrice+=currentCanvas.VirtualMachines[i].costMonthly();
+                    yearPrice+=currentCanvas.VirtualMachines[i].costYear();
                 }
                 for (var i in currentCanvas.Databases) {
                     console.log("Monthly costs: " + currentCanvas.Databases[i].costMonthly());
+                    monthPrice+=currentCanvas.Databases[i].costMonthly();
+                    yearPrice+=currentCanvas.Databases[i].costYear();
                 }
                 for (var i in currentCanvas.Storages) {
                     console.log("Monthly costs: " + currentCanvas.Storages[i].costMonthly());
+                    monthPrice+=currentCanvas.Storages[i].costMonthly();
+                    yearPrice+=currentCanvas.Storages[i].costYear();
                 }
-                var totalprice = 0;
                 var myString = '';
-                addCalculationToDiv(result.substring(0, 300), Math.round(totalprice * 100) / 100, currentCanvas.numId);
+                addCalculationToDiv(result.substring(0, 300), currentCanvas.numId, Math.round(yearPrice * 100) / 100, Math.round(monthPrice * 100) / 100);
                 showCalculationDiv();
             }
 
@@ -512,7 +524,6 @@ $(function() {
     storageSize.innerHTML = StorageSlider.value;
     StorageSlider.oninput = function() {
         storageSize.innerHTML = this.value;
-        console.log(storageSize);
     }
 
     /** Database Sliders */

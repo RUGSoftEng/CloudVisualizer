@@ -30,8 +30,8 @@ function VirtualMachine() {
     this.LBPerHour=LBHourly;
     this.TPUPerHour=TPUHourly;
     this.costMonthly=VMCostMonthly;
-    this.costQuarter=VMCostMonthly; // Not correct
-    this.costYear=VMCostMonthly; // Not correct
+    //this.costQuarter=VMCostMonthly; // Not correct
+    this.costYear=VMCostYearly; // Not correct
 }
 function Storage() {
     this.objectName="Storage";
@@ -100,6 +100,9 @@ function resetAll() {
 //input the results of running the other functions into these:
 function VMCostMonthly(){
     return (this.sustainedUsePerHour()*this.hours*this.days/7*365/12+this.TPUPerHour()*this.hours*365/12+(this.PDPerHour()+this.LBPerHour())*24*365/12)*this.nrInstances;
+}
+function VMCostYearly(){
+    return (this.costMonthly())*12;
 }
 var totalCostMonthly=function(VMCostPerMonth,StoragePerHour,dataStorePerHour){
     return VMCostPerMonth+(StoragePerHour+dataStorePerHour)*24*365/12;
