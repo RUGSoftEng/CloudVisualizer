@@ -33,11 +33,11 @@ html, body {
   margin-top: 0px !important;
   position: relative;
   width: 100%;
-  height: calc(100% - (150px)); }
+  height: 86%; }
 
 .filters {
   width: 220px;
-  height: 93.5%;
+  height: 91.5%;
   border-right-style: solid;
   border-color: #cccccc;
   float: left; }
@@ -45,7 +45,7 @@ html, body {
 .canvas {
   margin-left: 10px;
   width: calc(75% - (220px ));
-  height: 93.5%;
+  height: 91.5%;
   float: left;
   border-radius: 3px     5px      5px           3px;
   border-style: solid;

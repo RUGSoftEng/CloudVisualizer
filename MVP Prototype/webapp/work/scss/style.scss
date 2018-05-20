@@ -25,7 +25,7 @@ $headerhight: 150px;
     position: relative;
     //background-color: white;
   	width:100%;
-  	height:calc(100% - (#{$headerhight}));
+  	height:86%;
 	//	min-height: px;
 	//	background-color: red;
 }
@@ -33,7 +33,7 @@ $headerhight: 150px;
 $filterwidth: 220px;
 .filters{
 	width:$filterwidth;
-	height:93.5%;
+	height:91.5%;
 	//background-color:green;
 	border-right-style:solid;
 	border-color:#cccccc;
@@ -43,7 +43,7 @@ $filterwidth: 220px;
 .canvas{
 	margin-left: 10px;
 	width:calc(75% - (#{$filterwidth} );
-	height: 93.5%;
+	height: 91.5%;
 	float:left;
 	border-radius: 3px     5px      5px           3px;
 	border-style: solid;
