@@ -403,15 +403,31 @@ function calculate (){
         showCaculationDiv();
     });
 }
+
+function copyCanvas(canvas) {
+    var listVirtualMachines=[];
+    var listDatabases=[];
+    var listStorages=[];
+    var newCanvas=new Canvas();
+    for (var i=0; i<canvas.VirtualMachines.length; i++) {
+        listVirtualMachines.push(Object.assign(new VirtualMachine(), canvas.VirtualMachines[i]));
+    }
+    for (var i=0; i<canvas.Databases.length; i++) {
+        listDatabases.push(Object.assign(new Database(), canvas.Databases[i]));
+    }
+    for (var i=0; i<canvas.Storages.length; i++) {
+        listStorages.push(Object.assign(new Storage(), canvas.Storages[i]));
+    }
+    newCanvas.idCounter=canvas.idCounter;
+    newCanvas.numId=canvas.numId;
+    newCanvas.VirtualMachines=listVirtualMachines;
+    newCanvas.Databases=listDatabases;
+    newCanvas.Storages=listStorages;
+    return newCanvas;
+
+}
 /* Wrote this function to work on the google json when the clouddata API is down */
 function calculateTemp (){
-
-    /** Add canvas to list of canvas, so we can set it back later */
-    if (listOfCanvasses.length!=10) {
-        currentCanvas.numId=idCanvas++;
-        listOfCanvasses.push(currentCanvas);
-    }
-    /** */
 
     var result = '';
     var xobj = new XMLHttpRequest();
@@ -423,7 +439,17 @@ function calculateTemp (){
             //callback(xobj.responseText);
             var variable=JSON.parse(xobj.responseText);
             pricelist=variable["gcp_price_list"];
-            console.log(pricelist);
+
+            /** Add canvas to list of canvas, so we can set it back later */
+            if (listOfCanvasses.length!=10) {
+                currentCanvas.numId=idCanvas++;
+                console.log(idCanvas);
+                console.log(currentCanvas);
+                console.log(copyCanvas(currentCanvas));
+                listOfCanvasses.push(copyCanvas(currentCanvas));
+                console.log(listOfCanvasses);
+            }
+            /** */
 
             /** Calculations */
 
@@ -437,15 +463,15 @@ function calculateTemp (){
             for (var i in currentCanvas.Storages) {
                 console.log("Monthly costs: " + currentCanvas.Storages[i].costMonthly());
             }
+            var totalprice=0;
+            var myString='';
+            addCalculationToDiv(result.substring(0, 300), Math.round(totalprice*100)/100, currentCanvas.numId);
+            showCalculationDiv();
 
             /** */
         }
     };
     xobj.send(null);
-    var totalprice=0;
-    var myString='';
-    addCalculationToDiv(result.substring(0, 300), Math.round(totalprice*100)/100, currentCanvas.numId);
-    showCalculationDiv();
 
 }
 
