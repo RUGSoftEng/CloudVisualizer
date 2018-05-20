@@ -95,10 +95,18 @@
 			<h3>Storage</h3>
 			<ul class="source" id="source">
 				<img src="images/CS.png" class="grab" alt="CS" draggable="true" ondragstart="dragStorage(event)" id="dragStorage">
-				<li>Multi-Regional Storage</li>
-				<li>Regional Storage</li>
-				<li>Could Storage Nearline</li>
-				<li>Could Storage Coldline</li>
+				<li> Multi-Regional Storage
+						<input id="Multi-Regional Storage" type="checkbox">
+				</li>
+        <li> Regional Storage
+						<input id="Regional Storage" type="checkbox">
+				</li>
+        <li> Could Storage Nearline
+						<input id="Could-Storage-Nearline" type="checkbox">
+				</li>
+        <li> Could Storage Coldline
+						<input id="Could-Storage-Coldline" type="checkbox">
+				</li>
 				<li>Amount of GB:<span id="StorageGB"></span></li>
 				<input type="range" min="1" max="50" value="3" class="slider" id="StorageGBSliderID">
 			</ul>
