@@ -251,7 +251,6 @@ function changeImage(id, index, image, uniqueIdentifier) {
 function checkIcon(listOfObjects, id, index) {
 
     if (listOfObjects[index].nrInstances>1) {
-        console.log("changing it now sir!");
         changeImage(id, index, "images/multiple"+id+".png", listOfObjects[index].numId);
     }
 }
