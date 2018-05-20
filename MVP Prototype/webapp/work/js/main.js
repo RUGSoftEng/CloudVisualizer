@@ -7,11 +7,6 @@ var DBSize;
 var calculate;
 var service = 'google-cloud';
 
-// //drag
-// $(document).ready(function(){
-   
-// });
-
 // from canvasObject
 var VirtualMachines=[];
 var Databases=[];
@@ -73,8 +68,8 @@ function createBasicStorage(size) {
 function addVirtualMachine(newVM) {
     //Will contain the index of the duplicate VM if it exists, else -1
     var newVMID = newObjectExists(newVM, VirtualMachines);
-    var newVMIndex = getObjectById(newVMID, VirtualMachines);
     if (newVMID != -1) {
+        var newVMIndex = getObjectById(newVMID, VirtualMachines);
         console.log("EXISTS");
         //Increments the duplicate with the number of to be added instances
         incrementNrInstances(newVMIndex,newVM.nrInstances, VirtualMachines);
@@ -86,6 +81,7 @@ function addVirtualMachine(newVM) {
         //Creates new VM
         newVM.numId=idCounter++;
         VirtualMachines.push(newVM);
+        //console.log(VirtualMachines[0]);
         //Adds HTML for the new VM to the canvas
         addHTML(VirtualMachines.length-1, newVM.nrInstances, "vm", newVM.numId, VirtualMachines);
         checkIcon(VirtualMachines, "vm", VirtualMachines.length-1);
@@ -120,8 +116,8 @@ function addDatabase(newDB) {
 function addStorage(newStorage) {
     //Will contain the index of the duplicate Storage if it exists, else -1
     var newStorageID = newObjectExists(newStorage, Storages);
-    var newStorageIndex = getObjectById(newStorageID, Storages);
     if (newStorageID != -1) {
+        var newStorageIndex = getObjectById(newStorageID, Storages);
         console.log("EXISTS");
         //Increments the duplicate with the number of to be added instances
         incrementNrInstances(newStorageIndex,newStorage.nrInstances, Storages);
@@ -151,19 +147,39 @@ function getObjectById(id, listOfObjects) {
 
 function attachVariable (variableName,variableObject) {
     var input = document.getElementById(variableName);
+    if (variableName === "type"){
+		var keys = Object.keys(pricelist);
+		for (var i=0;i<keys.length;i++){
+			var typeName = (keys[i]).replace("CP-COMPUTEENGINE-VMIMAGE-","");
+			if(keys[i] !== typeName && (keys[i]).match("PREEMPTIBLE")==null){
+				var option = document.createElement("option");
+				option.text = typeName + " vCPUs: " + pricelist["CP-COMPUTEENGINE-VMIMAGE-"+typeName]["cores"] + " RAM: " + pricelist["CP-COMPUTEENGINE-VMIMAGE-"+typeName]["memory"];
+				option.value = typeName;
+				input.add(option);
+			}
+		}
+	}else if (variableName === "GPUType" /*&& pricelist["GPU_NVIDIA_TESLA_K80"][variableObject.region] != 0*/){
+		var option = document.createElement("option");
+		option.text = option.value = "NVIDIA_TESLA_K80";
+		input.add(option);
+		option = document.createElement("option");
+		option.text = option.value = "NVIDIA_TESLA_P100";
+		input.add(option);
+    }
     if (input != null) {
         input.value = variableObject[variableName];
         input.onchange = function () {
             variableObject[variableName] = this.value;
-            console.log(variableObject[variableName]);
+            //console.log(variableObject[variableName]);
         }
     }
 }
+
 function openPopup(objectToEdit){
     /*Insert code that shows the html of the popup*/
     for (var property in objectToEdit) {
         if (objectToEdit.hasOwnProperty(property)) {
-            console.log(property);
+            //console.log(property);
             attachVariable(property,objectToEdit);
         }
     }
@@ -172,8 +188,15 @@ function openPopup(objectToEdit){
 
 //We have a basic HTML structure, where we fill in the details for each Object
 function addHTML(par1,par3, id, uniqueIdentifier, listOfObjects){
-    var objectHTML="<div id='"+id+"_"+uniqueIdentifier+"' class='icons'><img src='images/"+id+".png'><p>"+par3+"</p> <a href='#' onclick='removeIcon(\""+id+"\", \""+uniqueIdentifier+"\", \""+listOfObjects+"\");'>x</a></div>";
-    $("#items").append(objectHTML);
+    var objectHTML="<div id='"+id+"_"+uniqueIdentifier+"' class='icons'><img src='images/"+id+".png'><p>"+par3+"</p> <a href='#' onclick='removeIcon(\""+id+"\", \""+uniqueIdentifier+"\", \""+listOfObjects+"\");'><span class='glyphicon glyphicon-trash'></span></a><a href='#' data-toggle='modal' data-target='#"+id+"Settings'	onclick='showSettings(\""+id+"\", "+uniqueIdentifier+");'> <span class='glyphicon glyphicon-wrench'></span> </a></div>";
+    if(id==="vm")
+      $("#itemsvm").append(objectHTML);
+    else if(id==="db")
+      $("#itemsdb").append(objectHTML);
+    else {
+        $("#itemsst").append(objectHTML);
+    }
+
 }
 
 //Since we incorperated the ID in the div of the Object, we can easily edit it now
@@ -227,36 +250,53 @@ function drop(ev) {
     ev.preventDefault();
     var obj = JSON.parse(ev.dataTransfer.getData("foo"));
     if (obj.objectName === "VirtualMachine") {
-        addVirtualMachine(obj);
+        var instance = Object.assign(new VirtualMachine(), obj);
+        addVirtualMachine(instance);
     }
     if (obj.objectName === "Database") {
-        addDatabase(obj);
+        var instance = Object.assign(new Database(), obj);
+        addDatabase(instance);
     }
     if (obj.objectName === "Storage") {
-        addStorage(obj);
+        var instance = Object.assign(new Storage(), obj);
+        addStorage(instance);
     }
-    //refresh();
 }
 
 function refresh() {
-    clearBox('items');
+    clearBox('itemsvm');
     for (var i in VirtualMachines) {
         var curVM  = VirtualMachines[i];
-        $("#items").append($('<div class="test"></div>').html('<img src="images/VM.png">'));
+        $("#itemsvm").append($('<div class="test" ></div>').html('<img src="images/VM.png">'));
         console.log(i.hours);
     }
 }
 
-function clearBox(elementID) {
-    document.getElementById(elementID).innerHTML = "";
+function clearBox(elementID1,elementID2,elementID3) {
+    document.getElementById(elementID1).innerHTML = "";
+    document.getElementById(elementID2).innerHTML = "";
+    document.getElementById(elementID3).innerHTML = "";
     Databases = [];
     Storages = [];
     VirtualMachines = [];
 }
-function removeIcon(elementID, uniqueIdentifier, listOfObjects){
+function removeIcon(elementID, uniqueIdentifier){
     var divId = "#"+elementID + "_"+uniqueIdentifier;
     $(divId).remove();
-	Databases.splice(getObjectById(uniqueIdentifier, Databases), 1);
+    console.log(elementID);
+    if (elementID=="vm") {
+        VirtualMachines.splice(getObjectById(uniqueIdentifier, VirtualMachines), 1);
+        return;
+    }
+    if (elementID=="db") {
+        Databases.splice(getObjectById(uniqueIdentifier, Databases), 1);
+        return;
+    }
+    if (elementID=="cs") {
+        Storages.splice(getObjectById(uniqueIdentifier, Storages), 1);
+        return;
+    }
+    console.log("NO THANKS");
 }
 
 //show the div when calculate is clicked
@@ -278,13 +318,14 @@ function addCalculationToDiv(string, totalPrice){
     newListItem += '<p class="mb-1">' + string +  '</p>';
     newListItem += '<small>Totalprice: ' + totalPrice+ '</small></a>';
 
-    var mainArea = document.getElementById("canvas-pop-up").children[0].innerHTML += newListItem;    
+    var mainArea = document.getElementById("canvas-pop-up").children[0].innerHTML += newListItem;
 }
 
 function calculate (){
     console.log("Querying cloudwatch for data from " + service);
 
     var result = '';
+
 
     // send HTTP request to Node so that it communicates with cloudwatch
     $.ajax({
@@ -296,33 +337,82 @@ function calculate (){
             result += res;
         }
     })
+
     // callback function when request is finished
     .done(function(){
-
         console.log("Finished processing response of AJAX request to cloudwatch ");
+
+        console.log(JSON.stringify("/google.json"));
 
         var totalprice=0;
         var myString='';
 
-        // perform calculation(s) here 
 
+        // Monthly
+        // console.log(VirtualMachines);
         // for (var i in VirtualMachines) {
-        //     var value = VirtualMachines[i].costMonthly() * VirtualMachines[i].nrInstances;
-        //     totalprice += value;
-        //     myString += '\n' + "Virtual machine " + i + "     " + Math.round(value*100)/100;
+        //     VirtualMachines[i].costMonthly=VMCostMonthly;
+        //     console.log(VirtualMachines[i]);
+        //     console.log(new VirtualMachine());
+        //     console.log(new VirtualMachine().costMonthly());
+        //     console.log(VirtualMachines[i].costMonthly()*VirtualMachines[i].nrInstances);
+        //     console.log("Monthly costs: " + VirtualMachines[i].costMonthly());
+        // }
+        // for (var i in Databases) {
+        //    // Databases[i].costMonthly=VMCostMonthly;
+        //     console.log("Monthly costs: " + Databases[i].costMonthly());
+        // }
+        // for (var i in Storages) {
+        //     console.log("Monthly costs: " + Storages[i].costMonthly());
         // }
 
         addCalculationToDiv(result.substring(0, 300), Math.round(totalprice*100)/100);
         showCaculationDiv();
     });
 }
+/* Wrote this function to work on the google json when the clouddata API is down */
+function calculateTemp (){
+    //console.log("Querying cloudwatch for data from " + service);
+
+    var result = '';
+
+    var xobj = new XMLHttpRequest();
+    xobj.overrideMimeType("application/json");
+    xobj.open('GET', 'google.json', true); // Replace 'my_data' with the path to your file
+    xobj.onreadystatechange = function () {
+        if (xobj.readyState == 4 && xobj.status == "200") {
+            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+            //callback(xobj.responseText);
+            var variable=JSON.parse(xobj.responseText);
+            pricelist=variable["gcp_price_list"];
+            console.log(pricelist);
+
+            /** Calculations */
+
+            for (var i in VirtualMachines) {
+                VirtualMachines[i].instanceType=determineInstanceType(VirtualMachines[i].type);
+                console.log(VirtualMachines[i].costMonthly());
+            }
+            for (var i in Databases) {
+                console.log("Monthly costs: " + Databases[i].costMonthly());
+            }
+            for (var i in Storages) {
+                console.log("Monthly costs: " + Storages[i].costMonthly());
+            }
+
+            /** */
+        }
+    };
+    xobj.send(null);
+    var totalprice=0;
+    var myString='';
+    addCalculationToDiv(result.substring(0, 300), Math.round(totalprice*100)/100);
+    showCaculationDiv();
+
+}
 
 $(function() {
     $("#myAccordion").accordion();
-    $(".source li").draggable({helper:"clone"});
-    $("#canvas").droppable({drop:function(event,ui){
-        $("#items").append($("<li></li>").text(ui.draggable.text()).on("click",function() { $(this).remove()}));
-    }});
 
     /** Virtual Machine Sliders */
 
@@ -381,17 +471,17 @@ $(function() {
     btn.onclick = function() {
         modal.style.display = "block";
     }
-    
+
     //When the user clicks on Save, close the modal
     btn1.onclick=function() {
         // save current provider
         $("input:checked").parent().each(function(){
             service = this.innerText;
         })
-    
+
         modal.style.display = "none";
     }
-    
+
     // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
         modal.style.display = "none";
@@ -400,6 +490,9 @@ $(function() {
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
         if (event.target == modal) {
+            $("input:checked").parent().each(function(){
+                service = this.innerText;
+            })
             modal.style.display = "none";
         }
 
@@ -423,4 +516,22 @@ function topFunction() {
     document.documentElement.scrollTop = 0;
 }
 
+function showSettings(id, uniqueIdentifier){
+    if (id=="vm") {
+        openPopup(VirtualMachines[getObjectById(uniqueIdentifier, VirtualMachines)]);
+        return;
+    }
+    if (id=="db") {
+        openPopup(Databases[getObjectById(uniqueIdentifier, Databases)]);
+        return;
+    }
+    if (id=="cs") {
+        openPopup(Storages[getObjectById(uniqueIdentifier, Storages)]);
+        return;
+    }
+    console.log("no reach here bitte");
+}
 
+function closeSettings(id){
+	document.getElementById(id).style.display = "none";
+}
