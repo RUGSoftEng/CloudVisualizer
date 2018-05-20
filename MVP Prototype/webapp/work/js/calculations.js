@@ -18,6 +18,7 @@ function VirtualMachine() {
     this.committedUsage="0";/*1-YEAR,3-YEAR or 0 string depending on user input*/;
     this.rules=0;
     this.nrInstances=1;
+    this.numId=-1;
     // Functions
     this.instanceType=determineInstanceType(this.type);
     this.sustainedUsePerHour=sustainedUseHourly;
@@ -29,13 +30,13 @@ function VirtualMachine() {
     this.LBPerHour=LBHourly;
     this.TPUPerHour=TPUHourly;
     this.costMonthly=VMCostMonthly;
-    this.costQuarter=VMCostMonthly;
-    this.costYear=VMCostMonthly;
+    //this.costQuarter=VMCostMonthly; // Not correct
+    this.costYear=VMCostYearly; // Not correct
 }
 function Storage() {
     this.objectName="Storage";
     /*The variables that influence the price of storage*/
-    this.region="";
+    this.region="us-central1";
     this.multiRegional=0;/*user picked size of multi-regional storage*/;
     this.regional=0;/*user picked size of regional storage*/;
     this.nearline=0;/*user picked size of nearline storage*/;
@@ -43,38 +44,30 @@ function Storage() {
     this.classAOps=0;/*millions of class A operations per month*/;
     this.classBOps=0;/*millions of class B operations per month*/;
     this.nrInstances=1;
+    this.numId=-1;
     // Functions
     this.costHour=storageCostHourly;
-    this.costDay=storageCostHourly*24;
-    this.costMonthly=storageCostHourly*24*(365/12);
-    this.costYear=storageCostHourly*24*365;
+    this.costDay=storageCostDaily;
+    this.costMonthly=storageCostMonthly;
+    this.costYear=storageCostYearly;
 }
 function Database() {
     this.objectName="Database";
     /*The variables that influence the price of databases*/
-    this.region="";
+    this.region="us-central1";
     this.dataSize=0;/*user picked size of data storage*/;
     this.dataReads=0;/*user picked number of entity reads per month*/;
     this.dataWrites=0;/*user picked number of entity writes per month*/;
     this.dataDeletes=0;/*user picked number of entity deletes per month*/;
     this.nrInstances=1;
+    this.numId=-1;
     // Functions
     this.costHour=dataStoreCostHourly;
-    this.costDay=dataStoreCostHourly*24;
-    this.costMonthly=dataStoreCostHourly*24*(365/12);
-    this.costYear=dataStoreCostHourly*24*365;
+    this.costDay=dataStoreCostDaily;
+    this.costMonthly=dataStoreCostMonthly;
+    this.costYear=dataStoreCostYearly;
 }
-function googlepricelist (){
-    console.log("starting new google pricelist");
-    $.ajax({
-        type: 'GET',
-        url: '/users3',
-        contentType: 'application/json',
-        success: function (result) {
-            pricelist=result[0].gcp_price_list;
-        }
-    });
-}
+
 function determineInstanceType(type) {
     if (type == "custom") {
         return {
@@ -106,26 +99,59 @@ function resetAll() {
 }
 //input the results of running the other functions into these:
 function VMCostMonthly(){
-    return this.sustainedUsePerHour()*this.hours*this.days/7*365/12+this.TPUPerHour()*this.hours*365/12+(this.PDPerHour()+this.LBPerHour())*24*365/12;
+    return (this.sustainedUsePerHour()*this.hours*this.days/7*365/12+this.TPUPerHour()*this.hours*365/12+(this.PDPerHour()+this.LBPerHour())*24*365/12)*this.nrInstances;
+}
+function VMCostYearly(){
+    return (this.costMonthly())*12;
 }
 var totalCostMonthly=function(VMCostPerMonth,StoragePerHour,dataStorePerHour){
     return VMCostPerMonth+(StoragePerHour+dataStorePerHour)*24*365/12;
 }
 function sustainedUseHourly(){
+
     var disc=1;
     var cud=1;
     if(this.committedUsage!="0"){
         cud=0.7;
     }else{
         var k=1;
-        var f=this.days/7*this.hours/24;
+        var f=(this.days/7)*(this.hours/24);
         disc=0;
         while(f>k*pricelist["sustained_use_base"]){
-            disc+=pricelist["sustained_use_base"]*f>k*pricelist["sustained_use_tiers"][k-1];
+            switch (k-1) {
+                case 0:
+                    disc+=pricelist["sustained_use_base"]*f>k*pricelist["sustained_use_tiers"]["0.25"];
+                    break;
+                case 1:
+                    disc+=pricelist["sustained_use_base"]*f>k*pricelist["sustained_use_tiers"]["0.50"];
+                    break;
+                case 2:
+                    disc+=pricelist["sustained_use_base"]*f>k*pricelist["sustained_use_tiers"]["0.75"];
+                    break;
+                case 3:
+                    disc+=pricelist["sustained_use_base"]*f>k*pricelist["sustained_use_tiers"]["1.0"];
+                    break;
+            }
             k+=1;
         }
-        disc+=f%pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"][k-1];
+        switch (k-1) {
+            case 0:
+                disc+=f%pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"]["0.25"];
+                break;
+            case 1:
+                disc+=f%pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"]["0.50"];
+                break;
+            case 2:
+                disc+=f%pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"]["0.75"];
+                break;
+            case 3:
+                disc+=f%pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"]["1.0"];
+                break;
+        }
         disc/=f;
+    }
+    if (disc==0) {
+        disc=1;
     }
     return disc*(this.osPerHour()+this.instancePerHour()
         +this.localSSDPerHour()+cud*this.GPUPerHour());
@@ -202,13 +228,27 @@ function TPUHourly(){
     return this.numTPU*this.TPUHours/24*pricelist["CP-CLOUD-TPU"]["us-central1"];
 }
 function storageCostHourly(){
-    return (pricelist["CP-BIGSTORE-STORAGE-MULTI_REGIONAL"][this.region]*this.multiRegional
+    return ((pricelist["CP-BIGSTORE-STORAGE-MULTI_REGIONAL"][this.region]*this.multiRegional
         +pricelist["CP-BIGSTORE-STORAGE-REGIONAL"][this.region]*this.regional
         +pricelist["CP-BIGSTORE-STORAGE-NEARLINE"][this.region]*this.nearline
         +pricelist["CP-BIGSTORE-STORAGE-COLDLINE"][this.region]*this.coldline
         +100*this.classAOps*pricelist["CP-BIGSTORE-CLASS-A-REQUEST"][this.region]
-        +100*this.classBOps*pricelist["CP-BIGSTORE-CLASS-B-REQUEST"][this.region])*12/365/24;
+        +100*this.classBOps*pricelist["CP-BIGSTORE-CLASS-B-REQUEST"][this.region])*12/365/24)*this.nrInstances;
 }
+
+function storageCostDaily() {
+    return this.costHour()*24;
+}
+
+function storageCostMonthly() {
+    return this.costHour()*24*(365/12);
+}
+
+function storageCostYearly() {
+    return this.costHour()*24*365;
+}
+
+
 function dataStoreCostHourly(){
     var cost=0;
     if(this.dataReads>pricelist["CP-CLOUD-DATASTORE-ENTITY-READ"]["freequota"]["quantity"]){
@@ -223,5 +263,17 @@ function dataStoreCostHourly(){
     if(this.dataSize>pricelist["CP-CLOUD-DATASTORE-INSTANCES"]["freequota"]["quantity"]){
         cost+=(this.dataSize-pricelist["CP-CLOUD-DATASTORE-INSTANCES"]["freequota"]["quantity"])*pricelist["CP-CLOUD-DATASTORE-INSTANCES"]["us"]
     }
-    return cost*12/365/24;
+    return (cost*12/365/24)*this.nrInstances;
+}
+
+function dataStoreCostDaily() {
+    return this.costHour()*24;
+}
+
+function dataStoreCostMonthly(){
+    return this.costHour()*24*(365/12);
+}
+
+function dataStoreCostYearly() {
+    return this.costHour()*24*365
 }

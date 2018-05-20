@@ -81,6 +81,58 @@
 - managed to get the API to run
 - push files and documentation cloudwatch to github
 - added flags to app.js for setting the IP address of the cloudwatch API
+- worked with Emiel on integrating the Cloudwatch API
+- worked with Emiel on integrating the Cloudwatch API
+- worked with Emiel on integrating the Cloudwatch API
+- worked with Emiel on integrating the Cloudwatch API
+- worked with Emiel figure out Gulp
+- worked with Emiel figure out Gulp
+- worked with Emiel on integrating the Cloudwatch API
+- worked with Emiel on integrating the Cloudwatch API
+- clean up code app.js
+- looking into way around Access-Control-Allow-Origin
+- looking into way around Access-Control-Allow-Origin
+- looking into way around Access-Control-Allow-Origin
+- looking into way around Access-Control-Allow-Origin
+- update readme + new meeting with client + remove files
+- setup /cloudwatch route processing AJAX request from clientside JS
+- setup /cloudwatch route processing AJAX request from clientside JS
+- create example requests in Postman
+- create example requests in Postman
+- setup /cloudwatch route processing AJAX request from clientside JS
+- return data from /cloudwatch route
+- return data from /cloudwatch route
+- return data from /cloudwatch route
+- team meeting
+- team meeting
+- team meeting 
+- adding file changes to backend branch
+- adding file changes to backend branch
+- attempt to fix broken drag n drop
+- restructure folder
+- refactoring main.js
+- work on calculations part 
+- refactoring main.js app.js
+- implementation user's provider choice
+- implementation user's provider choice
+- fix sending service parameter jquery
+- fix sending service parameter jquery
+- put data in list sections
+- put data in list sections
+- work on graphjs example
+- work on graphjs example
+- work on graphjs example
+- work on graphjs example
+- set up cloudwatch forwarding at home
+- set up cloudwatch forwarding at home
+- fix broken code
+- meeting with client
+- talk with group afterwards
+- fix provider selecting 
+- create json files for the cloudwatch API
+
+
+
 
 
 

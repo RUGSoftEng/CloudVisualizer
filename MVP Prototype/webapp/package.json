@@ -28,6 +28,7 @@
     "gulp-uglify": "^3.0.0"
   },
   "dependencies": {
+    "chart.js": "^2.7.2",
     "ejs": "^2.5.8",
     "gulp-ejs": "^3.1.2",
     "gulp-ext": "^1.0.0"
