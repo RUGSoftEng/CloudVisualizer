@@ -348,8 +348,8 @@ function addCalculationToDiv(string, totalPrice, canvasID){
     newListItem += '<small>' + date.toTimeString() + '</small></div>';
     newListItem += '<p class="mb-1">' + string +  '</p>';
     newListItem += '<small>Totalprice: ' + totalPrice+ '</small>';
-    newListItem +=  '<br><p class="glyphicon glyphicon-share-alt" id='+canvasID+' href="#" onclick="resetCanvas(id)" "float:right">'+ '</p>';
-    newListItem +=  '<p class="glyphicon glyphicon-trash" href="#" onclick="console.log(id)">'+ '</p></a>';
+    newListItem +=  '<br><p id='+canvasID+' style="float:right" class="glyphicon glyphicon-share-alt" href="#" onclick="resetCanvas(id)" >'+ '</p>';
+    newListItem +=  '<p style="float:right" class="glyphicon glyphicon-trash" href="#" onclick="console.log(0)">'+ '</p></a>';
 
     var mainArea = document.getElementById("canvas-pop-up").children[0].innerHTML += newListItem;
 }
