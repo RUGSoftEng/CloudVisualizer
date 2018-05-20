@@ -441,32 +441,32 @@ function calculateTemp (){
             pricelist=variable["gcp_price_list"];
 
             /** Add canvas to list of canvas, so we can set it back later */
-            if (listOfCanvasses.length!=10) {
-                currentCanvas.numId=idCanvas++;
+            if (listOfCanvasses.length<5) {
+                currentCanvas.numId = idCanvas++;
                 console.log(idCanvas);
                 console.log(currentCanvas);
                 console.log(copyCanvas(currentCanvas));
                 listOfCanvasses.push(copyCanvas(currentCanvas));
                 console.log(listOfCanvasses);
-            }
-            /** */
+                /** */
 
-            /** Calculations */
+                /** Calculations */
 
-            for (var i in currentCanvas.VirtualMachines) {
-                currentCanvas.VirtualMachines[i].instanceType=determineInstanceType(currentCanvas.VirtualMachines[i].type);
-                console.log(currentCanvas.VirtualMachines[i].costMonthly());
+                for (var i in currentCanvas.VirtualMachines) {
+                    currentCanvas.VirtualMachines[i].instanceType = determineInstanceType(currentCanvas.VirtualMachines[i].type);
+                    console.log(currentCanvas.VirtualMachines[i].costMonthly());
+                }
+                for (var i in currentCanvas.Databases) {
+                    console.log("Monthly costs: " + currentCanvas.Databases[i].costMonthly());
+                }
+                for (var i in currentCanvas.Storages) {
+                    console.log("Monthly costs: " + currentCanvas.Storages[i].costMonthly());
+                }
+                var totalprice = 0;
+                var myString = '';
+                addCalculationToDiv(result.substring(0, 300), Math.round(totalprice * 100) / 100, currentCanvas.numId);
+                showCalculationDiv();
             }
-            for (var i in currentCanvas.Databases) {
-                console.log("Monthly costs: " + currentCanvas.Databases[i].costMonthly());
-            }
-            for (var i in currentCanvas.Storages) {
-                console.log("Monthly costs: " + currentCanvas.Storages[i].costMonthly());
-            }
-            var totalprice=0;
-            var myString='';
-            addCalculationToDiv(result.substring(0, 300), Math.round(totalprice*100)/100, currentCanvas.numId);
-            showCalculationDiv();
 
             /** */
         }
