@@ -130,7 +130,15 @@
 - talk with group afterwards
 - fix provider selecting 
 - create json files for the cloudwatch API
-
+- review work before pull request
+- create 'todo' from review
+- meeting with client
+- meeting with client 
+- work on graph html
+- work on graph html
+- integrate graph.html into index.html
+- integrate graph.html into index.html
+- some refactoring
 
 
 
