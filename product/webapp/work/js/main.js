@@ -6,6 +6,88 @@ var storageSize;
 var DBSize;
 var calculate;
 var service = 'google-cloud';
+var listOfCanvasses=[];
+var idCanvas=0;
+var currentCanvas=new Canvas();
+
+var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+var COLORS = [
+    '#4dc9f6',
+    '#f67019',
+    '#f53794',
+    '#537bc4',
+    '#acc236',
+    '#166a8f',
+    '#00a950',
+    '#58595b',
+    '#8549ba'
+];
+
+window.chartColors = {
+    red: 'rgb(255, 99, 132)',
+    orange: 'rgb(255, 159, 64)',
+    yellow: 'rgb(255, 205, 86)',
+    green: 'rgb(75, 192, 192)',
+    blue: 'rgb(54, 162, 235)',
+    purple: 'rgb(153, 102, 255)',
+    grey: 'rgb(201, 203, 207)'
+};
+
+var config = {
+    type: 'line',
+    data: {
+        labels: MONTHS,
+        datasets: []
+    },
+    options: {
+        responsive: true,
+        title: {
+            display: true,
+            text: 'Cost over Time'
+        },
+        tooltips: {
+            mode: 'index',
+            intersect: false,
+        },
+        hover: {
+            mode: 'nearest',
+            intersect: true
+        },
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Month'
+                }
+            }],
+            yAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Price'
+                }
+            }]
+        }
+    }
+};
+
+function srand(seed) {
+    this._seed = seed;
+};
+
+function rand (min, max) {
+    var seed = this._seed;
+    min = min === undefined ? 0 : min;
+    max = max === undefined ? 1 : max;
+    this._seed = (seed * 9301 + 49297) % 233280;
+    return min + (this._seed / 233280) * (max - min);
+};
+
+function randomScalingFactor() {
+    return Math.round(rand(0, 100));
+};
 
 function Canvas() {
     this.VirtualMachines=[];
@@ -15,15 +97,125 @@ function Canvas() {
     this.numId=0;
 }
 
-var listOfCanvasses=[];
-var idCanvas=0;
-var currentCanvas=new Canvas();
-/*
-// from canvasObject
-var VirtualMachines=[];
-var Databases=[];
-var Storages=[];
-var idCounter=0; */
+$(function() {
+    $("#myAccordion").accordion();
+
+    /** Virtual Machine Sliders */
+
+    // Instances
+    var VMInstancesSlider = document.getElementById("VMInstancesSliderID");
+    nrInstances = document.getElementById("VMInstances");
+    nrInstances.innerHTML = VMInstancesSlider.value;
+    VMInstancesSlider.oninput = function() {
+        nrInstances.innerHTML = this.value;
+    }
+
+    // Days
+    var VMDaysSlider = document.getElementById("VMDaysSliderID");
+    days = document.getElementById("VMDays");
+    days.innerHTML = VMDaysSlider.value;
+    VMDaysSlider.oninput = function() {
+        days.innerHTML = this.value;
+    }
+
+    // Hours
+    var VMHoursSlider = document.getElementById("VMHoursSliderID");
+    hours = document.getElementById("VMHours");
+    hours.innerHTML = VMHoursSlider.value;
+    VMHoursSlider.oninput = function() {
+        hours.innerHTML = this.value;
+    }
+
+    /** Storage Sliders */
+    var StorageSlider = document.getElementById("StorageGBSliderID");
+    storageSize = document.getElementById("StorageGB");
+    storageSize.innerHTML = StorageSlider.value;
+    StorageSlider.oninput = function() {
+        storageSize.innerHTML = this.value;
+    }
+
+    /** Database Sliders */
+    var DBSlider = document.getElementById("DBGBSliderID");
+    DBSize = document.getElementById("DBGB");
+    DBSize.innerHTML = DBSlider.value;
+    DBSlider.oninput = function() {
+        DBSize.innerHTML = this.value;
+    }
+
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // When the user clicks the button, open the modal
+    document.getElementById("provider").onclick = function() {
+        modal.style.display = "block";
+    }
+
+    //When the user clicks on Save, close the modal
+    document.getElementById("save-modal").onclick=function() {
+        // save current provider
+        $("input:checked").parent().each(function(){
+            service = this.innerText;
+        })
+        modal.style.display = "none";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    document.getElementsByClassName("close")[0].onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            $("input:checked").parent().each(function(){
+                service = this.innerText;
+            })
+            modal.style.display = "none";
+        }
+    }
+
+    // seed random generator
+    srand(Date.now());
+
+    // Initialize graph and add relevant onClick events to buttons
+    var ctx = document.getElementById('graphCanvas').getContext('2d');
+    window.myLine = new Chart(ctx, config);
+
+    document.getElementById('randomizeData').addEventListener('click', function() {
+        config.data.datasets.forEach(function(dataset) {
+            dataset.data = dataset.data.map(function() {
+                return randomScalingFactor();
+            });
+        });
+        window.myLine.update();
+    });
+
+    var colorNames = Object.keys(window.chartColors);
+    document.getElementById('addDataset').addEventListener('click', function() {
+        var colorName = colorNames[config.data.datasets.length % colorNames.length];
+        var newColor = window.chartColors[colorName];
+        var newDataset = {
+            label: 'Dataset ' + (config.data.datasets.length + 1),
+            backgroundColor: newColor,
+            borderColor: newColor,
+            data: [],
+            fill: false
+        };
+
+        for (var index = 0; index < config.data.labels.length; ++index) {
+            newDataset.data.push(randomScalingFactor());
+        }
+
+        config.data.datasets.push(newDataset);
+        window.myLine.update();
+    });
+
+    document.getElementById('removeDataset').addEventListener('click', function() {
+        config.data.datasets.splice(0, 1);
+        window.myLine.update();
+    });
+
+});
 
 //Checks if the to be added object already exists.
 //If it exists, it will return the index where the duplicate object is located
@@ -82,18 +274,15 @@ function addVirtualMachine(newVM) {
     var newVMID = newObjectExists(newVM, currentCanvas.VirtualMachines);
     if (newVMID != -1) {
         var newVMIndex = getObjectById(newVMID, currentCanvas.VirtualMachines);
-        console.log("EXISTS");
         //Increments the duplicate with the number of to be added instances
         incrementNrInstances(newVMIndex,newVM.nrInstances, currentCanvas.VirtualMachines);
         //Updates the HTML in the canvas
         changeHTML(newVMIndex, currentCanvas.VirtualMachines, "vm", newVMID);
         checkIcon(currentCanvas.VirtualMachines, "vm", newVMIndex);
     } else {
-        console.log("New virtual machine!");
         //Creates new VM
         newVM.numId=currentCanvas.idCounter++;
         currentCanvas.VirtualMachines.push(newVM);
-        //console.log(VirtualMachines[0]);
         //Adds HTML for the new VM to the canvas
         addHTML(newVM.nrInstances, "vm", newVM.numId, currentCanvas.VirtualMachines);
         checkIcon(currentCanvas.VirtualMachines, "vm", currentCanvas.VirtualMachines.length-1);
@@ -107,14 +296,12 @@ function addDatabase(newDB) {
     var newDBID = newObjectExists(newDB, currentCanvas.Databases);
     if (newDBID != -1) {
         var newDBIndex = getObjectById(newDBID, currentCanvas.Databases);
-        console.log("EXISTS");
         //Increments the duplicate with the number of to be added instances
         incrementNrInstances(newDBIndex,newDB.nrInstances, currentCanvas.Databases);
         //Updates the HTML in the canvas
         changeHTML(newDBIndex, currentCanvas.Databases, "db", newDBID);
         checkIcon(currentCanvas.Databases, "db", newDBIndex);
     } else {
-        console.log("New data base!");
         //Creates new DB
         newDB.numId=currentCanvas.idCounter++;
         currentCanvas.Databases.push(newDB);
@@ -130,14 +317,12 @@ function addStorage(newStorage) {
     var newStorageID = newObjectExists(newStorage, currentCanvas.Storages);
     if (newStorageID != -1) {
         var newStorageIndex = getObjectById(newStorageID, currentCanvas.Storages);
-        console.log("EXISTS");
         //Increments the duplicate with the number of to be added instances
         incrementNrInstances(newStorageIndex,newStorage.nrInstances, currentCanvas.Storages);
         //Updates the HTML in the canvas
         changeHTML(newStorageIndex, currentCanvas.Storages, "cs", newStorageID);
         checkIcon(currentCanvas.Storages, "cs", newStorageIndex);
     } else {
-        console.log("New storage!");
         //Creates new storage
         newStorage.numId=currentCanvas.idCounter++;
         currentCanvas.Storages.push(newStorage);
@@ -153,7 +338,7 @@ function getObjectById(id, listOfObjects) {
             return i;
         }
     }
-    console.log("Shouldn't reach here!");
+    console.error("Shouldn't reach here!");
     return null;
 }
 
@@ -208,7 +393,6 @@ function attachVariable (variableName,variableObject) {
         input.value = variableObject[variableName];
         input.onchange = function () {
             variableObject[variableName] = this.value;
-            //console.log(variableObject[variableName]);
         }
     }
 }
@@ -217,7 +401,6 @@ function openPopup(objectToEdit){
     /*Insert code that shows the html of the popup*/
     for (var property in objectToEdit) {
         if (objectToEdit.hasOwnProperty(property)) {
-            //console.log(property);
             attachVariable(property,objectToEdit);
         }
     }
@@ -307,7 +490,6 @@ function refresh() {
     for (var i in currentCanvas.VirtualMachines) {
         var curVM  = currentCanvas.VirtualMachines[i];
         $("#itemsvm").append($('<div class="test" ></div>').html('<img src="images/VM.png">'));
-        console.log(i.hours);
     }
 }
 
@@ -332,7 +514,7 @@ function removeIcon(elementID, uniqueIdentifier){
         currentCanvas.Storages.splice(getObjectById(uniqueIdentifier, currentCanvas.Storages), 1);
         return;
     }
-    console.log("NO THANKS");
+    console.error("Error removing icon");
 }
 
 //show the div when calculate is clicked
@@ -362,10 +544,7 @@ function addCalculationToDiv(string, canvasID, yearPrice, monthPrice){
 }
 
 function calculate (){
-    console.log("Querying cloudwatch for data from " + service);
-
     var result = '';
-
 
     // send HTTP request to Node so that it communicates with cloudwatch
     $.ajax({
@@ -380,10 +559,7 @@ function calculate (){
 
     // callback function when request is finished
     .done(function(){
-        console.log("Finished processing response of AJAX request to cloudwatch ");
-
-        console.log(JSON.stringify("/google.json"));
-
+        
         var totalprice=0;
         var myString='';
 
@@ -433,7 +609,9 @@ function copyCanvas(canvas) {
     return newCanvas;
 
 }
-/* Wrote this function to work on the google json when the clouddata API is down */
+
+// TODO: REMOVE
+// Wrote this function to work on the google json when the clouddata API is down 
 function calculateTemp (){
 
     var result = '';
@@ -458,17 +636,14 @@ function calculateTemp (){
                 var yearPrice=0;
                 for (var i in currentCanvas.VirtualMachines) {
                     currentCanvas.VirtualMachines[i].instanceType = determineInstanceType(currentCanvas.VirtualMachines[i].type);
-                    console.log(currentCanvas.VirtualMachines[i].costMonthly());
                     monthPrice+=currentCanvas.VirtualMachines[i].costMonthly();
                     yearPrice+=currentCanvas.VirtualMachines[i].costYear();
                 }
                 for (var i in currentCanvas.Databases) {
-                    console.log("Monthly costs: " + currentCanvas.Databases[i].costMonthly());
                     monthPrice+=currentCanvas.Databases[i].costMonthly();
                     yearPrice+=currentCanvas.Databases[i].costYear();
                 }
                 for (var i in currentCanvas.Storages) {
-                    console.log("Monthly costs: " + currentCanvas.Storages[i].costMonthly());
                     monthPrice+=currentCanvas.Storages[i].costMonthly();
                     yearPrice+=currentCanvas.Storages[i].costYear();
                 }
@@ -476,100 +651,11 @@ function calculateTemp (){
                 addCalculationToDiv(result.substring(0, 300), currentCanvas.numId, Math.round(yearPrice * 100) / 100, Math.round(monthPrice * 100) / 100);
                 showCalculationDiv();
             }
-
-            /** */
         }
     };
     xobj.send(null);
 
 }
-
-$(function() {
-    $("#myAccordion").accordion();
-
-    /** Virtual Machine Sliders */
-
-    // Instances
-    var VMInstancesSlider = document.getElementById("VMInstancesSliderID");
-    nrInstances = document.getElementById("VMInstances");
-    nrInstances.innerHTML = VMInstancesSlider.value;
-    VMInstancesSlider.oninput = function() {
-        nrInstances.innerHTML = this.value;
-    }
-
-    // Days
-    var VMDaysSlider = document.getElementById("VMDaysSliderID");
-    days = document.getElementById("VMDays");
-    days.innerHTML = VMDaysSlider.value;
-    VMDaysSlider.oninput = function() {
-        days.innerHTML = this.value;
-    }
-
-    // Hours
-    var VMHoursSlider = document.getElementById("VMHoursSliderID");
-    hours = document.getElementById("VMHours");
-    hours.innerHTML = VMHoursSlider.value;
-    VMHoursSlider.oninput = function() {
-        hours.innerHTML = this.value;
-    }
-
-    /** Storage Sliders */
-    var StorageSlider = document.getElementById("StorageGBSliderID");
-    storageSize = document.getElementById("StorageGB");
-    storageSize.innerHTML = StorageSlider.value;
-    StorageSlider.oninput = function() {
-        storageSize.innerHTML = this.value;
-    }
-
-    /** Database Sliders */
-    var DBSlider = document.getElementById("DBGBSliderID");
-    DBSize = document.getElementById("DBGB");
-    DBSize.innerHTML = DBSlider.value;
-    DBSlider.oninput = function() {
-        DBSize.innerHTML = this.value;
-    }
-
-    // Get the modal
-    var modal = document.getElementById('myModal');
-
-    // Get the button that opens the modal
-    var btn = document.getElementById("provider");
-    var btn1 = document.getElementById("save-modal");
-
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
-
-    // When the user clicks the button, open the modal
-    btn.onclick = function() {
-        modal.style.display = "block";
-    }
-
-    //When the user clicks on Save, close the modal
-    btn1.onclick=function() {
-        // save current provider
-        $("input:checked").parent().each(function(){
-            service = this.innerText;
-        })
-
-        modal.style.display = "none";
-    }
-
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            $("input:checked").parent().each(function(){
-                service = this.innerText;
-            })
-            modal.style.display = "none";
-        }
-
-    }
-});
 
 // When the user scrolls down 20px from the top of the document, show the button
 window.onscroll = function() {scrollFunction()};
@@ -601,7 +687,7 @@ function showSettings(id, uniqueIdentifier){
         openPopup(currentCanvas.Storages[getObjectById(uniqueIdentifier, currentCanvas.Storages)]);
         return;
     }
-    console.log("no reach here bitte");
+    console.error("Error showing settings, not allowed to reach here");
 }
 
 function closeSettings(id){
