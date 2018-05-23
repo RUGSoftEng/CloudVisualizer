@@ -10,85 +10,6 @@ var listOfCanvasses=[];
 var idCanvas=0;
 var currentCanvas=new Canvas();
 
-var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-var COLORS = [
-    '#4dc9f6',
-    '#f67019',
-    '#f53794',
-    '#537bc4',
-    '#acc236',
-    '#166a8f',
-    '#00a950',
-    '#58595b',
-    '#8549ba'
-];
-
-window.chartColors = {
-    red: 'rgb(255, 99, 132)',
-    orange: 'rgb(255, 159, 64)',
-    yellow: 'rgb(255, 205, 86)',
-    green: 'rgb(75, 192, 192)',
-    blue: 'rgb(54, 162, 235)',
-    purple: 'rgb(153, 102, 255)',
-    grey: 'rgb(201, 203, 207)'
-};
-
-var config = {
-    type: 'line',
-    data: {
-        labels: MONTHS,
-        datasets: []
-    },
-    options: {
-        responsive: true,
-        title: {
-            display: true,
-            text: 'Cost over Time'
-        },
-        tooltips: {
-            mode: 'index',
-            intersect: false,
-        },
-        hover: {
-            mode: 'nearest',
-            intersect: true
-        },
-        scales: {
-            xAxes: [{
-                display: true,
-                scaleLabel: {
-                    display: true,
-                    labelString: 'Month'
-                }
-            }],
-            yAxes: [{
-                display: true,
-                scaleLabel: {
-                    display: true,
-                    labelString: 'Price'
-                }
-            }]
-        }
-    }
-};
-
-function srand(seed) {
-    this._seed = seed;
-};
-
-function rand (min, max) {
-    var seed = this._seed;
-    min = min === undefined ? 0 : min;
-    max = max === undefined ? 1 : max;
-    this._seed = (seed * 9301 + 49297) % 233280;
-    return min + (this._seed / 233280) * (max - min);
-};
-
-function randomScalingFactor() {
-    return Math.round(rand(0, 100));
-};
-
 function Canvas() {
     this.VirtualMachines=[];
     this.Databases=[];
@@ -173,48 +94,6 @@ $(function() {
             modal.style.display = "none";
         }
     }
-
-    // seed random generator
-    srand(Date.now());
-
-    // Initialize graph and add relevant onClick events to buttons
-    var ctx = document.getElementById('graphCanvas').getContext('2d');
-    window.myLine = new Chart(ctx, config);
-
-    document.getElementById('randomizeData').addEventListener('click', function() {
-        config.data.datasets.forEach(function(dataset) {
-            dataset.data = dataset.data.map(function() {
-                return randomScalingFactor();
-            });
-        });
-        window.myLine.update();
-    });
-
-    var colorNames = Object.keys(window.chartColors);
-    document.getElementById('addDataset').addEventListener('click', function() {
-        var colorName = colorNames[config.data.datasets.length % colorNames.length];
-        var newColor = window.chartColors[colorName];
-        var newDataset = {
-            label: 'Dataset ' + (config.data.datasets.length + 1),
-            backgroundColor: newColor,
-            borderColor: newColor,
-            data: [],
-            fill: false
-        };
-
-        for (var index = 0; index < config.data.labels.length; ++index) {
-            newDataset.data.push(randomScalingFactor());
-        }
-
-        config.data.datasets.push(newDataset);
-        window.myLine.update();
-    });
-
-    document.getElementById('removeDataset').addEventListener('click', function() {
-        config.data.datasets.splice(0, 1);
-        window.myLine.update();
-    });
-
 });
 
 //Checks if the to be added object already exists.
