@@ -69,17 +69,21 @@ function Database() {
 }
 
 function determineInstanceType(type) {
-    if (type == "custom") {
+    if (type === "custom") {
+        console.log("TEST A");
         return {
             "cores": 0/*user input*/,
             "memory": 0/*user input*/
         }
     } else {
-        if (this.preemptible) {
+        console.log("TEST B");
+        if (this.preemptible === true) {
+            console.log("TEST C");
             return pricelist["CP-COMPUTEENGINE-VMIMAGE-" + type + "-PREEMPTIBLE"];
         } else {
+            console.log("Test2 "+ pricelist["CP-COMPUTEENGINE-VMIMAGE-" + type]);
             return pricelist["CP-COMPUTEENGINE-VMIMAGE-" + type];
-        }
+    }
     }
 }
 function resetAll() {
@@ -99,7 +103,8 @@ function resetAll() {
 }
 //input the results of running the other functions into these:
 function VMCostMonthly(){
-    return (this.sustainedUsePerHour()*this.hours*this.days/7*365/12+this.TPUPerHour()*this.hours*365/12+(this.PDPerHour()+this.LBPerHour())*24*365/12)*this.nrInstances;
+    console.log(this.sustainedUsePerHour()*24*365/12 * 3);
+    return (this.sustainedUsePerHour()*24*365/12+this.TPUPerHour()*this.hours*365/12+(this.PDPerHour()+this.LBPerHour())*24*365/12)*this.nrInstances;
 }
 function VMCostYearly(){
     return (this.costMonthly())*12;
@@ -118,18 +123,19 @@ function sustainedUseHourly(){
         var f=(this.days/7)*(this.hours/24);
         disc=0;
         while(f>k*pricelist["sustained_use_base"]){
+            console.log("test");
             switch (k-1) {
                 case 0:
-                    disc+=pricelist["sustained_use_base"]*f>k*pricelist["sustained_use_tiers"]["0.25"];
+                    disc+=pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"]["0.25"];
                     break;
                 case 1:
-                    disc+=pricelist["sustained_use_base"]*f>k*pricelist["sustained_use_tiers"]["0.50"];
+                    disc+=pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"]["0.50"];
                     break;
                 case 2:
-                    disc+=pricelist["sustained_use_base"]*f>k*pricelist["sustained_use_tiers"]["0.75"];
+                    disc+=pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"]["0.75"];
                     break;
                 case 3:
-                    disc+=pricelist["sustained_use_base"]*f>k*pricelist["sustained_use_tiers"]["1.0"];
+                    disc+=pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"]["1.0"];
                     break;
             }
             k+=1;
@@ -148,11 +154,23 @@ function sustainedUseHourly(){
                 disc+=f%pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"]["1.0"];
                 break;
         }
-        disc/=f;
     }
-    if (disc==0) {
-        disc=1;
-    }
+    //if (disc==0) {
+    //    disc=1;
+    //}
+    console.log("Disc is "+disc);
+
+    console.log("Instanceperhour is "+this.instancePerHour());
+
+    console.log("osPerHour is "+this.osPerHour());
+
+    console.log("localSSD is "+this.localSSDPerHour());
+
+    console.log("GPU is "+this.GPUPerHour());
+
+    console.log("Return value is"+ (disc*(this.osPerHour()+this.instancePerHour()
+        +this.localSSDPerHour()+cud*this.GPUPerHour())));
+
     return disc*(this.osPerHour()+this.instancePerHour()
         +this.localSSDPerHour()+cud*this.GPUPerHour());
 }
@@ -191,6 +209,7 @@ function instanceHourly(){
                 +this.instanceType["memory"]*6.5*pricelist["CP-COMPUTEENGINE-CUSTOM-VM-RAM"+pre][this.region];
         }
     }else{
+        console.log("Test "+this.instanceType[this.region]);
         return this.instanceType[this.region];
     }
 }
