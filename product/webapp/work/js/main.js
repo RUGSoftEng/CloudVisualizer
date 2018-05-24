@@ -9,6 +9,8 @@ var service = 'google-cloud';
 var listOfCanvasses=[];
 var idCanvas=0;
 var currentCanvas=new Canvas();
+var monthPrice;
+
 
 function Canvas() {
     this.VirtualMachines=[];
@@ -29,7 +31,7 @@ $(function() {
     nrInstances.innerHTML = VMInstancesSlider.value;
     VMInstancesSlider.oninput = function() {
         nrInstances.innerHTML = this.value;
-    }
+    };
 
     // Days
     var VMDaysSlider = document.getElementById("VMDaysSliderID");
@@ -37,7 +39,7 @@ $(function() {
     days.innerHTML = VMDaysSlider.value;
     VMDaysSlider.oninput = function() {
         days.innerHTML = this.value;
-    }
+    };
 
     // Hours
     var VMHoursSlider = document.getElementById("VMHoursSliderID");
@@ -45,7 +47,7 @@ $(function() {
     hours.innerHTML = VMHoursSlider.value;
     VMHoursSlider.oninput = function() {
         hours.innerHTML = this.value;
-    }
+    };
 
     /** Storage Sliders */
     var StorageSlider = document.getElementById("StorageGBSliderID");
@@ -53,7 +55,7 @@ $(function() {
     storageSize.innerHTML = StorageSlider.value;
     StorageSlider.oninput = function() {
         storageSize.innerHTML = this.value;
-    }
+    };
 
     /** Database Sliders */
     var DBSlider = document.getElementById("DBGBSliderID");
@@ -61,7 +63,7 @@ $(function() {
     DBSize.innerHTML = DBSlider.value;
     DBSlider.oninput = function() {
         DBSize.innerHTML = this.value;
-    }
+    };
 
     // Get the modal
     var modal = document.getElementById('myModal');
@@ -69,28 +71,28 @@ $(function() {
     // When the user clicks the button, open the modal
     document.getElementById("provider").onclick = function() {
         modal.style.display = "block";
-    }
+    };
 
     //When the user clicks on Save, close the modal
     document.getElementById("save-modal").onclick=function() {
         // save current provider
         $("input:checked").parent().each(function(){
             service = this.innerText;
-        })
+        });
         modal.style.display = "none";
-    }
+    };
 
     // When the user clicks on <span> (x), close the modal
     document.getElementsByClassName("close")[0].onclick = function() {
         modal.style.display = "none";
-    }
+    };
 
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
         if (event.target == modal) {
             $("input:checked").parent().each(function(){
                 service = this.innerText;
-            })
+            });
             modal.style.display = "none";
         }
     }
@@ -511,7 +513,7 @@ function calculateTemp (){
                 /** */
 
                 /** Calculations */
-                var monthPrice=0;
+                monthPrice=0;
                 var yearPrice=0;
                 for (var i in currentCanvas.VirtualMachines) {
                     currentCanvas.VirtualMachines[i].instanceType = determineInstanceType(currentCanvas.VirtualMachines[i].type);
@@ -523,8 +525,8 @@ function calculateTemp (){
                     yearPrice+=currentCanvas.Databases[i].costYear();
                 }
                 for (var i in currentCanvas.Storages) {
-                    monthPrice+=currentCanvas.Storages[i].costMonthly();
-                    yearPrice+=currentCanvas.Storages[i].costYear();
+                    monthPrice += currentCanvas.Storages[i].costMonthly();
+                    yearPrice += currentCanvas.Storages[i].costYear();
                 }
                 var myString = '';
                 addCalculationToDiv(result.substring(0, 300), currentCanvas.numId, Math.round(yearPrice * 100) / 100, Math.round(monthPrice * 100) / 100);

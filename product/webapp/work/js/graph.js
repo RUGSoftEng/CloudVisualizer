@@ -73,16 +73,16 @@ $(function() {
 
     document.getElementById('plotData').addEventListener('click', function() {
         var dataSetNumber = document.getElementById('datasetToPlotField').value;
-        var a = parseInt(document.getElementById('aField').value);
-        var b = parseInt(document.getElementById('bField').value);
+            var a = parseInt(document.getElementById('aField').value);
+            var b = parseInt(document.getElementById('bField').value);
 
-        var newData = [];
-        for(var x=0; x<12; x++){
-            newData.push(a*x + b);
-        }
+            var newData = [];
+            for (var x = 0; x < 12; x++) {
+                newData.push(a * x + b);
+            }
 
-        config.data.datasets[dataSetNumber-1].data = newData;
-        window.myLine.update();
+            config.data.datasets[dataSetNumber - 1].data = newData;
+            window.myLine.update();
     });
 
     var colorNames = Object.keys(window.chartColors);
@@ -108,3 +108,24 @@ $(function() {
     });
 
 });
+
+function plotlatest(){
+
+    window.alert(monthPrice);
+    var dataSetNumber = document.getElementById('datasetToPlotField').value;
+    if(typeof(monthPrice)!='undefined') {
+        var a = monthPrice;
+        var b = parseInt(document.getElementById('bField').value);
+
+        var newData = [];
+        for (var x = 0; x < 12; x++) {
+            newData.push(a * x + b);
+        }
+
+        config.data.datasets[dataSetNumber - 1].data = newData;
+        window.myLine.update();
+    }else{
+        window.alert("No total price to plot");
+    }
+
+}
