@@ -122,7 +122,7 @@ function sustainedUseHourly(){
         var k=1;
         var f=(this.days/7)*(this.hours/24);
         disc=0;
-        while(f>k*pricelist["sustained_use_base"]){
+        while(f>=k*pricelist["sustained_use_base"]){
             console.log("test");
             switch (k-1) {
                 case 0:
