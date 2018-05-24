@@ -196,7 +196,7 @@ function attachVariable (variableName,variableObject) {
 				input.add(option);
 			}
 		}
-	}else if (variableName === "GPUType" /*&& pricelist["GPU_NVIDIA_TESLA_K80"][variableObject.region] != 0*/){
+	}else if (variableName === "GPUType" && pricelist["GPU_NVIDIA_TESLA_K80"][variableObject.region] != 0){
 		var option = document.createElement("option");
 		option.text = option.value = "NVIDIA_TESLA_K80";
 		input.add(option);
