@@ -5,7 +5,7 @@ var hours;
 var storageSize;
 var DBSize;
 var calculate;
-var service = 'google-cloud';
+var service;
 var listOfCanvasses=[];
 var idCanvas=0;
 var currentCanvas=new Canvas();
@@ -18,7 +18,7 @@ function Canvas() {
     this.numId=0;
 }
 
-$(function() {
+function setupWindow(){
     $("#myAccordion").accordion();
 
     /** Virtual Machine Sliders */
@@ -64,36 +64,38 @@ $(function() {
     }
 
     // Get the modal
-    var modal = document.getElementById('myModal');
+    var modal = document.getElementById('exampleModal2');
 
     // When the user clicks the button, open the modal
-    document.getElementById("provider").onclick = function() {
-        modal.style.display = "block";
-    }
+    $('#provider').click( function() {
+        $('#exampleModal2').show();
+    });
 
     //When the user clicks on Save, close the modal
-    document.getElementById("save-modal").onclick=function() {
+    $('#save-provider-modal').click( function() {
         // save current provider
+    
         $("input:checked").parent().each(function(){
             service = this.innerText;
         })
-        modal.style.display = "none";
-    }
+        $('#exampleModal2').hide();
+        localStorage.setItem('provider', service);
+        location.reload();
+    });
+}
 
-    // When the user clicks on <span> (x), close the modal
-    document.getElementsByClassName("close")[0].onclick = function() {
-        modal.style.display = "none";
-    }
+$(function() {
+    // retrieve user selected provider from previous session
+    if( ! localStorage.getItem('provider') ){ 
+        service = 'google-cloud'; 
+    } else {
+        service = localStorage.getItem('provider');
+    };
 
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            $("input:checked").parent().each(function(){
-                service = this.innerText;
-            })
-            modal.style.display = "none";
-        }
-    }
+    // load accordion content from the corresponding file
+    $("#myAccordion").load("accordion-" + service + ".html", function(){
+       setupWindow();
+    });
 });
 
 //Checks if the to be added object already exists.
