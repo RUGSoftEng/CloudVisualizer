@@ -5,7 +5,7 @@ var hours;
 var storageSize;
 var DBSize;
 var calculate;
-var service = 'google-cloud';
+var service;
 var listOfCanvasses=[];
 var idCanvas=0;
 var currentCanvas=new Canvas();
@@ -20,7 +20,7 @@ function Canvas() {
     this.numId=0;
 }
 
-$(function() {
+function setupWindow(){
     $("#myAccordion").accordion();
 
     /** Virtual Machine Sliders */
@@ -66,15 +66,18 @@ $(function() {
     };
 
     // Get the modal
-    var modal = document.getElementById('myModal');
+    var modal = document.getElementById('exampleModal2');
 
     // When the user clicks the button, open the modal
+    $('#provider').click( function() {
+        $('#exampleModal2').show();
+    });
     document.getElementById("provider").onclick = function() {
         modal.style.display = "block";
     };
 
     //When the user clicks on Save, close the modal
-    document.getElementById("save-modal").onclick=function() {
+    $('#save-provider-modal').click( function() {
         // save current provider
         $("input:checked").parent().each(function(){
             service = this.innerText;
@@ -96,6 +99,28 @@ $(function() {
             modal.style.display = "none";
         }
     }
+
+        $("input:checked").parent().each(function(){
+            service = this.innerText;
+        })
+        $('#exampleModal2').hide();
+        localStorage.setItem('provider', service);
+        location.reload();
+    });
+}
+
+$(function() {
+    // retrieve user selected provider from previous session
+    if( ! localStorage.getItem('provider') ){
+        service = 'google-cloud';
+    } else {
+        service = localStorage.getItem('provider');
+    };
+
+    // load accordion content from the corresponding file
+    $("#myAccordion").load("accordion-" + service + ".html", function(){
+       setupWindow();
+    });
 });
 
 //Checks if the to be added object already exists.

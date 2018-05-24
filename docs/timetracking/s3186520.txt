@@ -144,6 +144,20 @@
 - work on plotting y = ax + b
 - put graph stuff into seperate js file
 - look into AWS storage EBS
+- look into AWS storage EBS
+- dynamically load content of Accordion from file
+- dynamically load content of Accordion from file
+- dynamically load content of Accordion from file
+- dynamically load content of Accordion from file
+- dynamically load content of Accordion from file
+- dynamically load content of Accordion from file
+- work on provider selection
+- work on provider selection
+- work on provider selection
+- work on provider selection
+- transform some javascript into jQuery
+- store user's choice for provider accross sessions
+- store user's choice for provider accross sessions
 
 
 
