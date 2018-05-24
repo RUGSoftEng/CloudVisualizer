@@ -9,3 +9,4 @@ function VirtualMachineAWS() {
     this.nrInstances=1;
     this.numId=-1;
 }
+
