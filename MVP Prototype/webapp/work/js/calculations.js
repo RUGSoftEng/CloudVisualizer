@@ -214,14 +214,14 @@ function instanceHourly(){
     }
 }
 function localSSDHourly(){
-    if(this.preemptible){
+    if(this.preemptible === true){
         return this.localSSDSize*pricelist["CP-COMPUTEENGINE-LOCAL-SSD-PREEMPTIBLE"][this.region];
     }else{
         return this.localSSDSize*pricelist["CP-COMPUTEENGINE-LOCAL-SSD"][this.region];
     }
 }
 function GPUHourly(){
-    if(this.preemptible){
+    if(this.preemptible === true){
         return this.numGPU*pricelist["GPU_"+this.GPUType+"-PREEMPTIBLE"][this.region];
     }else if (this.numGPU!=0){
         return this.numGPU*pricelist["GPU_"+this.GPUType][this.region];
