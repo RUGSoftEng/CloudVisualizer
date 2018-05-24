@@ -143,6 +143,7 @@
 - work on plotting y = ax + b
 - work on plotting y = ax + b
 - put graph stuff into seperate js file
+- look into AWS storage EBS
 
 
 
