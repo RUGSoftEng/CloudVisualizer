@@ -11,7 +11,6 @@ var idCanvas=0;
 var currentCanvas=new Canvas();
 var monthPrice;
 
-
 function Canvas() {
     this.VirtualMachines=[];
     this.Databases=[];
@@ -31,7 +30,7 @@ function setupWindow(){
     nrInstances.innerHTML = VMInstancesSlider.value;
     VMInstancesSlider.oninput = function() {
         nrInstances.innerHTML = this.value;
-    };
+    }
 
     // Days
     var VMDaysSlider = document.getElementById("VMDaysSliderID");
@@ -39,7 +38,7 @@ function setupWindow(){
     days.innerHTML = VMDaysSlider.value;
     VMDaysSlider.oninput = function() {
         days.innerHTML = this.value;
-    };
+    }
 
     // Hours
     var VMHoursSlider = document.getElementById("VMHoursSliderID");
@@ -47,7 +46,7 @@ function setupWindow(){
     hours.innerHTML = VMHoursSlider.value;
     VMHoursSlider.oninput = function() {
         hours.innerHTML = this.value;
-    };
+    }
 
     /** Storage Sliders */
     var StorageSlider = document.getElementById("StorageGBSliderID");
@@ -55,7 +54,7 @@ function setupWindow(){
     storageSize.innerHTML = StorageSlider.value;
     StorageSlider.oninput = function() {
         storageSize.innerHTML = this.value;
-    };
+    }
 
     /** Database Sliders */
     var DBSlider = document.getElementById("DBGBSliderID");
@@ -63,7 +62,7 @@ function setupWindow(){
     DBSize.innerHTML = DBSlider.value;
     DBSlider.oninput = function() {
         DBSize.innerHTML = this.value;
-    };
+    }
 
     // Get the modal
     var modal = document.getElementById('exampleModal2');
@@ -72,34 +71,11 @@ function setupWindow(){
     $('#provider').click( function() {
         $('#exampleModal2').show();
     });
-    document.getElementById("provider").onclick = function() {
-        modal.style.display = "block";
-    };
 
     //When the user clicks on Save, close the modal
     $('#save-provider-modal').click( function() {
         // save current provider
-        $("input:checked").parent().each(function(){
-            service = this.innerText;
-        });
-        modal.style.display = "none";
-    };
-
-    // When the user clicks on <span> (x), close the modal
-    document.getElementsByClassName("close")[0].onclick = function() {
-        modal.style.display = "none";
-    };
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            $("input:checked").parent().each(function(){
-                service = this.innerText;
-            });
-            modal.style.display = "none";
-        }
-    }
-
+    
         $("input:checked").parent().each(function(){
             service = this.innerText;
         })

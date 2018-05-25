@@ -159,6 +159,7 @@
 - store user's choice for provider accross sessions
 - store user's choice for provider accross sessions
 - clean up backend branch
+- fix main.js 
 
 
 
