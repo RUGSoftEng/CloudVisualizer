@@ -158,6 +158,7 @@
 - transform some javascript into jQuery
 - store user's choice for provider accross sessions
 - store user's choice for provider accross sessions
+- clean up backend branch
 
 
 
