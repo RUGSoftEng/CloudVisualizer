@@ -160,6 +160,7 @@
 - store user's choice for provider accross sessions
 - clean up backend branch
 - fix main.js 
+- set provider selected on page load/refresh
 
 
 

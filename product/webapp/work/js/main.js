@@ -91,6 +91,16 @@ $(function() {
         service = 'google-cloud';
     } else {
         service = localStorage.getItem('provider');
+
+        // set the current provider checked in the pop up
+        $('#providerForm').children('div').find('label').each(function(){
+            this.children[0].removeAttribute('checked');
+            
+            if(service == this.innerText){
+                this.children[0].setAttribute('checked', null);
+            }
+    
+        });
     };
 
     // load accordion content from the corresponding file
