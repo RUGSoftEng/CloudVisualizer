@@ -9,7 +9,6 @@ var service;
 var listOfCanvasses=[];
 var idCanvas=0;
 var currentCanvas=new Canvas();
-var monthPrice;
 
 function Canvas() {
     this.VirtualMachines=[];
@@ -75,7 +74,7 @@ function setupWindow(){
     //When the user clicks on Save, close the modal
     $('#save-provider-modal').click( function() {
         // save current provider
-    
+
         $("input:checked").parent().each(function(){
             service = this.innerText;
         })
@@ -95,11 +94,11 @@ $(function() {
         // set the current provider checked in the pop up
         $('#providerForm').children('div').find('label').each(function(){
             this.children[0].removeAttribute('checked');
-            
+
             if(service == this.innerText){
                 this.children[0].setAttribute('checked', null);
             }
-    
+
         });
     };
 
@@ -420,6 +419,7 @@ function showCalculationDiv() {
 // set content of the calculationDiv
 function addCalculationToDiv(string, canvasID, yearPrice, monthPrice){
     var date = new Date();
+    var y =5;
     // build new list item in HTML
     var newListItem = '<a  id='+"canvas_"+canvasID+' class="list-group-item list-group-item-action flex-column align-items-start"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">';
     newListItem += '<h5 class="mb-1">Calculation for ' + service + '</h5>';
@@ -427,11 +427,14 @@ function addCalculationToDiv(string, canvasID, yearPrice, monthPrice){
     newListItem += '<p class="mb-1">' + string +  '</p>';
     newListItem += '<small>Cost per year: ' + "$" + yearPrice+ '</small>';
     newListItem +=  '<p id='+canvasID+' style="float:right" class="glyphicon glyphicon-share-alt" href="#" onclick="resetCanvas(id)" >'+" &nbsp"+ '</p>';
-    newListItem +=  '<p style="float:right" class="glyphicon glyphicon-signal" href="#" onclick="" >'+" &nbsp"+ '</p>';
+    newListItem +=  '<p style="float:right" class="glyphicon glyphicon-signal" href="#" onclick="plotGraph('+monthPrice+')" >'+" &nbsp"+ '</p>';
     newListItem +=  '<p id='+canvasID+' style="float:right" class="glyphicon glyphicon-trash" href="#" onclick="removeCanvas(id)">'+" &nbsp"+ '</p>';
     newListItem += '<br><small>Cost per month: ' + "$" + monthPrice+ '</small></a>';
 
     var mainArea = document.getElementById("canvas-pop-up").children[0].innerHTML += newListItem;
+}
+
+function plotGraph2(id){
 
 }
 
@@ -451,7 +454,7 @@ function calculate (){
 
     // callback function when request is finished
     .done(function(){
-        
+
         var totalprice=0;
         var myString='';
 
@@ -503,9 +506,8 @@ function copyCanvas(canvas) {
 }
 
 // TODO: REMOVE
-// Wrote this function to work on the google json when the clouddata API is down 
+// Wrote this function to work on the google json when the clouddata API is down
 function calculateTemp (){
-
     var result = '';
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
@@ -524,7 +526,7 @@ function calculateTemp (){
                 /** */
 
                 /** Calculations */
-                monthPrice=0;
+                var monthPrice=0;
                 var yearPrice=0;
                 for (var i in currentCanvas.VirtualMachines) {
                     currentCanvas.VirtualMachines[i].instanceType = determineInstanceType(currentCanvas.VirtualMachines[i].type);

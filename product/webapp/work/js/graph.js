@@ -66,7 +66,7 @@ var config = {
 
 // jQuery function that executes after when the page loads
 $(function() {
-   
+
     // Initialize graph and add relevant onClick events to buttons
     var ctx = document.getElementById('graphCanvas').getContext('2d');
     window.myLine = new Chart(ctx, config);
@@ -86,11 +86,11 @@ $(function() {
     });
 
     var colorNames = Object.keys(window.chartColors);
-    document.getElementById('addDataset').addEventListener('click', function() {
+    //document.getElementById('addDataset').addEventListener('click', function() {
         var colorName = colorNames[config.data.datasets.length % colorNames.length];
         var newColor = window.chartColors[colorName];
         var newDataset = {
-            label: 'Dataset ' + (config.data.datasets.length + 1),
+            label: 'Price' /*+ (config.data.datasets.length + 1)*/,
             backgroundColor: newColor,
             borderColor: newColor,
             data: [],
@@ -99,7 +99,7 @@ $(function() {
 
         config.data.datasets.push(newDataset);
         window.myLine.update();
-    });
+    //});
 
     document.getElementById('removeDataset').addEventListener('click', function() {
         var indexToDelete = document.getElementById('datasetNumberField').value - 1;
@@ -109,23 +109,20 @@ $(function() {
 
 });
 
-function plotlatest(){
-
-    window.alert(monthPrice);
-    var dataSetNumber = document.getElementById('datasetToPlotField').value;
+function plotGraph(monthPrice){
     if(typeof(monthPrice)!='undefined') {
-        var a = monthPrice;
-        var b = parseInt(document.getElementById('bField').value);
 
         var newData = [];
         for (var x = 0; x < 12; x++) {
-            newData.push(a * x + b);
+            newData.push(monthPrice *x);
         }
 
-        config.data.datasets[dataSetNumber - 1].data = newData;
+        config.data.datasets[0].data = newData;
         window.myLine.update();
+        $('html, body').animate({
+            scrollTop: $("#graphCanvas").offset().top-100
+        }, 1300);
     }else{
         window.alert("No total price to plot");
     }
-
 }
