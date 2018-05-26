@@ -16,7 +16,7 @@
 		<script src="js/graph.min.js"></script>
 		<script src="js/main.min.js"></script>
 		<script src="vendor/js/bootstrap.js"></script>
-		
+
 		<link href="vendor/css/bootstrap.css" rel="stylesheet">
 		<link href="vendor/css/bootstrap-theme.min.css" rel="stylesheet">
 
@@ -51,11 +51,14 @@
 	</div>
 	<!-- BODY -->
 	<div class="content">
-		<h4>
-		 <button id="provider"style="padding-right:150px;margin-left:0px;color:black;background-color:WhiteSmoke"   data-toggle="modal" data-target="#providerPopup">Provider</button>
-			<button onclick="clearBox('itemsvm','itemsst','itemsdb')" type="button">Clear canvas</button>
-			<button onclick="calculateTemp()" type="button" style="margin-left:630px;background-color: #ffaa00">Calculate</button>
-		</h4>
+		<div class="calc" style=" float: right;padding-left: 2%">
+
+
+ <button class="iconButton" id="provider"data-toggle="modal" data-target="#providerPopup"><img src="images/provider.ico"width="50" height="50"/></button>
+	<button class="iconButton" onclick="clearBox('itemsvm','itemsst','itemsdb')" type="button"><img src="images/clearCanvas.ico"width="50" height="50"/></button>
+	<button  class="iconButton"id="calculate" onclick="calculateTemp()" type="button" ><img src="images/calc.ico"width="50" height="50"/></button>
+	<button  class="iconButton"id="deleteCalc" type="button" ><img src="images/trash.ico"width="50" height="50"/></button>
+		</div>
 
 	<!-- Provider pop-up -->
 	<div class="modal fade" id="providerPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -89,7 +92,7 @@
 	</div>
 
 	<!-- Accordion Elements-->
-	<div class="filters" id="myAccordion">
+	<div class="filters"id="myAccordion">
 		<!-- content loaded dynamically with jQuery from 'accordion-[service].html'-->
 	</div>
 
@@ -245,7 +248,7 @@
 	</div>
 
 	<!-- Canvas Section -->
-	<div class="canvas"id="canvas" ondrop="drop(event)" ondragover="allowDrop(event)">
+	<div class="canvas"id="canvas"ondrop="drop(event)" ondragover="allowDrop(event)">
 
 
 				<div id="itemsdb" style=" padding-left:10px"></div>
@@ -261,7 +264,7 @@
 	</div>
 
 	<!-- CHARTJS GRAPH SECTION -->
-	<div style="width:75%;">
+	<div  style=" width:76%">
 		<canvas id="graphCanvas"></canvas>
 		<br/>
 		<h4>
@@ -277,7 +280,7 @@
 		<input type="text" id="datasetNumberField" name="datasetNumber" value="1">
 		<button id="removeDataset">Remove Dataset</button>
 	</div>
-	
+
 	</div>
 
 

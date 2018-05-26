@@ -13,7 +13,8 @@
   border-radius: 10px; }
 
 html, body {
-  height: 100%; }
+  height: 100%;
+  background-color: orange; }
 
 .header {
   color: white;
@@ -76,18 +77,6 @@ ul.source {
 
 a p, h4 {
   color: DarkCyan; }
-
-.content button {
-  background-color: DarkCyan;
-  border-radius: 5px     5px      5px           5px;
-  border-style: solid;
-  border-width: 2px;
-  color: white;
-  padding: 6.3px 10px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px; }
 
 .content .slider {
   margin-top: 5px;
@@ -254,3 +243,10 @@ a p, h4 {
 #itemsst {
   width: 33.3%;
   position: relative; }
+
+.iconButton {
+  background-color: white;
+  padding: 0;
+  border: none;
+  background: none;
+  margin: 14px 12px; }
