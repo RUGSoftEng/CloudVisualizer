@@ -13,8 +13,7 @@
   border-radius: 10px; }
 
 html, body {
-  height: 100%;
-  background-color: orange; }
+  height: 100%; }
 
 .header {
   color: white;
@@ -58,6 +57,14 @@ html, body {
 .graph {
   width: calc(100% - (220px ));
   float: right; }
+
+#revIcon {
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  filter: FlipH;
+  -ms-filter: "FlipH"; }
 
 .canvas-pop-up {
   display: none;
@@ -114,6 +121,9 @@ a p, h4 {
   border-radius: 50%;
   background: DarkCyan;
   cursor: pointer; }
+
+.modal-dialog {
+  max-width: 750px; }
 
 /*
 .modal {

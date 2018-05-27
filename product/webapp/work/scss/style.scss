@@ -59,6 +59,9 @@ $filterwidth: 220px;
 
 }
 
+#revIcon{
+background-color: black;
+}
 .canvas-pop-up{
 	display:none;
 	width:23.5%;
@@ -126,6 +129,9 @@ a p,h4{
     cursor: pointer;
 }
 
+.modal-dialog{
+	max-width:750px;
+}
 /*
 .modal {
     display: none; /* Hidden by default */

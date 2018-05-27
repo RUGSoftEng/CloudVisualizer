@@ -6,7 +6,6 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!--stuff i need -->
-		<link rel="stylesheet" href="css/style.min.css">
 		<link rel="shortcut icon" type="image/x-icon" href="images/logo.ico" />
 		<link rel="stylesheet" href="vendor/js/jquery-ui.min.css">
 		<script src="vendor/js/external/jquery/jquery.js"></script>
@@ -16,9 +15,10 @@
 		<script src="js/graph.min.js"></script>
 		<script src="js/main.min.js"></script>
 		<script src="vendor/js/bootstrap.js"></script>
-
+		
 		<link href="vendor/css/bootstrap.css" rel="stylesheet">
 		<link href="vendor/css/bootstrap-theme.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/style.min.css">
 
 	</head>
 	<body>
@@ -57,7 +57,7 @@
  <button class="iconButton" id="provider"data-toggle="modal" data-target="#providerPopup"><img src="images/provider.ico"width="50" height="50"/></button>
 	<button class="iconButton" onclick="clearBox('itemsvm','itemsst','itemsdb')" type="button"><img src="images/clearCanvas.ico"width="50" height="50"/></button>
 	<button  class="iconButton"id="calculate" onclick="calculateTemp()" type="button" ><img src="images/calc.ico"width="50" height="50"/></button>
-	<button  class="iconButton"id="deleteCalc" type="button" ><img src="images/trash.ico"width="50" height="50"/></button>
+	<button  class="iconButton"id="deleteCalc" type="button" onclick="deleteCalc()"><img src="images/trash.ico"width="50" height="50"/></button>
 		</div>
 
 	<!-- Provider pop-up -->
@@ -205,6 +205,7 @@
 						Millions of class B operations per month
 						<input type="number" id="classBOps" min="0">
 					</form>
+							<canvas id="graphCanvas2"></canvas>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -216,8 +217,8 @@
 
 	<!-- POPUP EDIT (GOOGLE) DATABASE -->
 	<div class="modal fade" id="dbSettings" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
+		<div class="modal-dialog" role="document" >
+			<div class="modal-content" >
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">Providers</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -238,6 +239,11 @@
 						<input type="number" id="dataDeletes" min="0"><br>
 					</form>
 					<button type="button" onclick='closeSettings("dbEdit")'>Close CS settings</button>
+					
+
+		<canvas id="graphCanvas"></canvas>
+
+
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

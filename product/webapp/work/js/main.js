@@ -426,7 +426,7 @@ function addCalculationToDiv(string, canvasID, yearPrice, monthPrice){
     newListItem += '<small>' + date.toTimeString() + '</small></div>';
     newListItem += '<p class="mb-1">' + string +  '</p>';
     newListItem += '<small>Cost per year: ' + "$" + yearPrice+ '</small>';
-    newListItem +=  '<p id='+canvasID+' style="float:right" class="glyphicon glyphicon-share-alt" href="#" onclick="resetCanvas(id)" >'+" &nbsp"+ '</p>';
+    newListItem +=  '<p id='+canvasID+' style="float:right" id="revIcon" class="glyphicon glyphicon-repeat"  href="#" onclick="resetCanvas(id)" >'+" &nbsp"+ '</p>';
     newListItem +=  '<p style="float:right" class="glyphicon glyphicon-signal" href="#" onclick="plotGraph('+monthPrice+')" >'+" &nbsp"+ '</p>';
     newListItem +=  '<p id='+canvasID+' style="float:right" class="glyphicon glyphicon-trash" href="#" onclick="removeCanvas(id)">'+" &nbsp"+ '</p>';
     newListItem += '<br><small>Cost per month: ' + "$" + monthPrice+ '</small></a>';
@@ -436,6 +436,13 @@ function addCalculationToDiv(string, canvasID, yearPrice, monthPrice){
 
 function plotGraph2(id){
 
+}
+
+function deleteCalc(){
+	document.getElementById("canvas-pop-up").innerHTML="";
+	console.log(listOfCanvasses);
+	listOfCanvasses = [];
+	console.log(listOfCanvasses);
 }
 
 function calculate (){
