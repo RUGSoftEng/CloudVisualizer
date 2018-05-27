@@ -426,9 +426,9 @@ function addCalculationToDiv(string, canvasID, yearPrice, monthPrice){
     newListItem += '<small>' + date.toTimeString() + '</small></div>';
     newListItem += '<p class="mb-1">' + string +  '</p>';
     newListItem += '<small>Cost per year: ' + "$" + yearPrice+ '</small>';
-    newListItem +=  '<p id='+canvasID+' style="float:right" id="revIcon" class="glyphicon glyphicon-repeat"  href="#" onclick="resetCanvas(id)" >'+" &nbsp"+ '</p>';
+    newListItem +=  '<div id="luc"><p id='+canvasID+' style="float:right" href="#" onclick="resetCanvas(id)" ><span class="glyphicon glyphicon-wrench"></span></p>';
     newListItem +=  '<p style="float:right" class="glyphicon glyphicon-signal" href="#" onclick="plotGraph('+monthPrice+')" >'+" &nbsp"+ '</p>';
-    newListItem +=  '<p id='+canvasID+' style="float:right" class="glyphicon glyphicon-trash" href="#" onclick="removeCanvas(id)">'+" &nbsp"+ '</p>';
+    newListItem +=  '<p id='+canvasID+' style="float:right" class="glyphicon glyphicon-trash" href="#" onclick="removeCanvas(id)">'+" &nbsp"+ '</p></div>';
     newListItem += '<br><small>Cost per month: ' + "$" + monthPrice+ '</small></a>';
 
     var mainArea = document.getElementById("canvas-pop-up").children[0].innerHTML += newListItem;

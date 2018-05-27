@@ -59,9 +59,11 @@ $filterwidth: 220px;
 
 }
 
-#revIcon{
-background-color: black;
+#luc p:hover{
+	cursor:pointer;
+	color:red;
 }
+
 .canvas-pop-up{
 	display:none;
 	width:23.5%;
