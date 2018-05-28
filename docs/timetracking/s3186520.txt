@@ -161,6 +161,8 @@
 - clean up backend branch
 - fix main.js 
 - set provider selected on page load/refresh
+- tried loading only loading accordion element without page refresh
+- tried loading only loading accordion element without page refresh
 
 
 
