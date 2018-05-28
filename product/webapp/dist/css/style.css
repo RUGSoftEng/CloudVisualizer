@@ -58,13 +58,9 @@ html, body {
   width: calc(100% - (220px ));
   float: right; }
 
-#revIcon {
-  -moz-transform: scaleX(-1);
-  -o-transform: scaleX(-1);
-  -webkit-transform: scaleX(-1);
-  transform: scaleX(-1);
-  filter: FlipH;
-  -ms-filter: "FlipH"; }
+#luc p:hover {
+  cursor: pointer;
+  color: red; }
 
 .canvas-pop-up {
   display: none;

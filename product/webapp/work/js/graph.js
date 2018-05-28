@@ -73,20 +73,13 @@ $(function() {
 
     document.getElementById('plotData').addEventListener('click', function() {
         var dataSetNumber = document.getElementById('datasetToPlotField').value;
-            var a = parseInt(document.getElementById('aField').value);
-            var b = parseInt(document.getElementById('bField').value);
-
-            var newData = [];
-            for (var x = 0; x < 12; x++) {
-                newData.push(a * x + b);
-            }
-
-            config.data.datasets[dataSetNumber - 1].data = newData;
-            window.myLine.update();
+        var a = parseInt(document.getElementById('aField').value);
+        var b = parseInt(document.getElementById('bField').value);
+        plotGraphNew(dataSetNumber, a, b);
     });
 
     var colorNames = Object.keys(window.chartColors);
-    //document.getElementById('addDataset').addEventListener('click', function() {
+    document.getElementById('addDataset').addEventListener('click', function() {
         var colorName = colorNames[config.data.datasets.length % colorNames.length];
         var newColor = window.chartColors[colorName];
         var newDataset = {
@@ -99,7 +92,7 @@ $(function() {
 
         config.data.datasets.push(newDataset);
         window.myLine.update();
-    //});
+    });
 
     document.getElementById('removeDataset').addEventListener('click', function() {
         var indexToDelete = document.getElementById('datasetNumberField').value - 1;
@@ -108,6 +101,16 @@ $(function() {
     });
 
 });
+
+function plotGraphNew(d, a, b){
+    var newData = [];
+    for (var x = 0; x < 12; x++) {
+        newData.push(a * x + b);
+    }
+
+    config.data.datasets[dataSetNumber - 1].data = newData;
+    window.myLine.update();
+}
 
 function plotGraph(monthPrice){
     if(typeof(monthPrice)!='undefined') {
