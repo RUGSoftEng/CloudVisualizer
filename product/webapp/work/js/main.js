@@ -144,7 +144,7 @@ function addCalculationToDiv(canvas){
     newListItem +=  '<p id='+canvas.numId+' style="float:right" class="glyphicon glyphicon-trash" href="#" onclick="removeCanvas(id)">'+" &nbsp"+ '</p></div>';
     newListItem += '<br><small>Cost per month: ' + "$" + canvas.monthlyPrice+ '</small></a>';
 
-    $('#canvas-pop-up').first().append(newListItem);
+    $('#canvas-pop-up').first().prepend(newListItem);
 }
 
 function deleteCalc(){
