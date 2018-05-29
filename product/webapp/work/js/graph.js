@@ -64,12 +64,97 @@ var config = {
     }
 };
 
+var vmConfig = {
+    type: 'line',
+    data: {
+        labels: MONTHS,
+        datasets: [{
+            label: 'Price for VM ',
+            backgroundColor: '#4dc9f6',
+            borderColor: '#4dc9f6',
+            data: [],
+            fill: false
+        }
+        ]
+    },
+    options: {
+        responsive: true,
+        title: {
+            display: true,
+            text: 'Cost over Time'
+        },
+        tooltips: {
+            mode: 'index',
+            intersect: false,
+        },
+        hover: {
+            mode: 'nearest',
+            intersect: true
+        },
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Month'
+                }
+            }],
+            yAxes: [{
+                display: true,
+                ticks: {
+                    beginAtZero: true
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Price'
+                }
+            }]
+        }
+    }
+};
+
 $(function() {
     // Initialize graph and add relevant onClick events to buttons
     var ctx = document.getElementById('graphCanvas').getContext('2d');
     window.myLine = new Chart(ctx, config);
+
+    // initialize vm popup graph
+    var ctx = document.getElementById('popupGraphvm').getContext('2d');
+    window.popupGraphVM = new Chart(ctx, vmConfig);
+ 
+   // intializePopupGraphVM();
+
  
  });
+
+ function intializePopupGraphVM (){
+    // add dataset
+    var colorNames = Object.keys(window.chartColors);
+    var colorName = colorNames[vmConfig.data.datasets.length % colorNames.length];
+    var newColor = window.chartColors[colorName];
+    var newDataset = {
+        label: 'Price for VM ',
+        backgroundColor: newColor,
+        borderColor: newColor,
+        data: [],
+        fill: false
+    };
+    vmConfig.data.datasets.push(newDataset);
+   
+ }
+
+ function updatePopupGraphVM(virtualmachine){
+    var monthPrice = virtualmachine.costMonthly();
+
+    // add data points
+    var newData = [];
+    for (var x = 0; x < 12; x++) {
+        newData.push(monthPrice *x);
+    }
+    vmConfig.data.datasets[0].data = newData;
+    
+    window.popupGraphVM.update();
+ }
  
  function plotGraph(monthPrice, canvasId){
     // add dataset

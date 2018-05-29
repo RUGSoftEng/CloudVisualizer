@@ -170,10 +170,11 @@
 					Hours per day used
 					<input type="number" id="TPUHours" min="0">
 				</form>
+				<canvas id="popupGraphvm"></canvas>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" id="save-modal" onclick='closeSettings("vmEdit")' data-dismiss="modal">Close VM settings</button>
+					<button type="button" class="btn btn-primary" id="save-modal" data-dismiss="modal">Save VM settings</button>
 				</div>
 			</div>
 		</div>
@@ -239,12 +240,12 @@
 						Entity deletes per month
 						<input type="number" id="dataDeletes" min="0"><br>
 					</form>
-					<button type="button" onclick='closeSettings("dbEdit")'>Close CS settings</button>
 
+					<canvas id="popUpGraph"></canvas>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" id="save-modal" onclick='closeSettings("dbSettings")' data-dismiss="modal">Save changes</button>
+					<button type="button" class="btn btn-primary" id="save-modal" data-dismiss="modal">Save changes</button>
 				</div>
 			</div>
 		</div>

@@ -174,17 +174,28 @@ function attachVariable (variableName,variableObject) {
         input.value = variableObject[variableName];
         input.onchange = function () {
             variableObject[variableName] = this.value;
+            // change graph
+            variableObject.instanceType = determineInstanceType(variableObject.type);
+            updatePopupGraphVM(variableObject);
         }
     }
 }
 
 function openPopup(objectToEdit){
+
     /*Insert code that shows the html of the popup*/
     for (var property in objectToEdit) {
         if (objectToEdit.hasOwnProperty(property)) {
             attachVariable(property,objectToEdit);
         }
     }
+
+
+    objectToEdit.instanceType = determineInstanceType(objectToEdit.type);
+    updatePopupGraphVM(objectToEdit);
+
+
+
 }
 
 
@@ -326,11 +337,21 @@ function copyCanvas(canvas) {
 }
 
 function showSettings(id, uniqueIdentifier){
+    var current, copy; 
     if (id=="vm") {
-        openPopup(currentCanvas.VirtualMachines[getObjectById(uniqueIdentifier, currentCanvas.VirtualMachines)]);
+        current = currentCanvas.VirtualMachines[getObjectById(uniqueIdentifier, currentCanvas.VirtualMachines)]
+        
+        copy = Object.assign(new VirtualMachine(),current);
+        openPopup(copy);
+
+        $('#vmSettings').find('#save-modal').click(function(){
+            currentCanvas.VirtualMachines[getObjectById(uniqueIdentifier, currentCanvas.VirtualMachines)] = copy;
+        });
+      
         return;
     }
     if (id=="db") {
+
         openPopup(currentCanvas.Databases[getObjectById(uniqueIdentifier, currentCanvas.Databases)]);
         return;
     }
@@ -339,8 +360,4 @@ function showSettings(id, uniqueIdentifier){
         return;
     }
     console.error("Error showing settings, not allowed to reach here");
-}
-
-function closeSettings(id){
-	document.getElementById(id).style.display = "none";
 }
