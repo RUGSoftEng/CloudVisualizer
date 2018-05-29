@@ -240,10 +240,6 @@
 						<input type="number" id="dataDeletes" min="0"><br>
 					</form>
 					<button type="button" onclick='closeSettings("dbEdit")'>Close CS settings</button>
-					
-
-		<canvas id="graphCanvas"></canvas>
-
 
 				</div>
 				<div class="modal-footer">
@@ -271,21 +267,11 @@
 	</div>
 
 	<!-- CHARTJS GRAPH SECTION -->
-	<div  style=" width:76%">
-		<canvas id="graphCanvas"></canvas>
-		<br/>
+	<div  style=" width:75%">
 		<h4>
-			Functions are of the type y = ax + b
+			Graph section
 		</h4>
-		<input type="text" id="aField" name="a" value="a">
-		<input type="text" id="bField" name="b" value="b">
-		<input type="text" id="datasetToPlotField" name="dataset number" value="dataset number">
-		<button id="plotData">Plot function</button><br />
-		<br />
-		<button id="addDataset">Add Dataset</button><br />
-		<br />
-		<input type="text" id="datasetNumberField" name="datasetNumber" value="1">
-		<button id="removeDataset">Remove Dataset</button>
+		<canvas id="graphCanvas"></canvas>
 	</div>
 
 	</div>
