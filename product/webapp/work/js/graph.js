@@ -32,7 +32,7 @@ var config = {
         responsive: true,
         title: {
             display: true,
-            text: 'Cost over Time'
+            text: 'Click to hide/show line(s)'
         },
         tooltips: {
             mode: 'index',
