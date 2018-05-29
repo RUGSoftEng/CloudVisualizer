@@ -69,9 +69,99 @@ var vmConfig = {
     data: {
         labels: MONTHS,
         datasets: [{
-            label: 'Price for VM ',
+            label: 'Price for this Virtual Machine configuration',
             backgroundColor: '#4dc9f6',
             borderColor: '#4dc9f6',
+            data: [],
+            fill: false
+        }
+        ]
+    },
+    options: {
+        responsive: true,
+        tooltips: {
+            mode: 'index',
+            intersect: false,
+        },
+        hover: {
+            mode: 'nearest',
+            intersect: true
+        },
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Month'
+                }
+            }],
+            yAxes: [{
+                display: true,
+                ticks: {
+                    beginAtZero: true
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Price ($)'
+                }
+            }]
+        }
+    }
+};
+
+var csConfig = {
+    type: 'line',
+    data: {
+        labels: MONTHS,
+        datasets: [{
+            label: 'Price for this Cloud Storage configuration',
+            backgroundColor: '#acc236',
+            borderColor: '#acc236',
+            data: [],
+            fill: false
+        }
+        ]
+    },
+    options: {
+        responsive: true,
+        tooltips: {
+            mode: 'index',
+            intersect: false,
+        },
+        hover: {
+            mode: 'nearest',
+            intersect: true
+        },
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Month'
+                }
+            }],
+            yAxes: [{
+                display: true,
+                ticks: {
+                    beginAtZero: true
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Price ($)'
+                }
+            }]
+        }
+    }
+};
+
+var dbConfig = {
+    type: 'line',
+    data: {
+        labels: MONTHS,
+        datasets: [{
+            label: 'Price for this Database configuration',
+            backgroundColor: '#acc236',
+            borderColor: '#acc236',
             data: [],
             fill: false
         }
@@ -106,7 +196,7 @@ var vmConfig = {
                 },
                 scaleLabel: {
                     display: true,
-                    labelString: 'Price'
+                    labelString: 'Price ($)'
                 }
             }]
         }
@@ -118,30 +208,19 @@ $(function() {
     var ctx = document.getElementById('graphCanvas').getContext('2d');
     window.myLine = new Chart(ctx, config);
 
-    // initialize vm popup graph
-    var ctx = document.getElementById('popupGraphvm').getContext('2d');
+    // initialize 'virtual machine' popup graph
+    var ctx = document.getElementById('popupGraphVM').getContext('2d');
     window.popupGraphVM = new Chart(ctx, vmConfig);
- 
-   // intializePopupGraphVM();
 
+    // initialize 'cloud storage' popup graph
+    var ctx = document.getElementById('popupGraphCS').getContext('2d');
+    window.popupGraphCS = new Chart(ctx, csConfig);
+
+    // initialize 'database' popup graph
+    var ctx = document.getElementById('popupGraphDB').getContext('2d');
+    window.popupGraphDB = new Chart(ctx, dbConfig);
  
  });
-
- function intializePopupGraphVM (){
-    // add dataset
-    var colorNames = Object.keys(window.chartColors);
-    var colorName = colorNames[vmConfig.data.datasets.length % colorNames.length];
-    var newColor = window.chartColors[colorName];
-    var newDataset = {
-        label: 'Price for VM ',
-        backgroundColor: newColor,
-        borderColor: newColor,
-        data: [],
-        fill: false
-    };
-    vmConfig.data.datasets.push(newDataset);
-   
- }
 
  function updatePopupGraphVM(virtualmachine){
     var monthPrice = virtualmachine.costMonthly();
@@ -149,14 +228,40 @@ $(function() {
     // add data points
     var newData = [];
     for (var x = 0; x < 12; x++) {
-        newData.push(monthPrice *x);
+        newData.push( (monthPrice*x).toFixed(2) );
     }
     vmConfig.data.datasets[0].data = newData;
     
     window.popupGraphVM.update();
  }
+
+ function updatePopupGraphDB(database){
+    var monthPrice = database.costMonthly();
+
+    // add data points
+    var newData = [];
+    for (var x = 0; x < 12; x++) {
+        newData.push((monthPrice*x).toFixed(2));
+    }
+    dbConfig.data.datasets[0].data = newData;
+    
+    window.popupGraphDB.update();
+ }
+
+ function updatePopupGraphCS(storage){
+    var monthPrice = storage.costMonthly();
+
+    // add data points
+    var newData = [];
+    for (var x = 0; x < 12; x++) {
+        newData.push((monthPrice*x).toFixed(2));
+    }
+    csConfig.data.datasets[0].data = newData;
+    
+    window.popupGraphCS.update();
+ }
  
- function plotGraph(monthPrice, canvasId){
+ function plotMainGraph(monthPrice, canvasId){
     // add dataset
     var colorNames = Object.keys(window.chartColors);
     var colorName = colorNames[config.data.datasets.length % colorNames.length];
@@ -173,7 +278,7 @@ $(function() {
     // add data points
     var newData = [];
     for (var x = 0; x < 12; x++) {
-        newData.push(monthPrice *x);
+        newData.push((monthPrice*x).toFixed(2));
     }
     config.data.datasets[config.data.datasets.length - 1].data = newData;
 

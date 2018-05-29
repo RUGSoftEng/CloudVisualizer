@@ -172,6 +172,17 @@
 - work on saving all canvasses and calculations
 - work on saving all canvasses and calculations
 - work on saving all canvasses and calculations
+- TA meeting
+- Team meeting
+- work with luc on popup graph VM
+- work with luc on popup graph VM
+- work with luc on popup graph VM
+- work with luc on popup graph VM
+- work on popup graph DB
+- work on popup graph CS
+- some debugging and testing
+
+
 
 
 

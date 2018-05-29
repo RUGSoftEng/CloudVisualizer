@@ -17,11 +17,8 @@ function Canvas() {
     this.numId=0;
 }
 
-function setupWindow(){
-    $("#myAccordion").accordion();
-
+function setupGoogleCloud(){
     /** Virtual Machine Sliders */
-
     // Instances
     var VMInstancesSlider = document.getElementById("VMInstancesSliderID");
     nrInstances = document.getElementById("VMInstances");
@@ -60,6 +57,14 @@ function setupWindow(){
     DBSize.innerHTML = DBSlider.value;
     DBSlider.oninput = function() {
         DBSize.innerHTML = this.value;
+    }
+}
+
+function setupWindow(){
+    $("#myAccordion").accordion();
+
+    if(service == 'google-cloud'){
+        setupGoogleCloud();
     }
 
     // Get the modal
@@ -140,7 +145,7 @@ function addCalculationToDiv(canvas){
     newListItem += '<p class="mb-1">' + canvas.description +  '</p>';
     newListItem += '<small>Cost per year: ' + "$" + canvas.yearlyPrice + '</small>';
     newListItem +=  '<div id="luc"><p id='+canvas.numId+' style="float:right" href="#" onclick="resetCanvas(id)" ><span class="glyphicon glyphicon-wrench"></span></p>';
-    newListItem +=  '<p style="float:right" class="glyphicon glyphicon-signal" href="#" onclick="plotGraph('+canvas.monthlyPrice +',' + canvas.numId+')" >'+" &nbsp"+ '</p>';
+    newListItem +=  '<p style="float:right" class="glyphicon glyphicon-signal" href="#" onclick="plotMainGraph('+canvas.monthlyPrice +',' + canvas.numId+')" >'+" &nbsp"+ '</p>';
     newListItem +=  '<p id='+canvas.numId+' style="float:right" class="glyphicon glyphicon-trash" href="#" onclick="removeCanvas(id)">'+" &nbsp"+ '</p></div>';
     newListItem += '<br><small>Cost per month: ' + "$" + canvas.monthlyPrice+ '</small></a>';
 

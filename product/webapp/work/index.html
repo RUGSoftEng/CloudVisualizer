@@ -170,18 +170,20 @@
 					Hours per day used
 					<input type="number" id="TPUHours" min="0">
 				</form>
-				<canvas id="popupGraphvm"></canvas>
+				<br />
+				<br />
+				<canvas id="popupGraphVM"></canvas>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" id="save-modal" data-dismiss="modal">Save VM settings</button>
+					<button type="button" class="btn btn-primary" id="save-modal" data-dismiss="modal">Save changes</button>
 				</div>
 			</div>
 		</div>
 	</div>
 
 	<!-- POPUP EDIT (GOOGLE) STORAGE -->
-	<div class="modal fade" id="csSettings" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="csSettings" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">ex
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -207,11 +209,13 @@
 						Millions of class B operations per month
 						<input type="number" id="classBOps" min="0">
 					</form>
-							<canvas id="graphCanvas2"></canvas>
+					<br />
+					<br />
+					<canvas id="popupGraphCS"></canvas>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" id="save-modal" onclick='closeSettings("csSettings")' data-dismiss="modal">Close CS settings</button>
+					<button type="button" class="btn btn-primary" id="save-modal" data-dismiss="modal">Save changes</button>
 				</div>
 			</div>
 		</div>
@@ -240,8 +244,9 @@
 						Entity deletes per month
 						<input type="number" id="dataDeletes" min="0"><br>
 					</form>
-
-					<canvas id="popUpGraph"></canvas>
+					<br />
+					<br />
+					<canvas id="popupGraphDB"></canvas>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -268,7 +273,7 @@
 	</div>
 
 	<!-- CHARTJS GRAPH SECTION -->
-	<div  style=" width:75%">
+	<div  style=" width:50%">
 		<h4>
 			Graph section
 		</h4>

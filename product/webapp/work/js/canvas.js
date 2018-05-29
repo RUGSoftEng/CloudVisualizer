@@ -175,8 +175,18 @@ function attachVariable (variableName,variableObject) {
         input.onchange = function () {
             variableObject[variableName] = this.value;
             // change graph
+
             variableObject.instanceType = determineInstanceType(variableObject.type);
-            updatePopupGraphVM(variableObject);
+            if(variableObject instanceof VirtualMachine){
+                updatePopupGraphVM(variableObject);
+            } else if (variableObject instanceof Storage){
+                updatePopupGraphCS(variableObject);
+            } else if (variableObject instanceof Database){
+                updatePopupGraphDB(variableObject);
+            } else {
+                console.error("instance of object on the canvas is not right");
+            }
+     
         }
     }
 }
@@ -189,13 +199,6 @@ function openPopup(objectToEdit){
             attachVariable(property,objectToEdit);
         }
     }
-
-
-    objectToEdit.instanceType = determineInstanceType(objectToEdit.type);
-    updatePopupGraphVM(objectToEdit);
-
-
-
 }
 
 
@@ -340,23 +343,45 @@ function showSettings(id, uniqueIdentifier){
     var current, copy; 
     if (id=="vm") {
         current = currentCanvas.VirtualMachines[getObjectById(uniqueIdentifier, currentCanvas.VirtualMachines)]
-        
         copy = Object.assign(new VirtualMachine(),current);
+
         openPopup(copy);
 
         $('#vmSettings').find('#save-modal').click(function(){
             currentCanvas.VirtualMachines[getObjectById(uniqueIdentifier, currentCanvas.VirtualMachines)] = copy;
         });
-      
+
+        copy.instanceType = determineInstanceType(copy.type);
+        updatePopupGraphVM(copy);
         return;
     }
     if (id=="db") {
+        current = currentCanvas.Databases[getObjectById(uniqueIdentifier, currentCanvas.Databases)]
+        copy = Object.assign(new Database(),current);
 
-        openPopup(currentCanvas.Databases[getObjectById(uniqueIdentifier, currentCanvas.Databases)]);
+        openPopup(copy);
+
+        $('#dbSettings').find('#save-modal').click(function(){
+            currentCanvas.Databases[getObjectById(uniqueIdentifier, currentCanvas.Databases)] = copy;
+        });
+
+        
+        copy.instanceType = determineInstanceType(copy.type);
+        updatePopupGraphDB(copy);
         return;
     }
     if (id=="cs") {
-        openPopup(currentCanvas.Storages[getObjectById(uniqueIdentifier, currentCanvas.Storages)]);
+        current = currentCanvas.Storages[getObjectById(uniqueIdentifier, currentCanvas.Storages)]
+        copy = Object.assign(new Storage(),current);
+
+        openPopup(copy);
+
+        $('#csSettings').find('#save-modal').click(function(){
+            currentCanvas.Storages[getObjectById(uniqueIdentifier, currentCanvas.Storages)] = copy;
+        });
+
+        copy.instanceType = determineInstanceType(copy.type);
+        updatePopupGraphCS(copy);
         return;
     }
     console.error("Error showing settings, not allowed to reach here");
