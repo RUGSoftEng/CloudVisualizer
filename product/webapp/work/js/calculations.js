@@ -75,7 +75,7 @@ function determineInstanceType(type) {
             "memory": 0/*user input*/
         }
     } else {
-        if (this.preemptible) {
+        if (this.preemptible===true) {
             return pricelist["CP-COMPUTEENGINE-VMIMAGE-" + type + "-PREEMPTIBLE"];
         } else {
             return pricelist["CP-COMPUTEENGINE-VMIMAGE-" + type];
@@ -117,19 +117,19 @@ function sustainedUseHourly(){
         var k=1;
         var f=(this.days/7)*(this.hours/24);
         disc=0;
-        while(f>k*pricelist["sustained_use_base"]){
+        while(f>=k*pricelist["sustained_use_base"]){
             switch (k-1) {
                 case 0:
-                    disc+=pricelist["sustained_use_base"]*f>k*pricelist["sustained_use_tiers"]["0.25"];
+                    disc+=pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"]["0.25"];
                     break;
                 case 1:
-                    disc+=pricelist["sustained_use_base"]*f>k*pricelist["sustained_use_tiers"]["0.50"];
+                    disc+=pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"]["0.50"];
                     break;
                 case 2:
-                    disc+=pricelist["sustained_use_base"]*f>k*pricelist["sustained_use_tiers"]["0.75"];
+                    disc+=pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"]["0.75"];
                     break;
                 case 3:
-                    disc+=pricelist["sustained_use_base"]*f>k*pricelist["sustained_use_tiers"]["1.0"];
+                    disc+=pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"]["1.0"];
                     break;
             }
             k+=1;
@@ -149,9 +149,6 @@ function sustainedUseHourly(){
                 break;
         }
         disc/=f;
-    }
-    if (disc==0) {
-        disc=1;
     }
     return disc*(this.osPerHour()+this.instancePerHour()
         +this.localSSDPerHour()+cud*this.GPUPerHour());
@@ -195,14 +192,14 @@ function instanceHourly(){
     }
 }
 function localSSDHourly(){
-    if(this.preemptible){
+    if(this.preemptible===true){
         return this.localSSDSize*pricelist["CP-COMPUTEENGINE-LOCAL-SSD-PREEMPTIBLE"][this.region];
     }else{
         return this.localSSDSize*pricelist["CP-COMPUTEENGINE-LOCAL-SSD"][this.region];
     }
 }
 function GPUHourly(){
-    if(this.preemptible){
+    if(this.preemptible===true){
         return this.numGPU*pricelist["GPU_"+this.GPUType+"-PREEMPTIBLE"][this.region];
     }else if (this.numGPU!=0){
         return this.numGPU*pricelist["GPU_"+this.GPUType][this.region];
