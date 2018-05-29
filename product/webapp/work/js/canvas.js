@@ -126,6 +126,9 @@ function getObjectById(id, listOfObjects) {
 function resetCanvas(canvasID) {
     clearBox('itemsvm','itemsst','itemsdb');
     currentCanvas=copyCanvas(listOfCanvasses[getObjectById(canvasID, listOfCanvasses)]);
+  
+ 
+
     for (var i=0; i<currentCanvas.VirtualMachines.length; i++) {
         var VM=currentCanvas.VirtualMachines[i];
         addHTML(VM.nrInstances, "vm", VM.numId, currentCanvas.VirtualMachines);
@@ -141,12 +144,25 @@ function resetCanvas(canvasID) {
         addHTML(storage.nrInstances, "cs", storage.numId, currentCanvas.Storages);
         checkIcon(currentCanvas.Storages, "cs", i);
     }
+
+
+    service = currentCanvas.service;
+    localStorage.setItem('provider', service);
+    
+    // TODO also change accordion
+
 }
 
 function removeCanvas(canvasID, documentID) {
     var divId = "#canvas_"+canvasID;
     $(divId).remove();
+
+    // remove from main graph
+    removeCalculationMainGraph(listOfCanvasses[getObjectById(canvasID, listOfCanvasses)].timestamp);
+    // remove from list of canvasses
     listOfCanvasses.splice(getObjectById(canvasID, listOfCanvasses), 1);
+    // remove from storage
+    localStorage.setItem('listOfCanvasses', JSON.stringify(listOfCanvasses));
 }
 
 function attachVariable (variableName,variableObject) {

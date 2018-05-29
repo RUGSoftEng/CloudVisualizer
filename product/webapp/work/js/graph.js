@@ -261,26 +261,54 @@ $(function() {
     window.popupGraphCS.update();
  }
  
- function plotMainGraph(monthPrice, canvasId){
+function addCalculationMainGraph(monthPrice, timestamp){
     // add dataset
     var colorNames = Object.keys(window.chartColors);
     var colorName = colorNames[config.data.datasets.length % colorNames.length];
     var newColor = window.chartColors[colorName];
     var newDataset = {
-        label: 'Price for canvas ' + (canvasId + 1),
+        label:  timestamp,
         backgroundColor: newColor,
         borderColor: newColor,
         data: [],
-        fill: false
+        fill: false,
+        hidden: true,
     };
     config.data.datasets.push(newDataset);
-    
+
     // add data points
     var newData = [];
     for (var x = 0; x < 12; x++) {
         newData.push((monthPrice*x).toFixed(2));
     }
     config.data.datasets[config.data.datasets.length - 1].data = newData;
+    window.myLine.update();
+}
+
+function clearMainGraph(){
+    config.data.datasets = [];
+    window.myLine.update();
+}
+
+function removeCalculationMainGraph(timestamp){
+    config.data.datasets.forEach(function(element, index){
+        if(element.label == timestamp ){
+            config.data.datasets.splice(index, 1);
+        }
+    });
+
+    window.myLine.update();
+}
+
+function showGraph(timestamp){
+    // hide all other plots
+    config.data.datasets.forEach(function(element){
+        if(element.label == timestamp ){
+            element.hidden = false;
+        } else {
+            element.hidden = true;
+        }
+    });
 
     window.myLine.update();
 
@@ -288,4 +316,4 @@ $(function() {
     $('html, body').animate({
         scrollTop: $("#graphCanvas").offset().top-100
     }, 1300);
- }
+}
