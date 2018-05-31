@@ -126,8 +126,8 @@ function getObjectById(id, listOfObjects) {
 function resetCanvas(canvasID) {
     clearBox('itemsvm','itemsst','itemsdb');
     currentCanvas=copyCanvas(listOfCanvasses[getObjectById(canvasID, listOfCanvasses)]);
-  
- 
+
+
 
     for (var i=0; i<currentCanvas.VirtualMachines.length; i++) {
         var VM=currentCanvas.VirtualMachines[i];
@@ -148,7 +148,7 @@ function resetCanvas(canvasID) {
 
     service = currentCanvas.service;
     localStorage.setItem('provider', service);
-    
+
     // TODO also change accordion
 
 }
@@ -168,28 +168,28 @@ function removeCanvas(canvasID, documentID) {
 function attachVariable (variableName,variableObject) {
     var input = document.getElementById(variableName);
     if (variableName === "type"){
-		var keys = Object.keys(pricelist);
-		for (var i=0;i<keys.length;i++){
-			var typeName = (keys[i]).replace("CP-COMPUTEENGINE-VMIMAGE-","");
-			if(keys[i] !== typeName && (keys[i]).match("PREEMPTIBLE")==null){
-				var option = document.createElement("option");
-				option.text = typeName + " vCPUs: " + pricelist["CP-COMPUTEENGINE-VMIMAGE-"+typeName]["cores"] + " RAM: " + pricelist["CP-COMPUTEENGINE-VMIMAGE-"+typeName]["memory"];
-				option.value = typeName;
-				input.add(option);
-			}
-		}
-	}else if (variableName === "GPUType" /*&& pricelist["GPU_NVIDIA_TESLA_K80"][variableObject.region] != 0*/){
-		var option = document.createElement("option");
-		option.text = option.value = "NVIDIA_TESLA_K80";
-		input.add(option);
-		option = document.createElement("option");
-		option.text = option.value = "NVIDIA_TESLA_P100";
-		input.add(option);
+        var keys = Object.keys(pricelist);
+        for (var i=0;i<keys.length;i++){
+            var typeName = (keys[i]).replace("CP-COMPUTEENGINE-VMIMAGE-","");
+            if(keys[i] !== typeName && (keys[i]).match("PREEMPTIBLE")==null){
+                var option = document.createElement("option");
+                option.text = typeName + " vCPUs: " + pricelist["CP-COMPUTEENGINE-VMIMAGE-"+typeName]["cores"] + " RAM: " + pricelist["CP-COMPUTEENGINE-VMIMAGE-"+typeName]["memory"];
+                option.value = typeName;
+                input.add(option);
+            }
+        }
+    }else if (variableName === "GPUType" /*&& pricelist["GPU_NVIDIA_TESLA_K80"][variableObject.region] != 0*/){
+        var option = document.createElement("option");
+        option.text = option.value = "NVIDIA_TESLA_K80";
+        input.add(option);
+        option = document.createElement("option");
+        option.text = option.value = "NVIDIA_TESLA_P100";
+        input.add(option);
     }
     if (input != null) {
         input.value = variableObject[variableName];
         input.onchange = function () {
-            variableObject[variableName] = this.value;
+            variableObject[variableName] = parseInt(this.value);
             // change graph
 
             variableObject.instanceType = determineInstanceType(variableObject.type);
@@ -202,7 +202,7 @@ function attachVariable (variableName,variableObject) {
             } else {
                 console.error("instance of object on the canvas is not right");
             }
-     
+
         }
     }
 }
@@ -222,9 +222,9 @@ function openPopup(objectToEdit){
 function addHTML(par3, id, uniqueIdentifier, listOfObjects){
     var objectHTML="<div id='"+id+"_"+uniqueIdentifier+"' class='icons'><img src='images/"+id+".png'><p>"+par3+"</p> <a href='#' onclick='removeIcon(\""+id+"\", \""+uniqueIdentifier+"\", \""+listOfObjects+"\");'><span class='glyphicon glyphicon-trash'></span></a><a href='#' data-toggle='modal' data-target='#"+id+"Settings'	onclick='showSettings(\""+id+"\", "+uniqueIdentifier+");'> <span class='glyphicon glyphicon-wrench'></span> </a></div>";
     if(id==="vm")
-      $("#itemsvm").append(objectHTML);
+        $("#itemsvm").append(objectHTML);
     else if(id==="db")
-      $("#itemsdb").append(objectHTML);
+        $("#itemsdb").append(objectHTML);
     else {
         $("#itemsst").append(objectHTML);
     }
@@ -246,7 +246,9 @@ function checkIcon(listOfObjects, id, index) {
 
     if (listOfObjects[index].nrInstances>1) {
         changeImage(id, index, "images/multiple"+id+".png", listOfObjects[index].numId);
-    }
+    }else{
+		changeImage(id, index, "images/"+id+".png", listOfObjects[index].numId);
+	}
 }
 
 function incrementNrInstances(index, incr, listOfObjects) {
@@ -356,15 +358,18 @@ function copyCanvas(canvas) {
 }
 
 function showSettings(id, uniqueIdentifier){
-    var current, copy; 
+    var current, copy,index;
     if (id=="vm") {
-        current = currentCanvas.VirtualMachines[getObjectById(uniqueIdentifier, currentCanvas.VirtualMachines)]
+		index = getObjectById(uniqueIdentifier, currentCanvas.VirtualMachines);
+        current = currentCanvas.VirtualMachines[index];
         copy = Object.assign(new VirtualMachine(),current);
 
         openPopup(copy);
 
         $('#vmSettings').find('#save-modal').click(function(){
-            currentCanvas.VirtualMachines[getObjectById(uniqueIdentifier, currentCanvas.VirtualMachines)] = copy;
+            currentCanvas.VirtualMachines[index] = copy;
+			changeHTML(index, currentCanvas.VirtualMachines, id, uniqueIdentifier);
+			checkIcon(currentCanvas.VirtualMachines, id, index);
         });
 
         copy.instanceType = determineInstanceType(copy.type);
@@ -372,28 +377,34 @@ function showSettings(id, uniqueIdentifier){
         return;
     }
     if (id=="db") {
-        current = currentCanvas.Databases[getObjectById(uniqueIdentifier, currentCanvas.Databases)]
+		index = getObjectById(uniqueIdentifier, currentCanvas.Databases);
+        current = currentCanvas.Databases[index];
         copy = Object.assign(new Database(),current);
 
         openPopup(copy);
 
         $('#dbSettings').find('#save-modal').click(function(){
-            currentCanvas.Databases[getObjectById(uniqueIdentifier, currentCanvas.Databases)] = copy;
+            currentCanvas.Databases[index] = copy;
+			changeHTML(index, currentCanvas.Databases, id, uniqueIdentifier);
+			checkIcon(currentCanvas.Databases, id, index);
         });
 
-        
+
         copy.instanceType = determineInstanceType(copy.type);
         updatePopupGraphDB(copy);
         return;
     }
     if (id=="cs") {
-        current = currentCanvas.Storages[getObjectById(uniqueIdentifier, currentCanvas.Storages)]
+		index = getObjectById(uniqueIdentifier, currentCanvas.Storages);
+        current = currentCanvas.Storages[index];
         copy = Object.assign(new Storage(),current);
 
         openPopup(copy);
 
         $('#csSettings').find('#save-modal').click(function(){
-            currentCanvas.Storages[getObjectById(uniqueIdentifier, currentCanvas.Storages)] = copy;
+            currentCanvas.Storages[index] = copy;
+			changeHTML(index, currentCanvas.Storages, id, uniqueIdentifier);
+			checkIcon(currentCanvas.Storages, id, index);
         });
 
         copy.instanceType = determineInstanceType(copy.type);

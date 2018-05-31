@@ -15,11 +15,12 @@ function Canvas() {
     this.Storages=[];
     this.idCounter=0;
     this.numId=0;
+    this.graphColor='rgb(255, 99, 132)';
 }
 
 function setupGoogleCloud(){
     /** Virtual Machine Sliders */
-    // Instances
+        // Instances
     var VMInstancesSlider = document.getElementById("VMInstancesSliderID");
     nrInstances = document.getElementById("VMInstances");
     nrInstances.innerHTML = VMInstancesSlider.value;
@@ -115,7 +116,7 @@ function loadDataFromMemory(){
 
     for(var i in listOfCanvasses){
         addCalculationToDiv(listOfCanvasses[i]);
-        addCalculationMainGraph(listOfCanvasses[i].monthlyPrice, listOfCanvasses[i].timestamp);
+        addCalculationMainGraph(listOfCanvasses[i].monthlyPrice, listOfCanvasses[i].timestamp, listOfCanvasses[i].graphColor, "graph_"+listOfCanvasses[i].numId);
     }
     showCalculationDiv();
 }
@@ -125,7 +126,7 @@ $(function() {
 
     // load accordion content from the corresponding file
     $("#myAccordion").load("accordion-" + service + ".html", function(){
-       setupWindow();
+        setupWindow();
     });
 });
 
@@ -155,7 +156,7 @@ function addCalculationToDiv(canvas){
     newListItem += '<p class="mb-1">' + canvas.description +  '</p>';
     newListItem += '<small>Cost per year: ' + "$" + canvas.yearlyPrice + '</small>';
     newListItem +=  '<div id="luc"><p id='+canvas.numId+' style="float:right" href="#" onclick="resetCanvas(id)" ><span class="glyphicon glyphicon-wrench"></span></p>';
-    newListItem +=  '<p style="float:right" class="glyphicon glyphicon-signal" href="#" onclick="showGraph(\'' + canvas.timestamp + '\')" >'+" &nbsp"+ '</p>';
+    newListItem +=  '<p id='+"graph_"+canvas.numId+' style="float:right;color:red" class="glyphicon glyphicon-signal" href="#" onclick="showGraph(\'' + canvas.timestamp + '\')" >'+" &nbsp"+ '</p>';
     newListItem +=  '<p id='+canvas.numId+' style="float:right" class="glyphicon glyphicon-trash" href="#" onclick="removeCanvas(' + canvas.numId + ')">'+" &nbsp"+ '</p></div>';
     newListItem += '<br><small>Cost per month: ' + "$" + canvas.monthlyPrice+ '</small></a>';
 
@@ -185,43 +186,43 @@ function calculate (){
     })
 
     // callback function for when request is finished
-    .done(function(){
-        var monthPrice=0;
+        .done(function(){
+            var monthPrice=0;
 
-        // TODO: PUT CALCULATIONS HERE 
+            // TODO: PUT CALCULATIONS HERE
 
-        // for (var i in currentCanvas.VirtualMachines) {
-        //     currentCanvas.VirtualMachines[i].instanceType = determineInstanceType(currentCanvas.VirtualMachines[i].type);
-        //     monthPrice+=currentCanvas.VirtualMachines[i].costMonthly();
-        //     yearPrice+=currentCanvas.VirtualMachines[i].costYear();
-        // }
-        // for (var i in currentCanvas.Databases) {
-        //     monthPrice+=currentCanvas.Databases[i].costMonthly();
-        //     yearPrice+=currentCanvas.Databases[i].costYear();
-        // }
-        // for (var i in currentCanvas.Storages) {
-        //     monthPrice += currentCanvas.Storages[i].costMonthly();
-        //     yearPrice += currentCanvas.Storages[i].costYear();
-        // }
+            // for (var i in currentCanvas.VirtualMachines) {
+            //     currentCanvas.VirtualMachines[i].instanceType = determineInstanceType(currentCanvas.VirtualMachines[i].type);
+            //     monthPrice+=currentCanvas.VirtualMachines[i].costMonthly();
+            //     yearPrice+=currentCanvas.VirtualMachines[i].costYear();
+            // }
+            // for (var i in currentCanvas.Databases) {
+            //     monthPrice+=currentCanvas.Databases[i].costMonthly();
+            //     yearPrice+=currentCanvas.Databases[i].costYear();
+            // }
+            // for (var i in currentCanvas.Storages) {
+            //     monthPrice += currentCanvas.Storages[i].costMonthly();
+            //     yearPrice += currentCanvas.Storages[i].costYear();
+            // }
 
-        // set properties of canvas used to (re)create list item
-        currentCanvas.numId = idCanvas++;
-        currentCanvas.service = service;
-        currentCanvas.timestamp = new Date().toTimeString();
-        currentCanvas.description = 'you can put a short description here';
-        currentCanvas.monthlyPrice = Math.round(monthPrice * 100) / 100;
-        currentCanvas.yearlyPrice = Math.round(yearPrice * 100) / 100;
+            // set properties of canvas used to (re)create list item
+            currentCanvas.numId = idCanvas++;
+            currentCanvas.service = service;
+            currentCanvas.timestamp = new Date().toTimeString();
+            currentCanvas.description = 'you can put a short description here';
+            currentCanvas.monthlyPrice = Math.round(monthPrice * 100) / 100;
+            currentCanvas.yearlyPrice = Math.round(yearPrice * 100) / 100;
 
-        // store the canvas
-        listOfCanvasses.push(copyCanvas(currentCanvas));
+            // store the canvas
+            listOfCanvasses.push(copyCanvas(currentCanvas));
 
-        addCalculationToDiv(currentCanvas);
-        addCalculationMainGraph(monthPrice, currentCanvas.numId);
-        showCalculationDiv();
+            addCalculationToDiv(currentCanvas);
+            addCalculationMainGraph(monthPrice, currentCanvas.numId, currentCanvas.graphColor, "graph_"+currentCanvas.numId);
+            showCalculationDiv();
 
-        // store/update data in localStorage
-        localStorage.setItem('listOfCanvasses', JSON.stringify(listOfCanvasses));
-    });
+            // store/update data in localStorage
+            localStorage.setItem('listOfCanvasses', JSON.stringify(listOfCanvasses));
+        });
 }
 
 // TODO: REMOVE
@@ -270,9 +271,9 @@ function calculateTemp (){
                 listOfCanvasses.push(copyCanvas(currentCanvas));
 
                 addCalculationToDiv(currentCanvas);
-                addCalculationMainGraph(currentCanvas.monthlyPrice, currentCanvas.timestamp);
+                addCalculationMainGraph(currentCanvas.monthlyPrice, currentCanvas.timestamp, currentCanvas.graphColor, "graph_"+currentCanvas.numId);
                 showCalculationDiv();
-                
+
                 // store/update data in localStorage
                 localStorage.setItem('listOfCanvasses', JSON.stringify(listOfCanvasses));
             }

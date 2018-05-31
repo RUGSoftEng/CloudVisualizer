@@ -219,10 +219,10 @@ $(function() {
     // initialize 'database' popup graph
     var ctx = document.getElementById('popupGraphDB').getContext('2d');
     window.popupGraphDB = new Chart(ctx, dbConfig);
- 
- });
 
- function updatePopupGraphVM(virtualmachine){
+});
+
+function updatePopupGraphVM(virtualmachine){
     var monthPrice = virtualmachine.costMonthly();
 
     // add data points
@@ -231,11 +231,11 @@ $(function() {
         newData.push( (monthPrice*x).toFixed(2) );
     }
     vmConfig.data.datasets[0].data = newData;
-    
-    window.popupGraphVM.update();
- }
 
- function updatePopupGraphDB(database){
+    window.popupGraphVM.update();
+}
+
+function updatePopupGraphDB(database){
     var monthPrice = database.costMonthly();
 
     // add data points
@@ -244,11 +244,11 @@ $(function() {
         newData.push((monthPrice*x).toFixed(2));
     }
     dbConfig.data.datasets[0].data = newData;
-    
-    window.popupGraphDB.update();
- }
 
- function updatePopupGraphCS(storage){
+    window.popupGraphDB.update();
+}
+
+function updatePopupGraphCS(storage){
     var monthPrice = storage.costMonthly();
 
     // add data points
@@ -257,15 +257,18 @@ $(function() {
         newData.push((monthPrice*x).toFixed(2));
     }
     csConfig.data.datasets[0].data = newData;
-    
+
     window.popupGraphCS.update();
- }
- 
-function addCalculationMainGraph(monthPrice, timestamp){
+}
+
+function addCalculationMainGraph(monthPrice, timestamp, graphColor, graphId){
     // add dataset
     var colorNames = Object.keys(window.chartColors);
     var colorName = colorNames[config.data.datasets.length % colorNames.length];
     var newColor = window.chartColors[colorName];
+    graphColor=newColor;
+    document.getElementById(graphId).style.color=graphColor;
+
     var newDataset = {
         label:  timestamp,
         backgroundColor: newColor,
