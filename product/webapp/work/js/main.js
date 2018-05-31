@@ -4,7 +4,7 @@ var hours;
 var storageSize;
 var DBSize;
 var calculate;
-var service='google-cloud';
+var service;
 var listOfCanvasses=[];
 var idCanvas=0;
 var currentCanvas=new Canvas();
