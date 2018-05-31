@@ -98,7 +98,7 @@
 	</div>
 
 	<!-- POPUP EDIT (GOOGLE) VM -->
-	<div class="modal fade" id="vmSettings" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="google-cloudvmSettings" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -112,18 +112,18 @@
 				<h4>Virtual machine</h4>
 				<form>
 					Number of instances
-					<input type="number" id="nrInstances" min="0"><br>
+					<input type="number" id="google-cloudnrInstances" min="0"><br>
 					Preemptible
-					<input type="checkbox" id="preemptible"><br>
+					<input type="checkbox" id="google-cloudpreemptible"><br>
 					Type
-					<select id="type">
+					<select id="google-cloudtype">
 					</select><br>
 					Days per week used
-					<input type="number" id="days" min="0" max="7"><br>
+					<input type="number" id="google-clouddays" min="0" max="7"><br>
 					Hours per day used
-					<input type="number" id="hours" min="0" max="24"><br>
+					<input type="number" id="google-cloudhours" min="0" max="24"><br>
 					Operating system
-					<select id="OSType">
+					<select id="google-cloudOSType">
 						<option value="">Free OS</option>
 						<option value="win">Windows Server</option>
 						<option value="rhel">Red Hat Enterprise Linux</option>
@@ -135,14 +135,14 @@
 					</select>
 					<br>
 					Number of GPUs
-					<input type="number" id="numGPU" min="0"><br>
+					<input type="number" id="google-cloudnumGPU" min="0"><br>
 					GPU type
-					<select id="GPUType">
+					<select id="google-cloudGPUType">
 					</select><br>
 					Local SSD size (GB)
-					<input type="number" id="localSSDSize" min="0"><br>
+					<input type="number" id="google-cloudlocalSSDSize" min="0"><br>
 					Commitment period (years)
-					<select id="commitedUsage">
+					<select id="google-cloudcommittedUsage">
 						<br>
 						<option value="0">0</option>
 						<option value="1-YEAR">1</option>
@@ -152,27 +152,73 @@
 				<h4>Persistent Disk</h4>
 				<form>
 					Persistent disk size (GB)
-					<input type="number" id="PDSize" min="0"><br>
+					<input type="number" id="google-cloudPDSize" min="0"><br>
 					Persistent SSD size (GB)
-					<input type="number" id="PDSSDSize" min="0"><br>
+					<input type="number" id="google-cloudPDSSDSize" min="0"><br>
 					Snapshot storage size (GB)
-					<input type="number" id="PDSnapshot" min="0"><br>
+					<input type="number" id="google-cloudPDSnapshot" min="0"><br>
 				</form>
 				<h4>Load balancing</h4>
 				<form>
 					Number of load balancing rules
-					<input type="number" id="rules" min="0">
+					<input type="number" id="google-cloudrules" min="0">
 				</form>
 				<h4>Cloud TPUs</h4>
 				<form>
 					Number of TPUs
-					<input type="number" id="numTPU" min="0"><br>
+					<input type="number" id="google-cloudnumTPU" min="0"><br>
 					Hours per day used
-					<input type="number" id="TPUHours" min="0">
+					<input type="number" id="google-cloudTPUHours" min="0">
 				</form>
 				<br />
 				<br />
-				<canvas id="popupGraphVM"></canvas>
+				<canvas id="google-cloudpopupGraphVM"></canvas>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" id="save-modal" data-dismiss="modal">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+		
+	<!-- POPUP EDIT (AMAZON) VM -->
+	<div class="modal fade" id="amazon-webservicesvmSettings" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Providers</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+				<h3>Edit selection</h3>
+				<h4>Virtual machine</h4>
+				<form>
+					Number of instances
+					<input type="number" id="amazon-webservicesnrInstances" min="0"><br>
+					Type
+					<select id="amazon-webservicestype">
+					</select><br>
+					Days per week used
+					<input type="number" id="amazon-webservicesdays" min="0" max="7"><br>
+					Hours per day used
+					<input type="number" id="amazon-webserviceshours" min="0" max="24"><br>
+					Operating system
+					<select id="amazon-webservicesOSType">
+						<option value="Linux">Linux</option>
+                        <option value="RHEL">Red Hat Enterprise Linux</option>
+                        <option value="SLES">SUSE Linux Enterprise Server</option>
+                        <option value="Windows">Windows</option>
+                        <option value="Windows with SQL Standard">Windows with SQL Standard</option>
+                        <option value="Windows with SQL Web">Windows with SQL Web</option>
+                        <option value="Windows with SQL Enterprise">Windows with SQL Enterprise</option>
+					</select>
+					<br>
+				<br />
+				<br />
+				<canvas id="amazon-webservicespopupGraphVM"></canvas>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
