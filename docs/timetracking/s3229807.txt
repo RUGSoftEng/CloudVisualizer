@@ -75,5 +75,13 @@ Working on the graph again
 13:30 - 17:00 Redid some of the code so that everything is now stored in a nice Canvas object. Canvasses are now saved when calculate is clicked, up to 5 can be saved. Canvasses can be restored. Have to ask the client if he things this is a good idea
 17:30-19:00 Worked on a couple of a different things
 
+21-05-2018
+13:00 - 15:00 Some small work
+
+22-05-2018
+12:15- 12:45 Group meeting
+12:30 - 14:00 Worked some on the project with Luc
+14:00 - 14:45 Client meeting
+
 
   
