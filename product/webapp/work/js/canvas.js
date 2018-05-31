@@ -166,7 +166,7 @@ function removeCanvas(canvasID, documentID) {
 }
 
 function attachVariable (variableName,variableObject) {
-    var input = document.getElementById(variableName);
+    var input = document.getElementById(service + variableName);
     if (variableName === "type"){
 		var keys = Object.keys(pricelist);
 		for (var i=0;i<keys.length;i++){
