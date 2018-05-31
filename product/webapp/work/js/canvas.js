@@ -189,7 +189,7 @@ function attachVariable (variableName,variableObject) {
     if (input != null) {
         input.value = variableObject[variableName];
         input.onchange = function () {
-            variableObject[variableName] = this.value;
+            variableObject[variableName] = parseInt(this.value);
             // change graph
 
             variableObject.instanceType = determineInstanceType(variableObject.type);
