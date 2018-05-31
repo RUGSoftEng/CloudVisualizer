@@ -126,6 +126,9 @@ function getObjectById(id, listOfObjects) {
 function resetCanvas(canvasID) {
     clearBox('itemsvm','itemsst','itemsdb');
     currentCanvas=copyCanvas(listOfCanvasses[getObjectById(canvasID, listOfCanvasses)]);
+  
+ 
+
     for (var i=0; i<currentCanvas.VirtualMachines.length; i++) {
         var VM=currentCanvas.VirtualMachines[i];
         addHTML(VM.nrInstances, "vm", VM.numId, currentCanvas.VirtualMachines);
@@ -141,12 +144,25 @@ function resetCanvas(canvasID) {
         addHTML(storage.nrInstances, "cs", storage.numId, currentCanvas.Storages);
         checkIcon(currentCanvas.Storages, "cs", i);
     }
+
+
+    service = currentCanvas.service;
+    localStorage.setItem('provider', service);
+    
+    // TODO also change accordion
+
 }
 
 function removeCanvas(canvasID, documentID) {
     var divId = "#canvas_"+canvasID;
     $(divId).remove();
+
+    // remove from main graph
+    removeCalculationMainGraph(listOfCanvasses[getObjectById(canvasID, listOfCanvasses)].timestamp);
+    // remove from list of canvasses
     listOfCanvasses.splice(getObjectById(canvasID, listOfCanvasses), 1);
+    // remove from storage
+    localStorage.setItem('listOfCanvasses', JSON.stringify(listOfCanvasses));
 }
 
 function attachVariable (variableName,variableObject) {
@@ -174,11 +190,25 @@ function attachVariable (variableName,variableObject) {
         input.value = variableObject[variableName];
         input.onchange = function () {
             variableObject[variableName] = this.value;
+            // change graph
+
+            variableObject.instanceType = determineInstanceType(variableObject.type);
+            if(variableObject instanceof VirtualMachine){
+                updatePopupGraphVM(variableObject);
+            } else if (variableObject instanceof Storage){
+                updatePopupGraphCS(variableObject);
+            } else if (variableObject instanceof Database){
+                updatePopupGraphDB(variableObject);
+            } else {
+                console.error("instance of object on the canvas is not right");
+            }
+     
         }
     }
 }
 
 function openPopup(objectToEdit){
+
     /*Insert code that shows the html of the popup*/
     for (var property in objectToEdit) {
         if (objectToEdit.hasOwnProperty(property)) {
@@ -326,21 +356,49 @@ function copyCanvas(canvas) {
 }
 
 function showSettings(id, uniqueIdentifier){
+    var current, copy; 
     if (id=="vm") {
-        openPopup(currentCanvas.VirtualMachines[getObjectById(uniqueIdentifier, currentCanvas.VirtualMachines)]);
+        current = currentCanvas.VirtualMachines[getObjectById(uniqueIdentifier, currentCanvas.VirtualMachines)]
+        copy = Object.assign(new VirtualMachine(),current);
+
+        openPopup(copy);
+
+        $('#vmSettings').find('#save-modal').click(function(){
+            currentCanvas.VirtualMachines[getObjectById(uniqueIdentifier, currentCanvas.VirtualMachines)] = copy;
+        });
+
+        copy.instanceType = determineInstanceType(copy.type);
+        updatePopupGraphVM(copy);
         return;
     }
     if (id=="db") {
-        openPopup(currentCanvas.Databases[getObjectById(uniqueIdentifier, currentCanvas.Databases)]);
+        current = currentCanvas.Databases[getObjectById(uniqueIdentifier, currentCanvas.Databases)]
+        copy = Object.assign(new Database(),current);
+
+        openPopup(copy);
+
+        $('#dbSettings').find('#save-modal').click(function(){
+            currentCanvas.Databases[getObjectById(uniqueIdentifier, currentCanvas.Databases)] = copy;
+        });
+
+        
+        copy.instanceType = determineInstanceType(copy.type);
+        updatePopupGraphDB(copy);
         return;
     }
     if (id=="cs") {
-        openPopup(currentCanvas.Storages[getObjectById(uniqueIdentifier, currentCanvas.Storages)]);
+        current = currentCanvas.Storages[getObjectById(uniqueIdentifier, currentCanvas.Storages)]
+        copy = Object.assign(new Storage(),current);
+
+        openPopup(copy);
+
+        $('#csSettings').find('#save-modal').click(function(){
+            currentCanvas.Storages[getObjectById(uniqueIdentifier, currentCanvas.Storages)] = copy;
+        });
+
+        copy.instanceType = determineInstanceType(copy.type);
+        updatePopupGraphCS(copy);
         return;
     }
     console.error("Error showing settings, not allowed to reach here");
-}
-
-function closeSettings(id){
-	document.getElementById(id).style.display = "none";
 }

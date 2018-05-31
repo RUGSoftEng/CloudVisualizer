@@ -32,7 +32,7 @@ var config = {
         responsive: true,
         title: {
             display: true,
-            text: 'Cost over Time'
+            text: 'Click to hide/show line(s)'
         },
         tooltips: {
             mode: 'index',
@@ -64,68 +64,256 @@ var config = {
     }
 };
 
-// jQuery function that executes after when the page loads
-$(function() {
+var vmConfig = {
+    type: 'line',
+    data: {
+        labels: MONTHS,
+        datasets: [{
+            label: 'Price for this Virtual Machine configuration',
+            backgroundColor: '#4dc9f6',
+            borderColor: '#4dc9f6',
+            data: [],
+            fill: false
+        }
+        ]
+    },
+    options: {
+        responsive: true,
+        tooltips: {
+            mode: 'index',
+            intersect: false,
+        },
+        hover: {
+            mode: 'nearest',
+            intersect: true
+        },
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Month'
+                }
+            }],
+            yAxes: [{
+                display: true,
+                ticks: {
+                    beginAtZero: true
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Price ($)'
+                }
+            }]
+        }
+    }
+};
 
+var csConfig = {
+    type: 'line',
+    data: {
+        labels: MONTHS,
+        datasets: [{
+            label: 'Price for this Cloud Storage configuration',
+            backgroundColor: '#acc236',
+            borderColor: '#acc236',
+            data: [],
+            fill: false
+        }
+        ]
+    },
+    options: {
+        responsive: true,
+        tooltips: {
+            mode: 'index',
+            intersect: false,
+        },
+        hover: {
+            mode: 'nearest',
+            intersect: true
+        },
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Month'
+                }
+            }],
+            yAxes: [{
+                display: true,
+                ticks: {
+                    beginAtZero: true
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Price ($)'
+                }
+            }]
+        }
+    }
+};
+
+var dbConfig = {
+    type: 'line',
+    data: {
+        labels: MONTHS,
+        datasets: [{
+            label: 'Price for this Database configuration',
+            backgroundColor: '#acc236',
+            borderColor: '#acc236',
+            data: [],
+            fill: false
+        }
+        ]
+    },
+    options: {
+        responsive: true,
+        title: {
+            display: true,
+            text: 'Cost over Time'
+        },
+        tooltips: {
+            mode: 'index',
+            intersect: false,
+        },
+        hover: {
+            mode: 'nearest',
+            intersect: true
+        },
+        scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Month'
+                }
+            }],
+            yAxes: [{
+                display: true,
+                ticks: {
+                    beginAtZero: true
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Price ($)'
+                }
+            }]
+        }
+    }
+};
+
+$(function() {
     // Initialize graph and add relevant onClick events to buttons
     var ctx = document.getElementById('graphCanvas').getContext('2d');
     window.myLine = new Chart(ctx, config);
 
-    document.getElementById('plotData').addEventListener('click', function() {
-        var dataSetNumber = document.getElementById('datasetToPlotField').value;
-        var a = parseInt(document.getElementById('aField').value);
-        var b = parseInt(document.getElementById('bField').value);
-        plotGraphNew(dataSetNumber, a, b);
-    });
+    // initialize 'virtual machine' popup graph
+    var ctx = document.getElementById('popupGraphVM').getContext('2d');
+    window.popupGraphVM = new Chart(ctx, vmConfig);
 
-    var colorNames = Object.keys(window.chartColors);
-    document.getElementById('addDataset').addEventListener('click', function() {
-        var colorName = colorNames[config.data.datasets.length % colorNames.length];
-        var newColor = window.chartColors[colorName];
-        var newDataset = {
-            label: 'Price' /*+ (config.data.datasets.length + 1)*/,
-            backgroundColor: newColor,
-            borderColor: newColor,
-            data: [],
-            fill: false
-        };
+    // initialize 'cloud storage' popup graph
+    var ctx = document.getElementById('popupGraphCS').getContext('2d');
+    window.popupGraphCS = new Chart(ctx, csConfig);
 
-        config.data.datasets.push(newDataset);
-        window.myLine.update();
-    });
+    // initialize 'database' popup graph
+    var ctx = document.getElementById('popupGraphDB').getContext('2d');
+    window.popupGraphDB = new Chart(ctx, dbConfig);
+ 
+ });
 
-    document.getElementById('removeDataset').addEventListener('click', function() {
-        var indexToDelete = document.getElementById('datasetNumberField').value - 1;
-        config.data.datasets.splice(indexToDelete, 1);
-        window.myLine.update();
-    });
+ function updatePopupGraphVM(virtualmachine){
+    var monthPrice = virtualmachine.costMonthly();
 
-});
-
-function plotGraphNew(d, a, b){
+    // add data points
     var newData = [];
     for (var x = 0; x < 12; x++) {
-        newData.push(a * x + b);
+        newData.push( (monthPrice*x).toFixed(2) );
     }
+    vmConfig.data.datasets[0].data = newData;
+    
+    window.popupGraphVM.update();
+ }
 
-    config.data.datasets[dataSetNumber - 1].data = newData;
+ function updatePopupGraphDB(database){
+    var monthPrice = database.costMonthly();
+
+    // add data points
+    var newData = [];
+    for (var x = 0; x < 12; x++) {
+        newData.push((monthPrice*x).toFixed(2));
+    }
+    dbConfig.data.datasets[0].data = newData;
+    
+    window.popupGraphDB.update();
+ }
+
+ function updatePopupGraphCS(storage){
+    var monthPrice = storage.costMonthly();
+
+    // add data points
+    var newData = [];
+    for (var x = 0; x < 12; x++) {
+        newData.push((monthPrice*x).toFixed(2));
+    }
+    csConfig.data.datasets[0].data = newData;
+    
+    window.popupGraphCS.update();
+ }
+ 
+function addCalculationMainGraph(monthPrice, timestamp){
+    // add dataset
+    var colorNames = Object.keys(window.chartColors);
+    var colorName = colorNames[config.data.datasets.length % colorNames.length];
+    var newColor = window.chartColors[colorName];
+    var newDataset = {
+        label:  timestamp,
+        backgroundColor: newColor,
+        borderColor: newColor,
+        data: [],
+        fill: false,
+        hidden: true,
+    };
+    config.data.datasets.push(newDataset);
+
+    // add data points
+    var newData = [];
+    for (var x = 0; x < 12; x++) {
+        newData.push((monthPrice*x).toFixed(2));
+    }
+    config.data.datasets[config.data.datasets.length - 1].data = newData;
     window.myLine.update();
 }
 
-function plotGraph(monthPrice){
-    if(typeof(monthPrice)!='undefined') {
+function clearMainGraph(){
+    config.data.datasets = [];
+    window.myLine.update();
+}
 
-        var newData = [];
-        for (var x = 0; x < 12; x++) {
-            newData.push(monthPrice *x);
+function removeCalculationMainGraph(timestamp){
+    config.data.datasets.forEach(function(element, index){
+        if(element.label == timestamp ){
+            config.data.datasets.splice(index, 1);
         }
+    });
 
-        config.data.datasets[0].data = newData;
-        window.myLine.update();
-        $('html, body').animate({
-            scrollTop: $("#graphCanvas").offset().top-100
-        }, 1300);
-    }else{
-        window.alert("No total price to plot");
-    }
+    window.myLine.update();
+}
+
+function showGraph(timestamp){
+    // hide all other plots
+    config.data.datasets.forEach(function(element){
+        if(element.label == timestamp ){
+            element.hidden = false;
+        } else {
+            element.hidden = true;
+        }
+    });
+
+    window.myLine.update();
+
+    // animation
+    $('html, body').animate({
+        scrollTop: $("#graphCanvas").offset().top-100
+    }, 1300);
 }

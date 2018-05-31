@@ -163,7 +163,6 @@
 - set provider selected on page load/refresh
 - tried loading only loading accordion element without page refresh
 - tried loading only loading accordion element without page refresh
-
 - put canvas related stuff into seperate file, clean up old files
 - modified canvas object add properties for recreation of listItem
 - modified canvas object add properties for recreation of listItem
@@ -172,6 +171,22 @@
 - work on saving all canvasses and calculations
 - work on saving all canvasses and calculations
 - work on saving all canvasses and calculations
+- TA meeting
+- Team meeting
+- work with luc on popup graph VM
+- work with luc on popup graph VM
+- work with luc on popup graph VM
+- work with luc on popup graph VM
+- work on popup graph DB
+- work on popup graph CS
+- some debugging and testing
+- hide all graphs by default
+- scroll and make single graph visible
+- ability to delete all graphs
+- ability to delete all graphs
+- delete graph of a single calculation
+
+
 
 
 
