@@ -188,7 +188,6 @@ function getCloudwatchData(service){
 
     // callback function for when request is finished
         .done(function(){
-<<<<<<< HEAD
             pricelist = result;
             console.log(result);
             document.getElementById("calculate").disabled = false;
@@ -218,7 +217,6 @@ function calculate (){
     // store/update data in localStorage
     localStorage.setItem('listOfCanvasses', JSON.stringify(listOfCanvasses));
 
-=======
             var monthPrice=0;
 
             // TODO: PUT CALCULATIONS HERE
@@ -255,7 +253,6 @@ function calculate (){
             // store/update data in localStorage
             localStorage.setItem('listOfCanvasses', JSON.stringify(listOfCanvasses));
         });
->>>>>>> backend
 }
 
 // TODO: REMOVE
