@@ -83,5 +83,13 @@ Working on the graph again
 12:30 - 14:00 Worked some on the project with Luc
 14:00 - 14:45 Client meeting
 
+29-05-2018
+12:00 - 12:30 Group meeting
+12:30 - 15:15 Looked a bit into checkboxes and how it could be implemented into our project
+
+31-05-2018
+12:00 - 12:30 Graph icons in the calculations now have the same color as their graph.
+
+
 
   
