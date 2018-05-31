@@ -126,8 +126,8 @@ function getObjectById(id, listOfObjects) {
 function resetCanvas(canvasID) {
     clearBox('itemsvm','itemsst','itemsdb');
     currentCanvas=copyCanvas(listOfCanvasses[getObjectById(canvasID, listOfCanvasses)]);
-  
- 
+
+
 
     for (var i=0; i<currentCanvas.VirtualMachines.length; i++) {
         var VM=currentCanvas.VirtualMachines[i];
@@ -148,7 +148,7 @@ function resetCanvas(canvasID) {
 
     service = currentCanvas.service;
     localStorage.setItem('provider', service);
-    
+
     // TODO also change accordion
 
 }
@@ -166,25 +166,25 @@ function removeCanvas(canvasID, documentID) {
 }
 
 function attachVariable (variableName,variableObject) {
-    var input = document.getElementById(service + variableName);
+    var input = document.getElementById(variableName);
     if (variableName === "type"){
-		var keys = Object.keys(pricelist);
-		for (var i=0;i<keys.length;i++){
-			var typeName = (keys[i]).replace("CP-COMPUTEENGINE-VMIMAGE-","");
-			if(keys[i] !== typeName && (keys[i]).match("PREEMPTIBLE")==null){
-				var option = document.createElement("option");
-				option.text = typeName + " vCPUs: " + pricelist["CP-COMPUTEENGINE-VMIMAGE-"+typeName]["cores"] + " RAM: " + pricelist["CP-COMPUTEENGINE-VMIMAGE-"+typeName]["memory"];
-				option.value = typeName;
-				input.add(option);
-			}
-		}
-	}else if (variableName === "GPUType" /*&& pricelist["GPU_NVIDIA_TESLA_K80"][variableObject.region] != 0*/){
-		var option = document.createElement("option");
-		option.text = option.value = "NVIDIA_TESLA_K80";
-		input.add(option);
-		option = document.createElement("option");
-		option.text = option.value = "NVIDIA_TESLA_P100";
-		input.add(option);
+        var keys = Object.keys(pricelist);
+        for (var i=0;i<keys.length;i++){
+            var typeName = (keys[i]).replace("CP-COMPUTEENGINE-VMIMAGE-","");
+            if(keys[i] !== typeName && (keys[i]).match("PREEMPTIBLE")==null){
+                var option = document.createElement("option");
+                option.text = typeName + " vCPUs: " + pricelist["CP-COMPUTEENGINE-VMIMAGE-"+typeName]["cores"] + " RAM: " + pricelist["CP-COMPUTEENGINE-VMIMAGE-"+typeName]["memory"];
+                option.value = typeName;
+                input.add(option);
+            }
+        }
+    }else if (variableName === "GPUType" /*&& pricelist["GPU_NVIDIA_TESLA_K80"][variableObject.region] != 0*/){
+        var option = document.createElement("option");
+        option.text = option.value = "NVIDIA_TESLA_K80";
+        input.add(option);
+        option = document.createElement("option");
+        option.text = option.value = "NVIDIA_TESLA_P100";
+        input.add(option);
     }
     if (input != null) {
         input.value = variableObject[variableName];
@@ -202,7 +202,7 @@ function attachVariable (variableName,variableObject) {
             } else {
                 console.error("instance of object on the canvas is not right");
             }
-     
+
         }
     }
 }
@@ -222,9 +222,9 @@ function openPopup(objectToEdit){
 function addHTML(par3, id, uniqueIdentifier, listOfObjects){
     var objectHTML="<div id='"+id+"_"+uniqueIdentifier+"' class='icons'><img src='images/"+id+".png'><p>"+par3+"</p> <a href='#' onclick='removeIcon(\""+id+"\", \""+uniqueIdentifier+"\", \""+listOfObjects+"\");'><span class='glyphicon glyphicon-trash'></span></a><a href='#' data-toggle='modal' data-target='#"+id+"Settings'	onclick='showSettings(\""+id+"\", "+uniqueIdentifier+");'> <span class='glyphicon glyphicon-wrench'></span> </a></div>";
     if(id==="vm")
-      $("#itemsvm").append(objectHTML);
+        $("#itemsvm").append(objectHTML);
     else if(id==="db")
-      $("#itemsdb").append(objectHTML);
+        $("#itemsdb").append(objectHTML);
     else {
         $("#itemsst").append(objectHTML);
     }
@@ -356,7 +356,7 @@ function copyCanvas(canvas) {
 }
 
 function showSettings(id, uniqueIdentifier){
-    var current, copy; 
+    var current, copy;
     if (id=="vm") {
         current = currentCanvas.VirtualMachines[getObjectById(uniqueIdentifier, currentCanvas.VirtualMachines)]
         copy = Object.assign(new VirtualMachine(),current);
@@ -381,7 +381,7 @@ function showSettings(id, uniqueIdentifier){
             currentCanvas.Databases[getObjectById(uniqueIdentifier, currentCanvas.Databases)] = copy;
         });
 
-        
+
         copy.instanceType = determineInstanceType(copy.type);
         updatePopupGraphDB(copy);
         return;
