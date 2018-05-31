@@ -227,46 +227,6 @@
 			</div>
 		</div>
 	</div>
-		
-	<!-- POPUP EDIT (MICROSOFT) VM -->
-	<div class="modal fade" id="microsoft-azurevmSettings" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Providers</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-				<h3>Edit selection</h3>
-				<h4>Virtual machine</h4>
-				<form>
-					Number of instances
-					<input type="number" id="microsoft-azurenrInstances" min="0"><br>
-					Type
-					<select id="microsoft-azuretype">
-					</select><br>
-					Days per week used
-					<input type="number" id="microsoft-azuredays" min="0" max="7"><br>
-					Hours per day used
-					<input type="number" id="microsoft-azurehours" min="0" max="24"><br>
-					Operating system
-					<select id="microsoft-azureOSType" disabled>
-						<option value="sql-web">SQL Server Web</option>
-					</select>
-					<br>
-				<br />
-				<br />
-				<canvas id="microsoft-azurepopupGraphVM"></canvas>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" id="save-modal" data-dismiss="modal">Save changes</button>
-				</div>
-			</div>
-		</div>
-	</div>
 
 	<!-- POPUP EDIT (GOOGLE) STORAGE -->
 	<div class="modal fade" id="csSettings" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">ex
