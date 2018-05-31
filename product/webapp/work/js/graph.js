@@ -209,7 +209,7 @@ $(function() {
     window.myLine = new Chart(ctx, config);
 
     // initialize 'virtual machine' popup graph
-    var ctx = document.getElementById('popupGraphVM').getContext('2d');
+    var ctx = document.getElementById(service+'popupGraphVM').getContext('2d');
     window.popupGraphVM = new Chart(ctx, vmConfig);
 
     // initialize 'cloud storage' popup graph
