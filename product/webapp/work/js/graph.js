@@ -268,7 +268,6 @@ function addCalculationMainGraph(monthPrice, timestamp, graphColor, graphId){
     var newColor = window.chartColors[colorName];
     graphColor=newColor;
     document.getElementById(graphId).style.color=graphColor;
-    console.log(graphColor);
 
     var newDataset = {
         label:  timestamp,
