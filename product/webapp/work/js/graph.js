@@ -209,6 +209,7 @@ $(function() {
     window.myLine = new Chart(ctx, config);
 
     // initialize 'virtual machine' popup graph
+    console.log(service);
     var ctx = document.getElementById(service+'popupGraphVM').getContext('2d');
     window.popupGraphVM = new Chart(ctx, vmConfig);
 
