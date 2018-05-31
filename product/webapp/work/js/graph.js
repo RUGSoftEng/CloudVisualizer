@@ -261,11 +261,15 @@ $(function() {
     window.popupGraphCS.update();
  }
  
-function addCalculationMainGraph(monthPrice, timestamp){
+function addCalculationMainGraph(monthPrice, timestamp, graphColor, graphId){
     // add dataset
     var colorNames = Object.keys(window.chartColors);
     var colorName = colorNames[config.data.datasets.length % colorNames.length];
     var newColor = window.chartColors[colorName];
+    graphColor=newColor;
+    document.getElementById(graphId).style.color=graphColor;
+    console.log(graphColor);
+
     var newDataset = {
         label:  timestamp,
         backgroundColor: newColor,

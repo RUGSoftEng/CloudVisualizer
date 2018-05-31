@@ -15,6 +15,7 @@ function Canvas() {
     this.Storages=[];
     this.idCounter=0;
     this.numId=0;
+    this.graphColor='rgb(255, 99, 132)';
 }
 
 function setupGoogleCloud(){
@@ -115,7 +116,7 @@ function loadDataFromMemory(){
 
     for(var i in listOfCanvasses){
         addCalculationToDiv(listOfCanvasses[i]);
-        addCalculationMainGraph(listOfCanvasses[i].monthlyPrice, listOfCanvasses[i].timestamp);
+        addCalculationMainGraph(listOfCanvasses[i].monthlyPrice, listOfCanvasses[i].timestamp, listOfCanvasses[i].graphColor, "graph_"+listOfCanvasses[i].numId);
     }
     showCalculationDiv();
 }
@@ -155,7 +156,7 @@ function addCalculationToDiv(canvas){
     newListItem += '<p class="mb-1">' + canvas.description +  '</p>';
     newListItem += '<small>Cost per year: ' + "$" + canvas.yearlyPrice + '</small>';
     newListItem +=  '<div id="luc"><p id='+canvas.numId+' style="float:right" href="#" onclick="resetCanvas(id)" ><span class="glyphicon glyphicon-wrench"></span></p>';
-    newListItem +=  '<p style="float:right" class="glyphicon glyphicon-signal" href="#" onclick="showGraph(\'' + canvas.timestamp + '\')" >'+" &nbsp"+ '</p>';
+    newListItem +=  '<p id='+"graph_"+canvas.numId+' style="float:right;color:red" class="glyphicon glyphicon-signal" href="#" onclick="showGraph(\'' + canvas.timestamp + '\')" >'+" &nbsp"+ '</p>';
     newListItem +=  '<p id='+canvas.numId+' style="float:right" class="glyphicon glyphicon-trash" href="#" onclick="removeCanvas(' + canvas.numId + ')">'+" &nbsp"+ '</p></div>';
     newListItem += '<br><small>Cost per month: ' + "$" + canvas.monthlyPrice+ '</small></a>';
 
@@ -216,7 +217,7 @@ function calculate (){
         listOfCanvasses.push(copyCanvas(currentCanvas));
 
         addCalculationToDiv(currentCanvas);
-        addCalculationMainGraph(monthPrice, currentCanvas.numId);
+        addCalculationMainGraph(monthPrice, currentCanvas.numId, currentCanvas.graphColor, "graph_"+currentCanvas.numId);
         showCalculationDiv();
 
         // store/update data in localStorage
@@ -270,7 +271,7 @@ function calculateTemp (){
                 listOfCanvasses.push(copyCanvas(currentCanvas));
 
                 addCalculationToDiv(currentCanvas);
-                addCalculationMainGraph(currentCanvas.monthlyPrice, currentCanvas.timestamp);
+                addCalculationMainGraph(currentCanvas.monthlyPrice, currentCanvas.timestamp, currentCanvas.graphColor, "graph_"+currentCanvas.numId);
                 showCalculationDiv();
                 
                 // store/update data in localStorage
