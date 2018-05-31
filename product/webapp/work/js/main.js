@@ -19,7 +19,7 @@ function Canvas() {
 
 function setupGoogleCloud(){
     /** Virtual Machine Sliders */
-    // Instances
+        // Instances
     var VMInstancesSlider = document.getElementById("VMInstancesSliderID");
     nrInstances = document.getElementById("VMInstances");
     nrInstances.innerHTML = VMInstancesSlider.value;
@@ -125,7 +125,7 @@ $(function() {
 
     // load accordion content from the corresponding file
     $("#myAccordion").load("accordion-" + service + ".html", function(){
-       setupWindow();
+        setupWindow();
     });
 
     getCloudwatchData(service);
@@ -188,6 +188,7 @@ function getCloudwatchData(service){
 
     // callback function for when request is finished
         .done(function(){
+<<<<<<< HEAD
             pricelist = result;
             console.log(result);
             document.getElementById("calculate").disabled = false;
@@ -217,6 +218,44 @@ function calculate (){
     // store/update data in localStorage
     localStorage.setItem('listOfCanvasses', JSON.stringify(listOfCanvasses));
 
+=======
+            var monthPrice=0;
+
+            // TODO: PUT CALCULATIONS HERE
+
+            // for (var i in currentCanvas.VirtualMachines) {
+            //     currentCanvas.VirtualMachines[i].instanceType = determineInstanceType(currentCanvas.VirtualMachines[i].type);
+            //     monthPrice+=currentCanvas.VirtualMachines[i].costMonthly();
+            //     yearPrice+=currentCanvas.VirtualMachines[i].costYear();
+            // }
+            // for (var i in currentCanvas.Databases) {
+            //     monthPrice+=currentCanvas.Databases[i].costMonthly();
+            //     yearPrice+=currentCanvas.Databases[i].costYear();
+            // }
+            // for (var i in currentCanvas.Storages) {
+            //     monthPrice += currentCanvas.Storages[i].costMonthly();
+            //     yearPrice += currentCanvas.Storages[i].costYear();
+            // }
+
+            // set properties of canvas used to (re)create list item
+            currentCanvas.numId = idCanvas++;
+            currentCanvas.service = service;
+            currentCanvas.timestamp = new Date().toTimeString();
+            currentCanvas.description = 'you can put a short description here';
+            currentCanvas.monthlyPrice = Math.round(monthPrice * 100) / 100;
+            currentCanvas.yearlyPrice = Math.round(yearPrice * 100) / 100;
+
+            // store the canvas
+            listOfCanvasses.push(copyCanvas(currentCanvas));
+
+            addCalculationToDiv(currentCanvas);
+            addCalculationMainGraph(monthPrice, currentCanvas.numId, currentCanvas.graphColor, "graph_"+currentCanvas.numId);
+            showCalculationDiv();
+
+            // store/update data in localStorage
+            localStorage.setItem('listOfCanvasses', JSON.stringify(listOfCanvasses));
+        });
+>>>>>>> backend
 }
 
 // TODO: REMOVE
@@ -267,7 +306,7 @@ function calculateTemp (){
                 addCalculationToDiv(currentCanvas);
                 addCalculationMainGraph(currentCanvas.monthlyPrice, currentCanvas.timestamp);
                 showCalculationDiv();
-                
+
                 // store/update data in localStorage
                 localStorage.setItem('listOfCanvasses', JSON.stringify(listOfCanvasses));
             }
