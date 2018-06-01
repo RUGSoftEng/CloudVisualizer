@@ -178,6 +178,9 @@ function loadDataFromMemory(){
         addCalculationMainGraph(listOfCanvasses[i].monthlyPrice, listOfCanvasses[i].timestamp, listOfCanvasses[i].graphColor, "graph_"+listOfCanvasses[i].numId);
     }
     showCalculationDiv();
+    if (listOfCanvasses.length>0) {
+        document.getElementById("mainGraph").style.display = "block";
+    }
 }
 
 $(function() {
