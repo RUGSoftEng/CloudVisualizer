@@ -30,7 +30,7 @@ function newObjectExists(newObject, objectList) {
 
 function createBasicVirtualMachine(nrInstances, days, hours) {
     var newVM=new VirtualMachine();
-    newVM.nrInstances=nrInstancesVM;
+    newVM.nrInstances=nrInstances;
     newVM.days=days;
     newVM.hours=hours;
     newVM.instanceType=determineInstanceType(newVM.type);
