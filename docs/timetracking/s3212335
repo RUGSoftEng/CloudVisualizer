@@ -134,3 +134,6 @@ Refreshed canvas on changes
 Refreshed canvas on changes
 Fixed bug with incrementing number of objects
 Fixed bug with incrementing number of objects
+Made graph show up when calculations are being done, else be invisible
+Made graph show up when calculations are being done, else be invisible
+Some small bugfixes
