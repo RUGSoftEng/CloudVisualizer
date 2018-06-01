@@ -31,7 +31,7 @@ function VirtualMachine() {
     this.TPUPerHour=TPUHourly;
     this.costMonthly=VMCostMonthly[service];
     //this.costQuarter=VMCostMonthly; // Not correct
-    //this.costYear=VMCostYearly; // Not correct
+    this.costYear=VMCostYearly; // Not correct
 }
 function Storage() {
     this.objectName="Storage";
