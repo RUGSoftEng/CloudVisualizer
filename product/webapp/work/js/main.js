@@ -19,8 +19,9 @@ var hours;
 var calculate;
 
 // Canvas
-/** TODO: Maybe add this variable to the canvas object? */
+/** TODO: Maybe add these variables to the canvas object? */
 var service;
+var region;
 // The list of all stored canvasses
 var listOfCanvasses=[];
 // Counter for id of canvasses
@@ -38,6 +39,11 @@ function Canvas() {
     // Personal unique id of canvas
     this.numId=0;
     this.graphColor='rgb(255, 99, 132)';
+}
+
+function setRegion(selectObject) {
+    currentCanvas.region=selectObject.value;
+    console.log(currentCanvas.region);
 }
 
 function setupGoogleCloud(){
@@ -276,6 +282,7 @@ function calculate (){
             // set properties of canvas used to (re)create list item
             currentCanvas.numId = idCanvas++;
             currentCanvas.service = service;
+            currentCanvas.region = region;
             currentCanvas.timestamp = new Date().toTimeString();
             currentCanvas.description = 'you can put a short description here';
             currentCanvas.monthlyPrice = Math.round(monthPrice * 100) / 100;
@@ -329,6 +336,7 @@ function calculateTemp (){
 
                 // set properties of canvas used to (re)create list item
                 currentCanvas.numId = idCanvas++;
+                //currentCanvas.region = region;
                 currentCanvas.service = service;
                 currentCanvas.timestamp = new Date().toGMTString();
                 currentCanvas.description = buildDescriptionOfCanvas(currentCanvas);

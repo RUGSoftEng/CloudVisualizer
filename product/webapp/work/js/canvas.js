@@ -34,6 +34,7 @@ function createBasicVirtualMachine(nrInstances, days, hours) {
     newVM.days=days;
     newVM.hours=hours;
     newVM.instanceType=determineInstanceType(newVM.type);
+    newVM.region=currentCanvas.region;
     return newVM;
 }
 
@@ -41,6 +42,7 @@ function createBasicDatabase(nrInstances, size) {
     var newDatabase=new Database();
     newDatabase.dataSize=size;
     newDatabase.nrInstances=nrInstances;
+    newDatabase.region=currentCanvas.region;
     return newDatabase;
 }
 
@@ -51,6 +53,7 @@ function createBasicStorage(nrInstances, multiRegionalSize, regionalSize, nearli
     newStorage.nearline=nearlineSize;
     newStorage.coldline=coldlineSize;
     newStorage.nrInstances=nrInstances;
+    newStorage.region=currentCanvas.region;
     return newStorage;
 }
 
