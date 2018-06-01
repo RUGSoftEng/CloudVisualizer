@@ -21,7 +21,6 @@ var calculate;
 // Canvas
 /** TODO: Maybe add these variables to the canvas object? */
 var service;
-var region;
 // The list of all stored canvasses
 var listOfCanvasses=[];
 // Counter for id of canvasses
@@ -39,6 +38,7 @@ function Canvas() {
     // Personal unique id of canvas
     this.numId=0;
     this.graphColor='rgb(255, 99, 132)';
+    this.region="us-central1";
 }
 
 function setRegion(selectObject) {

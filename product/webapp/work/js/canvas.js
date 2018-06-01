@@ -15,6 +15,8 @@ function newObjectExists(newObject, objectList) {
                 break;
             }
             if (newObject[propName]!==objectList[i][propName]) {
+                console.log(propName);
+                console.log(newObject[propName] + objectList[i][propName]);
                 stop=true;
             }
             if (stop) {
@@ -35,6 +37,7 @@ function createBasicVirtualMachine(nrInstances, days, hours) {
     newVM.hours=hours;
     newVM.instanceType=determineInstanceType(newVM.type);
     newVM.region=currentCanvas.region;
+    console.log(newVM.region);
     return newVM;
 }
 
@@ -178,6 +181,7 @@ function removeCanvas(canvasID, documentID) {
 }
 
 function attachVariable (variableName,variableObject) {
+    console.log(variableName);
     var input = document.getElementById(variableName);
     if (variableName === "type"){
         var keys = Object.keys(pricelist);
@@ -201,6 +205,8 @@ function attachVariable (variableName,variableObject) {
     if (input != null) {
         input.value = variableObject[variableName];
         input.onchange = function () {
+            console.log(input);
+            console.log("jojoitsme");
             variableObject[variableName] = parseInt(this.value);
             // change graph
 
@@ -299,6 +305,7 @@ function drop(ev) {
     if (obj.objectName === "VirtualMachine") {
         var instance = Object.assign(new VirtualMachine(), obj);
         addVirtualMachine(instance);
+        console.log(instance);
     }
     if (obj.objectName === "Database") {
         var instance = Object.assign(new Database(), obj);
