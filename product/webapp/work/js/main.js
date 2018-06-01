@@ -291,7 +291,7 @@ function calculateTemp (){
                 // set properties of canvas used to (re)create list item
                 currentCanvas.numId = idCanvas++;
                 currentCanvas.service = service;
-                //currentCanvas.timestamp = new Date().toGMTString();
+                currentCanvas.timestamp = new Date().toGMTString();
                 currentCanvas.description = buildDescriptionOfCanvas(currentCanvas);
                 currentCanvas.monthlyPrice = Math.round(monthPrice * 100) / 100;
                 currentCanvas.yearlyPrice = Math.round(yearPrice * 100) / 100;
