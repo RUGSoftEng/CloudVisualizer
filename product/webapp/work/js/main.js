@@ -1,21 +1,37 @@
-var nrInstancesVM;
-var nrInstancesStorage;
+/** Google cloud */
+// Database
 var nrInstancesDB;
+var DBSize;
+
+// Storage
+var nrInstancesStorage;
+var storageSize;
+
+// Virtual machines
+var nrInstancesVM;
 var days;
 var hours;
-var storageSize;
-var DBSize;
+
 var calculate;
+
+// Canvas
+/** TODO: Maybe add this variable to the canvas object? */
 var service;
+// The list of all stored canvasses
 var listOfCanvasses=[];
+// Counter for id of canvasses
 var idCanvas=0;
+// Current canvas shown
 var currentCanvas=new Canvas();
 
+// Object canvas
 function Canvas() {
     this.VirtualMachines=[];
     this.Databases=[];
     this.Storages=[];
+    // Counter for the id of objects (storage, database, virtual machine)
     this.idCounter=0;
+    // Personal unique id of canvas
     this.numId=0;
     this.graphColor='rgb(255, 99, 132)';
 }
