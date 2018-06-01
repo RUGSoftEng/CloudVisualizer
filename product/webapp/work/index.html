@@ -123,7 +123,7 @@
                         Hours per day used
                         <input type="number" id="hours" min="0" max="24"><br>
                         Operating system
-                        <select id="OSType">
+                        <select id="OSType" disabled>
                             <option value="">Free OS</option>
                             <option value="win">Windows Server</option>
                             <option value="rhel">Red Hat Enterprise Linux</option>
@@ -132,13 +132,21 @@
                             <option value="sql-standard">SQL Server Standard</option>
                             <option value="sql-web">SQL Server Web</option>
                             <option value="sql-enterprise">SQL Server Enterprise</option>
-                        </select>
                         <br>
-
+                    Number of GPUs
+                    <input type="number" id="numGPU" min="0"><br>
+                    GPU type
+                    <select id="GPUType">
+                    </select><br>
+                    Local SSD size (GB)
+                    <input type="number" id="localSSDSize" min="0"><br>
+                    Commitment period (years)
+                    <select id="committedUsage">
+                        <br>
                         <option value="0">0</option>
                         <option value="1-YEAR">1</option>
                         <option value="3-YEAR">3</option>
-                        </select>
+                    </select>
                     </form>
                     <h4>Persistent Disk</h4>
                     <form>
@@ -161,47 +169,6 @@
                         Hours per day used
                         <input type="number" id="TPUHours" min="0">
                     </form>
-                    <br />
-                    <br />
-                    <canvas id="popupGraphVM"></canvas>
-
-                    Number of GPUs
-                    <input type="number" id="numGPU" min="0"><br>
-                    GPU type
-                    <select id="GPUType">
-                    </select><br>
-                    Local SSD size (GB)
-                    <input type="number" id="localSSDSize" min="0"><br>
-                    Commitment period (years)
-                    <select id="commitedUsage">
-                        <br>
-                        <option value="0">0</option>
-                        <option value="1-YEAR">1</option>
-                        <option value="3-YEAR">3</option>
-                    </select>
-                    </form>
-                    <h4>Persistent Disk</h4>
-                    <form>
-                        Persistent disk size (GB)
-                        <input type="number" id="PDSize" min="0"><br>
-                        Persistent SSD size (GB)
-                        <input type="number" id="PDSSDSize" min="0"><br>
-                        Snapshot storage size (GB)
-                        <input type="number" id="PDSnapshot" min="0"><br>
-                    </form>
-                    <h4>Load balancing</h4>
-                    <form>
-                        Number of load balancing rules
-                        <input type="number" id="rules" min="0">
-                    </form>
-                    <h4>Cloud TPUs</h4>
-                    <form>
-                        Number of TPUs
-                        <input type="number" id="numTPU" min="0"><br>
-                        Hours per day used
-                        <input type="number" id="TPUHours" min="0">
-                    </form>
-                    <br />
                     <br />
                     <canvas id="popupGraphVM"></canvas>
 

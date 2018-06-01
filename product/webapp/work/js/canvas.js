@@ -187,12 +187,14 @@ function attachVariable (variableName,variableObject) {
         input.add(option);
     }
     if (input != null) {
+		console.log(variableName);
         input.value = variableObject[variableName];
         input.onchange = function () {
             if (variableName==="nrInstances"){
 				variableObject[variableName] = parseInt(this.value);
 			}else{
 				variableObject[variableName] = this.value;
+				console.log("changed " +variableName+ " to " +this.value);
 			}
             // change graph
             if(variableObject instanceof VirtualMachine){

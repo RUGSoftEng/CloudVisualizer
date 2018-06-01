@@ -186,6 +186,7 @@ function osHourly(){
 }
 function instanceHourly(){
     if(this.committedUsage!="0"){
+		console.log("cud");
         return pricelist["data"][0]["data"]["services"]["CP-CUD-"+this.committedUsage+"-CPU"]["locales"][this.region]*this.instanceType["cores"]+
             pricelist["data"][0]["data"]["services"]["CP-CUD-"+this.committedUsage+"-RAM"]["locales"][this.region]*this.instanceType["memory"];
     }else if(this.type=="custom"){
