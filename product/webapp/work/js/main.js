@@ -128,6 +128,8 @@ $(function() {
     $("#myAccordion").load("accordion-" + service + ".html", function(){
         setupWindow();
     });
+
+    calculate();
 });
 
 //show the div when calculate is clicked
@@ -187,6 +189,9 @@ function calculate (){
 
     // callback function for when request is finished
         .done(function(){
+            result = JSON.parse(result); 
+            console.log(result["data"][0]["data"]["services"]);
+            
             var monthPrice=0;
 
             // TODO: PUT CALCULATIONS HERE
