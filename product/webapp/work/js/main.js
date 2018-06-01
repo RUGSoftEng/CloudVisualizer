@@ -5,6 +5,10 @@ var DBSize;
 
 // Storage
 var nrInstancesStorage;
+var multiRegionalStorage;
+var regionalStorage;
+var nearlineStorage;
+var coldlineStorage;
 var storageSize;
 
 // Virtual machines
@@ -71,11 +75,32 @@ function setupGoogleCloud(){
         nrInstancesStorage.innerHTML = this.value;
     }
 
-    var StorageSlider = document.getElementById("StorageGBSliderID");
-    storageSize = document.getElementById("StorageGB");
-    storageSize.innerHTML = StorageSlider.value;
-    StorageSlider.oninput = function() {
-        storageSize.innerHTML = this.value;
+    var multiRegionalStorageSlider = document.getElementById("multiRegionalStorageSliderID");
+    multiRegionalStorage = document.getElementById("multiRegionalStorage");
+    multiRegionalStorage.innerHTML = multiRegionalStorageSlider.value;
+    multiRegionalStorageSlider.oninput = function() {
+        multiRegionalStorage.innerHTML = this.value;
+    }
+
+    var regionalStorageSlider = document.getElementById("regionalStorageSliderID");
+    regionalStorage = document.getElementById("regionalStorage");
+    regionalStorage.innerHTML = regionalStorageSlider.value;
+    regionalStorageSlider.oninput = function() {
+        regionalStorage.innerHTML = this.value;
+    }
+
+    var coldlineStorageSlider = document.getElementById("coldlineStorageSliderID");
+    coldlineStorage = document.getElementById("coldlineStorage");
+    coldlineStorage.innerHTML = coldlineStorageSlider.value;
+    coldlineStorageSlider.oninput = function() {
+        coldlineStorage.innerHTML = this.value;
+    }
+
+    var nearlineStorageSlider = document.getElementById("nearlineStorageSliderID");
+    nearlineStorage = document.getElementById("nearlineStorage");
+    nearlineStorage.innerHTML = nearlineStorageSlider.value;
+    nearlineStorageSlider.oninput = function() {
+        nearlineStorage.innerHTML = this.value;
     }
 
     /** Database Sliders */

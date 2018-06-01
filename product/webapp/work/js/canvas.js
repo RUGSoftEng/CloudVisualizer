@@ -44,9 +44,12 @@ function createBasicDatabase(nrInstances, size) {
     return newDatabase;
 }
 
-function createBasicStorage(nrInstances, size) {
+function createBasicStorage(nrInstances, multiRegionalSize, regionalSize, nearlineSize, coldlineSize) {
     var newStorage=new Storage();
-    newStorage.multiRegional=size;
+    newStorage.multiRegional=multiRegionalSize;
+    newStorage.regional=regionalSize;
+    newStorage.nearline=nearlineSize;
+    newStorage.coldline=coldlineSize;
     newStorage.nrInstances=nrInstances;
     return newStorage;
 }
@@ -271,7 +274,7 @@ function dragDatabase(ev) {
 
 function dragStorage(ev) {
     jQuery.event.props.push('dataTransfer');
-    var newStorage = createBasicStorage(parseInt(nrInstancesStorage.innerHTML), parseInt(storageSize.innerHTML));
+    var newStorage = createBasicStorage(parseInt(nrInstancesStorage.innerHTML), parseInt(multiRegionalStorage.innerHTML), parseInt(regionalStorage.innerHTML), parseInt(nearlineStorage.innerHTML), parseInt(coldlineStorage.innerHTML));
     var j = JSON.stringify(newStorage);
     ev.dataTransfer.setData("foo", j);
 }
