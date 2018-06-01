@@ -2,7 +2,7 @@ var pricelist=[];
 function VirtualMachine() {
     this.objectName="VirtualMachine";
     this.region=(service==="google-cloud")?"us-central1":(service==="amazon-webservices")?"US East (N-Virginia)":"us-east";
-    this.type=(service==="google-cloud")?"F1-MICRO":(service==="amazon-webservices")?"t2-nano":"B1s";/*user picked type*/;
+    this.type=(service==="google-cloud")?"N1-STANDARD-1":(service==="amazon-webservices")?"t2-nano":"B1s";/*user picked type*/;
     this.days=1;/*days per week the VM is used*/;
     this.hours=1;/*hours per day the VM is used*/;
     this.osType=(service==="google-cloud")?"":(service==="amazon-webservices")?"Linux":"SQL Server Web";/*user picked OS*/;
@@ -186,7 +186,6 @@ function osHourly(){
 }
 function instanceHourly(){
     if(this.committedUsage!="0"){
-		console.log("cud");
         return pricelist["data"][0]["data"]["services"]["CP-CUD-"+this.committedUsage+"-CPU"]["locales"][this.region]*this.instanceType["cores"]+
             pricelist["data"][0]["data"]["services"]["CP-CUD-"+this.committedUsage+"-RAM"]["locales"][this.region]*this.instanceType["memory"];
     }else if(this.type=="custom"){

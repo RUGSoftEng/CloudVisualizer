@@ -187,14 +187,22 @@ function attachVariable (variableName,variableObject) {
         input.add(option);
     }
     if (input != null) {
-		console.log(variableName);
         input.value = variableObject[variableName];
         input.onchange = function () {
             if (variableName==="nrInstances"){
 				variableObject[variableName] = parseInt(this.value);
 			}else{
 				variableObject[variableName] = this.value;
-				console.log("changed " +variableName+ " to " +this.value);
+			}
+			if(variableName === "type"){
+				variableObject.instanceType=determineInstanceType(variableObject.type);
+				if(pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-VMIMAGE-"+input.value]["properties"]["cores"] === "shared"){
+					variableObject.committedUsage = "0"
+					document.getElementById("committedUsage").disabled = true;
+					document.getElementById("committedUsage").value = "0";
+				}else{
+					document.getElementById("committedUsage").disabled = false;
+				}
 			}
             // change graph
             if(variableObject instanceof VirtualMachine){
