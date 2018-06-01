@@ -1,11 +1,11 @@
 var pricelist=[];
 function VirtualMachine() {
     this.objectName="VirtualMachine";
-    this.region="us-central1";/*user picked region*/;
-    this.type="F1-MICRO";/*user picked type*/;
+    this.region=(service==="google-cloud")?"us-central1":(service==="amazon-webservices")?"US East (N-Virginia)":"us-east";
+    this.type=(service==="google-cloud")?"F1-MICRO":(service==="amazon-webservices")?"t2-nano":"B1s";/*user picked type*/;
     this.days=1;/*days per week the VM is used*/;
     this.hours=1;/*hours per day the VM is used*/;
-    this.osType="";/*user picked OS*/;
+    this.osType=(service==="google-cloud")?"":(service==="amazon-webservices")?"Linux":"SQL Server Web";/*user picked OS*/;
     this.numGPU=0;/*number of GPUs*/
     this.GPUType="";/*user picked GPU*/;
     this.localSSDSize=0;/*user picked size*/;
@@ -204,9 +204,9 @@ function instanceHourly(){
         }
     }else{
         if(this.preemptible === true) {
-            return this.pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-VMIMAGE-" + this.type + "-PREEMPTIBLE"]["locales"][this.region];
+            return pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-VMIMAGE-" + this.type + "-PREEMPTIBLE"]["locales"][this.region];
         }
-        return this.pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-VMIMAGE-" + this.type]["locales"][this.region];
+        return pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-VMIMAGE-" + this.type]["locales"][this.region];
 
     }
 }

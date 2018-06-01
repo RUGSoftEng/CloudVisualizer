@@ -168,12 +168,12 @@ function removeCanvas(canvasID, documentID) {
 function attachVariable (variableName,variableObject) {
     var input = document.getElementById(variableName);
     if (variableName === "type"){
-        var keys = Object.keys(pricelist);
+        var keys = Object.keys(pricelist["data"][0]["data"]["services"]);
         for (var i=0;i<keys.length;i++){
             var typeName = (keys[i]).replace("CP-COMPUTEENGINE-VMIMAGE-","");
             if(keys[i] !== typeName && (keys[i]).match("PREEMPTIBLE")==null){
                 var option = document.createElement("option");
-                option.text = typeName + " vCPUs: " + pricelist["CP-COMPUTEENGINE-VMIMAGE-"+typeName]["cores"] + " RAM: " + pricelist["CP-COMPUTEENGINE-VMIMAGE-"+typeName]["memory"];
+                option.text = typeName + " vCPUs: " + pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-VMIMAGE-"+typeName]["properties"]["cores"] + " RAM: " + pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-VMIMAGE-"+typeName]["properties"]["memory"] +" GB";
                 option.value = typeName;
                 input.add(option);
             }
@@ -189,10 +189,12 @@ function attachVariable (variableName,variableObject) {
     if (input != null) {
         input.value = variableObject[variableName];
         input.onchange = function () {
-            variableObject[variableName] = parseInt(this.value);
+            if (variableName==="nrInstances"){
+				variableObject[variableName] = parseInt(this.value);
+			}else{
+				variableObject[variableName] = this.value;
+			}
             // change graph
-
-            variableObject.instanceType = determineInstanceType(variableObject.type);
             if(variableObject instanceof VirtualMachine){
                 updatePopupGraphVM(variableObject);
             } else if (variableObject instanceof Storage){

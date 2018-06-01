@@ -216,7 +216,7 @@ function calculate (){
     currentCanvas.timestamp = new Date().toTimeString();
     currentCanvas.description = 'you can put a short description here';
     currentCanvas.monthlyPrice = Math.round(monthPrice * 100) / 100;
-    //currentCanvas.yearlyPrice = Math.round(yearPrice * 100) / 100;
+    currentCanvas.yearlyPrice = currentCanvas.monthlyPrice*12;
 
     // store the canvas
     listOfCanvasses.push(copyCanvas(currentCanvas));
