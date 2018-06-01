@@ -31,7 +31,7 @@ function VirtualMachine() {
     this.TPUPerHour=TPUHourly;
     this.costMonthly=VMCostMonthly[service];
     //this.costQuarter=VMCostMonthly; // Not correct
-    this.costYear=VMCostYearly; // Not correct
+    //this.costYear=VMCostYearly; // Not correct
 }
 function Storage() {
     this.objectName="Storage";
@@ -48,11 +48,11 @@ function Storage() {
     // Functions
     this.costHour=storageCostHourly;
     this.costDay=storageCostDaily;
+    this.sustainedUsePerHour=sustainedUseHourly;
     this.costMonthly=storageCostMonthly;
     this.costYear=storageCostYearly;
-    this.costMonthly=VMCostMonthly[service];
-
 }
+
 function Database() {
     this.objectName="Database";
     /*The variables that influence the price of databases*/
@@ -68,7 +68,7 @@ function Database() {
     this.costDay=dataStoreCostDaily;
     this.costMonthly=dataStoreCostMonthly;
     this.costYear=dataStoreCostYearly;
-    this.costMonthly=VMCostMonthly[service];
+    this.sustainedUsePerHour=sustainedUseHourly;
 }
 
 function determineInstanceType(type) {
@@ -269,21 +269,31 @@ function storageCostYearly() {
 
 
 function dataStoreCostHourly(){
+
     var cost=0;
-   // console.log(pricelist);
+    console.log(pricelist);
+    cost+=(this.dataReads)*pricelist[0]["data"][0]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-READ"]["locales"]["us"];
+    cost+=(this.dataWrites)*pricelist[0]["services"]["CP-CLOUD-DATASTORE-ENTITY-WRITE"]["locales"]["us"];
+    cost+=(this.dataDeletes)*pricelist[0]["services"]["CP-CLOUD-DATASTORE-ENTITY-DELETE"]["locales"]["us"];
+    cost+=(this.dataSize)*pricelist[0]["services"]["CP-CLOUD-DATASTORE-INSTANCES"]["locales"]["us"];
+    return (cost*12/365/24)*this.nrInstances;
+
+//    var cost=0;
+//   console.log(pricelist);
 //if(this.dataReads>pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-READ"]["freequota"]["quantity"]){
-cost+=(this.dataReads/*-pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-READ"]["freequota"]["quantity"]*/)*pricelist['data']['data']['services']["CP-CLOUD-DATASTORE-ENTITY-READ"]["locales"]["us"];
+//cost+=(this.dataReads/*-pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-READ"]["freequota"]["quantity"]*/)*pricelist['data']['data']['services']["CP-CLOUD-DATASTORE-ENTITY-READ"]["locales"]["us"];
 //}
 //if(this.dataWrites>pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-WRITE"]["freequota"]["quantity"]){
-cost+=(this.dataWrites/*-pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-WRITE"]["freequota"]["quantity"]*/)*pricelist['data']['data']['services']["CP-CLOUD-DATASTORE-ENTITY-WRITE"]["locales"]["us"];
+//cost+=(this.dataWrites/*-pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-WRITE"]["freequota"]["quantity"]*/)*pricelist['data']['data']['services']["CP-CLOUD-DATASTORE-ENTITY-WRITE"]["locales"]["us"];
 //}
 //if(this.dataDeletes>pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-DELETE"]["freequota"]["quantity"]){
-cost+=(this.dataDeletes/*-pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-DELETE"]["freequota"]["quantity"]*/)*pricelist['data']['data']['services']["CP-CLOUD-DATASTORE-ENTITY-DELETE"]["locales"]["us"];
+//cost+=(this.dataDeletes/*-pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-DELETE"]["freequota"]["quantity"]*/)*pricelist['data']['data']['services']["CP-CLOUD-DATASTORE-ENTITY-DELETE"]["locales"]["us"];
 //}
 //if(this.dataSize>pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-INSTANCES"]["freequota"]["quantity"]){
-cost+=(this.dataSize/*-pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-INSTANCES"]["freequota"]["quantity"]*/)*pricelist['data']['data']['services']["CP-CLOUD-DATASTORE-INSTANCES"]["locales"]["us"];
+//cost+=(this.dataSize/*-pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-INSTANCES"]["freequota"]["quantity"]*/)*pricelist['data']['data']['services']["CP-CLOUD-DATASTORE-INSTANCES"]["locales"]["us"];
 //}
-return (cost*12/365/24)*this.nrInstances;
+//return (cost*12/365/24)*this.nrInstances;
+
 }
 
 function dataStoreCostDaily() {

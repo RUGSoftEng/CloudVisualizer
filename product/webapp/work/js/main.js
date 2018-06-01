@@ -189,7 +189,7 @@ function getCloudwatchData(service){
     // callback function for when request is finished
         .done(function(){
             pricelist = result;
-            console.log(result);
+            //console.log(result);
             document.getElementById("calculate").disabled = false;
         });
 }
