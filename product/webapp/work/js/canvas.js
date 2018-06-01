@@ -168,6 +168,10 @@ function removeCanvas(canvasID, documentID) {
     listOfCanvasses.splice(getObjectById(canvasID, listOfCanvasses), 1);
     // remove from storage
     localStorage.setItem('listOfCanvasses', JSON.stringify(listOfCanvasses));
+	console.log(listOfCanvasses.length);
+	if(listOfCanvasses.length == 0){
+		document.getElementById("mainGraph").style.display = "none";
+	}
 }
 
 function attachVariable (variableName,variableObject) {

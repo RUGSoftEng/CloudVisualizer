@@ -58,6 +58,11 @@ html, body {
   width: calc(100% - (220px ));
   float: right; }
 
+#mainGraph {
+  display: none;
+  width: calc(75% - 200px);
+  margin-left: 220px; }
+
 #luc p:hover {
   cursor: pointer;
   color: red; }

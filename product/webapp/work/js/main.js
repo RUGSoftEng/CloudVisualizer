@@ -230,6 +230,7 @@ function deleteCalc(){
     clearMainGraph();
     listOfCanvasses = [];
     localStorage.setItem('listOfCanvasses', JSON.stringify([]));
+	document.getElementById("mainGraph").style.display = "none";
 }
 
 function calculate (){
@@ -344,7 +345,7 @@ function calculateTemp (){
         }
     };
     xobj.send(null);
-
+	document.getElementById("mainGraph").style.display = "block";
 
 }
 
