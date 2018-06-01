@@ -30,22 +30,24 @@ function newObjectExists(newObject, objectList) {
 
 function createBasicVirtualMachine(nrInstances, days, hours) {
     var newVM=new VirtualMachine();
-    newVM.nrInstances=nrInstances;
+    newVM.nrInstances=nrInstancesVM;
     newVM.days=days;
     newVM.hours=hours;
     newVM.instanceType=determineInstanceType(newVM.type);
     return newVM;
 }
 
-function createBasicDatabase(size) {
+function createBasicDatabase(nrInstances, size) {
     var newDatabase=new Database();
     newDatabase.dataSize=size;
+    newDatabase.nrInstances=nrInstances;
     return newDatabase;
 }
 
-function createBasicStorage(size) {
+function createBasicStorage(nrInstances, size) {
     var newStorage=new Storage();
     newStorage.multiRegional=size;
+    newStorage.nrInstances=nrInstances;
     return newStorage;
 }
 
@@ -262,21 +264,21 @@ function allowDrop(ev) {
 
 function dragDatabase(ev) {
     jQuery.event.props.push('dataTransfer');
-    var newDB = createBasicDatabase(parseInt(DBSize.innerHTML));
+    var newDB = createBasicDatabase(parseInt(nrInstancesDB.innerHTML), parseInt(DBSize.innerHTML));
     var j = JSON.stringify(newDB);
     ev.dataTransfer.setData("foo", j);
 }
 
 function dragStorage(ev) {
     jQuery.event.props.push('dataTransfer');
-    var newStorage = createBasicStorage(parseInt(storageSize.innerHTML));
+    var newStorage = createBasicStorage(parseInt(nrInstancesStorage.innerHTML), parseInt(storageSize.innerHTML));
     var j = JSON.stringify(newStorage);
     ev.dataTransfer.setData("foo", j);
 }
 
 function dragVM(ev) {
     jQuery.event.props.push('dataTransfer');
-    var newVM = createBasicVirtualMachine(parseInt(nrInstances.innerHTML), parseInt(days.innerHTML), parseInt(hours.innerHTML));
+    var newVM = createBasicVirtualMachine(parseInt(nrInstancesVM.innerHTML), parseInt(days.innerHTML), parseInt(hours.innerHTML));
     var j = JSON.stringify(newVM);
     ev.dataTransfer.setData("foo", j);
 }

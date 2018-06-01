@@ -1,4 +1,6 @@
-var nrInstances;
+var nrInstancesVM;
+var nrInstancesStorage;
+var nrInstancesDB;
 var days;
 var hours;
 var storageSize;
@@ -22,10 +24,10 @@ function setupGoogleCloud(){
     /** Virtual Machine Sliders */
         // Instances
     var VMInstancesSlider = document.getElementById("VMInstancesSliderID");
-    nrInstances = document.getElementById("VMInstances");
-    nrInstances.innerHTML = VMInstancesSlider.value;
+    nrInstancesVM = document.getElementById("VMInstances");
+    nrInstancesVM.innerHTML = VMInstancesSlider.value;
     VMInstancesSlider.oninput = function() {
-        nrInstances.innerHTML = this.value;
+        nrInstancesVM.innerHTML = this.value;
     }
 
     // Days
@@ -45,6 +47,14 @@ function setupGoogleCloud(){
     }
 
     /** Storage Sliders */
+    // Instances
+    var StorageInstancesSlider = document.getElementById("StorageInstancesSliderID");
+    nrInstancesStorage = document.getElementById("StorageInstances");
+    nrInstancesStorage.innerHTML = StorageInstancesSlider.value;
+    StorageInstancesSlider.oninput = function() {
+        nrInstancesStorage.innerHTML = this.value;
+    }
+
     var StorageSlider = document.getElementById("StorageGBSliderID");
     storageSize = document.getElementById("StorageGB");
     storageSize.innerHTML = StorageSlider.value;
@@ -53,6 +63,14 @@ function setupGoogleCloud(){
     }
 
     /** Database Sliders */
+    // Instances
+    var DBInstancesSlider = document.getElementById("DBInstancesSliderID");
+    nrInstancesDB = document.getElementById("DBInstances");
+    nrInstancesDB.innerHTML = DBInstancesSlider.value;
+    DBInstancesSlider.oninput = function() {
+        nrInstancesDB.innerHTML = this.value;
+    }
+
     var DBSlider = document.getElementById("DBGBSliderID");
     DBSize = document.getElementById("DBGB");
     DBSize.innerHTML = DBSlider.value;
