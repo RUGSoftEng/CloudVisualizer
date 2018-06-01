@@ -195,6 +195,7 @@ function getCloudwatchData(service){
 }
 
 function calculate (){
+    /*
     var monthPrice=0;
 
     // TODO: PUT CALCULATIONS HERE
@@ -216,24 +217,24 @@ function calculate (){
 
     // store/update data in localStorage
     localStorage.setItem('listOfCanvasses', JSON.stringify(listOfCanvasses));
-
+    */
     var monthPrice=0;
-
+    var yearPrice=0;
     // TODO: PUT CALCULATIONS HERE
 
-    // for (var i in currentCanvas.VirtualMachines) {
-    //     currentCanvas.VirtualMachines[i].instanceType = determineInstanceType(currentCanvas.VirtualMachines[i].type);
-    //     monthPrice+=currentCanvas.VirtualMachines[i].costMonthly();
-    //     yearPrice+=currentCanvas.VirtualMachines[i].costYear();
-    // }
-    // for (var i in currentCanvas.Databases) {
-    //     monthPrice+=currentCanvas.Databases[i].costMonthly();
-    //     yearPrice+=currentCanvas.Databases[i].costYear();
-    // }
-    // for (var i in currentCanvas.Storages) {
-    //     monthPrice += currentCanvas.Storages[i].costMonthly();
-    //     yearPrice += currentCanvas.Storages[i].costYear();
-    // }
+     for (var i in currentCanvas.VirtualMachines) {
+         currentCanvas.VirtualMachines[i].instanceType = determineInstanceType(currentCanvas.VirtualMachines[i].type);
+         monthPrice+=currentCanvas.VirtualMachines[i].costMonthly();
+         yearPrice+=currentCanvas.VirtualMachines[i].costYear();
+     }
+     for (var i in currentCanvas.Databases) {
+         monthPrice+=currentCanvas.Databases[i].costMonthly();
+         yearPrice+=currentCanvas.Databases[i].costYear();
+     }
+     for (var i in currentCanvas.Storages) {
+         monthPrice += currentCanvas.Storages[i].costMonthly();
+         yearPrice += currentCanvas.Storages[i].costYear();
+     }
 
     // set properties of canvas used to (re)create list item
     currentCanvas.numId = idCanvas++;

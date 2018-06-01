@@ -50,6 +50,8 @@ function Storage() {
     this.costDay=storageCostDaily;
     this.costMonthly=storageCostMonthly;
     this.costYear=storageCostYearly;
+    this.costMonthly=VMCostMonthly[service];
+
 }
 function Database() {
     this.objectName="Database";
@@ -66,6 +68,7 @@ function Database() {
     this.costDay=dataStoreCostDaily;
     this.costMonthly=dataStoreCostMonthly;
     this.costYear=dataStoreCostYearly;
+    this.costMonthly=VMCostMonthly[service];
 }
 
 function determineInstanceType(type) {
@@ -267,19 +270,20 @@ function storageCostYearly() {
 
 function dataStoreCostHourly(){
     var cost=0;
-    //if(this.dataReads>pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-READ"]["freequota"]["quantity"]){
-    cost+=(this.dataReads/*-pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-READ"]["freequota"]["quantity"]*/)*pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-READ"]["locales"]["us"];
-    //}
-    //if(this.dataWrites>pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-WRITE"]["freequota"]["quantity"]){
-    cost+=(this.dataWrites/*-pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-WRITE"]["freequota"]["quantity"]*/)*pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-WRITE"]["locales"]["us"];
-    //}
-    //if(this.dataDeletes>pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-DELETE"]["freequota"]["quantity"]){
-    cost+=(this.dataDeletes/*-pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-DELETE"]["freequota"]["quantity"]*/)*pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-DELETE"]["locales"]["us"];
-    //}
-    //if(this.dataSize>pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-INSTANCES"]["freequota"]["quantity"]){
-    cost+=(this.dataSize/*-pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-INSTANCES"]["freequota"]["quantity"]*/)*pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-INSTANCES"]["locales"]["us"];
-    //}
-    return (cost*12/365/24)*this.nrInstances;
+   // console.log(pricelist);
+//if(this.dataReads>pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-READ"]["freequota"]["quantity"]){
+cost+=(this.dataReads/*-pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-READ"]["freequota"]["quantity"]*/)*pricelist['data']['data']['services']["CP-CLOUD-DATASTORE-ENTITY-READ"]["locales"]["us"];
+//}
+//if(this.dataWrites>pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-WRITE"]["freequota"]["quantity"]){
+cost+=(this.dataWrites/*-pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-WRITE"]["freequota"]["quantity"]*/)*pricelist['data']['data']['services']["CP-CLOUD-DATASTORE-ENTITY-WRITE"]["locales"]["us"];
+//}
+//if(this.dataDeletes>pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-DELETE"]["freequota"]["quantity"]){
+cost+=(this.dataDeletes/*-pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-DELETE"]["freequota"]["quantity"]*/)*pricelist['data']['data']['services']["CP-CLOUD-DATASTORE-ENTITY-DELETE"]["locales"]["us"];
+//}
+//if(this.dataSize>pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-INSTANCES"]["freequota"]["quantity"]){
+cost+=(this.dataSize/*-pricelist["data"]["data"]["services"]["CP-CLOUD-DATASTORE-INSTANCES"]["freequota"]["quantity"]*/)*pricelist['data']['data']['services']["CP-CLOUD-DATASTORE-INSTANCES"]["locales"]["us"];
+//}
+return (cost*12/365/24)*this.nrInstances;
 }
 
 function dataStoreCostDaily() {
