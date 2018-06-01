@@ -43,7 +43,7 @@ app.post('/cloudwatch',function(req,result){
     console.log("service: " + service);
 
     var post_options = {
-        host: ipAddressCloudwatch,
+        host: ipAddressCloudwatch/*'localhost*/',
         port: '8000',
         path: '/api/v1',
         method: 'POST',
