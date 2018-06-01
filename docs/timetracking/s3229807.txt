@@ -1,79 +1,159 @@
-08-03-2018
-Worked with Sjouke on a list of possible filters
-09-03-2018
-Meeting with group
-Sent e-mail to client to ask about how we should retrieve information (multiple or only one api) and asked some questions about providers.
-10-03-2018
-Setup own github branch
+08-03-2018: Worked with Sjouke on a list of possible filters
+08-03-2018: Worked with Sjouke on a list of possible filters
+09-03-2018: Meeting with group
+09-03-2018: Sent e-mail to client to ask about how we should retrieve information (multiple or only one api) and asked some questions about providers.
+10-03-2018: Setup own github branch
+14-03-2018: Changed branch for new requirements
+15-03-2018: Meeting with client
+15-03-2018: Discussing afterwards
+16-03-2018: Meeting with group and TA
+20-03-2018: Started looking into the Json file received from the client, also started looking into graphs for representing the data.
+20-03-2018: Fixing the development branch for the new structure
+22-03-2018: Started looking into chart.js
+22-03-2018: Started looking into chart.js
+22-03-2018: Started looking into chart.js
+22-03-2018: Started looking into chart.js
+26-03-2018: Working on the graph that is produced after filtering
+26-03-2018: Working on the graph that is produced after filtering
+27-03-2018: Working on the graph again
+27-03-2018: Working on the graph again
+27-03-2018: Working on the graph again
+28-03-2018: Working with group on the project at uni
+28-03-2018: Working with group on the project at uni
+28-03-2018: Working with group on the project at uni
+28-03-2018: Working with group on the project at uni
+28-03-2018: Working with group on the project at uni
+28-03-2018: Working with group on the project at uni
+28-03-2018: Working with group on the project at uni
+28-03-2018: Working with group on the project at uni
+28-03-2018: Working with group on the project at uni
+28-03-2018: Working with group on the project at uni
+29-03-2018: Working on filtering for Virtual Machines/Databases/Storages
+29-03-2018: Working on filtering for Virtual Machines/Databases/Storages
+29-03-2018: Working on filtering for Virtual Machines/Databases/Storages
+29-03-2018: Working on filtering for Virtual Machines/Databases/Storages
+29-03-2018: Working on filtering for Virtual Machines/Databases/Storages
+29-03-2018: Working on filtering for Virtual Machines/Databases/Storages
+29-03-2018: Working on filtering for Virtual Machines/Databases/Storages
+29-03-2018: Working on filtering for Virtual Machines/Databases/Storages
+29-03-2018: Working on filtering for Virtual Machines/Databases/Storages
+29-03-2018: Working on filtering for Virtual Machines/Databases/Storages
+29-03-2018: Working on filtering for Virtual Machines/Databases/Storages
+30-03-2018: Meeting with Merlijn and Sjouke, worked on filtering on region
+30-03-2018: Meeting with Merlijn and Sjouke, worked on filtering on region
+30-03-2018: Meeting with Merlijn and Sjouke, worked on filtering on region
+30-03-2018: Meeting with Merlijn and Sjouke, worked on filtering on region
+30-03-2018: Meeting with Merlijn and Sjouke, worked on filtering on region
+31-03-2018: Working on the calculations, with help from Emiel
+31-03-2018: Working on the calculations, with help from Emiel
+31-03-2018: Working on the calculations, with help from Emiel
+31-03-2018: Working on the calculations, with help from Emiel
+31-03-2018: Working on the calculations, with help from Emiel
+31-03-2018: Working on the calculations, with help from Emiel
+31-03-2018: Working on the calculations, with help from Emiel
+31-03-2018: Working on the calculations, with help from Emiel
+31-03-2018: Working on the calculations, with help from Emiel
+02-04-2018: Working on the MVP, combining front-end with back-end
+02-04-2018: Working on the MVP, combining front-end with back-end
+02-04-2018: Working on the MVP, combining front-end with back-end
+02-04-2018: Working on the MVP, combining front-end with back-end
+02-04-2018: Working on the MVP, combining front-end with back-end
+02-04-2018: Working on the MVP, combining front-end with back-end
+02-04-2018: Working on the MVP, combining front-end with back-end
+02-04-2018: Working on the MVP, combining front-end with back-end
+02-04-2018: Working on the MVP, combining front-end with back-end
+02-04-2018: Working on the MVP, combining front-end with back-end
+02-04-2018: Working on the MVP, combining front-end with back-end
+02-04-2018: Working on the MVP, combining front-end with back-end
+02-04-2018: Working on the MVP, combining front-end with back-end
+02-04-2018: Working on the MVP, combining front-end with back-end
+02-04-2018: Working on the MVP, combining front-end with back-end
+02-04-2018: Working on the MVP, combining front-end with back-end
+02-04-2018: Working on the MVP, combining front-end with back-end
+19-04-2018: Worked with Luc, on designing functions for the drag and drop feature (e.g icon should increment when VM is exactly the same)
+19-04-2018: Worked with Luc, on designing functions for the drag and drop feature (e.g icon should increment when VM is exactly the same)
+19-04-2018: Worked with Luc, on designing functions for the drag and drop feature (e.g icon should increment when VM is exactly the same)
+19-04-2018: Worked with Luc, on designing functions for the drag and drop feature (e.g icon should increment when VM is exactly the same)
+19-04-2018: Worked with Luc, on designing functions for the drag and drop feature (e.g icon should increment when VM is exactly the same)
+19-04-2018: Worked with Luc, on designing functions for the drag and drop feature (e.g icon should increment when VM is exactly the same)
+19-04-2018: Worked with Luc, on designing functions for the drag and drop feature (e.g icon should increment when VM is exactly the same)
+19-04-2018: Worked with Luc, on designing functions for the drag and drop feature (e.g icon should increment when VM is exactly the same)
+19-04-2018: Worked with Luc, on designing functions for the drag and drop feature (e.g icon should increment when VM is exactly the same)
+03-05-2018: Working with group on the project
+03-05-2018: Working with group on the project
+03-05-2018: Working with group on the project
+03-05-2018: Working with group on the project
+03-05-2018: Working with group on the project
+03-05-2018: Working with group on the project
+03-05-2018: Working with group on the project
+03-05-2018: Working with group on the project
+13-05-2018: Attempting a merge with frontend
+13-05-2018: Attempting a merge with frontend
+13-05-2018: Attempting a merge with frontend
+13-05-2018: Attempting a merge with frontend
+13-05-2018: Attempting a merge with frontend
+13-05-2018: Attempting a merge with frontend
+14-05-2018: Merging frontend and backend branches manually
+14-05-2018: Merging frontend and backend branches manually
+14-05-2018: Merging frontend and backend branches manually
+14-05-2018: Merging frontend and backend branches manually
+15-05-2018: Meeting
+15-05-2018: Working together on some functionality in Bernouilliborg
+15-05-2018: Working together on some functionality in Bernouilliborg
+15-05-2018: Working together on some functionality in Bernouilliborg
+15-05-2018: Working together on some functionality in Bernouilliborg
+15-05-2018: Working together on some functionality in Bernouilliborg
+15-05-2018: Working on functionality for: deleting an item from canvas, calculations when clicking the calculate button, pop-up functionality
+15-05-2018: Working on functionality for: deleting an item from canvas, calculations when clicking the calculate button, pop-up functionality
+15-05-2018: Working on functionality for: deleting an item from canvas, calculations when clicking the calculate button, pop-up functionality
+15-05-2018: Working on functionality for: deleting an item from canvas, calculations when clicking the calculate button, pop-up functionality
+15-05-2018: Working on functionality for: deleting an item from canvas, calculations when clicking the calculate button, pop-up functionality
+15-05-2018: Working on functionality for: deleting an item from canvas, calculations when clicking the calculate button, pop-up functionality
+15-05-2018: Working on functionality for: deleting an item from canvas, calculations when clicking the calculate button, pop-up functionality
+19-05-2018: Worked on calculations of google provider, fixed some bugs in calculation.js, made a start on implementing the graph
+19-05-2018: Worked on calculations of google provider, fixed some bugs in calculation.js, made a start on implementing the graph
+19-05-2018: Worked on calculations of google provider, fixed some bugs in calculation.js, made a start on implementing the graph
+19-05-2018: Worked on calculations of google provider, fixed some bugs in calculation.js, made a start on implementing the graph
+19-05-2018: Worked on calculations of google provider, fixed some bugs in calculation.js, made a start on implementing the graph
+19-05-2018: Worked on calculations of google provider, fixed some bugs in calculation.js, made a start on implementing the graph
+19-05-2018: Worked on calculations of google provider, fixed some bugs in calculation.js, made a start on implementing the graph
+19-05-2018: Worked on calculations of google provider, fixed some bugs in calculation.js, made a start on implementing the graph
+19-05-2018: Worked on calculations of google provider, fixed some bugs in calculation.js, made a start on implementing the graph
+19-05-2018: Worked on calculations of google provider, fixed some bugs in calculation.js, made a start on implementing the graph
+20-05-2018: Worked on adding some new icons to store and restore canvasses
+20-05-2018: Worked on adding some new icons to store and restore canvasses
+20-05-2018: Worked on adding some new icons to store and restore canvasses
+20-05-2018: Redid some of the code so that everything is now stored in a nice Canvas object. Canvasses are now saved when calculate is clicked, up to 5 can be saved. Canvasses can be restored. Have to ask the client if he things this is a good idea
+20-05-2018: Redid some of the code so that everything is now stored in a nice Canvas object. Canvasses are now saved when calculate is clicked, up to 5 can be saved. Canvasses can be restored. Have to ask the client if he things this is a good idea
+20-05-2018: Redid some of the code so that everything is now stored in a nice Canvas object. Canvasses are now saved when calculate is clicked, up to 5 can be saved. Canvasses can be restored. Have to ask the client if he things this is a good idea
+20-05-2018: Redid some of the code so that everything is now stored in a nice Canvas object. Canvasses are now saved when calculate is clicked, up to 5 can be saved. Canvasses can be restored. Have to ask the client if he things this is a good idea
+20-05-2018: Redid some of the code so that everything is now stored in a nice Canvas object. Canvasses are now saved when calculate is clicked, up to 5 can be saved. Canvasses can be restored. Have to ask the client if he things this is a good idea
+20-05-2018: Redid some of the code so that everything is now stored in a nice Canvas object. Canvasses are now saved when calculate is clicked, up to 5 can be saved. Canvasses can be restored. Have to ask the client if he things this is a good idea
+20-05-2018: Redid some of the code so that everything is now stored in a nice Canvas object. Canvasses are now saved when calculate is clicked, up to 5 can be saved. Canvasses can be restored. Have to ask the client if he things this is a good idea
+20-05-2018: Worked on a couple of a different things
+20-05-2018: Worked on a couple of a different things
+20-05-2018: Worked on a couple of a different things
+21-05-2018: Some small work
+21-05-2018: Some small work
+21-05-2018: Some small work
+21-05-2018: Some small work
+22-05-2018: Group meeting
+22-05-2018: Worked some on the project with Luc
+22-05-2018: Worked some on the project with Luc
+22-05-2018: Worked some on the project with Luc
+22-05-2018: Client meeting
+29-05-2018: Group meeting
+29-05-2018: Looked a bit into checkboxes and how it could be implemented into our project
+29-05-2018: Looked a bit into checkboxes and how it could be implemented into our project
+29-05-2018: Looked a bit into checkboxes and how it could be implemented into our project
+29-05-2018: Looked a bit into checkboxes and how it could be implemented into our project
+29-05-2018: Looked a bit into checkboxes and how it could be implemented into our project
+29-05-2018: Looked a bit into checkboxes and how it could be implemented into our project
+31-05-2018: Graph icons in the calculations now have the same color as their graph.
+31-05-2018: Tried fixing some bugs 
+31-05-2018: Manually reverted back to previous version of backend branch
+31-05-2018: Fixed timetracking document
 
-14-03-2018
-Changed branch for new requirements
-
-15-03-2018
-12:00-12:30 Meeting with client
-13:30-14:00 Discussing afterwards
-
-16-03-2018
-13:00-13:30 Meeting with group and TA
-
-20-03-2018
-11:30-12:00 Started looking into the Json file received from the client, also started looking into graphs for representing the data.
-12:00-12:30 Fixing the development branch for the new structure
-
-22-03-2018
-12:00-14:00 Started looking into chart.js
-
-26-03-2018
-16:30-17:30
-Working on the graph that is produced after filtering
-
-27-03-2018
-12:00 - 13:30
-Working on the graph again
-
-28-03-2018
-11:00-16:00 Working with group on the project at uni
-
-29-03-2018
-12:00-17:00 Working on filtering for Virtual Machines/Databases/Storages
-18:00-19:00 Working on filtering for Virtual Machines/Databases/Storages
-
-30-03-2018
-11:30 - 14:00 Meeting with Merlijn and Sjouke, worked on filtering on region
-
-31-03-2018
-11:30 - 16:00 Working on the calculations, with help from Emiel
-
-02-04-2018
-14:00 - 18:30 Working on the MVP, combining front-end with back-end
-19:30 - 23:30 Working on the MVP, combining front-end with back-end
-
-19-04-2018
-11:00 - 15:30 Worked with Luc, on designing functions for the drag and drop feature (e.g icon should increment when VM is exactly the same)
-
-03-05-2018
-11:30 - 15:30 Working with group on the project
-
-13-05-2018
-18:00 - 21:00 Attempting a merge with frontend
-
-14-05-2018
-16:30 - 17:15 Merging frontend and backend branches manually 
-18:15 - 19:00 Merging frontend and backend branches manually
-
-15-05-2018
-12:00 - 12:15 Meeting
-12:15 - 14:45 Working together on some functionality in Bernouilliborg
-21:00 - 00:45 Working on functionality for: deleting an item from canvas, calculations when clicking the calculate button, pop-up functionality
-
-19-05-2018
-10:30 - 13:00 Worked on calculations of google provider, fixed some bugs in calculation.js, made a start on implementing the graph
-13:30 - 16:00 Worked on calculations of google provider, fixed some bugs in calculation.js, made a start on implementing the graph
-
-20-05-2018
-12:00 - 13:30 Worked on adding some new icons to store and restore canvasses
-13:30 - 17:00 Redid some of the code so that everything is now stored in a nice Canvas object. Canvasses are now saved when calculate is clicked, up to 5 can be saved. Canvasses can be restored. Have to ask the client if he things this is a good idea
-17:30-19:00 Worked on a couple of a different things
 
 
   

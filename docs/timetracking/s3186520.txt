@@ -130,6 +130,73 @@
 - talk with group afterwards
 - fix provider selecting 
 - create json files for the cloudwatch API
+- review work before pull request
+- create 'todo' from review
+- meeting with client
+- meeting with client 
+- work on graph html
+- work on graph html
+- integrate graph.html into index.html
+- integrate graph.html into index.html
+- some refactoring
+- work on plotting y = ax + b
+- work on plotting y = ax + b
+- work on plotting y = ax + b
+- put graph stuff into seperate js file
+- look into AWS storage EBS
+- look into AWS storage EBS
+- dynamically load content of Accordion from file
+- dynamically load content of Accordion from file
+- dynamically load content of Accordion from file
+- dynamically load content of Accordion from file
+- dynamically load content of Accordion from file
+- dynamically load content of Accordion from file
+- work on provider selection
+- work on provider selection
+- work on provider selection
+- work on provider selection
+- transform some javascript into jQuery
+- store user's choice for provider accross sessions
+- store user's choice for provider accross sessions
+- clean up backend branch
+- fix main.js 
+- set provider selected on page load/refresh
+- tried loading only loading accordion element without page refresh
+- tried loading only loading accordion element without page refresh
+- put canvas related stuff into seperate file, clean up old files
+- modified canvas object add properties for recreation of listItem
+- modified canvas object add properties for recreation of listItem
+- work on saving all canvasses and calculations
+- work on saving all canvasses and calculations
+- work on saving all canvasses and calculations
+- work on saving all canvasses and calculations
+- work on saving all canvasses and calculations
+- TA meeting
+- Team meeting
+- work with luc on popup graph VM
+- work with luc on popup graph VM
+- work with luc on popup graph VM
+- work with luc on popup graph VM
+- work on popup graph DB
+- work on popup graph CS
+- some debugging and testing
+- hide all graphs by default
+- scroll and make single graph visible
+- ability to delete all graphs
+- ability to delete all graphs
+- delete graph of a single calculation
+- look into issue with some of the images
+- look into issue with some of the images
+- look into issue with some of the images
+- look into issue with some of the images
+- trying to connect cloudwatch home network
+- trying to connect cloudwatch home network
+- accessing JSON data from cloudwatch
+- communication on Slack
+- centering graph canvas
+- work on AWS accordion
+- work on MS accordion
+
 
 
 
