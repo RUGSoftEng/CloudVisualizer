@@ -60,6 +60,29 @@
         <button  class="iconButton"id="calculate" onclick="calculate()" type="button" ><img src="images/calc.ico"width="50" height="50"/></button>
         <button  class="iconButton"id="deleteCalc" type="button" onclick="deleteCalc()"><img src="images/trash.ico"width="50" height="50"/></button>
     </div>
+	<div class="calc" style=" float: right;padding-left: 2%">
+		<select id="SelectRegionID" onchange="setRegion(this)">
+			<option value="us-central1">Iowa</option>
+			<option value="us-east1">South Carolina</option>
+			<option value="us-east4">Northern Virginia</option>
+			<option value="us-west1">Oregon</option>
+			<option value="europe-west1">Belgium</option>
+			<option value="europe-west2">London</option>
+			<option value="europe-west3">Frankfurt</option>
+			<option value="asia-east1">Taiwan</option>
+			<option value="asia-northeast1">Tokyo</option>
+			<option value="asia-southeast1">Singapore</option>
+			<option value="asia-south1">Mumbai</option>
+			<option value="australia-southeast1">Sydney</option>
+			<option value="southamerica-east1">Sao Paulo</option>
+			<option value="europe-west4">Netherlands</option>
+			<option value="northamerica-northeast1">Montréal, Canada</option>
+		</select>
+		<button class="iconButton" id="provider"data-toggle="modal" data-target="#providerPopup"><img src="images/provider.ico"width="50" height="50"/></button>
+		<button class="iconButton" onclick="clearBox('itemsvm','itemsst','itemsdb')" type="button"><img src="images/clearCanvas.ico"width="50" height="50"/></button>
+		<button  class="iconButton"id="calculate" onclick="calculateTemp()" type="button" ><img src="images/calc.ico"width="50" height="50"/></button>
+		<button  class="iconButton"id="deleteCalc" type="button" onclick="deleteCalc()"><img src="images/trash.ico"width="50" height="50"/></button>
+	</div>
 
     <!-- Provider pop-up -->
     <div class="modal fade" id="providerPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -255,6 +278,43 @@
             </div>
         </div>
     </div>
+	<!-- POPUP EDIT (GOOGLE) DATABASE -->
+	<div class="modal fade" id="dbSettings" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document" >
+			<div class="modal-content" >
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Providers</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<h3>Edit selection</h3>
+					<h4>Database</h4>
+					<form>
+						Database size (GB)
+						<input type="number" id="dataSize" min="0"><br>
+						Entity reads per month
+						<input type="number" id="dataReads" min="0"><br>
+						Entity writes per month
+						<input type="number" id="dataWrites" min="0"><br>
+						Entity deletes per month
+						<input type="number" id="dataDeletes" min="0"><br>
+					</form>
+					<br />
+					<br />
+					<canvas id="popupGraphDB"></canvas>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" id="save-modal" data-dismiss="modal">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Canvas Section -->
+	<div class="canvas"id="canvas"ondrop="drop(event)" ondragover="allowDrop(event)" >
 
     <!-- Canvas Section -->
     <div class="canvas"id="canvas"ondrop="drop(event)" ondragover="allowDrop(event)">
@@ -279,6 +339,10 @@
         </h4>
         <canvas id="graphCanvas"></canvas>
     </div>
+	<!-- CHARTJS GRAPH SECTION -->
+	<div id="mainGraph">
+		<canvas id="graphCanvas"></canvas>
+	</div>
 
 </div>
 

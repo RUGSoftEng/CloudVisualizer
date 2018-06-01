@@ -15,6 +15,8 @@ function newObjectExists(newObject, objectList) {
                 break;
             }
             if (newObject[propName]!==objectList[i][propName]) {
+                console.log(propName);
+                console.log(newObject[propName] + objectList[i][propName]);
                 stop=true;
             }
             if (stop) {
@@ -34,18 +36,27 @@ function createBasicVirtualMachine(nrInstances, days, hours) {
     newVM.days=days;
     newVM.hours=hours;
     newVM.instanceType=determineInstanceType(newVM.type);
+    newVM.region=currentCanvas.region;
+    console.log(newVM.region);
     return newVM;
 }
 
-function createBasicDatabase(size) {
+function createBasicDatabase(nrInstances, size) {
     var newDatabase=new Database();
     newDatabase.dataSize=size;
+    newDatabase.nrInstances=nrInstances;
+    newDatabase.region=currentCanvas.region;
     return newDatabase;
 }
 
-function createBasicStorage(size) {
+function createBasicStorage(nrInstances, multiRegionalSize, regionalSize, nearlineSize, coldlineSize) {
     var newStorage=new Storage();
-    newStorage.multiRegional=size;
+    newStorage.multiRegional=multiRegionalSize;
+    newStorage.regional=regionalSize;
+    newStorage.nearline=nearlineSize;
+    newStorage.coldline=coldlineSize;
+    newStorage.nrInstances=nrInstances;
+    newStorage.region=currentCanvas.region;
     return newStorage;
 }
 
@@ -163,9 +174,14 @@ function removeCanvas(canvasID, documentID) {
     listOfCanvasses.splice(getObjectById(canvasID, listOfCanvasses), 1);
     // remove from storage
     localStorage.setItem('listOfCanvasses', JSON.stringify(listOfCanvasses));
+	console.log(listOfCanvasses.length);
+	if(listOfCanvasses.length == 0){
+		document.getElementById("mainGraph").style.display = "none";
+	}
 }
 
 function attachVariable (variableName,variableObject) {
+    console.log(variableName);
     var input = document.getElementById(variableName);
     if (variableName === "type"){
         var keys = Object.keys(pricelist["data"][0]["data"]["services"]);
@@ -204,6 +220,9 @@ function attachVariable (variableName,variableObject) {
 					document.getElementById("committedUsage").disabled = false;
 				}
 			}
+            console.log(input);
+            console.log("jojoitsme");
+            variableObject[variableName] = parseInt(this.value);
             // change graph
             if(variableObject instanceof VirtualMachine){
                 updatePopupGraphVM(variableObject);
@@ -274,21 +293,21 @@ function allowDrop(ev) {
 
 function dragDatabase(ev) {
     jQuery.event.props.push('dataTransfer');
-    var newDB = createBasicDatabase(parseInt(DBSize.innerHTML));
+    var newDB = createBasicDatabase(parseInt(nrInstancesDB.innerHTML), parseInt(DBSize.innerHTML));
     var j = JSON.stringify(newDB);
     ev.dataTransfer.setData("foo", j);
 }
 
 function dragStorage(ev) {
     jQuery.event.props.push('dataTransfer');
-    var newStorage = createBasicStorage(parseInt(storageSize.innerHTML));
+    var newStorage = createBasicStorage(parseInt(nrInstancesStorage.innerHTML), parseInt(multiRegionalStorage.innerHTML), parseInt(regionalStorage.innerHTML), parseInt(nearlineStorage.innerHTML), parseInt(coldlineStorage.innerHTML));
     var j = JSON.stringify(newStorage);
     ev.dataTransfer.setData("foo", j);
 }
 
 function dragVM(ev) {
     jQuery.event.props.push('dataTransfer');
-    var newVM = createBasicVirtualMachine(parseInt(nrInstances.innerHTML), parseInt(days.innerHTML), parseInt(hours.innerHTML));
+    var newVM = createBasicVirtualMachine(parseInt(nrInstancesVM.innerHTML), parseInt(days.innerHTML), parseInt(hours.innerHTML));
     var j = JSON.stringify(newVM);
     ev.dataTransfer.setData("foo", j);
 }
@@ -299,6 +318,7 @@ function drop(ev) {
     if (obj.objectName === "VirtualMachine") {
         var instance = Object.assign(new VirtualMachine(), obj);
         addVirtualMachine(instance);
+        console.log(instance);
     }
     if (obj.objectName === "Database") {
         var instance = Object.assign(new Database(), obj);

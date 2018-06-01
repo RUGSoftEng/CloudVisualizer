@@ -1,30 +1,59 @@
-var nrInstances;
+/** Google cloud */
+// Database
+var nrInstancesDB;
+var DBSize;
+
+// Storage
+var nrInstancesStorage;
+var multiRegionalStorage;
+var regionalStorage;
+var nearlineStorage;
+var coldlineStorage;
+var storageSize;
+
+// Virtual machines
+var nrInstancesVM;
 var days;
 var hours;
-var storageSize;
-var DBSize;
+
 var calculate;
+
+// Canvas
+/** TODO: Maybe add these variables to the canvas object? */
 var service;
+// The list of all stored canvasses
 var listOfCanvasses=[];
+// Counter for id of canvasses
 var idCanvas=0;
+// Current canvas shown
 var currentCanvas=new Canvas();
 
+// Object canvas
 function Canvas() {
     this.VirtualMachines=[];
     this.Databases=[];
     this.Storages=[];
+    // Counter for the id of objects (storage, database, virtual machine)
     this.idCounter=0;
+    // Personal unique id of canvas
     this.numId=0;
+    this.graphColor='rgb(255, 99, 132)';
+    this.region="us-central1";
+}
+
+function setRegion(selectObject) {
+    currentCanvas.region=selectObject.value;
+    console.log(currentCanvas.region);
 }
 
 function setupGoogleCloud(){
     /** Virtual Machine Sliders */
         // Instances
     var VMInstancesSlider = document.getElementById("VMInstancesSliderID");
-    nrInstances = document.getElementById("VMInstances");
-    nrInstances.innerHTML = VMInstancesSlider.value;
+    nrInstancesVM = document.getElementById("VMInstances");
+    nrInstancesVM.innerHTML = VMInstancesSlider.value;
     VMInstancesSlider.oninput = function() {
-        nrInstances.innerHTML = this.value;
+        nrInstancesVM.innerHTML = this.value;
     }
 
     // Days
@@ -44,14 +73,51 @@ function setupGoogleCloud(){
     }
 
     /** Storage Sliders */
-    var StorageSlider = document.getElementById("StorageGBSliderID");
-    storageSize = document.getElementById("StorageGB");
-    storageSize.innerHTML = StorageSlider.value;
-    StorageSlider.oninput = function() {
-        storageSize.innerHTML = this.value;
+    // Instances
+    var StorageInstancesSlider = document.getElementById("StorageInstancesSliderID");
+    nrInstancesStorage = document.getElementById("StorageInstances");
+    nrInstancesStorage.innerHTML = StorageInstancesSlider.value;
+    StorageInstancesSlider.oninput = function() {
+        nrInstancesStorage.innerHTML = this.value;
+    }
+
+    var multiRegionalStorageSlider = document.getElementById("multiRegionalStorageSliderID");
+    multiRegionalStorage = document.getElementById("multiRegionalStorage");
+    multiRegionalStorage.innerHTML = multiRegionalStorageSlider.value;
+    multiRegionalStorageSlider.oninput = function() {
+        multiRegionalStorage.innerHTML = this.value;
+    }
+
+    var regionalStorageSlider = document.getElementById("regionalStorageSliderID");
+    regionalStorage = document.getElementById("regionalStorage");
+    regionalStorage.innerHTML = regionalStorageSlider.value;
+    regionalStorageSlider.oninput = function() {
+        regionalStorage.innerHTML = this.value;
+    }
+
+    var coldlineStorageSlider = document.getElementById("coldlineStorageSliderID");
+    coldlineStorage = document.getElementById("coldlineStorage");
+    coldlineStorage.innerHTML = coldlineStorageSlider.value;
+    coldlineStorageSlider.oninput = function() {
+        coldlineStorage.innerHTML = this.value;
+    }
+
+    var nearlineStorageSlider = document.getElementById("nearlineStorageSliderID");
+    nearlineStorage = document.getElementById("nearlineStorage");
+    nearlineStorage.innerHTML = nearlineStorageSlider.value;
+    nearlineStorageSlider.oninput = function() {
+        nearlineStorage.innerHTML = this.value;
     }
 
     /** Database Sliders */
+    // Instances
+    var DBInstancesSlider = document.getElementById("DBInstancesSliderID");
+    nrInstancesDB = document.getElementById("DBInstances");
+    nrInstancesDB.innerHTML = DBInstancesSlider.value;
+    DBInstancesSlider.oninput = function() {
+        nrInstancesDB.innerHTML = this.value;
+    }
+
     var DBSlider = document.getElementById("DBGBSliderID");
     DBSize = document.getElementById("DBGB");
     DBSize.innerHTML = DBSlider.value;
@@ -118,6 +184,9 @@ function loadDataFromMemory(){
         addCalculationMainGraph(listOfCanvasses[i].monthlyPrice, listOfCanvasses[i].timestamp);
     }
     showCalculationDiv();
+    if (listOfCanvasses.length>0) {
+        document.getElementById("mainGraph").style.display = "block";
+    }
 }
 
 $(function() {
@@ -129,6 +198,7 @@ $(function() {
     });
 
     getCloudwatchData(service);
+    calculate();
 });
 
 //show the div when calculate is clicked
@@ -170,6 +240,7 @@ function deleteCalc(){
     clearMainGraph();
     listOfCanvasses = [];
     localStorage.setItem('listOfCanvasses', JSON.stringify([]));
+	document.getElementById("mainGraph").style.display = "none";
 }
 
 function getCloudwatchData(service){
@@ -191,6 +262,45 @@ function getCloudwatchData(service){
             pricelist = JSON.parse(result);
             console.log(result);
             document.getElementById("calculate").disabled = false;
+            result = JSON.parse(result); 
+            console.log(result["data"][0]["data"]["services"]);
+            
+            var monthPrice=0;
+
+            // TODO: PUT CALCULATIONS HERE
+
+            // for (var i in currentCanvas.VirtualMachines) {
+            //     currentCanvas.VirtualMachines[i].instanceType = determineInstanceType(currentCanvas.VirtualMachines[i].type);
+            //     monthPrice+=currentCanvas.VirtualMachines[i].costMonthly();
+            //     yearPrice+=currentCanvas.VirtualMachines[i].costYear();
+            // }
+            // for (var i in currentCanvas.Databases) {
+            //     monthPrice+=currentCanvas.Databases[i].costMonthly();
+            //     yearPrice+=currentCanvas.Databases[i].costYear();
+            // }
+            // for (var i in currentCanvas.Storages) {
+            //     monthPrice += currentCanvas.Storages[i].costMonthly();
+            //     yearPrice += currentCanvas.Storages[i].costYear();
+            // }
+
+            // set properties of canvas used to (re)create list item
+            currentCanvas.numId = idCanvas++;
+            currentCanvas.service = service;
+            currentCanvas.region = region;
+            currentCanvas.timestamp = new Date().toTimeString();
+            currentCanvas.description = 'you can put a short description here';
+            currentCanvas.monthlyPrice = Math.round(monthPrice * 100) / 100;
+            currentCanvas.yearlyPrice = Math.round(yearPrice * 100) / 100;
+
+            // store the canvas
+            listOfCanvasses.push(copyCanvas(currentCanvas));
+
+            addCalculationToDiv(currentCanvas);
+            addCalculationMainGraph(monthPrice, currentCanvas.numId, currentCanvas.graphColor, "graph_"+currentCanvas.numId);
+            showCalculationDiv();
+
+            // store/update data in localStorage
+            localStorage.setItem('listOfCanvasses', JSON.stringify(listOfCanvasses));
         });
 }
 
@@ -265,6 +375,7 @@ function calculateTemp (){
 
                 // set properties of canvas used to (re)create list item
                 currentCanvas.numId = idCanvas++;
+                //currentCanvas.region = region;
                 currentCanvas.service = service;
                 currentCanvas.timestamp = new Date().toGMTString();
                 currentCanvas.description = buildDescriptionOfCanvas(currentCanvas);
@@ -284,7 +395,7 @@ function calculateTemp (){
         }
     };
     xobj.send(null);
-
+	document.getElementById("mainGraph").style.display = "block";
 
 }
 
