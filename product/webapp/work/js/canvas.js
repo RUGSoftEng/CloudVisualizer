@@ -34,18 +34,26 @@ function createBasicVirtualMachine(nrInstances, days, hours) {
     newVM.days=days;
     newVM.hours=hours;
     newVM.instanceType=determineInstanceType(newVM.type);
+    newVM.region=currentCanvas.region;
     return newVM;
 }
 
-function createBasicDatabase(size) {
+function createBasicDatabase(nrInstances, size) {
     var newDatabase=new Database();
     newDatabase.dataSize=size;
+    newDatabase.nrInstances=nrInstances;
+    newDatabase.region=currentCanvas.region;
     return newDatabase;
 }
 
-function createBasicStorage(size) {
+function createBasicStorage(nrInstances, multiRegionalSize, regionalSize, nearlineSize, coldlineSize) {
     var newStorage=new Storage();
-    newStorage.multiRegional=size;
+    newStorage.multiRegional=multiRegionalSize;
+    newStorage.regional=regionalSize;
+    newStorage.nearline=nearlineSize;
+    newStorage.coldline=coldlineSize;
+    newStorage.nrInstances=nrInstances;
+    newStorage.region=currentCanvas.region;
     return newStorage;
 }
 
@@ -163,17 +171,20 @@ function removeCanvas(canvasID, documentID) {
     listOfCanvasses.splice(getObjectById(canvasID, listOfCanvasses), 1);
     // remove from storage
     localStorage.setItem('listOfCanvasses', JSON.stringify(listOfCanvasses));
+    if(listOfCanvasses.length == 0){
+        document.getElementById("mainGraph").style.display = "none";
+    }
 }
 
 function attachVariable (variableName,variableObject) {
     var input = document.getElementById(variableName);
     if (variableName === "type"){
-        var keys = Object.keys(pricelist["data"][0]["data"]["services"]);
+        var keys = Object.keys(pricelist);
         for (var i=0;i<keys.length;i++){
             var typeName = (keys[i]).replace("CP-COMPUTEENGINE-VMIMAGE-","");
             if(keys[i] !== typeName && (keys[i]).match("PREEMPTIBLE")==null){
                 var option = document.createElement("option");
-                option.text = typeName + " vCPUs: " + pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-VMIMAGE-"+typeName]["properties"]["cores"] + " RAM: " + pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-VMIMAGE-"+typeName]["properties"]["memory"] +" GB";
+                option.text = typeName + " vCPUs: " + pricelist["CP-COMPUTEENGINE-VMIMAGE-"+typeName]["cores"] + " RAM: " + pricelist["CP-COMPUTEENGINE-VMIMAGE-"+typeName]["memory"];
                 option.value = typeName;
                 input.add(option);
             }
@@ -189,22 +200,10 @@ function attachVariable (variableName,variableObject) {
     if (input != null) {
         input.value = variableObject[variableName];
         input.onchange = function () {
-            if (variableName==="nrInstances"){
-                variableObject[variableName] = parseInt(this.value);
-            }else{
-                variableObject[variableName] = this.value;
-            }
-            if(variableName === "type"){
-                variableObject.instanceType=determineInstanceType(variableObject.type);
-                if(pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-VMIMAGE-"+input.value]["properties"]["cores"] === "shared"){
-                    variableObject.committedUsage = "0"
-                    document.getElementById("committedUsage").disabled = true;
-                    document.getElementById("committedUsage").value = "0";
-                }else{
-                    document.getElementById("committedUsage").disabled = false;
-                }
-            }
+            variableObject[variableName] = parseInt(this.value);
             // change graph
+
+            variableObject.instanceType = determineInstanceType(variableObject.type);
             if(variableObject instanceof VirtualMachine){
                 updatePopupGraphVM(variableObject);
             } else if (variableObject instanceof Storage){
@@ -274,21 +273,21 @@ function allowDrop(ev) {
 
 function dragDatabase(ev) {
     jQuery.event.props.push('dataTransfer');
-    var newDB = createBasicDatabase(parseInt(DBSize.innerHTML));
+    var newDB = createBasicDatabase(parseInt(nrInstancesDB.innerHTML), parseInt(DBSize.innerHTML));
     var j = JSON.stringify(newDB);
     ev.dataTransfer.setData("foo", j);
 }
 
 function dragStorage(ev) {
     jQuery.event.props.push('dataTransfer');
-    var newStorage = createBasicStorage(parseInt(storageSize.innerHTML));
+    var newStorage = createBasicStorage(parseInt(nrInstancesStorage.innerHTML), parseInt(multiRegionalStorage.innerHTML), parseInt(regionalStorage.innerHTML), parseInt(nearlineStorage.innerHTML), parseInt(coldlineStorage.innerHTML));
     var j = JSON.stringify(newStorage);
     ev.dataTransfer.setData("foo", j);
 }
 
 function dragVM(ev) {
     jQuery.event.props.push('dataTransfer');
-    var newVM = createBasicVirtualMachine(parseInt(nrInstances.innerHTML), parseInt(days.innerHTML), parseInt(hours.innerHTML));
+    var newVM = createBasicVirtualMachine(parseInt(nrInstancesVM.innerHTML), parseInt(days.innerHTML), parseInt(hours.innerHTML));
     var j = JSON.stringify(newVM);
     ev.dataTransfer.setData("foo", j);
 }
