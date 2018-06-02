@@ -168,8 +168,7 @@
 02-06-2018: Implementing some functionality for offline access to data
 02-06-2018: Checking if everthing works as it should 
 02-06-2018: Checking if everthing works as it should 
-02-06-2018: Made sure the dragging and dropping for the other two provider works
-02-06-2018: Some debugging regarding the calculations
+
 
 
 

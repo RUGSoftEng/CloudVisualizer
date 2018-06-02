@@ -41,9 +41,8 @@ $filterwidth: 220px;
 }
 
 .canvas{
-	$canvaswidth: calc(75% - (#{$filterwidth} );
 	margin-left: 10px;
-	width: $canvaswidth;
+	width:calc(75% - (#{$filterwidth} );
 	height: 91.5%;
 	float:left;
 	border-radius: 3px     5px      5px           3px;
@@ -53,7 +52,6 @@ $filterwidth: 220px;
 	display:flex;
 	overflow:auto;
 }
-
 
 .graph {
 	width:calc(100% - (#{$filterwidth} );
@@ -71,23 +69,13 @@ $filterwidth: 220px;
 	color:red;
 }
 
-.calc{
-	padding-top:10px;
-	float:right;
-	width:23.5%;
-}
-
-.calc select{
-	width:calc(100% - 10px);
-}
-
-
 .canvas-pop-up{
 	display:none;
 	width:23.5%;
 	float:right;
-	height:calc(91.5% - 126px);
-	overflow:auto;
+	height:93.5%;
+    overflow:auto;
+
 }
 
 .footer {
@@ -152,7 +140,85 @@ a p,h4{
 .modal-dialog{
 	max-width:750px;
 }
+/*
+.modal {
+    display: none; /* Hidden by default */
+/*    position: fixed; /* Stay in place */
+/*    z-index: 1; /* Sit on top */
+/*    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+//    height: 100%; /* Full height */
+//    overflow: auto; /* Enable scroll if needed */
+//    background-color: rgb(0,0,0); /* Fallback color */
+//    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+//    -webkit-animation-name: fadeIn; /* Fade in the background */
+/*    -webkit-animation-duration: 0.4s;
+    animation-name: fadeIn;
+    animation-duration: 0.4s
+}
 
+/* Modal Content */
+/*.modal-content {
+    position: fixed;
+    bottom: 0;
+    background-color: #fefefe;
+    width: 17.6%;
+    -webkit-animation-name: slideIn;
+    -webkit-animation-duration: 0.4s;
+    animation-name: slideIn;
+    animation-duration: 0.4s
+}
+
+/* The Close Button */
+/*.close {
+    color: DarkCyan;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-header {
+    padding: 2px 16px;
+    background-color: white;
+    color: #343a40;
+}
+
+.modal-body {padding: 2px 4px;}
+
+.modal-footer {
+    padding: 2px 16px;
+    background-color: white;
+    color: #343a40;
+}
+
+/* Add Animation *//*
+@-webkit-keyframes slideIn {
+    from {bottom: -300px; opacity: 0}
+    to {bottom: 0; opacity: 1}
+}
+
+@keyframes slideIn {
+    from {bottom: -300px; opacity: 0}
+    to {bottom: 0; opacity: 1}
+}
+
+@-webkit-keyframes fadeIn {
+    from {opacity: 0}
+    to {opacity: 1}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0}
+    to {opacity: 1}
+}*/
 .grab {
     cursor: move; /* fallback if grab cursor is unsupported */
     cursor: grab;
@@ -220,16 +286,4 @@ position: relative;
   border: none;
   background: none;
 	margin: 14px 12px;
-}
-
-@media only screen and (max-width: 1366px){
-	.calc img{
-		width: 45px;
-		height:auto;
-	}
-	
-	.canvas-pop-up{
-		height:calc(91.5% - 121px);
-	}	
-	
 }

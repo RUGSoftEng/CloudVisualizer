@@ -53,8 +53,8 @@
 </div>
 <!-- BODY -->
 <div class="content">
-    <div class="calc">
-        <select id="SelectRegionID" class="form-control" onchange="setRegion(this)" title="Select region">
+    <div class="calc" style=" float: right;padding-left: 2%">
+        <select id="SelectRegionID" onchange="setRegion(this)" title="Select region">
             <option value="us-central1">Iowa</option>
             <option value="us-east1">South Carolina</option>
             <option value="us-east4">Northern Virginia</option>
@@ -71,10 +71,10 @@
             <option value="europe-west4">Netherlands</option>
             <option value="northamerica-northeast1">Montréal, Canada</option>
         </select>
-        <button class="iconButton" id="provider"data-toggle="modal" data-target="#providerPopup"><img src="images/provider.ico"width="50" height="50" title="Select Provider"/></button>
-        <button class="iconButton" onclick="clearBox('itemsvm','itemsst','itemsdb')" type="button"><img src="images/clearCanvas.ico"width="50" height="50" title="Clear current canvas"/></button>
-        <button  class="iconButton"id="calculate" onclick="calculate()" type="button" ><img src="images/calc.ico"width="50" height="50" title="Calculate"/></button>
-        <button  class="iconButton"id="deleteCalc" type="button" onclick="deleteCalc()"><img src="images/trash.ico"width="50" height="50" title="Delete all calculations"/></button>
+        <button class="iconButton" id="provider"data-toggle="modal" data-target="#providerPopup"><img src="images/provider.png"width="50" height="50" title="Select Provider"/></button>
+        <button class="iconButton" onclick="clearBox('itemsvm','itemsst','itemsdb')" type="button"><img src="images/clearCanvas.png"width="50" height="50" title="Clear current canvas"/></button>
+        <button  class="iconButton"id="calculate" onclick="calculate()" type="button" ><img src="images/calc.png"width="50" height="50" title="Calculate"/></button>
+        <button  class="iconButton"id="deleteCalc" type="button" onclick="deleteCalc()"><img src="images/trash.png"width="50" height="50" title="Delete all calculations"/></button>
     </div>
 
 	<!-- Provider pop-up -->
@@ -273,7 +273,7 @@
 	</div>
 
 	<!-- Canvas Section -->
-	<div class="canvas"id="canvas"ondrop="drop(event)" ondragover="allowDrop(event)" >
+	<div class="canvas"id="canvas"ondrop="drop(event)" ondragover="allowDrop(event)" title="Drop elements from the accordion here" >
 
 
 		<div id="itemsdb" style=" padding-left:10px"></div>

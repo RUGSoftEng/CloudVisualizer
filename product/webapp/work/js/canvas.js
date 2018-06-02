@@ -33,9 +33,7 @@ function createBasicVirtualMachine(nrInstances, days, hours) {
     newVM.nrInstances=nrInstances;
     newVM.days=days;
     newVM.hours=hours;
-    if (service == 'google-cloud') {
-        newVM.instanceType = determineInstanceType(newVM.type);
-    }
+    newVM.instanceType=determineInstanceType(newVM.type);
     newVM.region=currentCanvas.region;
     return newVM;
 }
@@ -166,7 +164,7 @@ function resetCanvas(canvasID) {
 function removeCanvas(canvasID, documentID) {
     var divId = "#canvas_"+canvasID;
     $(divId).remove();
-	
+
     // remove from main graph
     removeCalculationMainGraph(listOfCanvasses[getObjectById(canvasID, listOfCanvasses)].timestamp);
     // remove from list of canvasses
@@ -176,7 +174,6 @@ function removeCanvas(canvasID, documentID) {
     if(listOfCanvasses.length == 0){
         document.getElementById("mainGraph").style.display = "none";
     }
-	isOverflown();
 }
 
 function attachVariable (variableName,variableObject) {
@@ -209,9 +206,7 @@ function attachVariable (variableName,variableObject) {
 				variableObject[variableName] = this.value;
 			}
 			if(variableName === "type"){
-                if (service == 'google-cloud') {
-                    variableObject.instanceType = determineInstanceType(variableObject.type);
-                }
+				variableObject.instanceType=determineInstanceType(variableObject.type);
 				if(pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-VMIMAGE-"+input.value]["properties"]["cores"] === "shared"){
 					variableObject.committedUsage = "0"
 					document.getElementById("committedUsage").disabled = true;
@@ -399,9 +394,8 @@ function showSettings(id, uniqueIdentifier){
             changeHTML(index, currentCanvas.VirtualMachines, id, uniqueIdentifier);
             checkIcon(currentCanvas.VirtualMachines, id, index);
         });
-        if (service == 'google-cloud') {
-            copy.instanceType = determineInstanceType(copy.type);
-        }
+
+        copy.instanceType = determineInstanceType(copy.type);
         updatePopupGraphVM(copy);
         return;
     }

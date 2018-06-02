@@ -46,7 +46,7 @@ function setRegion(selectObject) {
     console.log(currentCanvas.region);
 }
 
-function setupVMSliders() {
+function setupGoogleCloud(){
     /** Virtual Machine Sliders */
         // Instances
     var VMInstancesSlider = document.getElementById("VMInstancesSliderID");
@@ -71,9 +71,7 @@ function setupVMSliders() {
     VMHoursSlider.oninput = function() {
         hours.innerHTML = this.value;
     }
-}
 
-function setupStorageSliders() {
     /** Storage Sliders */
         // Instances
     var StorageInstancesSlider = document.getElementById("StorageInstancesSliderID");
@@ -110,9 +108,7 @@ function setupStorageSliders() {
     nearlineStorageSlider.oninput = function() {
         nearlineStorage.innerHTML = this.value;
     }
-}
 
-function setupDBSliders() {
     /** Database Sliders */
         // Instances
     var DBInstancesSlider = document.getElementById("DBInstancesSliderID");
@@ -141,11 +137,7 @@ function setupWindow(){
     });
 
     if(service == 'google-cloud'){
-        setupVMSliders();
-        setupStorageSliders();
-        setupDBSliders();
-    } else {
-        setupVMSliders();
+        setupGoogleCloud();
     }
 
     // Get the modal
@@ -202,9 +194,6 @@ function loadDataFromMemory(){
     if (listOfCanvasses.length>0) {
         document.getElementById("mainGraph").style.display = "block";
     }
-	
-	isOverflown();
-		
 }
 
 $(function() {
@@ -218,22 +207,7 @@ $(function() {
     //getCloudwatchData(service);
     getOfflineData(service);
     //calculate();
-	isOverflown();
 });
-
-function isOverflown() {
-	var element = document.getElementById("canvas-pop-up");
-	if(element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth){
-		element.style.borderTopLeftRadius="0.25rem";
-		element.style.borderTop="1px solid rgba(0, 0, 0, 0.125)";
-		element.style.borderBottomLeftRadius="0.25rem";
-		element.style.borderBottom="1px solid rgba(0, 0, 0, 0.125)";
-	}else{
-		element.style.borderTop="none";
-		element.style.borderBottom="none";
-	}
-    return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
-}
 
 //show the div when calculate is clicked
 function showCalculationDiv() {
@@ -266,18 +240,15 @@ function addCalculationToDiv(canvas){
     newListItem += '<br><small>Cost per month: ' + "$" + canvas.monthlyPrice+ '</small></a>';
 
     $('#canvas-pop-up').first().prepend(newListItem);
-	isOverflown();
 }
 
 function deleteCalc(){
 
     $('#canvas-pop-up').first().html('');
-	isOverflown();
     clearMainGraph();
     listOfCanvasses = [];
     localStorage.setItem('listOfCanvasses', JSON.stringify([]));
     document.getElementById("mainGraph").style.display = "none";
-	
 }
 
 function getCloudwatchData(service){
@@ -305,12 +276,14 @@ function getCloudwatchData(service){
 function getOfflineData(service) {
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
+    console.log(service);
     xobj.open('GET', service+'.json', true); // Replace 'my_data' with the path to your file
     xobj.onreadystatechange = function () {
         if (xobj.readyState == 4 && xobj.status == "200") {
             // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
             //callback(xobj.responseText);
             var variable=JSON.parse(xobj.responseText);
+            console.log(variable);
             pricelist=variable;
         }
     };
@@ -322,9 +295,7 @@ function calculate (){
     var monthPrice=0;
     var yearPrice=0;
     for (var i in currentCanvas.VirtualMachines) {
-        if (service == 'google-cloud') {
-            currentCanvas.VirtualMachines[i].instanceType = determineInstanceType(currentCanvas.VirtualMachines[i].type);
-        }
+        currentCanvas.VirtualMachines[i].instanceType = determineInstanceType(currentCanvas.VirtualMachines[i].type);
         monthPrice+=currentCanvas.VirtualMachines[i].costMonthly();
         yearPrice+=currentCanvas.VirtualMachines[i].costYear();
     }
