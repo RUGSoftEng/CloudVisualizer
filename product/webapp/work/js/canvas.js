@@ -33,7 +33,9 @@ function createBasicVirtualMachine(nrInstances, days, hours) {
     newVM.nrInstances=nrInstances;
     newVM.days=days;
     newVM.hours=hours;
-    newVM.instanceType=determineInstanceType(newVM.type);
+    if (service == 'google-cloud') {
+        newVM.instanceType = determineInstanceType(newVM.type);
+    }
     newVM.region=currentCanvas.region;
     return newVM;
 }
@@ -206,7 +208,9 @@ function attachVariable (variableName,variableObject) {
 				variableObject[variableName] = this.value;
 			}
 			if(variableName === "type"){
-				variableObject.instanceType=determineInstanceType(variableObject.type);
+                if (service == 'google-cloud') {
+                    variableObject.instanceType = determineInstanceType(variableObject.type);
+                }
 				if(pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-VMIMAGE-"+input.value]["properties"]["cores"] === "shared"){
 					variableObject.committedUsage = "0"
 					document.getElementById("committedUsage").disabled = true;
@@ -394,8 +398,9 @@ function showSettings(id, uniqueIdentifier){
             changeHTML(index, currentCanvas.VirtualMachines, id, uniqueIdentifier);
             checkIcon(currentCanvas.VirtualMachines, id, index);
         });
-
-        copy.instanceType = determineInstanceType(copy.type);
+        if (service == 'google-cloud') {
+            copy.instanceType = determineInstanceType(copy.type);
+        }
         updatePopupGraphVM(copy);
         return;
     }

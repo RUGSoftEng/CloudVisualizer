@@ -20,7 +20,7 @@ function VirtualMachine() {
     this.nrInstances=1;
     this.numId=-1;
     // Functions
-    this.instanceType=determineInstanceType(this.type);
+    //this.instanceType=determineInstanceType(this.type);
     this.sustainedUsePerHour=sustainedUseHourly;
     this.osPerHour=osHourly;
     this.instancePerHour=instanceHourly;

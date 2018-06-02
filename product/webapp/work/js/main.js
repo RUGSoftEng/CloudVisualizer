@@ -46,7 +46,7 @@ function setRegion(selectObject) {
     console.log(currentCanvas.region);
 }
 
-function setupGoogleCloud(){
+function setupVMSliders() {
     /** Virtual Machine Sliders */
         // Instances
     var VMInstancesSlider = document.getElementById("VMInstancesSliderID");
@@ -71,7 +71,9 @@ function setupGoogleCloud(){
     VMHoursSlider.oninput = function() {
         hours.innerHTML = this.value;
     }
+}
 
+function setupStorageSliders() {
     /** Storage Sliders */
         // Instances
     var StorageInstancesSlider = document.getElementById("StorageInstancesSliderID");
@@ -108,7 +110,9 @@ function setupGoogleCloud(){
     nearlineStorageSlider.oninput = function() {
         nearlineStorage.innerHTML = this.value;
     }
+}
 
+function setupDBSliders() {
     /** Database Sliders */
         // Instances
     var DBInstancesSlider = document.getElementById("DBInstancesSliderID");
@@ -137,7 +141,11 @@ function setupWindow(){
     });
 
     if(service == 'google-cloud'){
-        setupGoogleCloud();
+        setupVMSliders();
+        setupStorageSliders();
+        setupDBSliders();
+    } else {
+        setupVMSliders();
     }
 
     // Get the modal
@@ -295,7 +303,9 @@ function calculate (){
     var monthPrice=0;
     var yearPrice=0;
     for (var i in currentCanvas.VirtualMachines) {
-        currentCanvas.VirtualMachines[i].instanceType = determineInstanceType(currentCanvas.VirtualMachines[i].type);
+        if (service == 'google-cloud') {
+            currentCanvas.VirtualMachines[i].instanceType = determineInstanceType(currentCanvas.VirtualMachines[i].type);
+        }
         monthPrice+=currentCanvas.VirtualMachines[i].costMonthly();
         yearPrice+=currentCanvas.VirtualMachines[i].costYear();
     }
