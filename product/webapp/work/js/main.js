@@ -214,6 +214,11 @@ $(function() {
     $("#myAccordion").load("accordion-" + service + ".html", function(){
         setupWindow();
     });
+	
+	$("#selectRegionID").load("region-" + service + ".html", function(){
+        setupWindow();
+    });
+	
 
     //getCloudwatchData(service);
     getOfflineData(service);
