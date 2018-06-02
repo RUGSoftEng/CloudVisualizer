@@ -70,8 +70,10 @@ html, body {
 .calc {
   padding-top: 10px;
   float: right;
-  width: 23.5%;
-  padding-right: 10px; }
+  width: 23.5%; }
+
+.calc select {
+  width: calc(100% - 10px); }
 
 .canvas-pop-up {
   display: none;
@@ -194,10 +196,9 @@ a p, h4 {
   background: none;
   margin: 14px 12px; }
 
-@media only screen and (max-width: 1280px) {
+@media only screen and (max-width: 1366px) {
   .calc img {
     width: 45px;
     height: auto; }
   .canvas-pop-up {
-    height: calc(91.5% - 121px); }
-  border: 1px solid rgba(0, 0, 0, 0.125); }
+    height: calc(91.5% - 121px); } }
