@@ -166,7 +166,7 @@ function resetCanvas(canvasID) {
 function removeCanvas(canvasID, documentID) {
     var divId = "#canvas_"+canvasID;
     $(divId).remove();
-
+	
     // remove from main graph
     removeCalculationMainGraph(listOfCanvasses[getObjectById(canvasID, listOfCanvasses)].timestamp);
     // remove from list of canvasses
@@ -176,6 +176,7 @@ function removeCanvas(canvasID, documentID) {
     if(listOfCanvasses.length == 0){
         document.getElementById("mainGraph").style.display = "none";
     }
+	isOverflown();
 }
 
 function attachVariable (variableName,variableObject) {

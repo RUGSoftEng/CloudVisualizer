@@ -202,6 +202,9 @@ function loadDataFromMemory(){
     if (listOfCanvasses.length>0) {
         document.getElementById("mainGraph").style.display = "block";
     }
+	
+	isOverflown();
+		
 }
 
 $(function() {
@@ -215,7 +218,22 @@ $(function() {
     //getCloudwatchData(service);
     getOfflineData(service);
     //calculate();
+	isOverflown();
 });
+
+function isOverflown() {
+	var element = document.getElementById("canvas-pop-up");
+	if(element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth){
+		element.style.borderTopLeftRadius="0.25rem";
+		element.style.borderTop="1px solid rgba(0, 0, 0, 0.125)";
+		element.style.borderBottomLeftRadius="0.25rem";
+		element.style.borderBottom="1px solid rgba(0, 0, 0, 0.125)";
+	}else{
+		element.style.borderTop="none";
+		element.style.borderBottom="none";
+	}
+    return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
+}
 
 //show the div when calculate is clicked
 function showCalculationDiv() {
@@ -248,15 +266,18 @@ function addCalculationToDiv(canvas){
     newListItem += '<br><small>Cost per month: ' + "$" + canvas.monthlyPrice+ '</small></a>';
 
     $('#canvas-pop-up').first().prepend(newListItem);
+	isOverflown();
 }
 
 function deleteCalc(){
 
     $('#canvas-pop-up').first().html('');
+	isOverflown();
     clearMainGraph();
     listOfCanvasses = [];
     localStorage.setItem('listOfCanvasses', JSON.stringify([]));
     document.getElementById("mainGraph").style.display = "none";
+	
 }
 
 function getCloudwatchData(service){
