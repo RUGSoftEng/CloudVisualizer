@@ -271,7 +271,6 @@ function storageCostYearly() {
 function dataStoreCostHourly(){
 
     var cost=0;
-    console.log(pricelist);
     cost+=(this.dataReads)*pricelist["data"][0]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-READ"]["locales"]["us"];
     cost+=(this.dataWrites)*pricelist["data"][0]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-WRITE"]["locales"]["us"];
     cost+=(this.dataDeletes)*pricelist["data"][0]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-DELETE"]["locales"]["us"];
