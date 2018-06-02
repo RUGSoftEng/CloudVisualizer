@@ -284,14 +284,12 @@ function getCloudwatchData(service){
 function getOfflineData(service) {
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
-    console.log(service);
     xobj.open('GET', service+'.json', true); // Replace 'my_data' with the path to your file
     xobj.onreadystatechange = function () {
         if (xobj.readyState == 4 && xobj.status == "200") {
             // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
             //callback(xobj.responseText);
             var variable=JSON.parse(xobj.responseText);
-            console.log(variable);
             pricelist=variable;
         }
     };
@@ -303,7 +301,6 @@ function calculate (){
     var monthPrice=0;
     var yearPrice=0;
     for (var i in currentCanvas.VirtualMachines) {
-        console.log(currentCanvas.VirtualMachines[i].type + " SQL Server Web");
         if (service == 'google-cloud') {
             currentCanvas.VirtualMachines[i].instanceType = determineInstanceType(currentCanvas.VirtualMachines[i].type);
         }
