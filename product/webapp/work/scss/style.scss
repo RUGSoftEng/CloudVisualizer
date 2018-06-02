@@ -77,6 +77,9 @@ $filterwidth: 220px;
 	width:23.5%;
 }
 
+.calc select{
+	width:calc(100% - 10px);
+}
 
 
 .canvas-pop-up{
@@ -219,16 +222,14 @@ position: relative;
 	margin: 14px 12px;
 }
 
-@media only screen and (max-width: 1280px){
-	.calc img {
-		width:45px;
+@media only screen and (max-width: 1366px){
+	.calc img{
+		width: 45px;
 		height:auto;
 	}
 	
 	.canvas-pop-up{
 		height:calc(91.5% - 121px);
-	}
+	}	
 	
-	 border: 1px solid rgba(0, 0, 0, 0.125);
-
 }
