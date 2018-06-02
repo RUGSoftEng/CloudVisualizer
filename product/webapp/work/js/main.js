@@ -73,7 +73,7 @@ function setupGoogleCloud(){
     }
 
     /** Storage Sliders */
-    // Instances
+        // Instances
     var StorageInstancesSlider = document.getElementById("StorageInstancesSliderID");
     nrInstancesStorage = document.getElementById("StorageInstances");
     nrInstancesStorage.innerHTML = StorageInstancesSlider.value;
@@ -110,7 +110,7 @@ function setupGoogleCloud(){
     }
 
     /** Database Sliders */
-    // Instances
+        // Instances
     var DBInstancesSlider = document.getElementById("DBInstancesSliderID");
     nrInstancesDB = document.getElementById("DBInstances");
     nrInstancesDB.innerHTML = DBInstancesSlider.value;
@@ -248,7 +248,7 @@ function deleteCalc(){
     clearMainGraph();
     listOfCanvasses = [];
     localStorage.setItem('listOfCanvasses', JSON.stringify([]));
-	document.getElementById("mainGraph").style.display = "none";
+    document.getElementById("mainGraph").style.display = "none";
 }
 
 function getCloudwatchData(service){

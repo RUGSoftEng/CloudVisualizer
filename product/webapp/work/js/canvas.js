@@ -171,9 +171,9 @@ function removeCanvas(canvasID, documentID) {
     listOfCanvasses.splice(getObjectById(canvasID, listOfCanvasses), 1);
     // remove from storage
     localStorage.setItem('listOfCanvasses', JSON.stringify(listOfCanvasses));
-	if(listOfCanvasses.length == 0){
-		document.getElementById("mainGraph").style.display = "none";
-	}
+    if(listOfCanvasses.length == 0){
+        document.getElementById("mainGraph").style.display = "none";
+    }
 }
 
 function attachVariable (variableName,variableObject) {
