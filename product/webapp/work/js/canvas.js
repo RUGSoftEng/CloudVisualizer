@@ -413,7 +413,6 @@ function showSettings(id, uniqueIdentifier){
         });
 
 
-        copy.instanceType = determineInstanceType(copy.type);
         updatePopupGraphDB(copy);
         return;
     }
@@ -430,7 +429,6 @@ function showSettings(id, uniqueIdentifier){
             checkIcon(currentCanvas.Storages, id, index);
         });
 
-        copy.instanceType = determineInstanceType(copy.type);
         updatePopupGraphCS(copy);
         return;
     }
