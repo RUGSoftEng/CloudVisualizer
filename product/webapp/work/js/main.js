@@ -133,6 +133,7 @@ function setupDBSliders() {
     }
 }
 
+
 function setupWindow(){
     $("#myAccordion").accordion();
     $( document ).tooltip({
