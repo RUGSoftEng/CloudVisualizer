@@ -128,6 +128,9 @@ function setupGoogleCloud(){
 
 function setupWindow(){
     $("#myAccordion").accordion();
+    $( document ).tooltip({
+        track: true
+    });
 
     $( document ).tooltip({
         track: true
