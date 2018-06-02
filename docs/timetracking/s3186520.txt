@@ -185,7 +185,21 @@
 - ability to delete all graphs
 - ability to delete all graphs
 - delete graph of a single calculation
-
+- look into issue with some of the images
+- look into issue with some of the images
+- look into issue with some of the images
+- look into issue with some of the images
+- trying to connect cloudwatch home network
+- trying to connect cloudwatch home network
+- accessing JSON data from cloudwatch
+- communication on Slack
+- centering graph canvas
+- work on AWS accordion
+- work on MS accordion
+- jquery tooltip popper.js
+- jquery tooltip popper.js
+- work on tooltips
+- work on tooltips
 
 
 
