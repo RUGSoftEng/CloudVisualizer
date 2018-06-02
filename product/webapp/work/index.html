@@ -8,15 +8,16 @@
 	<!--stuff i need -->
 	<link rel="shortcut icon" type="image/x-icon" href="images/logo.ico" />
 	<link rel="stylesheet" href="vendor/js/jquery-ui.min.css">
+	<script src="https://unpkg.com/popper.js@1.14.3/dist/umd/popper.min.js"></script>
 	<script src="vendor/js/external/jquery/jquery.js"></script>
+	<script src="vendor/js/bootstrap.js"></script>
 	<script src="vendor/js/jquery-ui.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
 	<script src="js/calculations.min.js"></script>
 	<script src="js/graph.min.js"></script>
 	<script src="js/canvas.min.js"></script>
 	<script src="js/main.min.js"></script>
-	<script src="vendor/js/bootstrap.js"></script>
-
+	
 	<link href="vendor/css/bootstrap.css" rel="stylesheet">
 	<link href="vendor/css/bootstrap-theme.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="css/style.min.css">
@@ -53,7 +54,7 @@
 <!-- BODY -->
 <div class="content">
 	<div class="calc" style=" float: right;padding-left: 2%">
-		<select id="selectRegionID" onchange="setRegion(this)">
+		<select id="SelectRegionID" onchange="setRegion(this)" title="Select region">
 			<option value="us-central1">Iowa</option>
 			<option value="us-east1">South Carolina</option>
 			<option value="us-east4">Northern Virginia</option>
@@ -70,10 +71,10 @@
 			<option value="europe-west4">Netherlands</option>
 			<option value="northamerica-northeast1">Montréal, Canada</option>
 		</select>
-		<button class="iconButton" id="provider"data-toggle="modal" data-target="#providerPopup"><img src="images/provider.ico"width="50" height="50"/></button>
-		<button class="iconButton" onclick="clearBox('itemsvm','itemsst','itemsdb')" type="button"><img src="images/clearCanvas.ico"width="50" height="50"/></button>
-		<button  class="iconButton"id="calculate" onclick="calculateTemp()" type="button" ><img src="images/calc.ico"width="50" height="50"/></button>
-		<button  class="iconButton"id="deleteCalc" type="button" onclick="deleteCalc()"><img src="images/trash.ico"width="50" height="50"/></button>
+		<button class="iconButton" id="provider"data-toggle="modal" data-target="#providerPopup"><img src="images/provider.ico"width="50" height="50" title="Select Provider"/></button>
+		<button class="iconButton" onclick="clearBox('itemsvm','itemsst','itemsdb')" type="button"><img src="images/clearCanvas.ico"width="50" height="50" title="Clear current canvas"/></button>
+		<button  class="iconButton"id="calculate" onclick="calculateTemp()" type="button" ><img src="images/calc.ico"width="50" height="50" title="Calculate"/></button>
+		<button  class="iconButton"id="deleteCalc" type="button" onclick="deleteCalc()"><img src="images/trash.ico"width="50" height="50" title="Delete all calculations"/></button>
 	</div>
 
 	<!-- Provider pop-up -->
@@ -272,7 +273,7 @@
 	</div>
 
 	<!-- Canvas Section -->
-	<div class="canvas"id="canvas"ondrop="drop(event)" ondragover="allowDrop(event)" >
+	<div class="canvas"id="canvas"ondrop="drop(event)" ondragover="allowDrop(event)" title="Drop elements from the accordion here" >
 
 
 		<div id="itemsdb" style=" padding-left:10px"></div>

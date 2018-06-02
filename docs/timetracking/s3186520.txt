@@ -196,6 +196,10 @@
 - centering graph canvas
 - work on AWS accordion
 - work on MS accordion
+- jquery tooltip popper.js
+- jquery tooltip popper.js
+- work on tooltips
+- work on tooltips
 
 
 

@@ -153,6 +153,15 @@
 31-05-2018: Tried fixing some bugs 
 31-05-2018: Manually reverted back to previous version of backend branch
 31-05-2018: Fixed timetracking document
+01-06-2018: Adding a nrInstances to the accordion of Storage and Database
+01-06-2018: Adding a nrInstances to the accordion of Storage and Database
+01-06-2018: Added sliders under Storage
+01-06-2018: Added sliders under Storage
+01-06-2018: Implemented functionality for region
+01-06-2018: Implemented functionality for region
+01-06-2018: Implemented functionality for region
+01-06-2018: Some small changes
+
 
 
 
