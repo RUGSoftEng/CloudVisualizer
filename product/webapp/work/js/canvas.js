@@ -215,7 +215,6 @@ function attachVariable (variableName,variableObject) {
 					document.getElementById("committedUsage").disabled = false;
 				}
 			}
-            variableObject[variableName] = parseInt(this.value);
             // change graph
             if(variableObject instanceof VirtualMachine){
                 updatePopupGraphVM(variableObject);
