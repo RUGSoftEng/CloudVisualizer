@@ -206,7 +206,7 @@ $(function() {
 
     //getCloudwatchData(service);
     getOfflineData(service);
-    calculate();
+    //calculate();
 });
 
 //show the div when calculate is clicked
