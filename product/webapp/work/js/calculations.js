@@ -1,11 +1,11 @@
 var pricelist=[];
 function VirtualMachine() {
     this.objectName="VirtualMachine";
-    this.region="us-central1";/*user picked region*/;
-    this.type="F1-MICRO";/*user picked type*/;
+    this.region=(service==="google-cloud")?"us-central1":(service==="amazon-webservices")?"US East (N-Virginia)":"us-east";
+    this.type=(service==="google-cloud")?"N1-STANDARD-1":(service==="amazon-webservices")?"t2-nano":"B1s";/*user picked type*/;
     this.days=1;/*days per week the VM is used*/;
     this.hours=1;/*hours per day the VM is used*/;
-    this.osType="win";/*user picked OS*/;
+    this.osType=(service==="google-cloud")?"":(service==="amazon-webservices")?"Linux":"SQL Server Web";/*user picked OS*/;
     this.numGPU=0;/*number of GPUs*/
     this.GPUType="";/*user picked GPU*/;
     this.localSSDSize=0;/*user picked size*/;
@@ -29,7 +29,7 @@ function VirtualMachine() {
     this.PDPerHour=PDHourly;
     this.LBPerHour=LBHourly;
     this.TPUPerHour=TPUHourly;
-    this.costMonthly=VMCostMonthly;
+    this.costMonthly=VMCostMonthly[service];
     //this.costQuarter=VMCostMonthly; // Not correct
     this.costYear=VMCostYearly; // Not correct
 }
@@ -48,9 +48,11 @@ function Storage() {
     // Functions
     this.costHour=storageCostHourly;
     this.costDay=storageCostDaily;
+    this.sustainedUsePerHour=sustainedUseHourly;
     this.costMonthly=storageCostMonthly;
     this.costYear=storageCostYearly;
 }
+
 function Database() {
     this.objectName="Database";
     /*The variables that influence the price of databases*/
@@ -66,6 +68,7 @@ function Database() {
     this.costDay=dataStoreCostDaily;
     this.costMonthly=dataStoreCostMonthly;
     this.costYear=dataStoreCostYearly;
+    this.sustainedUsePerHour=sustainedUseHourly;
 }
 
 function determineInstanceType(type) {
@@ -76,9 +79,9 @@ function determineInstanceType(type) {
         }
     } else {
         if (this.preemptible===true) {
-            return pricelist["CP-COMPUTEENGINE-VMIMAGE-" + type + "-PREEMPTIBLE"];
+            return pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-VMIMAGE-"  + type + "-PREEMPTIBLE"]["properties"];
         } else {
-            return pricelist["CP-COMPUTEENGINE-VMIMAGE-" + type];
+            return pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-VMIMAGE-"  + type]["properties"];
         }
     }
 }
@@ -97,16 +100,25 @@ function resetAll() {
     preemptible=false;
     committedUsage="0";
 }
-//input the results of running the other functions into these:
-function VMCostMonthly(){
-    return (this.sustainedUsePerHour()*this.hours*this.days/7*365/12+this.TPUPerHour()*this.hours*365/12+(this.PDPerHour()+this.LBPerHour())*24*365/12)*this.nrInstances;
+
+var VMCostMonthly = {
+    "google-cloud" : function(){
+        return (this.sustainedUsePerHour()*this.hours*this.days/7*365/12+this.TPUPerHour()*this.TPUHours*365/12+(this.PDPerHour()+this.LBPerHour())*24*365/12)*this.nrInstances;
+    },
+    "amazon-webservices" : function(){
+        return pricelist["data"][0]["data"]["services"][this.type + "-" + this.osType]["locales"][this.region] * (this.days/7 * this.hours/24 * 24 * 365 / 12);
+    },
+    "microsoft-azure": function(){
+        return pricelist["data"][0]["data"]["services"][this.type + " SQL Server Web"]["locales"][this.region] * (this.days/7 * this.hours/24 * 24 * 365 / 12);
+    }
 }
+
+//input the results of running the other functions into these:
+
 function VMCostYearly(){
     return (this.costMonthly())*12;
 }
-var totalCostMonthly=function(VMCostPerMonth,StoragePerHour,dataStorePerHour){
-    return VMCostPerMonth+(StoragePerHour+dataStorePerHour)*24*365/12;
-}
+
 function sustainedUseHourly(){
 
     var disc=1;
@@ -117,35 +129,35 @@ function sustainedUseHourly(){
         var k=1;
         var f=(this.days/7)*(this.hours/24);
         disc=0;
-        while(f>=k*pricelist["sustained_use_base"]){
+        while(f>=k*pricelist["data"][0]["data"]["meta"]["base"]){
             switch (k-1) {
                 case 0:
-                    disc+=pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"]["0.25"];
+                    disc+=pricelist["data"][0]["data"]["meta"]["base"]*pricelist["data"][0]["data"]["meta"]["tiers"]["0,25"];
                     break;
                 case 1:
-                    disc+=pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"]["0.50"];
+                    disc+=pricelist["data"][0]["data"]["meta"]["base"]*pricelist["data"][0]["data"]["meta"]["tiers"]["0,50"];
                     break;
                 case 2:
-                    disc+=pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"]["0.75"];
+                    disc+=pricelist["data"][0]["data"]["meta"]["base"]*pricelist["data"][0]["data"]["meta"]["tiers"]["0,75"];
                     break;
                 case 3:
-                    disc+=pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"]["1.0"];
+                    disc+=pricelist["data"][0]["data"]["meta"]["base"]*pricelist["data"][0]["data"]["meta"]["tiers"]["1,0"];
                     break;
             }
             k+=1;
         }
         switch (k-1) {
             case 0:
-                disc+=f%pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"]["0.25"];
+                disc+=f%pricelist["data"][0]["data"]["meta"]["base"]*pricelist["data"][0]["data"]["meta"]["tiers"]["0,25"];
                 break;
             case 1:
-                disc+=f%pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"]["0.50"];
+                disc+=f%pricelist["data"][0]["data"]["meta"]["base"]*pricelist["data"][0]["data"]["meta"]["tiers"]["0,50"];
                 break;
             case 2:
-                disc+=f%pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"]["0.75"];
+                disc+=f%pricelist["data"][0]["data"]["meta"]["base"]*pricelist["data"][0]["data"]["meta"]["tiers"]["0,75"];
                 break;
             case 3:
-                disc+=f%pricelist["sustained_use_base"]*pricelist["sustained_use_tiers"]["1.0"];
+                disc+=f%pricelist["data"][0]["data"]["meta"]["base"]*pricelist["data"][0]["data"]["meta"]["tiers"]["1,0"];
                 break;
         }
         disc/=f;
@@ -154,25 +166,28 @@ function sustainedUseHourly(){
         +this.localSSDPerHour()+cud*this.GPUPerHour());
 }
 function osHourly(){
+    if(this.osType === ""){
+        return 0;
+    }
     if(this.instanceType["cores"]=="shared"){
-        return pricelist["CP-COMPUTEENGINE-OS"][this.osType]["low"];
-    }else if(pricelist["CP-COMPUTEENGINE-OS"][this.osType]["cores"]=="shared"){
+        return pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-OS"][this.osType]["low"];
+    }else if(pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-OS"][this.osType]["cores"]=="shared"){
         var rate="high";
-    }else if(pricelist["CP-COMPUTEENGINE-OS"][this.osType]["cores"]>this.instanceType["cores"]){
+    }else if(pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-OS"][this.osType]["cores"]>this.instanceType["cores"]){
         var rate="high";
     }else{
         var rate="low";
     }
-    if(pricelist["CP-COMPUTEENGINE-OS"][this.osType]["percore"]){
-        return pricelist["CP-COMPUTEENGINE-OS"][this.osType][rate]*this.instanceType["cores"];
+    if(pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-OS"][this.osType]["percore"]){
+        return pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-OS"][this.osType][rate]*this.instanceType["cores"];
     }else{
-        return pricelist["CP-COMPUTEENGINE-OS"][this.osType][rate];
+        return pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-OS"][this.osType][rate];
     }
 }
 function instanceHourly(){
     if(this.committedUsage!="0"){
-        return pricelist["CP-CUD-"+this.committedUsage+"-CPU"][this.region]*this.instanceType["cores"]+
-            pricelist["CP-CUD-"+this.committedUsage+"-RAM"][this.region]*this.instanceType["memory"];
+        return pricelist["data"][0]["data"]["services"]["CP-CUD-"+this.committedUsage+"-CPU"]["locales"][this.region]*this.instanceType["cores"]+
+            pricelist["data"][0]["data"]["services"]["CP-CUD-"+this.committedUsage+"-RAM"]["locales"][this.region]*this.instanceType["memory"];
     }else if(this.type=="custom"){
         if(this.preemptible){
             var pre="-PREEMPTIBLE";
@@ -180,57 +195,64 @@ function instanceHourly(){
             var pre="";
         }
         if(this.instanceType["memory"]>this.instanceType["cores"]*6.5){
-            return pricelist["CP-COMPUTEENGINE-CUSTOM-VM-CORE"+pre][this.region]*this.instanceType["cores"]
-                +(this.instanceType["memory"]-this.instanceType["cores"]*6.5)*pricelist["CP-COMPUTEENGINE-CUSTOM-VM-EXTENDED-RAM"+pre][this.region]
-                +this.instanceType["cores"]*6.5*pricelist["CP-COMPUTEENGINE-CUSTOM-VM-RAM"+pre][this.region];
+            return pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-CUSTOM-VM-CORE"+pre]["locales"][this.region]*this.instanceType["cores"]
+                +(this.instanceType["memory"]-this.instanceType["cores"]*6.5)*pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-CUSTOM-VM-EXTENDED-RAM"+pre]["locales"][this.region]
+                +this.instanceType["cores"]*6.5*pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-CUSTOM-VM-RAM"+pre]["locales"][this.region];
         }else{
-            return pricelist["CP-COMPUTEENGINE-CUSTOM-VM-CORE"+pre][this.region]*this.instanceType["cores"]
-                +this.instanceType["memory"]*6.5*pricelist["CP-COMPUTEENGINE-CUSTOM-VM-RAM"+pre][this.region];
+            return pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-CUSTOM-VM-CORE"+pre]["locales"][this.region]*this.instanceType["cores"]
+                +this.instanceType["memory"]*6.5*pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-CUSTOM-VM-RAM"+pre]["locales"][this.region];
         }
     }else{
-        return this.instanceType[this.region];
+        if(this.preemptible === true) {
+            return pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-VMIMAGE-" + this.type + "-PREEMPTIBLE"]["locales"][this.region];
+        }
+        return pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-VMIMAGE-" + this.type]["locales"][this.region];
+
     }
 }
 function localSSDHourly(){
     if(this.preemptible===true){
-        return this.localSSDSize*pricelist["CP-COMPUTEENGINE-LOCAL-SSD-PREEMPTIBLE"][this.region];
+        return this.localSSDSize*pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-LOCAL-SSD-PREEMPTIBLE"]["locales"][this.region];
     }else{
-        return this.localSSDSize*pricelist["CP-COMPUTEENGINE-LOCAL-SSD"][this.region];
+        return this.localSSDSize*pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-LOCAL-SSD"]["locales"][this.region];
     }
 }
 function GPUHourly(){
     if(this.preemptible===true){
-        return this.numGPU*pricelist["GPU_"+this.GPUType+"-PREEMPTIBLE"][this.region];
+        return this.numGPU*pricelist["data"][0]["data"]["services"]["GPU_"+this.GPUType+"-PREEMPTIBLE"]["locales"][this.region];
     }else if (this.numGPU!=0){
-        return this.numGPU*pricelist["GPU_"+this.GPUType][this.region];
+        return this.numGPU*pricelist["data"][0]["data"]["services"]["GPU_"+this.GPUType]["locales"][this.region];
     }
     return 0;
 }
 function PDHourly(){
-    return (this.PDSSDSize*pricelist["CP-COMPUTEENGINE-STORAGE-PD-SSD"][this.region]+
-        this.PDSize*pricelist["CP-COMPUTEENGINE-STORAGE-PD-CAPACITY"][this.region]+
-        this.PDSnapshot*pricelist["CP-COMPUTEENGINE-STORAGE-PD-SNAPSHOT"][this.region])
+    return (this.PDSSDSize*pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-STORAGE-PD-SSD"]["locales"][this.region]+
+        this.PDSize*pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-STORAGE-PD-CAPACITY"]["locales"][this.region]+
+        this.PDSnapshot*pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-STORAGE-PD-SNAPSHOT"]["locales"][this.region])
         *12/365/24;
 }
 function LBHourly(){
+    if(this.rules==0){
+        return 0;
+    }
     if(this.rules>5){
-        return pricelist["FORWARDING_RULE_CHARGE_BASE"][this.region]
-            +pricelist["FORWARDING_RULE_CHARGE_EXTRA"][this.region]*(this.rules-5);
+        return pricelist["FORWARDING_RULE_CHARGE_BASE"]["locales"][this.region]
+            +pricelist["FORWARDING_RULE_CHARGE_EXTRA"]["locales"][this.region]*(this.rules-5);
     }else if(this.rules!=0){
-        return pricelist["FORWARDING_RULE_CHARGE_BASE"][this.region];
+        return pricelist["FORWARDING_RULE_CHARGE_BASE"]["locales"][this.region];
     }
     return 0;
 }
 function TPUHourly(){
-    return this.numTPU*this.TPUHours/24*pricelist["CP-CLOUD-TPU"]["us-central1"];
+    return this.numTPU*this.TPUHours/24*pricelist["data"][0]["data"]["services"]["CP-CLOUD-TPU"]["locales"]["us-central1"];
 }
 function storageCostHourly(){
-    return ((pricelist["CP-BIGSTORE-STORAGE-MULTI_REGIONAL"][this.region]*this.multiRegional
-        +pricelist["CP-BIGSTORE-STORAGE-REGIONAL"][this.region]*this.regional
-        +pricelist["CP-BIGSTORE-STORAGE-NEARLINE"][this.region]*this.nearline
-        +pricelist["CP-BIGSTORE-STORAGE-COLDLINE"][this.region]*this.coldline
-        +100*this.classAOps*pricelist["CP-BIGSTORE-CLASS-A-REQUEST"][this.region]
-        +100*this.classBOps*pricelist["CP-BIGSTORE-CLASS-B-REQUEST"][this.region])*12/365/24)*this.nrInstances;
+    return ((pricelist["data"][0]["data"]["services"]["CP-BIGSTORE-STORAGE-MULTI_REGIONAL"]["locales"][this.region]*this.multiRegional
+        +pricelist["data"][0]["data"]["services"]["CP-BIGSTORE-STORAGE-REGIONAL"]["locales"][this.region]*this.regional
+        +pricelist["data"][0]["data"]["services"]["CP-BIGSTORE-STORAGE-NEARLINE"]["locales"][this.region]*this.nearline
+        +pricelist["data"][0]["data"]["services"]["CP-BIGSTORE-STORAGE-COLDLINE"]["locales"][this.region]*this.coldline
+        +100*this.classAOps*pricelist["data"][0]["data"]["services"]["CP-BIGSTORE-CLASS-A-REQUEST"]["locales"][this.region]
+        +100*this.classBOps*pricelist["data"][0]["data"]["services"]["CP-BIGSTORE-CLASS-B-REQUEST"]["locales"][this.region])*12/365/24)*this.nrInstances;
 }
 
 function storageCostDaily() {
@@ -247,20 +269,15 @@ function storageCostYearly() {
 
 
 function dataStoreCostHourly(){
+
     var cost=0;
-    if(this.dataReads>pricelist["CP-CLOUD-DATASTORE-ENTITY-READ"]["freequota"]["quantity"]){
-        cost+=(this.dataReads-pricelist["CP-CLOUD-DATASTORE-ENTITY-READ"]["freequota"]["quantity"])*pricelist["CP-CLOUD-DATASTORE-ENTITY-READ"]["us"]
-    }
-    if(this.dataWrites>pricelist["CP-CLOUD-DATASTORE-ENTITY-WRITE"]["freequota"]["quantity"]){
-        cost+=(this.dataWrites-pricelist["CP-CLOUD-DATASTORE-ENTITY-WRITE"]["freequota"]["quantity"])*pricelist["CP-CLOUD-DATASTORE-ENTITY-WRITE"]["us"]
-    }
-    if(this.dataDeletes>pricelist["CP-CLOUD-DATASTORE-ENTITY-DELETE"]["freequota"]["quantity"]){
-        cost+=(this.dataDeletes-pricelist["CP-CLOUD-DATASTORE-ENTITY-DELETE"]["freequota"]["quantity"])*pricelist["CP-CLOUD-DATASTORE-ENTITY-DELETE"]["us"]
-    }
-    if(this.dataSize>pricelist["CP-CLOUD-DATASTORE-INSTANCES"]["freequota"]["quantity"]){
-        cost+=(this.dataSize-pricelist["CP-CLOUD-DATASTORE-INSTANCES"]["freequota"]["quantity"])*pricelist["CP-CLOUD-DATASTORE-INSTANCES"]["us"]
-    }
+    console.log(pricelist);
+    cost+=(this.dataReads)*pricelist["data"][0]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-READ"]["locales"]["us"];
+    cost+=(this.dataWrites)*pricelist["data"][0]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-WRITE"]["locales"]["us"];
+    cost+=(this.dataDeletes)*pricelist["data"][0]["data"]["services"]["CP-CLOUD-DATASTORE-ENTITY-DELETE"]["locales"]["us"];
+    cost+=(this.dataSize)*pricelist["data"][0]["data"]["services"]["CP-CLOUD-DATASTORE-INSTANCES"]["locales"]["us"];
     return (cost*12/365/24)*this.nrInstances;
+
 }
 
 function dataStoreCostDaily() {
