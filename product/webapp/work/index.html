@@ -139,7 +139,7 @@
 						Hours per day used
 						<input type="number" id="hours" min="0" max="24"><br>
 						Operating system
-						<select id="OSType">
+						<select id="OSType" disabled>
 							<option value="">Free OS</option>
 							<option value="win">Windows Server</option>
 							<option value="rhel">Red Hat Enterprise Linux</option>
@@ -158,7 +158,7 @@
 						Local SSD size (GB)
 						<input type="number" id="localSSDSize" min="0"><br>
 						Commitment period (years)
-						<select id="commitedUsage">
+						<select id="committedUsage">
 							<br>
 							<option value="0">0</option>
 							<option value="1-YEAR">1</option>
@@ -177,7 +177,7 @@
 					<h4>Load balancing</h4>
 					<form>
 						Number of load balancing rules
-						<input type="number" id="rules" min="0">
+						<input type="number" id="rules" min="0" disabled>
 					</form>
 					<h4>Cloud TPUs</h4>
 					<form>
