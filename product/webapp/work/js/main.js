@@ -339,7 +339,6 @@ function calculateTemp (){
 
                 // set properties of canvas used to (re)create list item
                 currentCanvas.numId = idCanvas++;
-                //currentCanvas.region = region;
                 currentCanvas.service = service;
                 currentCanvas.timestamp = new Date().toGMTString();
                 currentCanvas.description = buildDescriptionOfCanvas(currentCanvas);
