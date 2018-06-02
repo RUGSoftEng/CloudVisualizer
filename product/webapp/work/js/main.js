@@ -26,7 +26,7 @@ var listOfCanvasses=[];
 // Counter for id of canvasses
 var idCanvas=0;
 // Current canvas shown
-var currentCanvas=new Canvas();
+var currentCanvas;
 
 // Object canvas
 function Canvas() {
@@ -38,7 +38,7 @@ function Canvas() {
     // Personal unique id of canvas
     this.numId=0;
     this.graphColor='rgb(255, 99, 132)';
-    this.region=(service==="google-cloud")?"us-central1":(service==="amazon-webservices")?"US East (N-Virginia)":"us-east";
+    this.region=(service==='google-cloud')?"us-central1":(service==='amazon-webservices')?"US East (N-Virginia)":"us-east";
 }
 
 function setRegion(selectObject) {
@@ -140,6 +140,8 @@ function setupWindow(){
         track: true
     });
 
+    currentCanvas=new Canvas();
+
     if(service == 'google-cloud'){
         setupVMSliders();
         setupStorageSliders();
@@ -216,7 +218,6 @@ $(function() {
     });
 	
 	$("#selectRegionID").load("region-" + service + ".html", function(){
-        setupWindow();
     });
 	
 
