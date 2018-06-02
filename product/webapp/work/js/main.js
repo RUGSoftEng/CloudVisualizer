@@ -303,6 +303,7 @@ function calculate (){
     var monthPrice=0;
     var yearPrice=0;
     for (var i in currentCanvas.VirtualMachines) {
+        console.log(currentCanvas.VirtualMachines[i].type + " SQL Server Web");
         if (service == 'google-cloud') {
             currentCanvas.VirtualMachines[i].instanceType = determineInstanceType(currentCanvas.VirtualMachines[i].type);
         }

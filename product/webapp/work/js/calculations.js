@@ -2,7 +2,7 @@ var pricelist=[];
 function VirtualMachine() {
     this.objectName="VirtualMachine";
     this.region=(service==="google-cloud")?"us-central1":(service==="amazon-webservices")?"US East (N-Virginia)":"us-east";
-    this.type=(service==="google-cloud")?"N1-STANDARD-1":(service==="amazon-webservices")?"t2-nano":"B1s";/*user picked type*/;
+    this.type=(service==="google-cloud")?"N1-STANDARD-1":(service==="amazon-webservices")?"t2-nano":"B1S";/*user picked type*/;
     this.days=1;/*days per week the VM is used*/;
     this.hours=1;/*hours per day the VM is used*/;
     this.osType=(service==="google-cloud")?"":(service==="amazon-webservices")?"Linux":"SQL Server Web";/*user picked OS*/;
