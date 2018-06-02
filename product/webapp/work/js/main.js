@@ -132,6 +132,10 @@ function setupWindow(){
         track: true
     });
 
+    $( document ).tooltip({
+        track: true
+    });
+
     if(service == 'google-cloud'){
         setupGoogleCloud();
     }
@@ -200,6 +204,8 @@ $(function() {
         setupWindow();
     });
 
+    //getCloudwatchData(service);
+    getOfflineData(service);
     calculate();
 });
 
@@ -245,9 +251,9 @@ function deleteCalc(){
 	document.getElementById("mainGraph").style.display = "none";
 }
 
-function calculate (){
+function getCloudwatchData(service){
+    document.getElementById("calculate").disabled = true;
     var result = '';
-
     // send HTTP request to Node for cloudwatch data
     $.ajax({
         type: 'POST',
@@ -260,107 +266,104 @@ function calculate (){
     })
 
     // callback function for when request is finished
-        .done(function(){
-            result = JSON.parse(result); 
-            console.log(result["data"][0]["data"]["services"]);
-            
-            var monthPrice=0;
-
-            // TODO: PUT CALCULATIONS HERE
-
-            // for (var i in currentCanvas.VirtualMachines) {
-            //     currentCanvas.VirtualMachines[i].instanceType = determineInstanceType(currentCanvas.VirtualMachines[i].type);
-            //     monthPrice+=currentCanvas.VirtualMachines[i].costMonthly();
-            //     yearPrice+=currentCanvas.VirtualMachines[i].costYear();
-            // }
-            // for (var i in currentCanvas.Databases) {
-            //     monthPrice+=currentCanvas.Databases[i].costMonthly();
-            //     yearPrice+=currentCanvas.Databases[i].costYear();
-            // }
-            // for (var i in currentCanvas.Storages) {
-            //     monthPrice += currentCanvas.Storages[i].costMonthly();
-            //     yearPrice += currentCanvas.Storages[i].costYear();
-            // }
-
-            // set properties of canvas used to (re)create list item
-            currentCanvas.numId = idCanvas++;
-            currentCanvas.service = service;
-            currentCanvas.region = region;
-            currentCanvas.timestamp = new Date().toTimeString();
-            currentCanvas.description = 'you can put a short description here';
-            currentCanvas.monthlyPrice = Math.round(monthPrice * 100) / 100;
-            currentCanvas.yearlyPrice = Math.round(yearPrice * 100) / 100;
-
-            // store the canvas
-            listOfCanvasses.push(copyCanvas(currentCanvas));
-
-            addCalculationToDiv(currentCanvas);
-            addCalculationMainGraph(monthPrice, currentCanvas.numId, currentCanvas.graphColor, "graph_"+currentCanvas.numId);
-            showCalculationDiv();
-
-            // store/update data in localStorage
-            localStorage.setItem('listOfCanvasses', JSON.stringify(listOfCanvasses));
+        .done(function() {
+            pricelist = JSON.parse(result);
+            console.log(result);
+            document.getElementById("calculate").disabled = false;
         });
 }
 
-// TODO: REMOVE
-// Wrote this function to work on the google json when the clouddata API is down
-function calculateTemp (){
-    var result = '';
+function getOfflineData(service) {
     var xobj = new XMLHttpRequest();
     xobj.overrideMimeType("application/json");
-    xobj.open('GET', 'google.json', true); // Replace 'my_data' with the path to your file
+    console.log(service);
+    xobj.open('GET', service+'.json', true); // Replace 'my_data' with the path to your file
     xobj.onreadystatechange = function () {
         if (xobj.readyState == 4 && xobj.status == "200") {
             // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
             //callback(xobj.responseText);
             var variable=JSON.parse(xobj.responseText);
-            pricelist=variable["gcp_price_list"];
-
-            /** Add canvas to list of canvas, so we can set it back later */
-            if (listOfCanvasses.length<5) {
-
-                /** Price calculation(s) */
-                var monthPrice=0;
-                var yearPrice=0;
-                for (var i in currentCanvas.VirtualMachines) {
-                    currentCanvas.VirtualMachines[i].instanceType = determineInstanceType(currentCanvas.VirtualMachines[i].type);
-                    monthPrice+=currentCanvas.VirtualMachines[i].costMonthly();
-                    yearPrice+=currentCanvas.VirtualMachines[i].costYear();
-                }
-                for (var i in currentCanvas.Databases) {
-                    monthPrice+=currentCanvas.Databases[i].costMonthly();
-                    yearPrice+=currentCanvas.Databases[i].costYear();
-                }
-                for (var i in currentCanvas.Storages) {
-                    monthPrice += currentCanvas.Storages[i].costMonthly();
-                    yearPrice += currentCanvas.Storages[i].costYear();
-                }
-
-                // set properties of canvas used to (re)create list item
-                currentCanvas.numId = idCanvas++;
-                //currentCanvas.region = region;
-                currentCanvas.service = service;
-                currentCanvas.timestamp = new Date().toGMTString();
-                currentCanvas.description = buildDescriptionOfCanvas(currentCanvas);
-                currentCanvas.monthlyPrice = Math.round(monthPrice * 100) / 100;
-                currentCanvas.yearlyPrice = Math.round(yearPrice * 100) / 100;
-
-                // store the canvas
-                listOfCanvasses.push(copyCanvas(currentCanvas));
-
-                addCalculationToDiv(currentCanvas);
-                addCalculationMainGraph(currentCanvas.monthlyPrice, currentCanvas.timestamp, currentCanvas.graphColor, "graph_"+currentCanvas.numId);
-                showCalculationDiv();
-
-                // store/update data in localStorage
-                localStorage.setItem('listOfCanvasses', JSON.stringify(listOfCanvasses));
-            }
+            console.log(variable);
+            pricelist=variable;
         }
     };
     xobj.send(null);
-	document.getElementById("mainGraph").style.display = "block";
+}
 
+function calculate (){
+    /** Price calculation(s) */
+    var monthPrice=0;
+    var yearPrice=0;
+    for (var i in currentCanvas.VirtualMachines) {
+        currentCanvas.VirtualMachines[i].instanceType = determineInstanceType(currentCanvas.VirtualMachines[i].type);
+        monthPrice+=currentCanvas.VirtualMachines[i].costMonthly();
+        yearPrice+=currentCanvas.VirtualMachines[i].costYear();
+    }
+    for (var i in currentCanvas.Databases) {
+        monthPrice+=currentCanvas.Databases[i].costMonthly();
+        yearPrice+=currentCanvas.Databases[i].costYear();
+    }
+    for (var i in currentCanvas.Storages) {
+        monthPrice += currentCanvas.Storages[i].costMonthly();
+        yearPrice += currentCanvas.Storages[i].costYear();
+    }
+
+    // set properties of canvas used to (re)create list item
+    currentCanvas.numId = idCanvas++;
+    currentCanvas.service = service;
+    currentCanvas.timestamp = new Date().toGMTString();
+    currentCanvas.description = buildDescriptionOfCanvas(currentCanvas);
+    currentCanvas.monthlyPrice = Math.round(monthPrice * 100) / 100;
+    currentCanvas.yearlyPrice = Math.round(yearPrice * 100) / 100;
+
+    // store the canvas
+    listOfCanvasses.push(copyCanvas(currentCanvas));
+
+    addCalculationToDiv(currentCanvas);
+    addCalculationMainGraph(currentCanvas.monthlyPrice, currentCanvas.timestamp, currentCanvas.graphColor, "graph_"+currentCanvas.numId);
+    showCalculationDiv();
+
+    // store/update data in localStorage
+    localStorage.setItem('listOfCanvasses', JSON.stringify(listOfCanvasses));
+    document.getElementById("mainGraph").style.display = "block";
+}
+
+function calculateTemp (){
+    /** Add canvas to list of canvas, so we can set it back later */
+    /** Price calculation(s) */
+    var monthPrice=0;
+    var yearPrice=0;
+    for (var i in currentCanvas.VirtualMachines) {
+        currentCanvas.VirtualMachines[i].instanceType = determineInstanceType(currentCanvas.VirtualMachines[i].type);
+        monthPrice+=currentCanvas.VirtualMachines[i].costMonthly();
+        yearPrice+=currentCanvas.VirtualMachines[i].costYear();
+    }
+    for (var i in currentCanvas.Databases) {
+        monthPrice+=currentCanvas.Databases[i].costMonthly();
+        yearPrice+=currentCanvas.Databases[i].costYear();
+    }
+    for (var i in currentCanvas.Storages) {
+        monthPrice += currentCanvas.Storages[i].costMonthly();
+        yearPrice += currentCanvas.Storages[i].costYear();
+    }
+
+    // set properties of canvas used to (re)create list item
+    currentCanvas.numId = idCanvas++;
+    currentCanvas.service = service;
+    currentCanvas.timestamp = new Date().toGMTString();
+    currentCanvas.description = buildDescriptionOfCanvas(currentCanvas);
+    currentCanvas.monthlyPrice = Math.round(monthPrice * 100) / 100;
+    currentCanvas.yearlyPrice = Math.round(yearPrice * 100) / 100;
+    // store the canvas
+    listOfCanvasses.push(copyCanvas(currentCanvas));
+
+    addCalculationToDiv(currentCanvas);
+    addCalculationMainGraph(currentCanvas.monthlyPrice, currentCanvas.timestamp, currentCanvas.graphColor, "graph_"+currentCanvas.numId);
+    showCalculationDiv();
+
+    // store/update data in localStorage
+    localStorage.setItem('listOfCanvasses', JSON.stringify(listOfCanvasses));
+	document.getElementById("mainGraph").style.display = "block";
 }
 
 // When the user scrolls down 20px from the top of the document, show the button
