@@ -55,21 +55,25 @@
 <div class="content">
     <div class="calc">
         <select id="SelectRegionID" class="form-control" onchange="setRegion(this)" title="Select region">
-            <option value="us-central1">Iowa</option>
+			<option value="us">United States</option>
+			<option value="europe">Europe</option>
+			<option value="asia">Asia</option>
+			<option value="australia">Australia</option>
+			<option value="us-central1">Iowa</option>
             <option value="us-east1">South Carolina</option>
             <option value="us-east4">Northern Virginia</option>
             <option value="us-west1">Oregon</option>
-            <option value="europe-west1">Belgium</option>
+			<option value="northamerica-northeast1">Montréal, Canada</option>
+			<option value="southamerica-east1">Sao Paulo</option>
+			<option value="europe-west1">Belgium</option>
             <option value="europe-west2">London</option>
             <option value="europe-west3">Frankfurt</option>
-            <option value="asia-east">Taiwan</option>
+			<option value="europe-west4">Netherlands</option>
+			<option value="asia-east">Taiwan</option>
             <option value="asia-northeast">Tokyo</option>
             <option value="asia-southeast">Singapore</option>
             <option value="asia-south1">Mumbai</option>
             <option value="australia-southeast1">Sydney</option>
-            <option value="southamerica-east1">Sao Paulo</option>
-            <option value="europe-west4">Netherlands</option>
-            <option value="northamerica-northeast1">Montréal, Canada</option>
         </select>
         <button class="iconButton" id="provider"data-toggle="modal" data-target="#providerPopup"><img src="images/provider.png"width="50" height="50" title="Select Provider"/></button>
         <button class="iconButton" onclick="clearBox('itemsvm','itemsst','itemsdb')" type="button"><img src="images/clearCanvas.png"width="50" height="50" title="Clear current canvas"/></button>
