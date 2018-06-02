@@ -237,7 +237,6 @@ function updatePopupGraphVM(virtualmachine){
 
 function updatePopupGraphDB(database){
     var monthPrice = database.costMonthly();
-
     // add data points
     var newData = [];
     for (var x = 0; x < 12; x++) {
