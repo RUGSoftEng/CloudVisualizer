@@ -26,6 +26,7 @@
     "mongojs": "^2.5.0",
     "mongoose": "^5.0.10",
     "node-flag": "^1.5.1",
+    "popper.js": "^1.14.3",
     "validate-ip": "^1.0.1"
   },
   "author": "Ludger Visser",
