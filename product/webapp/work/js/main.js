@@ -38,7 +38,7 @@ function Canvas() {
     // Personal unique id of canvas
     this.numId=0;
     this.graphColor='rgb(255, 99, 132)';
-    this.region="us-central1";
+    this.region=(service==="google-cloud")?"us-central1":(service==="amazon-webservices")?"US East (N-Virginia)":"us-east";
 }
 
 function setRegion(selectObject) {

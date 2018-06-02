@@ -1,7 +1,6 @@
 var pricelist=[];
 function VirtualMachine() {
     this.objectName="VirtualMachine";
-    this.region=(service==="google-cloud")?"us-central1":(service==="amazon-webservices")?"US East (N-Virginia)":"us-east";
     this.type=(service==="google-cloud")?"N1-STANDARD-1":(service==="amazon-webservices")?"t2-nano":"B1S";/*user picked type*/;
     this.days=1;/*days per week the VM is used*/;
     this.hours=1;/*hours per day the VM is used*/;
@@ -36,7 +35,6 @@ function VirtualMachine() {
 function Storage() {
     this.objectName="Storage";
     /*The variables that influence the price of storage*/
-    this.region="us-central1";
     this.multiRegional=0;/*user picked size of multi-regional storage*/;
     this.regional=0;/*user picked size of regional storage*/;
     this.nearline=0;/*user picked size of nearline storage*/;
@@ -56,7 +54,6 @@ function Storage() {
 function Database() {
     this.objectName="Database";
     /*The variables that influence the price of databases*/
-    this.region="us-central1";
     this.dataSize=0;/*user picked size of data storage*/;
     this.dataReads=0;/*user picked number of entity reads per month*/;
     this.dataWrites=0;/*user picked number of entity writes per month*/;
@@ -106,10 +103,10 @@ var VMCostMonthly = {
         return (this.sustainedUsePerHour()*this.hours*this.days/7*365/12+this.TPUPerHour()*this.TPUHours*365/12+(this.PDPerHour()+this.LBPerHour())*24*365/12)*this.nrInstances;
     },
     "amazon-webservices" : function(){
-        return pricelist["data"][0]["data"]["services"][this.type + "-" + this.osType]["locales"][this.region] * (this.days/7 * this.hours/24 * 24 * 365 / 12);
+        return pricelist["data"][0]["data"]["services"][this.type + "-" + this.osType]["locales"][currentCanvas.region] * (this.days/7 * this.hours/24 * 24 * 365 / 12);
     },
     "microsoft-azure": function(){
-        return pricelist["data"][0]["data"]["services"][this.type + " SQL Server Web"]["locales"][this.region] * (this.days/7 * this.hours/24 * 24 * 365 / 12);
+        return pricelist["data"][0]["data"]["services"][this.type + " SQL Server Web"]["locales"][currentCanvas.region] * (this.days/7 * this.hours/24 * 24 * 365 / 12);
     }
 }
 
@@ -186,8 +183,8 @@ function osHourly(){
 }
 function instanceHourly(){
     if(this.committedUsage!="0"){
-        return pricelist["data"][0]["data"]["services"]["CP-CUD-"+this.committedUsage+"-CPU"]["locales"][this.region]*this.instanceType["cores"]+
-            pricelist["data"][0]["data"]["services"]["CP-CUD-"+this.committedUsage+"-RAM"]["locales"][this.region]*this.instanceType["memory"];
+        return pricelist["data"][0]["data"]["services"]["CP-CUD-"+this.committedUsage+"-CPU"]["locales"][currentCanvas.region]*this.instanceType["cores"]+
+            pricelist["data"][0]["data"]["services"]["CP-CUD-"+this.committedUsage+"-RAM"]["locales"][currentCanvas.region]*this.instanceType["memory"];
     }else if(this.type=="custom"){
         if(this.preemptible){
             var pre="-PREEMPTIBLE";
@@ -195,26 +192,26 @@ function instanceHourly(){
             var pre="";
         }
         if(this.instanceType["memory"]>this.instanceType["cores"]*6.5){
-            return pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-CUSTOM-VM-CORE"+pre]["locales"][this.region]*this.instanceType["cores"]
-                +(this.instanceType["memory"]-this.instanceType["cores"]*6.5)*pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-CUSTOM-VM-EXTENDED-RAM"+pre]["locales"][this.region]
-                +this.instanceType["cores"]*6.5*pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-CUSTOM-VM-RAM"+pre]["locales"][this.region];
+            return pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-CUSTOM-VM-CORE"+pre]["locales"][currentCanvas.region]*this.instanceType["cores"]
+                +(this.instanceType["memory"]-this.instanceType["cores"]*6.5)*pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-CUSTOM-VM-EXTENDED-RAM"+pre]["locales"][currentCanvas.region]
+                +this.instanceType["cores"]*6.5*pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-CUSTOM-VM-RAM"+pre]["locales"][currentCanvas.region];
         }else{
-            return pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-CUSTOM-VM-CORE"+pre]["locales"][this.region]*this.instanceType["cores"]
-                +this.instanceType["memory"]*6.5*pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-CUSTOM-VM-RAM"+pre]["locales"][this.region];
+            return pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-CUSTOM-VM-CORE"+pre]["locales"][currentCanvas.region]*this.instanceType["cores"]
+                +this.instanceType["memory"]*6.5*pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-CUSTOM-VM-RAM"+pre]["locales"][currentCanvas.region];
         }
     }else{
         if(this.preemptible === true) {
-            return pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-VMIMAGE-" + this.type + "-PREEMPTIBLE"]["locales"][this.region];
+            return pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-VMIMAGE-" + this.type + "-PREEMPTIBLE"]["locales"][currentCanvas.region];
         }
-        return pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-VMIMAGE-" + this.type]["locales"][this.region];
+        return pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-VMIMAGE-" + this.type]["locales"][currentCanvas.region];
 
     }
 }
 function localSSDHourly(){
     if(this.preemptible===true){
-        return this.localSSDSize*pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-LOCAL-SSD-PREEMPTIBLE"]["locales"][this.region];
+        return this.localSSDSize*pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-LOCAL-SSD-PREEMPTIBLE"]["locales"][currentCanvas.region];
     }else{
-        return this.localSSDSize*pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-LOCAL-SSD"]["locales"][this.region];
+        return this.localSSDSize*pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-LOCAL-SSD"]["locales"][currentCanvas.region];
     }
 }
 function GPUHourly(){
@@ -222,16 +219,16 @@ function GPUHourly(){
         return 0;
     }
     if(this.preemptible===true){
-        return this.numGPU*pricelist["data"][0]["data"]["services"]["GPU_"+this.GPUType+"-PREEMPTIBLE"]["locales"][this.region];
+        return this.numGPU*pricelist["data"][0]["data"]["services"]["GPU_"+this.GPUType+"-PREEMPTIBLE"]["locales"][currentCanvas.region];
     }else if (this.numGPU!=0){
-        return this.numGPU*pricelist["data"][0]["data"]["services"]["GPU_"+this.GPUType]["locales"][this.region];
+        return this.numGPU*pricelist["data"][0]["data"]["services"]["GPU_"+this.GPUType]["locales"][currentCanvas.region];
     }
     return 0;
 }
 function PDHourly(){
-    return (this.PDSSDSize*pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-STORAGE-PD-SSD"]["locales"][this.region]+
-        this.PDSize*pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-STORAGE-PD-CAPACITY"]["locales"][this.region]+
-        this.PDSnapshot*pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-STORAGE-PD-SNAPSHOT"]["locales"][this.region])
+    return (this.PDSSDSize*pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-STORAGE-PD-SSD"]["locales"][currentCanvas.region]+
+        this.PDSize*pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-STORAGE-PD-CAPACITY"]["locales"][currentCanvas.region]+
+        this.PDSnapshot*pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-STORAGE-PD-SNAPSHOT"]["locales"][currentCanvas.region])
         *12/365/24;
 }
 function LBHourly(){
@@ -239,10 +236,10 @@ function LBHourly(){
         return 0;
     }
     if(this.rules>5){
-        return pricelist["FORWARDING_RULE_CHARGE_BASE"]["locales"][this.region]
-            +pricelist["FORWARDING_RULE_CHARGE_EXTRA"]["locales"][this.region]*(this.rules-5);
+        return pricelist["FORWARDING_RULE_CHARGE_BASE"]["locales"][currentCanvas.region]
+            +pricelist["FORWARDING_RULE_CHARGE_EXTRA"]["locales"][currentCanvas.region]*(this.rules-5);
     }else if(this.rules!=0){
-        return pricelist["FORWARDING_RULE_CHARGE_BASE"]["locales"][this.region];
+        return pricelist["FORWARDING_RULE_CHARGE_BASE"]["locales"][currentCanvas.region];
     }
     return 0;
 }
@@ -250,12 +247,12 @@ function TPUHourly(){
     return this.numTPU*this.TPUHours/24*pricelist["data"][0]["data"]["services"]["CP-CLOUD-TPU"]["locales"]["us-central1"];
 }
 function storageCostHourly(){
-    return ((pricelist["data"][0]["data"]["services"]["CP-BIGSTORE-STORAGE-MULTI_REGIONAL"]["locales"][this.region]*this.multiRegional
-        +pricelist["data"][0]["data"]["services"]["CP-BIGSTORE-STORAGE-REGIONAL"]["locales"][this.region]*this.regional
-        +pricelist["data"][0]["data"]["services"]["CP-BIGSTORE-STORAGE-NEARLINE"]["locales"][this.region]*this.nearline
-        +pricelist["data"][0]["data"]["services"]["CP-BIGSTORE-STORAGE-COLDLINE"]["locales"][this.region]*this.coldline
-        +100*this.classAOps*pricelist["data"][0]["data"]["services"]["CP-BIGSTORE-CLASS-A-REQUEST"]["locales"][this.region]
-        +100*this.classBOps*pricelist["data"][0]["data"]["services"]["CP-BIGSTORE-CLASS-B-REQUEST"]["locales"][this.region])*12/365/24)*this.nrInstances;
+    return ((pricelist["data"][0]["data"]["services"]["CP-BIGSTORE-STORAGE-MULTI_REGIONAL"]["locales"][currentCanvas.region]*this.multiRegional
+        +pricelist["data"][0]["data"]["services"]["CP-BIGSTORE-STORAGE-REGIONAL"]["locales"][currentCanvas.region]*this.regional
+        +pricelist["data"][0]["data"]["services"]["CP-BIGSTORE-STORAGE-NEARLINE"]["locales"][currentCanvas.region]*this.nearline
+        +pricelist["data"][0]["data"]["services"]["CP-BIGSTORE-STORAGE-COLDLINE"]["locales"][currentCanvas.region]*this.coldline
+        +100*this.classAOps*pricelist["data"][0]["data"]["services"]["CP-BIGSTORE-CLASS-A-REQUEST"]["locales"][currentCanvas.region]
+        +100*this.classBOps*pricelist["data"][0]["data"]["services"]["CP-BIGSTORE-CLASS-B-REQUEST"]["locales"][currentCanvas.region])*12/365/24)*this.nrInstances;
 }
 
 function storageCostDaily() {
