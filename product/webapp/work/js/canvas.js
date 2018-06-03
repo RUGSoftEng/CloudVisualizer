@@ -133,10 +133,15 @@ function getObjectById(id, listOfObjects) {
 }
 
 function resetCanvas(canvasID) {
+    console.log(canvasID);
     clearBox('itemsvm','itemsst','itemsdb');
     currentCanvas=copyCanvas(listOfCanvasses[getObjectById(canvasID, listOfCanvasses)]);
-
-
+    if (service!=currentCanvas.service) {
+        service = currentCanvas.service;
+        localStorage.setItem('curCanvas', JSON.stringify(currentCanvas));
+        localStorage.setItem('provider', service);
+        location.reload();
+    }
 
     for (var i=0; i<currentCanvas.VirtualMachines.length; i++) {
         var VM=currentCanvas.VirtualMachines[i];
@@ -153,10 +158,6 @@ function resetCanvas(canvasID) {
         addHTML(storage.nrInstances, "cs", storage.numId, currentCanvas.Storages);
         checkIcon(currentCanvas.Storages, "cs", i);
     }
-
-
-    service = currentCanvas.service;
-    localStorage.setItem('provider', service);
 
     // TODO also change accordion
 
@@ -396,6 +397,8 @@ function copyCanvas(canvas) {
     newCanvas.VirtualMachines=listVirtualMachines;
     newCanvas.Databases=listDatabases;
     newCanvas.Storages=listStorages;
+    newCanvas.region=canvas.region;
+    newCanvas.regionTitle=canvas.regionTitle;
     return newCanvas;
 }
 

@@ -196,11 +196,44 @@ function loadDataFromMemory(){
         });
     };
 
+    if (localStorage.getItem('curCanvas') && localStorage.getItem('curCanvas')!='null') {
+        currentCanvas=JSON.parse(localStorage.getItem('curCanvas'));
+        reAssignCanvas(currentCanvas);
+        console.log(currentCanvas);
+        for (var i=0; i<currentCanvas.VirtualMachines.length; i++) {
+            var VM=currentCanvas.VirtualMachines[i];
+            addHTML(VM.nrInstances, "vm", VM.numId, currentCanvas.VirtualMachines);
+            checkIcon(currentCanvas.VirtualMachines, "vm", i);
+        }
+        for (var i=0; i<currentCanvas.Databases.length; i++) {
+            var DB=currentCanvas.Databases[i];
+            addHTML(DB.nrInstances, "db", DB.numId, currentCanvas.Databases);
+            checkIcon(currentCanvas.Databases, "db", i);
+        }
+        for (var i=0; i<currentCanvas.Storages.length; i++) {
+            var storage=currentCanvas.Storages[i];
+            addHTML(storage.nrInstances, "cs", storage.numId, currentCanvas.Storages);
+            checkIcon(currentCanvas.Storages, "cs", i);
+        }
+        localStorage.setItem('curCanvas', null);
+    } else {
+        console.log("null mate");
+    }
+
+    if (localStorage.getItem('idCanvas') && localStorage.getItem('idCanvas')!='null') {
+        idCanvas=localStorage.getItem('idCanvas');
+        console.log("Received: "+localStorage.getItem('idCanvas'));
+    }
+
     // load previous canvasses
     if( ! JSON.parse(localStorage.getItem('listOfCanvasses') )){
         listOfCanvasses = [];
     } else {
         listOfCanvasses = JSON.parse(localStorage.getItem('listOfCanvasses'));
+        for (var i=0; i<listOfCanvasses.length; i++) {
+            reAssignCanvas(listOfCanvasses[i]);
+        }
+        //console.log(listOfCanvasses);
     }
 
     for(var i in listOfCanvasses){
@@ -214,6 +247,18 @@ function loadDataFromMemory(){
 	
 	isOverflown();
 		
+}
+
+function reAssignCanvas(canvas) {
+    for (var i=0; i<canvas.VirtualMachines.length; i++) {
+        canvas.VirtualMachines[i]=Object.assign(new VirtualMachine(), canvas.VirtualMachines[i]);
+    }
+    for (var i=0; i<canvas.Databases.length; i++) {
+        canvas.Databases[i]=Object.assign(new Database(), canvas.Databases[i]);
+    }
+    for (var i=0; i<canvas.Storages.length; i++) {
+        canvas.Storages[i]=Object.assign(new Storage(), canvas.Storages[i]);
+    }
 }
 
 $(function() {
@@ -291,6 +336,7 @@ function deleteCalc(){
     clearMainGraph();
     listOfCanvasses = [];
     localStorage.setItem('listOfCanvasses', JSON.stringify([]));
+    localStorage.setItem('idCanvas', idCanvas);
     document.getElementById("mainGraph").style.display = "none";
 	
 }
@@ -352,7 +398,9 @@ function calculate (){
     }
 
     // set properties of canvas used to (re)create list item
+    console.log(idCanvas);
     currentCanvas.numId = idCanvas++;
+    console.log(idCanvas);
     currentCanvas.service = service;
     currentCanvas.timestamp = new Date().toGMTString();
     currentCanvas.description = buildDescriptionOfCanvas(currentCanvas);
@@ -367,6 +415,8 @@ function calculate (){
     showCalculationDiv();
 
     // store/update data in localStorage
+    localStorage.setItem('idCanvas', idCanvas);
+    console.log("Set id canvas to: "+idCanvas);
     localStorage.setItem('listOfCanvasses', JSON.stringify(listOfCanvasses));
     document.getElementById("mainGraph").style.display = "block";
 }
