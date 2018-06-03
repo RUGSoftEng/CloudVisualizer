@@ -179,7 +179,6 @@ function removeCanvas(canvasID, documentID) {
 }
 
 function attachVariable (variableName,variableObject) {
-<<<<<<< HEAD
     var input;
     if (variableName==="nrInstances") {
         if (variableObject.objectName==="VirtualMachine") {
