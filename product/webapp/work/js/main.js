@@ -40,7 +40,7 @@ function Canvas() {
     this.numId=0;
     this.graphColor='rgb(255, 99, 132)';
     this.region=(service==='google-cloud')?"us":(service==='amazon-webservices')?"AWS GovCloud (US)":"us-central1";
-    this.regionTitle=(service==='google-cloud')?"United States":(service==='amazon-webservices')?"United States":"United Statest";
+    this.regionTitle=(service==='google-cloud')?"United States":(service==='amazon-webservices')?"United States":"United States";
 }
 
 function setRegion(selectObject) {
