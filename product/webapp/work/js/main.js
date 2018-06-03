@@ -28,6 +28,7 @@ var idCanvas=0;
 // Current canvas shown
 var currentCanvas;
 
+var memoryValues = ["0GB", "50GB", "100GB", "200GB", "300GB", "400GB", "500GB", "750GB", "1TB", "1,5TB", "2TB" ,"2,5TB", "3TB", "4TB", "5TB", "7,5TB", "10TB", "20TB", "30TB", "40TB", "50TB", "75TB", "100TB","200TB","500TB","750TB"];
 // Object canvas
 function Canvas() {
     this.VirtualMachines=[];
@@ -86,30 +87,30 @@ function setupStorageSliders() {
 
     var multiRegionalStorageSlider = document.getElementById("multiRegionalStorageSliderID");
     multiRegionalStorage = document.getElementById("multiRegionalStorage");
-    multiRegionalStorage.innerHTML = multiRegionalStorageSlider.value;
+    multiRegionalStorage.innerHTML = memoryValues[0];
     multiRegionalStorageSlider.oninput = function() {
-        multiRegionalStorage.innerHTML = this.value;
+        multiRegionalStorage.innerHTML = memoryValues[this.value];
     }
 
     var regionalStorageSlider = document.getElementById("regionalStorageSliderID");
     regionalStorage = document.getElementById("regionalStorage");
-    regionalStorage.innerHTML = regionalStorageSlider.value;
+    regionalStorage.innerHTML = memoryValues[0];
     regionalStorageSlider.oninput = function() {
-        regionalStorage.innerHTML = this.value;
+        regionalStorage.innerHTML = memoryValues[this.value];
     }
 
     var coldlineStorageSlider = document.getElementById("coldlineStorageSliderID");
     coldlineStorage = document.getElementById("coldlineStorage");
-    coldlineStorage.innerHTML = coldlineStorageSlider.value;
+    coldlineStorage.innerHTML = memoryValues[0];
     coldlineStorageSlider.oninput = function() {
-        coldlineStorage.innerHTML = this.value;
+        coldlineStorage.innerHTML = memoryValues[this.value];
     }
 
     var nearlineStorageSlider = document.getElementById("nearlineStorageSliderID");
     nearlineStorage = document.getElementById("nearlineStorage");
-    nearlineStorage.innerHTML = nearlineStorageSlider.value;
+    nearlineStorage.innerHTML = memoryValues[0];;
     nearlineStorageSlider.oninput = function() {
-        nearlineStorage.innerHTML = this.value;
+        nearlineStorage.innerHTML = memoryValues[this.value];
     }
 }
 
@@ -125,9 +126,9 @@ function setupDBSliders() {
 
     var DBSlider = document.getElementById("DBGBSliderID");
     DBSize = document.getElementById("DBGB");
-    DBSize.innerHTML = DBSlider.value;
+    DBSize.innerHTML = memoryValues[0];
     DBSlider.oninput = function() {
-        DBSize.innerHTML = this.value;
+        DBSize.innerHTML = memoryValues[this.value];
     }
 }
 
@@ -222,10 +223,10 @@ $(function() {
 	$("#selectRegionID").load("region-" + service + ".html", function(){
     });
 	
-    getCloudwatchData(service);
+    //getCloudwatchData(service);
     
     // call for offline functionality
-    // getOfflineData(service);
+    getOfflineData(service);
 
 	isOverflown();
 });

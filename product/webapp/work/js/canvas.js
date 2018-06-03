@@ -1,6 +1,9 @@
 //Checks if the to be added object already exists.
 //If it exists, it will return the index where the duplicate object is located
 //If it doesn't exist already, it returns -1
+var memorySize = [0, 50, 100, 200, 300, 400, 500, 750, 1000, 1500, 2000 ,2500, 3000, 4000, 5000, 7500, 10000, 20000, 30000, 40000, 50000, 75000, 100000,200000,500000,750000];
+
+
 function newObjectExists(newObject, objectList) {
     var aProps=Object.getOwnPropertyNames(newObject);
     for (var i=0; i<objectList.length; i++) {
@@ -287,14 +290,19 @@ function allowDrop(ev) {
 
 function dragDatabase(ev) {
     jQuery.event.props.push('dataTransfer');
-    var newDB = createBasicDatabase(parseInt(nrInstancesDB.innerHTML), parseInt(DBSize.innerHTML));
+	var DBSizeSlider = document.getElementById("DBGBSliderID");
+    var newDB = createBasicDatabase(parseInt(nrInstancesDB.innerHTML), memorySize[DBSizeSlider.value]);
     var j = JSON.stringify(newDB);
     ev.dataTransfer.setData("foo", j);
 }
 
 function dragStorage(ev) {
     jQuery.event.props.push('dataTransfer');
-    var newStorage = createBasicStorage(parseInt(nrInstancesStorage.innerHTML), parseInt(multiRegionalStorage.innerHTML), parseInt(regionalStorage.innerHTML), parseInt(nearlineStorage.innerHTML), parseInt(coldlineStorage.innerHTML));
+	var multiRegSlider = document.getElementById("multiRegionalStorageSliderID");
+	var regSlider = document.getElementById("regionalStorageSliderID");
+	var nearlineSlider = document.getElementById("nearlineStorageSliderID");
+	var coldlineSlider = document.getElementById("coldlineStorageSliderID");
+    var newStorage = createBasicStorage(parseInt(nrInstancesStorage.innerHTML), memorySize[multiRegSlider.value], memorySize[regSlider.value], memorySize[nearlineSlider.value], memorySize[coldlineSlider.value]);
     var j = JSON.stringify(newStorage);
     ev.dataTransfer.setData("foo", j);
 }
