@@ -143,7 +143,9 @@ function setupWindow(){
         track: true
     });
 
-    currentCanvas=new Canvas();
+    if (currentCanvas==null) {
+        currentCanvas = new Canvas();
+    }
 
     if(service == 'google-cloud'){
         setupVMSliders();
