@@ -178,8 +178,10 @@ function loadDataFromMemory(){
     // load previous provider
     if( ! localStorage.getItem('provider') ){
         service = 'google-cloud';
+        $("#popupVMForm").load("popups.html #"+ service+"VMPopup",function(){});
     } else {
         service = localStorage.getItem('provider');
+        $("#popupVMForm").load("popups.html #"+ service+"VMPopup",function(){});
 
         // set the current provider checked in the pop up
         $('#providerForm').children('div').find('label').each(function(){
@@ -223,10 +225,10 @@ $(function() {
 	$("#selectRegionID").load("region-" + service + ".html", function(){
     });
 	
-    getCloudwatchData(service);
+    //getCloudwatchData(service);
     
     // call for offline functionality
-    // getOfflineData(service);
+    getOfflineData(service);
 
 	isOverflown();
 });
