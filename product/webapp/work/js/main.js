@@ -262,6 +262,7 @@ function buildDescriptionOfCanvas(canvas){
     result += 'Virtual Machines (' + canvas.VirtualMachines.length + ')<br />';
     result += 'Storages (' + canvas.Storages.length + ')<br />';
     result += 'Databases (' + canvas.Databases.length + ')<br />';
+	result += 'Region: '+canvas.regionTitle+'<br/>';
     return result;
 }
 
