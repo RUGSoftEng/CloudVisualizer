@@ -165,7 +165,7 @@ function resetCanvas(canvasID) {
 function removeCanvas(canvasID, documentID) {
     var divId = "#canvas_"+canvasID;
     $(divId).remove();
-	
+
     // remove from main graph
     removeCalculationMainGraph(listOfCanvasses[getObjectById(canvasID, listOfCanvasses)].timestamp);
     // remove from list of canvasses
@@ -407,7 +407,6 @@ function showSettings(id, uniqueIdentifier){
         copy = Object.assign(new VirtualMachine(),current);
 
         openPopup(copy);
-        $('#vmSettings').find('#save-modal').unbind("click");
         $('#vmSettings').find('#save-modal').click(function(){
             var newVMID=newObjectExists(copy, currentCanvas.VirtualMachines);
             if (newVMID!=-1 && newVMID!=index) {
