@@ -180,6 +180,7 @@
 03-06-2018: Debugging
 03-06-2018: Debugging
 03-06-2018: Debugging
+03-06-2018: Debugging
 03-06-2018: Changed default region to us
 03-06-2018: Worked on setting back the canvas across providers
 03-06-2018: Worked on setting back the canvas across providers
@@ -188,6 +189,7 @@
 03-06-2018: Debugging
 03-06-2018: Debugging
 03-06-2018: Reverting a region across providers and within provider
+03-06-2018: Debugging
 
 
 
