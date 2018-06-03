@@ -180,13 +180,13 @@ function removeCanvas(canvasID, documentID) {
 
 function attachVariable (variableName,variableObject) {
     var input = document.getElementById(variableName);
-    if (variableName === "type"){
+    if (variableName === "type" && input.options.length === 0){
         var keys = Object.getOwnPropertyNames(pricelist["data"][0]["data"]["services"]);
         switch(service){
 			case "google-cloud":
 				for (var i=0;i<keys.length;i++){
 					var typeName = (keys[i]).replace("CP-COMPUTEENGINE-VMIMAGE-","");
-					if(keys[i] !== typeName && (keys[i]).match("PREEMPTIBLE")==null){
+					if(keys[i] !== typeName && (keys[i]).match("PREEMPTIBLE")===null){
 						var option = document.createElement("option");
 						option.text = typeName + " vCPUs: " + pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-VMIMAGE-"+typeName]["properties"]["cores"] + " RAM: " + pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-VMIMAGE-"+typeName]["properties"]["memory"] +" GB";
 						option.value = typeName;
@@ -207,9 +207,7 @@ function attachVariable (variableName,variableObject) {
 				break;
 			case "amazon-webservices":
 				for (var i=0;i<keys.length;i++){
-					console.log(variableObject["osType"]);
-					console.log(keys[i]);
-					var typeName = (keys[i]).replace("-"+variableObject["osType"],"");
+					var typeName = (keys[i]).replace("-"+"Linux","");
 					if(keys[i] !== typeName){
 						var option = document.createElement("option");
 						option.text = typeName + " vCPUs: " + pricelist["data"][0]["data"]["services"][typeName+"-"+variableObject["osType"]]["properties"]["vCPU"] + " RAM: " + pricelist["data"][0]["data"]["services"][typeName+"-"+variableObject["osType"]]["properties"]["Memory (GiB)"] +" GB";
@@ -219,7 +217,7 @@ function attachVariable (variableName,variableObject) {
 				}
 				break;
 		}
-    }else if (variableName === "GPUType" && input!=null && pricelist["data"][0]["data"]["services"]["GPU_NVIDIA_TESLA_K80"][variableObject.region] != 0){
+    }else if (variableName === "GPUType" && input!=null && pricelist["data"][0]["data"]["services"]["GPU_NVIDIA_TESLA_K80"][variableObject.region] != 0 && input.options.length === 0){
         var option = document.createElement("option");
         option.text = option.value = "NVIDIA_TESLA_K80";
         input.add(option);
@@ -239,7 +237,7 @@ function attachVariable (variableName,variableObject) {
                 variableObject[variableName] = parseInt(this.value);
             }
             if(variableName === "type"){
-                if (service == 'google-cloud') {
+                if (service === 'google-cloud') {
                     variableObject.instanceType = determineInstanceType(variableObject.type);
                     if(pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-VMIMAGE-"+input.value]["properties"]["cores"] === "shared"){
 						variableObject.committedUsage = "0"
@@ -260,7 +258,30 @@ function attachVariable (variableName,variableObject) {
             } else {
                 console.error("instance of object on the canvas is not right");
             }
+			//Make sure no option can be selected that would break the calculations by disabling them.
+			disableInvalid(variableObject);
+        }
+    }
+}
 
+function disableInvalid(objectToEdit){
+	console.log("disabling invalid objects");
+	for (var property in objectToEdit) {
+        if (objectToEdit.hasOwnProperty(property)) {
+            list = document.getElementById(property);
+			if(list!=null && list.nodeName === "SELECT"){
+				prev = objectToEdit[property];
+				for( var i=list.options.length-1;i>=0;i--){
+					objectToEdit[property] = list.options[i].value;
+					try{
+						if(isNaN(objectToEdit.costMonthly())) throw "invalid"
+						list.options[i].disabled = false;
+					}catch (err){
+						list.options[i].disabled = true;
+					}
+				}
+				objectToEdit[property] = prev;
+			}
         }
     }
 }
@@ -273,6 +294,7 @@ function openPopup(objectToEdit){
             attachVariable(property,objectToEdit);
         }
     }
+    disableInvalid(objectToEdit);
 }
 
 
