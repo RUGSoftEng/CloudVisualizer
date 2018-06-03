@@ -400,7 +400,6 @@ function copyCanvas(canvas) {
 }
 
 function showSettings(id, uniqueIdentifier){
-    console.log("Showing item with identifier "+uniqueIdentifier);
     var current, copy,index;
     if (id=="vm") {
         index = getObjectById(uniqueIdentifier, currentCanvas.VirtualMachines);
@@ -430,7 +429,6 @@ function showSettings(id, uniqueIdentifier){
         updatePopupGraphVM(copy);
         return;
     }
-    console.log("Showing item with identifier "+uniqueIdentifier);
     if (id=="db") {
         index = getObjectById(uniqueIdentifier, currentCanvas.Databases);
         current = currentCanvas.Databases[index];
@@ -457,15 +455,11 @@ function showSettings(id, uniqueIdentifier){
         updatePopupGraphDB(copy);
         return;
     }
-    console.log("Showing item with identifier "+uniqueIdentifier);
     if (id=="cs") {
-        console.log("Showing item with identifier "+uniqueIdentifier);
         index = getObjectById(uniqueIdentifier, currentCanvas.Storages);
         current = currentCanvas.Storages[index];
         copy = Object.assign(new Storage(),current);
-        console.log("Showing item with identifier "+uniqueIdentifier);
         openPopup(copy);
-        console.log("Showing item with identifier "+uniqueIdentifier);
         $('#csSettings').find('#save-modal').click(function(){
             //console.log("Showing item with identifier "+uniqueIdentifier);
             //var newStorageID=newObjectExists(copy, currentCanvas.Storages);
@@ -485,6 +479,7 @@ function showSettings(id, uniqueIdentifier){
                 removeIcon("cs", uniqueIdentifier);
                 console.log("zes");
             } else {*/
+                console.log(uniqueIdentifier);
                 currentCanvas.Storages[index] = copy;
                 changeHTML(index, currentCanvas.Storages, id, uniqueIdentifier);
                 checkIcon(currentCanvas.Storages, id, index);
