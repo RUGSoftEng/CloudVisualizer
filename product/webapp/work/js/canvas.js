@@ -268,13 +268,15 @@ function attachVariable (variableName,variableObject) {
             if(variableName === "type"){
                 if (service === 'google-cloud') {
                     variableObject.instanceType = determineInstanceType(variableObject.type);
-                }
-                if(pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-VMIMAGE-"+input.value]["properties"]["cores"] === "shared"){
-                    variableObject.committedUsage = "0"
-                    document.getElementById("committedUsage").disabled = true;
-                    document.getElementById("committedUsage").value = "0";
-                }else{
-                    document.getElementById("committedUsage").disabled = false;
+
+                    if(pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-VMIMAGE-"+input.value]["properties"]["cores"] === "shared"){
+                        variableObject.committedUsage = "0"
+                        document.getElementById("committedUsage").disabled = true;
+                        document.getElementById("committedUsage").value = "0";
+                    }else{
+                        document.getElementById("committedUsage").disabled = false;
+                    }
+
                 }
             }
             // change graph
