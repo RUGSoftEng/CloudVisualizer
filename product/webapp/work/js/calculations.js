@@ -215,9 +215,6 @@ function localSSDHourly(){
     }
 }
 function GPUHourly(){
-    if(this.GPUType===""){
-        return 0;
-    }
     if(this.preemptible===true){
         return this.numGPU*pricelist["data"][0]["data"]["services"]["GPU_"+this.GPUType+"-PREEMPTIBLE"]["locales"][currentCanvas.region];
     }else if (this.numGPU!=0){
