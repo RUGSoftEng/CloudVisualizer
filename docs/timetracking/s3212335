@@ -165,3 +165,5 @@ Some frontend changes
 Started working on changing some stuff with the graph
 Added comparing line to popups
 Added comparing line to popups
+Worked on reverting the region if you load a canvas
+Worked on reverting the region if you load a canvas
