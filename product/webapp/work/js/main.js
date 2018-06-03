@@ -46,8 +46,6 @@ function Canvas() {
 function setRegion(selectObject) {
     currentCanvas.region=selectObject.value;
     currentCanvas.regionTitle=selectObject.selectedOptions[0].text;
-    console.log(currentCanvas.regionTitle);
-    console.log(currentCanvas.region);
 }
 
 function setupVMSliders() {
@@ -199,7 +197,6 @@ function loadDataFromMemory(){
     if (localStorage.getItem('curCanvas') && localStorage.getItem('curCanvas')!='null') {
         currentCanvas=JSON.parse(localStorage.getItem('curCanvas'));
         reAssignCanvas(currentCanvas);
-        console.log(currentCanvas);
         for (var i=0; i<currentCanvas.VirtualMachines.length; i++) {
             var VM=currentCanvas.VirtualMachines[i];
             addHTML(VM.nrInstances, "vm", VM.numId, currentCanvas.VirtualMachines);
@@ -216,13 +213,10 @@ function loadDataFromMemory(){
             checkIcon(currentCanvas.Storages, "cs", i);
         }
         localStorage.setItem('curCanvas', null);
-    } else {
-        console.log("null mate");
     }
 
     if (localStorage.getItem('idCanvas') && localStorage.getItem('idCanvas')!='null') {
         idCanvas=localStorage.getItem('idCanvas');
-        console.log("Received: "+localStorage.getItem('idCanvas'));
     }
 
     // load previous canvasses
@@ -233,7 +227,6 @@ function loadDataFromMemory(){
         for (var i=0; i<listOfCanvasses.length; i++) {
             reAssignCanvas(listOfCanvasses[i]);
         }
-        //console.log(listOfCanvasses);
     }
 
     for(var i in listOfCanvasses){
@@ -398,9 +391,7 @@ function calculate (){
     }
 
     // set properties of canvas used to (re)create list item
-    console.log(idCanvas);
     currentCanvas.numId = idCanvas++;
-    console.log(idCanvas);
     currentCanvas.service = service;
     currentCanvas.timestamp = new Date().toGMTString();
     currentCanvas.description = buildDescriptionOfCanvas(currentCanvas);
@@ -416,7 +407,6 @@ function calculate (){
 
     // store/update data in localStorage
     localStorage.setItem('idCanvas', idCanvas);
-    console.log("Set id canvas to: "+idCanvas);
     localStorage.setItem('listOfCanvasses', JSON.stringify(listOfCanvasses));
     document.getElementById("mainGraph").style.display = "block";
 }

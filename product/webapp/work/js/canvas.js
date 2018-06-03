@@ -133,7 +133,6 @@ function getObjectById(id, listOfObjects) {
 }
 
 function resetCanvas(canvasID) {
-    console.log(canvasID);
     clearBox('itemsvm','itemsst','itemsdb');
     currentCanvas=copyCanvas(listOfCanvasses[getObjectById(canvasID, listOfCanvasses)]);
     if (service!=currentCanvas.service) {
@@ -180,7 +179,18 @@ function removeCanvas(canvasID, documentID) {
 }
 
 function attachVariable (variableName,variableObject) {
-    var input = document.getElementById(variableName);
+    var input;
+    if (variableName==="nrInstances") {
+        if (variableObject.objectName==="VirtualMachine") {
+            input = document.getElementById(variableName);
+        } else if (variableObject.objectName==="Storage") {
+            input = document.getElementById(variableName+"Storage");
+        } else {
+            input = document.getElementById(variableName + "DB");
+        }
+    } else {
+        input = document.getElementById(variableName);
+    }
     if (variableName === "type"){
         var keys = Object.keys(pricelist["data"][0]["data"]["services"]);
         for (var i=0;i<keys.length;i++){
@@ -201,12 +211,17 @@ function attachVariable (variableName,variableObject) {
         input.add(option);
     }
     if (input != null) {
+        /*if (variableName=="nrInstancesStorage") {
+            input.value = variableObject["nrInstances"];
+        }
+        if (variableName="nrInstancesDB") {
+            input.value = variableObject["nrInstances"];
+        } */
         input.value = variableObject[variableName];
         input.onchange = function () {
             if (variableName==="type" || variableName ==="osType" || variableName==="GPUType" || variableName==="committedUsage"){
                 variableObject[variableName] = this.value;
             }else if (variableName==="preemptible"){
-                console.log(this.value);
                 variableObject[variableName] = (this.value==="true")
             } else {
                 variableObject[variableName] = parseInt(this.value);
@@ -354,19 +369,16 @@ function removeIcon(elementID, uniqueIdentifier){
     var index;
     if (elementID=="vm") {
         index=getObjectById(uniqueIdentifier, currentCanvas.VirtualMachines);
-        console.log("Removing element with uniqueIdentifier: "+uniqueIdentifier +"and index "+index);
         currentCanvas.VirtualMachines.splice(index, 1);
         return;
     }
     if (elementID=="db") {
         index=getObjectById(uniqueIdentifier, currentCanvas.Databases);
-        console.log("Removing element with uniqueIdentifier: "+uniqueIdentifier +"and index "+index);
         currentCanvas.Databases.splice(index, 1);
         return;
     }
     if (elementID=="cs") {
         index=getObjectById(uniqueIdentifier, currentCanvas.Storages);
-        console.log("Removing element with uniqueIdentifier: "+uniqueIdentifier +"and index "+index);
         currentCanvas.Storages.splice(index, 1);
         return;
     }
@@ -465,26 +477,14 @@ function showSettings(id, uniqueIdentifier){
         openPopup(copy);
         $('#csSettings').find('#save-modal').unbind("click");
         $('#csSettings').find('#save-modal').click(function(){
-            console.log("Showing item with identifier "+uniqueIdentifier);
             var newStorageID=newObjectExists(copy, currentCanvas.Storages);
-            console.log("Showing item with identifier "+uniqueIdentifier);
             if (newStorageID!=-1 && newStorageID!=index) {
-                console.log("Showing item with identifier "+uniqueIdentifier);
                 var newStorageIndex=getObjectById(newStorageID, currentCanvas.Storages);
-                console.log("Showing item with identifier "+uniqueIdentifier);
-                console.log(newStorageIndex);
                 incrementNrInstances(newStorageIndex, copy.nrInstances, currentCanvas.Storages);
-                console.log("Showing item with identifier "+uniqueIdentifier);
                 changeHTML(newStorageIndex, currentCanvas.Storages, "cs", newStorageID);
-                console.log("Showing item with identifier "+uniqueIdentifier);
                 checkIcon(currentCanvas.Storages, "cs", newStorageIndex);
-                console.log("Showing item with identifier "+uniqueIdentifier);
-                console.log(uniqueIdentifier);
                 removeIcon("cs", uniqueIdentifier);
-                console.log("zes");
             } else {
-                console.log(uniqueIdentifier);
-                console.log("TEST");
                 currentCanvas.Storages[index] = copy;
                 changeHTML(index, currentCanvas.Storages, id, uniqueIdentifier);
                 checkIcon(currentCanvas.Storages, id, index);

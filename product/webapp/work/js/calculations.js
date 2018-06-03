@@ -103,10 +103,10 @@ var VMCostMonthly = {
         return (this.sustainedUsePerHour()*this.hours*this.days/7*365/12+this.TPUPerHour()*this.TPUHours*365/12+(this.PDPerHour()+this.LBPerHour())*24*365/12)*this.nrInstances;
     },
     "amazon-webservices" : function(){
-        return pricelist["data"][0]["data"]["services"][this.type + "-" + this.osType]["locales"][currentCanvas.region] * (this.days/7 * this.hours/24 * 24 * 365 / 12);
+        return pricelist["data"][0]["data"]["services"][this.type + "-" + this.osType]["locales"][currentCanvas.region] * (this.days/7 * this.hours/24 * 24 * 365 / 12)*this.nrInstances;
     },
     "microsoft-azure": function(){
-        return pricelist["data"][0]["data"]["services"][this.type + " SQL Server Web"]["locales"][currentCanvas.region] * (this.days/7 * this.hours/24 * 24 * 365 / 12);
+        return pricelist["data"][0]["data"]["services"][this.type + " SQL Server Web"]["locales"][currentCanvas.region] * (this.days/7 * this.hours/24 * 24 * 365 / 12)*this.nrInstances;
     }
 }
 
