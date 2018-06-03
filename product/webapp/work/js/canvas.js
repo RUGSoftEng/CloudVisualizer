@@ -140,6 +140,8 @@ function resetCanvas(canvasID) {
         localStorage.setItem('curCanvas', JSON.stringify(currentCanvas));
         localStorage.setItem('provider', service);
         location.reload();
+    } else {
+        document.getElementById("selectRegionID").value = currentCanvas.region;
     }
 
     for (var i=0; i<currentCanvas.VirtualMachines.length; i++) {

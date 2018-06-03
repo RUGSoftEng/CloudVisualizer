@@ -44,6 +44,7 @@ function Canvas() {
 }
 
 function setRegion(selectObject) {
+    console.log(selectObject);
     currentCanvas.region=selectObject.value;
     currentCanvas.regionTitle=selectObject.selectedOptions[0].text;
 }
@@ -265,8 +266,11 @@ $(function() {
     });
 	
 	$("#selectRegionID").load("region-" + service + ".html", function(){
+        if (currentCanvas!=null) {
+            document.getElementById("selectRegionID").value = currentCanvas.region;
+        }
     });
-	
+
     //getCloudwatchData(service);
     
     // call for offline functionality
