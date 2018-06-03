@@ -210,6 +210,17 @@ function attachVariable (variableName,variableObject) {
         option.text = option.value = "NVIDIA_TESLA_P100";
         input.add(option);
     }
+	
+            if(variableObject instanceof VirtualMachine){
+                initPopupGraphVM(variableObject);
+            } else if (variableObject instanceof Storage){
+                initPopupGraphCS(variableObject);
+            } else if (variableObject instanceof Database){
+                initPopupGraphDB(variableObject);
+            } else {
+                console.error("instance of object on the canvas is not right");
+            }	
+	
     if (input != null) {
         /*if (variableName=="nrInstancesStorage") {
             input.value = variableObject["nrInstances"];

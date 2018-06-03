@@ -1,4 +1,4 @@
-var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+var MONTHS = [0,1,2,3,4,5,6,7,8,9,10,11,12];
 
 var COLORS = [
     '#4dc9f6',
@@ -74,6 +74,14 @@ var vmConfig = {
             borderColor: '#4dc9f6',
             data: [],
             fill: false
+        },
+		{
+            label: 'Original price',
+            backgroundColor: '#f67019',
+            borderColor: '#f67019',
+			borderDash: [10,5],
+            data: [],
+            fill: false
         }
         ]
     },
@@ -119,6 +127,14 @@ var csConfig = {
             borderColor: '#acc236',
             data: [],
             fill: false
+        },
+		{
+            label: 'Original price',
+            backgroundColor: '#f67019',
+            borderColor: '#f67019',
+			borderDash: [10,5],
+            data: [],
+            fill: false
         }
         ]
     },
@@ -162,6 +178,14 @@ var dbConfig = {
             label: 'Price for this Database configuration',
             backgroundColor: '#acc236',
             borderColor: '#acc236',
+            data: [],
+            fill: false
+        },
+		{
+            label: 'Original price',
+            backgroundColor: '#f67019',
+            borderColor: '#f67019',
+			borderDash: [10,5],
             data: [],
             fill: false
         }
@@ -222,12 +246,52 @@ $(function() {
 
 });
 
+
+function initPopupGraphVM(virtualmachine){
+    var monthPrice = virtualmachine.costMonthly();
+
+    // add data points
+    var newData = [];
+    for (var x = 0; x <= 12; x++) {
+        newData.push( (monthPrice*x).toFixed(2) );
+    }
+    vmConfig.data.datasets[1].data = newData;
+
+    window.popupGraphVM.update();
+}
+
+function initPopupGraphDB(database){
+    var monthPrice = database.costMonthly();
+
+    // add data points
+    var newData = [];
+    for (var x = 0; x <= 12; x++) {
+        newData.push( (monthPrice*x).toFixed(2) );
+    }
+    dbConfig.data.datasets[1].data = newData;
+
+    window.popupGraphVM.update();
+}
+
+function initPopupGraphCS(storage){
+    var monthPrice = storage.costMonthly();
+
+    // add data points
+    var newData = [];
+    for (var x = 0; x <= 12; x++) {
+        newData.push( (monthPrice*x).toFixed(2) );
+    }
+    csConfig.data.datasets[1].data = newData;
+
+    window.popupGraphVM.update();
+}
+
 function updatePopupGraphVM(virtualmachine){
     var monthPrice = virtualmachine.costMonthly();
 
     // add data points
     var newData = [];
-    for (var x = 0; x < 12; x++) {
+    for (var x = 0; x <= 12; x++) {
         newData.push( (monthPrice*x).toFixed(2) );
     }
     vmConfig.data.datasets[0].data = newData;
@@ -239,7 +303,7 @@ function updatePopupGraphDB(database){
     var monthPrice = database.costMonthly();
     // add data points
     var newData = [];
-    for (var x = 0; x < 12; x++) {
+    for (var x = 0; x <= 12; x++) {
         newData.push((monthPrice*x).toFixed(2));
     }
     dbConfig.data.datasets[0].data = newData;
@@ -252,7 +316,7 @@ function updatePopupGraphCS(storage){
 
     // add data points
     var newData = [];
-    for (var x = 0; x < 12; x++) {
+    for (var x = 0; x <= 12; x++) {
         newData.push((monthPrice*x).toFixed(2));
     }
     csConfig.data.datasets[0].data = newData;
@@ -280,7 +344,7 @@ function addCalculationMainGraph(monthPrice, timestamp, graphColor, graphId){
 
     // add data points
     var newData = [];
-    for (var x = 0; x < 12; x++) {
+    for (var x = 0; x <= 12; x++) {
         newData.push((monthPrice*x).toFixed(2));
     }
     config.data.datasets[config.data.datasets.length - 1].data = newData;
