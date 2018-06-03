@@ -159,7 +159,7 @@ function resetCanvas(canvasID) {
         addHTML(storage.nrInstances, "cs", storage.numId, currentCanvas.Storages);
         checkIcon(currentCanvas.Storages, "cs", i);
     }
-
+	document.getElementById("selectRegionID").value=currentCanvas.region;
     // TODO also change accordion
 
 }
