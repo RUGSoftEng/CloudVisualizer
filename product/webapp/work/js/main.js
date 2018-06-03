@@ -39,7 +39,7 @@ function Canvas() {
     // Personal unique id of canvas
     this.numId=0;
     this.graphColor='rgb(255, 99, 132)';
-    this.region=(service==='google-cloud')?"us":(service==='amazon-webservices')?"AWS GovCloud (US)":"us-central1";
+    this.region=(service==='google-cloud')?"us":(service==='amazon-webservices')?"AWS GovCloud (US)":"us-central";
     this.regionTitle=(service==='google-cloud')?"United States":(service==='amazon-webservices')?"United States":"United States";
 }
 
