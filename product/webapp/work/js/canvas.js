@@ -77,7 +77,6 @@ function addVirtualMachine(newVM) {
         //Adds HTML for the new VM to the canvas
         addHTML(newVM.nrInstances, "vm", newVM.numId, currentCanvas.VirtualMachines);
         checkIcon(currentCanvas.VirtualMachines, "vm", currentCanvas.VirtualMachines.length-1);
-        openPopup(newVM);
     }
 }
 
@@ -351,16 +350,23 @@ function clearBox(elementID1,elementID2,elementID3) {
 function removeIcon(elementID, uniqueIdentifier){
     var divId = "#"+elementID + "_"+uniqueIdentifier;
     $(divId).remove();
+    var index;
     if (elementID=="vm") {
-        currentCanvas.VirtualMachines.splice(getObjectById(uniqueIdentifier, currentCanvas.VirtualMachines), 1);
+        index=getObjectById(uniqueIdentifier, currentCanvas.VirtualMachines);
+        console.log("Removing element with uniqueIdentifier: "+uniqueIdentifier +"and index "+index);
+        currentCanvas.VirtualMachines.splice(index, 1);
         return;
     }
     if (elementID=="db") {
-        currentCanvas.Databases.splice(getObjectById(uniqueIdentifier, currentCanvas.Databases), 1);
+        index=getObjectById(uniqueIdentifier, currentCanvas.Databases);
+        console.log("Removing element with uniqueIdentifier: "+uniqueIdentifier +"and index "+index);
+        currentCanvas.Databases.splice(index, 1);
         return;
     }
     if (elementID=="cs") {
-        currentCanvas.Storages.splice(getObjectById(uniqueIdentifier, currentCanvas.Storages), 1);
+        index=getObjectById(uniqueIdentifier, currentCanvas.Storages);
+        console.log("Removing element with uniqueIdentifier: "+uniqueIdentifier +"and index "+index);
+        currentCanvas.Storages.splice(index, 1);
         return;
     }
     console.error("Error removing icon");
@@ -394,6 +400,7 @@ function copyCanvas(canvas) {
 }
 
 function showSettings(id, uniqueIdentifier){
+    console.log("Showing item with identifier "+uniqueIdentifier);
     var current, copy,index;
     if (id=="vm") {
         index = getObjectById(uniqueIdentifier, currentCanvas.VirtualMachines);
@@ -403,18 +410,18 @@ function showSettings(id, uniqueIdentifier){
         openPopup(copy);
 
         $('#vmSettings').find('#save-modal').click(function(){
-            var newVMID=newObjectExists(copy, currentCanvas.VirtualMachines);
-            if (newVMID!=-1 && newVMID!=index) {
+            //var newVMID=newObjectExists(copy, currentCanvas.VirtualMachines);
+            /*if (newVMID!=-1 && newVMID!=index) {
                 var newVMIndex=getObjectById(newVMID, currentCanvas.VirtualMachines);
                 incrementNrInstances(newVMIndex, copy.nrInstances, currentCanvas.VirtualMachines);
                 changeHTML(newVMIndex, currentCanvas.VirtualMachines, "vm", newVMID);
                 checkIcon(currentCanvas.VirtualMachines, "vm", newVMIndex);
                 removeIcon("vm", uniqueIdentifier);
-            } else {
+            } else {*/
                 currentCanvas.VirtualMachines[index] = copy;
                 changeHTML(index, currentCanvas.VirtualMachines, id, uniqueIdentifier);
                 checkIcon(currentCanvas.VirtualMachines, id, index);
-            }
+            //}
         });
 
         if (service == 'google-cloud') {
@@ -423,6 +430,7 @@ function showSettings(id, uniqueIdentifier){
         updatePopupGraphVM(copy);
         return;
     }
+    console.log("Showing item with identifier "+uniqueIdentifier);
     if (id=="db") {
         index = getObjectById(uniqueIdentifier, currentCanvas.Databases);
         current = currentCanvas.Databases[index];
@@ -431,51 +439,56 @@ function showSettings(id, uniqueIdentifier){
         openPopup(copy);
 
         $('#dbSettings').find('#save-modal').click(function(){
-            var newDBID=newObjectExists(copy, currentCanvas.Databases);
+            /*var newDBID=newObjectExists(copy, currentCanvas.Databases);
             if (newDBID!=-1 && newDBID!=index) {
                 var newDBIndex=getObjectById(newDBID, currentCanvas.Databases);
                 incrementNrInstances(newDBIndex, copy.nrInstances, currentCanvas.Databases);
                 changeHTML(newDBIndex, currentCanvas.Databases, "db", newDBID);
                 checkIcon(currentCanvas.Databases, "db", newDBIndex);
                 removeIcon("db", uniqueIdentifier);
-            } else {
+            } else {*/
                 currentCanvas.Databases[index] = copy;
                 changeHTML(index, currentCanvas.Databases, id, uniqueIdentifier);
                 checkIcon(currentCanvas.Databases, id, index);
-            }
+            //}
         });
 
 
         updatePopupGraphDB(copy);
         return;
     }
+    console.log("Showing item with identifier "+uniqueIdentifier);
     if (id=="cs") {
+        console.log("Showing item with identifier "+uniqueIdentifier);
         index = getObjectById(uniqueIdentifier, currentCanvas.Storages);
         current = currentCanvas.Storages[index];
         copy = Object.assign(new Storage(),current);
-
+        console.log("Showing item with identifier "+uniqueIdentifier);
         openPopup(copy);
-
+        console.log("Showing item with identifier "+uniqueIdentifier);
         $('#csSettings').find('#save-modal').click(function(){
-            var newStorageID=newObjectExists(copy, currentCanvas.Storages);
-            if (newStorageID!=-1 && newStorageID!=index) {
-                console.log("een");
+            //console.log("Showing item with identifier "+uniqueIdentifier);
+            //var newStorageID=newObjectExists(copy, currentCanvas.Storages);
+            //console.log("Showing item with identifier "+uniqueIdentifier);
+            /*if (newStorageID!=-1 && newStorageID!=index) {
+                console.log("Showing item with identifier "+uniqueIdentifier);
                 var newStorageIndex=getObjectById(newStorageID, currentCanvas.Storages);
-                console.log("twee");
+                console.log("Showing item with identifier "+uniqueIdentifier);
                 console.log(newStorageIndex);
                 incrementNrInstances(newStorageIndex, copy.nrInstances, currentCanvas.Storages);
-                console.log("drie");
+                console.log("Showing item with identifier "+uniqueIdentifier);
                 changeHTML(newStorageIndex, currentCanvas.Storages, "cs", newStorageID);
-                console.log("vier");
+                console.log("Showing item with identifier "+uniqueIdentifier);
                 checkIcon(currentCanvas.Storages, "cs", newStorageIndex);
-                console.log("vijf");
+                console.log("Showing item with identifier "+uniqueIdentifier);
+                console.log(uniqueIdentifier);
                 removeIcon("cs", uniqueIdentifier);
                 console.log("zes");
-            } else {
+            } else {*/
                 currentCanvas.Storages[index] = copy;
                 changeHTML(index, currentCanvas.Storages, id, uniqueIdentifier);
                 checkIcon(currentCanvas.Storages, id, index);
-            }
+            //}
         });
 
         updatePopupGraphCS(copy);
