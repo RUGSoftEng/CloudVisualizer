@@ -407,20 +407,20 @@ function showSettings(id, uniqueIdentifier){
         copy = Object.assign(new VirtualMachine(),current);
 
         openPopup(copy);
-
+        $('#vmSettings').find('#save-modal').unbind("click");
         $('#vmSettings').find('#save-modal').click(function(){
-            //var newVMID=newObjectExists(copy, currentCanvas.VirtualMachines);
-            /*if (newVMID!=-1 && newVMID!=index) {
+            var newVMID=newObjectExists(copy, currentCanvas.VirtualMachines);
+            if (newVMID!=-1 && newVMID!=index) {
                 var newVMIndex=getObjectById(newVMID, currentCanvas.VirtualMachines);
                 incrementNrInstances(newVMIndex, copy.nrInstances, currentCanvas.VirtualMachines);
                 changeHTML(newVMIndex, currentCanvas.VirtualMachines, "vm", newVMID);
                 checkIcon(currentCanvas.VirtualMachines, "vm", newVMIndex);
                 removeIcon("vm", uniqueIdentifier);
-            } else {*/
+            } else {
                 currentCanvas.VirtualMachines[index] = copy;
                 changeHTML(index, currentCanvas.VirtualMachines, id, uniqueIdentifier);
                 checkIcon(currentCanvas.VirtualMachines, id, index);
-            //}
+            }
         });
 
         if (service == 'google-cloud') {
@@ -435,20 +435,20 @@ function showSettings(id, uniqueIdentifier){
         copy = Object.assign(new Database(),current);
 
         openPopup(copy);
-
+        $('#dbSettings').find('#save-modal').unbind("click");
         $('#dbSettings').find('#save-modal').click(function(){
-            /*var newDBID=newObjectExists(copy, currentCanvas.Databases);
+            var newDBID=newObjectExists(copy, currentCanvas.Databases);
             if (newDBID!=-1 && newDBID!=index) {
                 var newDBIndex=getObjectById(newDBID, currentCanvas.Databases);
                 incrementNrInstances(newDBIndex, copy.nrInstances, currentCanvas.Databases);
                 changeHTML(newDBIndex, currentCanvas.Databases, "db", newDBID);
                 checkIcon(currentCanvas.Databases, "db", newDBIndex);
                 removeIcon("db", uniqueIdentifier);
-            } else {*/
+            } else {
                 currentCanvas.Databases[index] = copy;
                 changeHTML(index, currentCanvas.Databases, id, uniqueIdentifier);
                 checkIcon(currentCanvas.Databases, id, index);
-            //}
+            }
         });
 
 
@@ -460,11 +460,12 @@ function showSettings(id, uniqueIdentifier){
         current = currentCanvas.Storages[index];
         copy = Object.assign(new Storage(),current);
         openPopup(copy);
+        $('#csSettings').find('#save-modal').unbind("click");
         $('#csSettings').find('#save-modal').click(function(){
-            //console.log("Showing item with identifier "+uniqueIdentifier);
-            //var newStorageID=newObjectExists(copy, currentCanvas.Storages);
-            //console.log("Showing item with identifier "+uniqueIdentifier);
-            /*if (newStorageID!=-1 && newStorageID!=index) {
+            console.log("Showing item with identifier "+uniqueIdentifier);
+            var newStorageID=newObjectExists(copy, currentCanvas.Storages);
+            console.log("Showing item with identifier "+uniqueIdentifier);
+            if (newStorageID!=-1 && newStorageID!=index) {
                 console.log("Showing item with identifier "+uniqueIdentifier);
                 var newStorageIndex=getObjectById(newStorageID, currentCanvas.Storages);
                 console.log("Showing item with identifier "+uniqueIdentifier);
@@ -478,12 +479,13 @@ function showSettings(id, uniqueIdentifier){
                 console.log(uniqueIdentifier);
                 removeIcon("cs", uniqueIdentifier);
                 console.log("zes");
-            } else {*/
+            } else {
                 console.log(uniqueIdentifier);
+                console.log("TEST");
                 currentCanvas.Storages[index] = copy;
                 changeHTML(index, currentCanvas.Storages, id, uniqueIdentifier);
                 checkIcon(currentCanvas.Storages, id, index);
-            //}
+            }
         });
 
         updatePopupGraphCS(copy);
