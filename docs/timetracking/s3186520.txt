@@ -200,6 +200,9 @@
 - jquery tooltip popper.js
 - work on tooltips
 - work on tooltips
+- test cloudwatch windows
+- test cloudwatch linux
+- improve commandline validation
 
 
 

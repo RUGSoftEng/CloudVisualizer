@@ -45,8 +45,6 @@ function Canvas() {
 function setRegion(selectObject) {
     currentCanvas.region=selectObject.value;
     currentCanvas.regionTitle=selectObject.selectedOptions[0].text;
-    console.log(selectObject.selectedOptions[0].text);
-    console.log(currentCanvas.region);
 }
 
 function setupVMSliders() {
@@ -224,10 +222,11 @@ $(function() {
 	$("#selectRegionID").load("region-" + service + ".html", function(){
     });
 	
+    getCloudwatchData(service);
+    
+    // call for offline functionality
+    // getOfflineData(service);
 
-    //getCloudwatchData(service);
-    getOfflineData(service);
-    //calculate();
 	isOverflown();
 });
 
@@ -307,7 +306,6 @@ function getCloudwatchData(service){
     // callback function for when request is finished
         .done(function() {
             pricelist = JSON.parse(result);
-            console.log(result);
             document.getElementById("calculate").disabled = false;
         });
 }
