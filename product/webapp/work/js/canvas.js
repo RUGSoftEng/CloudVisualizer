@@ -203,23 +203,26 @@ function attachVariable (variableName,variableObject) {
     if (input != null) {
         input.value = variableObject[variableName];
         input.onchange = function () {
-            if (variableName==="nrInstances"){
-				variableObject[variableName] = parseInt(this.value);
-			}else{
-				variableObject[variableName] = this.value;
-			}
-			if(variableName === "type"){
+            if (variableName==="type" || variableName ==="osType" || variableName==="GPUType" || variableName==="committedUsage"){
+                variableObject[variableName] = this.value;
+            }else if (variableName==="preemptible"){
+                console.log(this.value);
+                variableObject[variableName] = (this.value==="true")
+            } else {
+                variableObject[variableName] = parseInt(this.value);
+            }
+            if(variableName === "type"){
                 if (service == 'google-cloud') {
                     variableObject.instanceType = determineInstanceType(variableObject.type);
                 }
-				if(pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-VMIMAGE-"+input.value]["properties"]["cores"] === "shared"){
-					variableObject.committedUsage = "0"
-					document.getElementById("committedUsage").disabled = true;
-					document.getElementById("committedUsage").value = "0";
-				}else{
-					document.getElementById("committedUsage").disabled = false;
-				}
-			}
+                if(pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-VMIMAGE-"+input.value]["properties"]["cores"] === "shared"){
+                    variableObject.committedUsage = "0"
+                    document.getElementById("committedUsage").disabled = true;
+                    document.getElementById("committedUsage").value = "0";
+                }else{
+                    document.getElementById("committedUsage").disabled = false;
+                }
+            }
             // change graph
             if(variableObject instanceof VirtualMachine){
                 updatePopupGraphVM(variableObject);
@@ -400,10 +403,20 @@ function showSettings(id, uniqueIdentifier){
         openPopup(copy);
 
         $('#vmSettings').find('#save-modal').click(function(){
-            currentCanvas.VirtualMachines[index] = copy;
-            changeHTML(index, currentCanvas.VirtualMachines, id, uniqueIdentifier);
-            checkIcon(currentCanvas.VirtualMachines, id, index);
+            var newVMID=newObjectExists(copy, currentCanvas.VirtualMachines);
+            if (newVMID!=-1 && newVMID!=index) {
+                var newVMIndex=getObjectById(newVMID, currentCanvas.VirtualMachines);
+                incrementNrInstances(newVMIndex, copy.nrInstances, currentCanvas.VirtualMachines);
+                changeHTML(newVMIndex, currentCanvas.VirtualMachines, "vm", newVMID);
+                checkIcon(currentCanvas.VirtualMachines, "vm", newVMIndex);
+                removeIcon("vm", uniqueIdentifier);
+            } else {
+                currentCanvas.VirtualMachines[index] = copy;
+                changeHTML(index, currentCanvas.VirtualMachines, id, uniqueIdentifier);
+                checkIcon(currentCanvas.VirtualMachines, id, index);
+            }
         });
+
         if (service == 'google-cloud') {
             copy.instanceType = determineInstanceType(copy.type);
         }
@@ -418,9 +431,18 @@ function showSettings(id, uniqueIdentifier){
         openPopup(copy);
 
         $('#dbSettings').find('#save-modal').click(function(){
-            currentCanvas.Databases[index] = copy;
-            changeHTML(index, currentCanvas.Databases, id, uniqueIdentifier);
-            checkIcon(currentCanvas.Databases, id, index);
+            var newDBID=newObjectExists(copy, currentCanvas.Databases);
+            if (newDBID!=-1 && newDBID!=index) {
+                var newDBIndex=getObjectById(newDBID, currentCanvas.Databases);
+                incrementNrInstances(newDBIndex, copy.nrInstances, currentCanvas.Databases);
+                changeHTML(newDBIndex, currentCanvas.Databases, "db", newDBID);
+                checkIcon(currentCanvas.Databases, "db", newDBIndex);
+                removeIcon("db", uniqueIdentifier);
+            } else {
+                currentCanvas.Databases[index] = copy;
+                changeHTML(index, currentCanvas.Databases, id, uniqueIdentifier);
+                checkIcon(currentCanvas.Databases, id, index);
+            }
         });
 
 
@@ -435,9 +457,25 @@ function showSettings(id, uniqueIdentifier){
         openPopup(copy);
 
         $('#csSettings').find('#save-modal').click(function(){
-            currentCanvas.Storages[index] = copy;
-            changeHTML(index, currentCanvas.Storages, id, uniqueIdentifier);
-            checkIcon(currentCanvas.Storages, id, index);
+            var newStorageID=newObjectExists(copy, currentCanvas.Storages);
+            if (newStorageID!=-1 && newStorageID!=index) {
+                console.log("een");
+                var newStorageIndex=getObjectById(newStorageID, currentCanvas.Storages);
+                console.log("twee");
+                console.log(newStorageIndex);
+                incrementNrInstances(newStorageIndex, copy.nrInstances, currentCanvas.Storages);
+                console.log("drie");
+                changeHTML(newStorageIndex, currentCanvas.Storages, "cs", newStorageID);
+                console.log("vier");
+                checkIcon(currentCanvas.Storages, "cs", newStorageIndex);
+                console.log("vijf");
+                removeIcon("cs", uniqueIdentifier);
+                console.log("zes");
+            } else {
+                currentCanvas.Storages[index] = copy;
+                changeHTML(index, currentCanvas.Storages, id, uniqueIdentifier);
+                checkIcon(currentCanvas.Storages, id, index);
+            }
         });
 
         updatePopupGraphCS(copy);

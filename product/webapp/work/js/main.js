@@ -223,10 +223,10 @@ $(function() {
 	$("#selectRegionID").load("region-" + service + ".html", function(){
     });
 	
-    //getCloudwatchData(service);
+    getCloudwatchData(service);
     
     // call for offline functionality
-    getOfflineData(service);
+    // getOfflineData(service);
 
 	isOverflown();
 });
