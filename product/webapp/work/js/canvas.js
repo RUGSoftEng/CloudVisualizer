@@ -135,8 +135,12 @@ function getObjectById(id, listOfObjects) {
 function resetCanvas(canvasID) {
     clearBox('itemsvm','itemsst','itemsdb');
     currentCanvas=copyCanvas(listOfCanvasses[getObjectById(canvasID, listOfCanvasses)]);
-
-
+    if (service!=currentCanvas.service) {
+        service = currentCanvas.service;
+        localStorage.setItem('curCanvas', JSON.stringify(currentCanvas));
+        localStorage.setItem('provider', service);
+        location.reload();
+    }
 
     for (var i=0; i<currentCanvas.VirtualMachines.length; i++) {
         var VM=currentCanvas.VirtualMachines[i];
@@ -153,10 +157,6 @@ function resetCanvas(canvasID) {
         addHTML(storage.nrInstances, "cs", storage.numId, currentCanvas.Storages);
         checkIcon(currentCanvas.Storages, "cs", i);
     }
-
-
-    service = currentCanvas.service;
-    localStorage.setItem('provider', service);
 
     // TODO also change accordion
 
@@ -179,7 +179,19 @@ function removeCanvas(canvasID, documentID) {
 }
 
 function attachVariable (variableName,variableObject) {
-    var input = document.getElementById(variableName);
+<<<<<<< HEAD
+    var input;
+    if (variableName==="nrInstances") {
+        if (variableObject.objectName==="VirtualMachine") {
+            input = document.getElementById(variableName);
+        } else if (variableObject.objectName==="Storage") {
+            input = document.getElementById(variableName+"Storage");
+        } else {
+            input = document.getElementById(variableName + "DB");
+        }
+    } else {
+        input = document.getElementById(variableName);
+    }
     if (variableName === "type" && input.options.length === 0){
         var keys = Object.getOwnPropertyNames(pricelist["data"][0]["data"]["services"]);
         switch(service){
@@ -225,13 +237,29 @@ function attachVariable (variableName,variableObject) {
         option.text = option.value = "NVIDIA_TESLA_P100";
         input.add(option);
     }
+	
+            if(variableObject instanceof VirtualMachine){
+                initPopupGraphVM(variableObject);
+            } else if (variableObject instanceof Storage){
+                initPopupGraphCS(variableObject);
+            } else if (variableObject instanceof Database){
+                initPopupGraphDB(variableObject);
+            } else {
+                console.error("instance of object on the canvas is not right");
+            }	
+	
     if (input != null) {
+        /*if (variableName=="nrInstancesStorage") {
+            input.value = variableObject["nrInstances"];
+        }
+        if (variableName="nrInstancesDB") {
+            input.value = variableObject["nrInstances"];
+        } */
         input.value = variableObject[variableName];
         input.onchange = function () {
             if (variableName==="type" || variableName ==="osType" || variableName==="GPUType" || variableName==="committedUsage"){
                 variableObject[variableName] = this.value;
             }else if (variableName==="preemptible"){
-                console.log(this.value);
                 variableObject[variableName] = (this.value==="true")
             } else {
                 variableObject[variableName] = parseInt(this.value);
@@ -239,13 +267,13 @@ function attachVariable (variableName,variableObject) {
             if(variableName === "type"){
                 if (service === 'google-cloud') {
                     variableObject.instanceType = determineInstanceType(variableObject.type);
-                    if(pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-VMIMAGE-"+input.value]["properties"]["cores"] === "shared"){
-						variableObject.committedUsage = "0"
-						document.getElementById("committedUsage").disabled = true;
-						document.getElementById("committedUsage").value = "0";
-					}else{
-						document.getElementById("committedUsage").disabled = false;
-					}
+                }
+                if(pricelist["data"][0]["data"]["services"]["CP-COMPUTEENGINE-VMIMAGE-"+input.value]["properties"]["cores"] === "shared"){
+                    variableObject.committedUsage = "0"
+                    document.getElementById("committedUsage").disabled = true;
+                    document.getElementById("committedUsage").value = "0";
+                }else{
+                    document.getElementById("committedUsage").disabled = false;
                 }
             }
             // change graph
@@ -403,19 +431,16 @@ function removeIcon(elementID, uniqueIdentifier){
     var index;
     if (elementID=="vm") {
         index=getObjectById(uniqueIdentifier, currentCanvas.VirtualMachines);
-        console.log("Removing element with uniqueIdentifier: "+uniqueIdentifier +"and index "+index);
         currentCanvas.VirtualMachines.splice(index, 1);
         return;
     }
     if (elementID=="db") {
         index=getObjectById(uniqueIdentifier, currentCanvas.Databases);
-        console.log("Removing element with uniqueIdentifier: "+uniqueIdentifier +"and index "+index);
         currentCanvas.Databases.splice(index, 1);
         return;
     }
     if (elementID=="cs") {
         index=getObjectById(uniqueIdentifier, currentCanvas.Storages);
-        console.log("Removing element with uniqueIdentifier: "+uniqueIdentifier +"and index "+index);
         currentCanvas.Storages.splice(index, 1);
         return;
     }
@@ -446,6 +471,8 @@ function copyCanvas(canvas) {
     newCanvas.VirtualMachines=listVirtualMachines;
     newCanvas.Databases=listDatabases;
     newCanvas.Storages=listStorages;
+    newCanvas.region=canvas.region;
+    newCanvas.regionTitle=canvas.regionTitle;
     return newCanvas;
 }
 
@@ -457,6 +484,7 @@ function showSettings(id, uniqueIdentifier){
         copy = Object.assign(new VirtualMachine(),current);
 
         openPopup(copy);
+        $('#vmSettings').find('#save-modal').unbind("click");
         $('#vmSettings').find('#save-modal').click(function(){
             var newVMID=newObjectExists(copy, currentCanvas.VirtualMachines);
             if (newVMID!=-1 && newVMID!=index) {
@@ -511,26 +539,14 @@ function showSettings(id, uniqueIdentifier){
         openPopup(copy);
         $('#csSettings').find('#save-modal').unbind("click");
         $('#csSettings').find('#save-modal').click(function(){
-            console.log("Showing item with identifier "+uniqueIdentifier);
             var newStorageID=newObjectExists(copy, currentCanvas.Storages);
-            console.log("Showing item with identifier "+uniqueIdentifier);
             if (newStorageID!=-1 && newStorageID!=index) {
-                console.log("Showing item with identifier "+uniqueIdentifier);
                 var newStorageIndex=getObjectById(newStorageID, currentCanvas.Storages);
-                console.log("Showing item with identifier "+uniqueIdentifier);
-                console.log(newStorageIndex);
                 incrementNrInstances(newStorageIndex, copy.nrInstances, currentCanvas.Storages);
-                console.log("Showing item with identifier "+uniqueIdentifier);
                 changeHTML(newStorageIndex, currentCanvas.Storages, "cs", newStorageID);
-                console.log("Showing item with identifier "+uniqueIdentifier);
                 checkIcon(currentCanvas.Storages, "cs", newStorageIndex);
-                console.log("Showing item with identifier "+uniqueIdentifier);
-                console.log(uniqueIdentifier);
                 removeIcon("cs", uniqueIdentifier);
-                console.log("zes");
             } else {
-                console.log(uniqueIdentifier);
-                console.log("TEST");
                 currentCanvas.Storages[index] = copy;
                 changeHTML(index, currentCanvas.Storages, id, uniqueIdentifier);
                 checkIcon(currentCanvas.Storages, id, index);
