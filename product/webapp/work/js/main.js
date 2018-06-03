@@ -39,14 +39,15 @@ function Canvas() {
     // Personal unique id of canvas
     this.numId=0;
     this.graphColor='rgb(255, 99, 132)';
-    this.region=(service==='google-cloud')?"us-central1":(service==='amazon-webservices')?"US East (N-Virginia)":"us-east";
-    this.regionTitle=(service==='google-cloud')?"Iowa":(service==='amazon-webservices')?"Northern Virginia":"US East";
+    this.region=(service==='google-cloud')?"us":(service==='amazon-webservices')?"AWS GovCloud (US)":"us-central1";
+    this.regionTitle=(service==='google-cloud')?"United States":(service==='amazon-webservices')?"United States":"United Statest";
 }
 
 function setRegion(selectObject) {
     currentCanvas.region=selectObject.value;
     currentCanvas.regionTitle=selectObject.selectedOptions[0].text;
     console.log(currentCanvas.regionTitle);
+    console.log(currentCanvas.region);
 }
 
 function setupVMSliders() {
