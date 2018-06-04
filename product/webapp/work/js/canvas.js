@@ -258,11 +258,32 @@ function attachVariable (variableName,variableObject) {
         } */
         input.value = variableObject[variableName];
         input.onchange = function () {
+
             if (variableName==="type" || variableName ==="osType" || variableName==="GPUType" || variableName==="committedUsage"){
                 variableObject[variableName] = this.value;
             }else if (variableName==="preemptible"){
                 variableObject[variableName] = (this.value==="true")
-            } else {
+            } else if(variableName == "days"){
+				if(parseInt(this.value)>7){
+					variableObject[variableName] = 7;
+					this.value=7;
+				}else if(parseInt(this.value)<1){
+					variableObject[variableName] = 1;
+					this.value=1;
+				}else{
+					variableObject[variableName] = parseInt(this.value);
+				}
+			}else if(variableName == "hours"){
+				if(parseInt(this.value)>24){
+					variableObject[variableName] = 24;
+					this.value=24;
+				}else if(parseInt(this.value)<1){
+					variableObject[variableName] = 1;
+					this.value=1;
+				}else{
+					variableObject[variableName] = parseInt(this.value);
+				}
+			}else{
                 variableObject[variableName] = parseInt(this.value);
             }
             if(variableName === "type"){

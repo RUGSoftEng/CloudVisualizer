@@ -179,15 +179,19 @@ a p, h4 {
 
 #itemsdb {
   width: 33.3%;
-  position: relative; }
+  position: relative;
+  padding-top: 10px;
+  padding-left: 10px; }
 
 #itemsvm {
   width: 33.3%;
-  position: relative; }
+  position: relative;
+  padding-top: 10px; }
 
 #itemsst {
   width: 33.3%;
-  position: relative; }
+  position: relative;
+  padding-top: 10px; }
 
 .iconButton {
   background-color: white;
@@ -201,4 +205,6 @@ a p, h4 {
     width: 45px;
     height: auto; }
   .canvas-pop-up {
-    height: calc(91.5% - 121px); } }
+    height: calc(91.5% - 121px); }
+  #itemsvm {
+    padding-left: 10%; } }
