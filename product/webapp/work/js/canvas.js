@@ -331,6 +331,43 @@ function disableInvalid(objectToEdit){
     }
 }
 
+function disableRegions(){
+	list = document.getElementById("selectRegionID");
+	prev = currentCanvas.region;
+	for( var i=list.options.length-1;i>=0;i--){
+		currentCanvas.region = list.options[i].value;
+		try{
+			if(isNaN(simpleCalc())) throw "invalid"
+			list.options[i].disabled = false;
+		}catch (err){
+			list.options[i].disabled = true;
+		}
+	}
+	currentCanvas.region = prev;
+	
+}
+
+function simpleCalc(){
+	var monthPrice=0;
+    var yearPrice=0;
+    for (var i in currentCanvas.VirtualMachines) {
+        if (service == 'google-cloud') {
+            currentCanvas.VirtualMachines[i].instanceType = determineInstanceType(currentCanvas.VirtualMachines[i].type);
+        }
+        monthPrice+=currentCanvas.VirtualMachines[i].costMonthly();
+        yearPrice+=currentCanvas.VirtualMachines[i].costYear();
+    }
+    for (var i in currentCanvas.Databases) {
+        monthPrice+=currentCanvas.Databases[i].costMonthly();
+        yearPrice+=currentCanvas.Databases[i].costYear();
+    }
+    for (var i in currentCanvas.Storages) {
+        monthPrice += currentCanvas.Storages[i].costMonthly();
+        yearPrice += currentCanvas.Storages[i].costYear();
+    }
+    return monthPrice;
+}
+
 function openPopup(objectToEdit){
 
     /*Insert code that shows the html of the popup*/
@@ -515,6 +552,7 @@ function showSettings(id, uniqueIdentifier){
                 changeHTML(index, currentCanvas.VirtualMachines, id, uniqueIdentifier);
                 checkIcon(currentCanvas.VirtualMachines, id, index);
             }
+            disableRegions();
         });
 
         if (service == 'google-cloud') {
