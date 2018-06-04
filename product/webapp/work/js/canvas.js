@@ -481,6 +481,7 @@ function clearBox(elementID1,elementID2,elementID3) {
     document.getElementById(elementID2).innerHTML = "";
     document.getElementById(elementID3).innerHTML = "";
     currentCanvas=new Canvas();
+    disableRegions();
 }
 function removeIcon(elementID, uniqueIdentifier){
     var divId = "#"+elementID + "_"+uniqueIdentifier;
