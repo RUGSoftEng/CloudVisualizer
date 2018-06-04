@@ -6,7 +6,7 @@ function VirtualMachine() {
     this.hours=1;/*hours per day the VM is used*/;
     this.osType=(service==="google-cloud")?"":(service==="amazon-webservices")?"Linux":"SQL Server Web";/*user picked OS*/;
     this.numGPU=0;/*number of GPUs*/
-    this.GPUType="";/*user picked GPU*/;
+    this.GPUType="NVIDIA_TESLA_K80";/*user picked GPU*/;
     this.localSSDSize=0;/*user picked size*/;
     this.PDSSDSize=0;/*user picked size*/;
     this.PDSize=0;/*user picked size*/;
