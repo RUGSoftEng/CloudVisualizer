@@ -44,7 +44,6 @@ function Canvas() {
 }
 
 function setRegion(selectObject) {
-    console.log(selectObject);
     currentCanvas.region=selectObject.value;
     currentCanvas.regionTitle=selectObject.selectedOptions[0].text;
 }
@@ -216,7 +215,6 @@ function loadDataFromMemory(){
             checkIcon(currentCanvas.Storages, "cs", i);
         }
         localStorage.setItem('curCanvas', null);
-        console.log(currentCanvas);
         //disableRegions();
     }
 
@@ -226,10 +224,8 @@ function loadDataFromMemory(){
 
     // load previous canvasses
     if( ! JSON.parse(localStorage.getItem('listOfCanvasses') )){
-        console.log(1);
         listOfCanvasses = [];
     } else {
-        console.log(listOfCanvasses);
         listOfCanvasses = JSON.parse(localStorage.getItem('listOfCanvasses'));
         for (var i=0; i<listOfCanvasses.length; i++) {
             reAssignCanvas(listOfCanvasses[i]);
@@ -424,7 +420,6 @@ function calculate (){
 
     // store/update data in localStorage
     localStorage.setItem('idCanvas', idCanvas);
-    console.log(listOfCanvasses);
     localStorage.setItem('listOfCanvasses', JSON.stringify(listOfCanvasses));
     document.getElementById("mainGraph").style.display = "block";
 }

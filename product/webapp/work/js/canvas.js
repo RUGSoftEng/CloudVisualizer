@@ -546,9 +546,7 @@ function showSettings(id, uniqueIdentifier){
         $('#vmSettings').find('#save-modal').unbind("click");
         $('#vmSettings').find('#save-modal').click(function(){
             var newVMID=newObjectExists(copy, currentCanvas.VirtualMachines);
-            console.log(currentCanvas.VirtualMachines)
             if (newVMID!=-1 && newVMID!=uniqueIdentifier) {
-                console.log("dit");
                 var newVMIndex=getObjectById(newVMID, currentCanvas.VirtualMachines);
                 incrementNrInstances(newVMIndex, copy.nrInstances, currentCanvas.VirtualMachines);
                 changeHTML(newVMIndex, currentCanvas.VirtualMachines, "vm", newVMID);
@@ -578,7 +576,6 @@ function showSettings(id, uniqueIdentifier){
         $('#dbSettings').find('#save-modal').click(function(){
             var newDBID=newObjectExists(copy, currentCanvas.Databases);
             if (newDBID!=-1 && newDBID!=uniqueIdentifier) {
-                console.log("dit");
                 var newDBIndex=getObjectById(newDBID, currentCanvas.Databases);
                 incrementNrInstances(newDBIndex, copy.nrInstances, currentCanvas.Databases);
                 changeHTML(newDBIndex, currentCanvas.Databases, "db", newDBID);
@@ -604,7 +601,6 @@ function showSettings(id, uniqueIdentifier){
         $('#csSettings').find('#save-modal').click(function(){
             var newStorageID=newObjectExists(copy, currentCanvas.Storages);
             if (newStorageID!=-1 && newStorageID!=uniqueIdentifier) {
-                console.log("dit");
                 var newStorageIndex=getObjectById(newStorageID, currentCanvas.Storages);
                 incrementNrInstances(newStorageIndex, copy.nrInstances, currentCanvas.Storages);
                 changeHTML(newStorageIndex, currentCanvas.Storages, "cs", newStorageID);
