@@ -196,6 +196,16 @@
 - centering graph canvas
 - work on AWS accordion
 - work on MS accordion
+- jquery tooltip popper.js
+- jquery tooltip popper.js
+- work on tooltips
+- work on tooltips
+- test cloudwatch windows
+- test cloudwatch linux
+- improve commandline validation
+- work on main graph unable to disable lines that are enabled by legend click
+- work on main graph unable to disable lines that are enabled by legend click
+- work on main graph unable to disable lines that are enabled by legend click
 
 
 

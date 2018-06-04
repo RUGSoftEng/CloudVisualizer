@@ -10,12 +10,17 @@ const http = require('http');
 const request = require('request');
 const validateip = require('validate-ip');
 
-// validate ipAddress specified by the flag '-a'
-if( validateip(nodeFlags.get('a'))){
-    var ipAddressCloudwatch = nodeFlags.get('a');
-} else {
-    console.log("Please enter a valid IPv4 address");
+// argument validation
+if(process.argv.length <= 3){
+    console.error("usage: node app.js -a [IP Address Cloudwatch]");
     process.exit(1);
+} else {
+    if( validateip(nodeFlags.get('a'))){
+        var ipAddressCloudwatch = nodeFlags.get('a');
+    } else {
+        console.error("Please enter a valid IPv4 address");
+        process.exit(1);
+    }
 }
 
 // View Engine
@@ -40,7 +45,6 @@ app.get('/about.html',function(req,res){
 app.post('/cloudwatch',function(req,result){
     // retrieve service from request
     var service = req.body.service;
-    console.log("service: " + service);
 
     var post_options = {
         host: ipAddressCloudwatch,
@@ -75,6 +79,6 @@ app.post('/cloudwatch',function(req,result){
 });
 
 app.listen(process.env.PORT || 3000, function(){
-    console.log('[INFO] Serving (web)pages from localhost:' + (process.env.PORT || 3000) );
+    console.log('[INFO] Serving webpages from localhost:' + (process.env.PORT || 3000) );
     console.log('[INFO] Connected to cloudwatch ' + ipAddressCloudwatch );
 });

@@ -161,6 +161,46 @@
 01-06-2018: Implemented functionality for region
 01-06-2018: Implemented functionality for region
 01-06-2018: Some small changes
+02-06-2018: Fixing problems after merging
+02-06-2018: Fixing problems after merging
+02-06-2018: Fixing problems after merging
+02-06-2018: Fixing problems after merging
+02-06-2018: Implementing some functionality for offline access to data
+02-06-2018: Checking if everthing works as it should 
+02-06-2018: Checking if everthing works as it should 
+02-06-2018: Made sure the dragging and dropping for the other two provider works
+02-06-2018: Some debugging regarding the calculations
+02-06-2018: Some changes in calculations.js for the region
+02-06-2018: Some changes in calculations.js for the region
+02-06-2018: Some small debugging
+02-06-2018: Added regionTitle attribute to canvas object
+03-06-2018: Working on stacking objects after editing them
+03-06-2018: Working on stacking objects after editing them
+03-06-2018: Working on stacking objects after editing them
+03-06-2018: Debugging
+03-06-2018: Debugging
+03-06-2018: Debugging
+03-06-2018: Debugging
+03-06-2018: Changed default region to us
+03-06-2018: Worked on setting back the canvas across providers
+03-06-2018: Worked on setting back the canvas across providers
+03-06-2018: Worked on setting back the canvas across providers
+03-06-2018: Worked on setting back the canvas across providers
+03-06-2018: Debugging
+03-06-2018: Debugging
+03-06-2018: Reverting a region across providers and within provider
+03-06-2018: Debugging
+04-06-2018: Working on some small changes
+04-06-2018: Working on some small changes
+04-06-2018: Debugging
+04-06-2018: Debugging
+04-06-2018: Debugging
+04-06-2018: Debugging
+04-06-2018: Debugging
+04-06-2018: Disabling regions after switching provider
+04-06-2018: Disabling regions after switching provider
+
+
 
 
 
