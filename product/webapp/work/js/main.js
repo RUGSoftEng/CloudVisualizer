@@ -314,8 +314,9 @@ function buildDescriptionOfCanvas(canvas){
 // set content of the calculationDiv
 function addCalculationToDiv(canvas){
     // build new list item in HTML
+	var serviceName = (canvas.service==='google-cloud')?"Google Cloud":(canvas.service==='amazon-webservices')?"Amazon Web Services":"Microsoft Azure";
     var newListItem = '<a  id='+"canvas_"+canvas.numId+' class="list-group-item list-group-item-action flex-column align-items-start"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">';
-    newListItem += '<h5 class="mb-1">' + canvas.service + ' calculation</h5>';
+    newListItem += '<h5 class="mb-1">' + serviceName + ' calculation</h5>';
     newListItem += '<small>' + canvas.timestamp + '</small></div>';
     newListItem += '<p class="mb-1">' + canvas.description +  '</p>';
     newListItem += '<small>Cost per year: ' + "$" + canvas.yearlyPrice + '</small>';
