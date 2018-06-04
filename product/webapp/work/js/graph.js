@@ -371,8 +371,10 @@ function showGraph(timestamp){
     config.data.datasets.forEach(function(element){
         if(element.label == timestamp ){
             element.hidden = false;
+            element._meta[0].hidden = false;
         } else {
             element.hidden = true;
+            element._meta[0].hidden = true;
         }
     });
 
