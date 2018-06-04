@@ -190,6 +190,15 @@
 03-06-2018: Debugging
 03-06-2018: Reverting a region across providers and within provider
 03-06-2018: Debugging
+04-06-2018: Working on some small changes
+04-06-2018: Working on some small changes
+04-06-2018: Debugging
+04-06-2018: Debugging
+04-06-2018: Debugging
+04-06-2018: Debugging
+04-06-2018: Debugging
+04-06-2018: Disabling regions after switching provider
+04-06-2018: Disabling regions after switching provider
 
 
 
