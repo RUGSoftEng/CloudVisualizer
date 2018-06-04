@@ -167,3 +167,6 @@ Added comparing line to popups
 Added comparing line to popups
 Worked on reverting the region if you load a canvas
 Worked on reverting the region if you load a canvas
+Some small changes to the icons
+Some small changes to the icons
+Fixed a bug with allowing the user to enter hours >24 or days >7 or both 0<
