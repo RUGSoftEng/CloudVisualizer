@@ -279,7 +279,9 @@ $(function() {
             document.getElementById("selectRegionID").value = currentCanvas.region;
         }
     });
-
+	
+	var serviceName = (service==='google-cloud')?"Google Cloud":(service==='amazon-webservices')?"Amazon Web Services":"Microsoft Azure";
+	document.getElementById("curProv").innerHTML="<h6>"+serviceName+"</h6>";
     isOverflown();
 });
 

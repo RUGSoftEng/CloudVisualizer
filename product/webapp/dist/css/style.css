@@ -52,7 +52,21 @@ html, body {
   border: 2px solid gray;
   background-color: WhiteSmoke;
   display: flex;
+  align-items: flex-start;
+  align-content: flex-start;
   overflow: auto; }
+
+#curProv {
+  height: auto;
+  width: auto;
+  background-color: white;
+  border-bottom: 2px solid gray;
+  border-left: 2px solid gray;
+  border-radius: 0px     0px      0px           3px;
+  padding: 5px; }
+
+#curProv h6 {
+  margin: 0px; }
 
 .graph {
   width: calc(100% - (220px ));
