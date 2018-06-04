@@ -230,14 +230,7 @@ function attachVariable (variableName,variableObject) {
 				}
 				break;
 		}
-    }else if (variableName === "GPUType" && input!=null && pricelist["data"][0]["data"]["services"]["GPU_NVIDIA_TESLA_K80"][variableObject.region] != 0 && input.options.length === 0){
-        var option = document.createElement("option");
-        option.text = option.value = "NVIDIA_TESLA_K80";
-        input.add(option);
-        option = document.createElement("option");
-        option.text = option.value = "NVIDIA_TESLA_P100";
-        input.add(option);
-    }
+	}
 	
             if(variableObject instanceof VirtualMachine){
                 initPopupGraphVM(variableObject);
