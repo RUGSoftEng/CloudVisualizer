@@ -160,6 +160,7 @@ function resetCanvas(canvasID) {
         checkIcon(currentCanvas.Storages, "cs", i);
     }
 	document.getElementById("selectRegionID").value=currentCanvas.region;
+    disableRegions();
     // TODO also change accordion
 
 }
@@ -333,6 +334,7 @@ function disableInvalid(objectToEdit){
 
 function disableRegions(){
 	list = document.getElementById("selectRegionID");
+	console.log(list);
 	prev = currentCanvas.region;
 	for( var i=list.options.length-1;i>=0;i--){
 		currentCanvas.region = list.options[i].value;
@@ -365,6 +367,7 @@ function simpleCalc(){
         monthPrice += currentCanvas.Storages[i].costMonthly();
         yearPrice += currentCanvas.Storages[i].costYear();
     }
+    console.log(monthPrice);
     return monthPrice;
 }
 
@@ -486,16 +489,19 @@ function removeIcon(elementID, uniqueIdentifier){
     if (elementID=="vm") {
         index=getObjectById(uniqueIdentifier, currentCanvas.VirtualMachines);
         currentCanvas.VirtualMachines.splice(index, 1);
+        disableRegions();
         return;
     }
     if (elementID=="db") {
         index=getObjectById(uniqueIdentifier, currentCanvas.Databases);
         currentCanvas.Databases.splice(index, 1);
+        disableRegions();
         return;
     }
     if (elementID=="cs") {
         index=getObjectById(uniqueIdentifier, currentCanvas.Storages);
         currentCanvas.Storages.splice(index, 1);
+        disableRegions();
         return;
     }
     console.error("Error removing icon");
@@ -553,8 +559,8 @@ function showSettings(id, uniqueIdentifier){
                 currentCanvas.VirtualMachines[index] = copy;
                 changeHTML(index, currentCanvas.VirtualMachines, id, uniqueIdentifier);
                 checkIcon(currentCanvas.VirtualMachines, id, index);
+                disableRegions();
             }
-            disableRegions();
         });
 
         if (service == 'google-cloud') {

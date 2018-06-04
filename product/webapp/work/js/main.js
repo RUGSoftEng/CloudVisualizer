@@ -216,6 +216,8 @@ function loadDataFromMemory(){
             checkIcon(currentCanvas.Storages, "cs", i);
         }
         localStorage.setItem('curCanvas', null);
+        console.log(currentCanvas);
+        //disableRegions();
     }
 
     if (localStorage.getItem('idCanvas') && localStorage.getItem('idCanvas')!='null') {
@@ -242,7 +244,8 @@ function loadDataFromMemory(){
     }
 	
 	isOverflown();
-		
+
+
 }
 
 function reAssignCanvas(canvas) {
@@ -264,19 +267,20 @@ $(function() {
     $("#myAccordion").load("accordion-" + service + ".html", function(){
         setupWindow();
     });
-	
+
+    //getCloudwatchData(service);
+
+    // call for offline functionality
+    getOfflineData(service);
+
 	$("#selectRegionID").load("region-" + service + ".html", function(){
+	    console.log("jim");
         if (currentCanvas!=null) {
             document.getElementById("selectRegionID").value = currentCanvas.region;
         }
     });
 
-    //getCloudwatchData(service);
-    
-    // call for offline functionality
-    getOfflineData(service);
-
-	isOverflown();
+    isOverflown();
 });
 
 function isOverflown() {
