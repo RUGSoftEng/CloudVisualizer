@@ -334,7 +334,6 @@ function disableInvalid(objectToEdit){
 
 function disableRegions(){
 	list = document.getElementById("selectRegionID");
-	console.log(list);
 	prev = currentCanvas.region;
 	for( var i=list.options.length-1;i>=0;i--){
 		currentCanvas.region = list.options[i].value;
@@ -367,7 +366,6 @@ function simpleCalc(){
         monthPrice += currentCanvas.Storages[i].costMonthly();
         yearPrice += currentCanvas.Storages[i].costYear();
     }
-    console.log(monthPrice);
     return monthPrice;
 }
 

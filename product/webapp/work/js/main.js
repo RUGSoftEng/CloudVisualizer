@@ -226,8 +226,10 @@ function loadDataFromMemory(){
 
     // load previous canvasses
     if( ! JSON.parse(localStorage.getItem('listOfCanvasses') )){
+        console.log(1);
         listOfCanvasses = [];
     } else {
+        console.log(listOfCanvasses);
         listOfCanvasses = JSON.parse(localStorage.getItem('listOfCanvasses'));
         for (var i=0; i<listOfCanvasses.length; i++) {
             reAssignCanvas(listOfCanvasses[i]);
@@ -268,16 +270,16 @@ $(function() {
         setupWindow();
     });
 
-    //getCloudwatchData(service);
-
-    // call for offline functionality
-    getOfflineData(service);
-
 	$("#selectRegionID").load("region-" + service + ".html", function(){
         if (currentCanvas!=null) {
             document.getElementById("selectRegionID").value = currentCanvas.region;
         }
     });
+
+    //getCloudwatchData(service);
+
+    // call for offline functionality
+    getOfflineData(service);
 	
 	var serviceName = (service==='google-cloud')?"Google Cloud":(service==='amazon-webservices')?"Amazon Web Services":"Microsoft Azure";
 	document.getElementById("curProv").innerHTML="<h6>"+serviceName+"</h6>";
@@ -325,7 +327,7 @@ function addCalculationToDiv(canvas){
     newListItem += '<small>' + canvas.timestamp + '</small></div>';
     newListItem += '<p class="mb-1">' + canvas.description +  '</p>';
     newListItem += '<small>Cost per year: ' + "$" + canvas.yearlyPrice + '</small>';
-    newListItem +=  '<div id="luc"><p id='+canvas.numId+' style="float:right" href="#" onclick="resetCanvas(id)" ><span class="glyphicon glyphicon-wrench"></span></p>';
+    newListItem +=  '<div id="luc"><p id='+canvas.numId+' style="float:right" href="#" onclick="resetCanvas(id)" ><span class="glyphicon glyphicon-repeat"></span></p>';
     newListItem +=  '<p id='+"graph_"+canvas.numId+' style="float:right;color:red" class="glyphicon glyphicon-signal" href="#" onclick="showGraph(\'' + canvas.timestamp + '\')" >'+" &nbsp"+ '</p>';
     newListItem +=  '<p id='+canvas.numId+' style="float:right" class="glyphicon glyphicon-trash" href="#" onclick="removeCanvas(' + canvas.numId + ')">'+" &nbsp"+ '</p></div>';
     newListItem += '<br><small>Cost per month: ' + "$" + canvas.monthlyPrice+ '</small></a>';
@@ -364,6 +366,7 @@ function getCloudwatchData(service){
         .done(function() {
             pricelist = JSON.parse(result);
             document.getElementById("calculate").disabled = false;
+            disableRegions();
         });
 }
 
@@ -377,6 +380,8 @@ function getOfflineData(service) {
             //callback(xobj.responseText);
             var variable=JSON.parse(xobj.responseText);
             pricelist=variable;
+            disableRegions();
+
         }
     };
     xobj.send(null);
@@ -419,6 +424,7 @@ function calculate (){
 
     // store/update data in localStorage
     localStorage.setItem('idCanvas', idCanvas);
+    console.log(listOfCanvasses);
     localStorage.setItem('listOfCanvasses', JSON.stringify(listOfCanvasses));
     document.getElementById("mainGraph").style.display = "block";
 }
