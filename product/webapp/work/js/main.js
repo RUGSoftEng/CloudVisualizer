@@ -274,7 +274,6 @@ $(function() {
     getOfflineData(service);
 
 	$("#selectRegionID").load("region-" + service + ".html", function(){
-	    console.log("jim");
         if (currentCanvas!=null) {
             document.getElementById("selectRegionID").value = currentCanvas.region;
         }
