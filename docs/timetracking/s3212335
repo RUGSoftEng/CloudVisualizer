@@ -173,3 +173,8 @@ Fixed a bug with allowing the user to enter hours >24 or days >7 or both 0<
 Some small frontend changes
 Implemented nice names for the calculations
 Fixed some slider issues
+Added a box for the current Provider in the canvas
+Added a box for the current Provider in the canvas
+Some small frontend fixes
+Some frontend positioning stuff
+Some small frontend fixes
