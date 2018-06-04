@@ -326,7 +326,7 @@ function addCalculationToDiv(canvas){
     newListItem += '<small>' + canvas.timestamp + '</small></div>';
     newListItem += '<p class="mb-1">' + canvas.description +  '</p>';
     newListItem += '<small>Cost per year: ' + "$" + canvas.yearlyPrice + '</small>';
-    newListItem +=  '<div id="luc"><p id='+canvas.numId+' style="float:right" href="#" onclick="resetCanvas(id)" ><span class="glyphicon glyphicon-wrench"></span></p>';
+    newListItem +=  '<div id="luc"><p id='+canvas.numId+' style="float:right" href="#" onclick="resetCanvas(id)" ><span class="glyphicon glyphicon-repeat"></span></p>';
     newListItem +=  '<p id='+"graph_"+canvas.numId+' style="float:right;color:red" class="glyphicon glyphicon-signal" href="#" onclick="showGraph(\'' + canvas.timestamp + '\')" >'+" &nbsp"+ '</p>';
     newListItem +=  '<p id='+canvas.numId+' style="float:right" class="glyphicon glyphicon-trash" href="#" onclick="removeCanvas(' + canvas.numId + ')">'+" &nbsp"+ '</p></div>';
     newListItem += '<br><small>Cost per month: ' + "$" + canvas.monthlyPrice+ '</small></a>';
