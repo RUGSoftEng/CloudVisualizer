@@ -135,7 +135,7 @@ function setupDBSliders() {
 
 
 function setupWindow(){
-    $("#myAccordion").accordion();
+    $("#myAccordion").accordion({heightStyle: 'panel'});
     $( document ).tooltip({
         track: true
     });
