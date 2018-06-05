@@ -1,7 +1,7 @@
 var pricelist=[];
 function VirtualMachine() {
     this.objectName="VirtualMachine";
-    this.type=(service==="google-cloud")?"N1-STANDARD-1":(service==="amazon-webservices")?"t2-nano":"B1S";/*user picked type*/;
+    this.type=(service==="google-cloud")?"N1-STANDARD-4":(service==="amazon-webservices")?"m4-xlarge":"B4MS";/*user picked type*/;
     this.days=1;/*days per week the VM is used*/;
     this.hours=1;/*hours per day the VM is used*/;
     this.osType=(service==="google-cloud")?"":(service==="amazon-webservices")?"Linux":"SQL Server Web";/*user picked OS*/;
@@ -215,6 +215,12 @@ function localSSDHourly(){
     }
 }
 function GPUHourly(){
+	if(this.GPUType=== ""){
+		return 0;
+	}
+	if(parseFloat(pricelist["data"][0]["data"]["services"]["GPU_"+this.GPUType+"-PREEMPTIBLE"]["locales"][currentCanvas.region])==parseFloat(0.00)){
+		return NaN;
+	}
     if(this.preemptible===true){
         return this.numGPU*pricelist["data"][0]["data"]["services"]["GPU_"+this.GPUType+"-PREEMPTIBLE"]["locales"][currentCanvas.region];
     }else if (this.numGPU!=0){

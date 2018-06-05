@@ -160,6 +160,7 @@ function resetCanvas(canvasID) {
         checkIcon(currentCanvas.Storages, "cs", i);
     }
 	document.getElementById("selectRegionID").value=currentCanvas.region;
+    disableRegions();
     // TODO also change accordion
 
 }
@@ -230,14 +231,7 @@ function attachVariable (variableName,variableObject) {
 				}
 				break;
 		}
-    }else if (variableName === "GPUType" && input!=null && pricelist["data"][0]["data"]["services"]["GPU_NVIDIA_TESLA_K80"][variableObject.region] != 0 && input.options.length === 0){
-        var option = document.createElement("option");
-        option.text = option.value = "NVIDIA_TESLA_K80";
-        input.add(option);
-        option = document.createElement("option");
-        option.text = option.value = "NVIDIA_TESLA_P100";
-        input.add(option);
-    }
+	}
 	
             if(variableObject instanceof VirtualMachine){
                 initPopupGraphVM(variableObject);
@@ -258,11 +252,32 @@ function attachVariable (variableName,variableObject) {
         } */
         input.value = variableObject[variableName];
         input.onchange = function () {
+
             if (variableName==="type" || variableName ==="osType" || variableName==="GPUType" || variableName==="committedUsage"){
                 variableObject[variableName] = this.value;
             }else if (variableName==="preemptible"){
                 variableObject[variableName] = (this.value==="true")
-            } else {
+            } else if(variableName == "days"){
+				if(parseInt(this.value)>7){
+					variableObject[variableName] = 7;
+					this.value=7;
+				}else if(parseInt(this.value)<1){
+					variableObject[variableName] = 1;
+					this.value=1;
+				}else{
+					variableObject[variableName] = parseInt(this.value);
+				}
+			}else if(variableName == "hours"){
+				if(parseInt(this.value)>24){
+					variableObject[variableName] = 24;
+					this.value=24;
+				}else if(parseInt(this.value)<1){
+					variableObject[variableName] = 1;
+					this.value=1;
+				}else{
+					variableObject[variableName] = parseInt(this.value);
+				}
+			}else{
                 variableObject[variableName] = parseInt(this.value);
             }
             if(variableName === "type"){
@@ -315,6 +330,43 @@ function disableInvalid(objectToEdit){
 			}
         }
     }
+}
+
+function disableRegions(){
+	list = document.getElementById("selectRegionID");
+	prev = currentCanvas.region;
+	for( var i=list.options.length-1;i>=0;i--){
+		currentCanvas.region = list.options[i].value;
+		try{
+			if(isNaN(simpleCalc())) throw "invalid"
+			list.options[i].disabled = false;
+		}catch (err){
+			list.options[i].disabled = true;
+		}
+	}
+	currentCanvas.region = prev;
+	
+}
+
+function simpleCalc(){
+	var monthPrice=0;
+    var yearPrice=0;
+    for (var i in currentCanvas.VirtualMachines) {
+        if (service == 'google-cloud') {
+            currentCanvas.VirtualMachines[i].instanceType = determineInstanceType(currentCanvas.VirtualMachines[i].type);
+        }
+        monthPrice+=currentCanvas.VirtualMachines[i].costMonthly();
+        yearPrice+=currentCanvas.VirtualMachines[i].costYear();
+    }
+    for (var i in currentCanvas.Databases) {
+        monthPrice+=currentCanvas.Databases[i].costMonthly();
+        yearPrice+=currentCanvas.Databases[i].costYear();
+    }
+    for (var i in currentCanvas.Storages) {
+        monthPrice += currentCanvas.Storages[i].costMonthly();
+        yearPrice += currentCanvas.Storages[i].costYear();
+    }
+    return monthPrice;
 }
 
 function openPopup(objectToEdit){
@@ -427,6 +479,7 @@ function clearBox(elementID1,elementID2,elementID3) {
     document.getElementById(elementID2).innerHTML = "";
     document.getElementById(elementID3).innerHTML = "";
     currentCanvas=new Canvas();
+    disableRegions();
 }
 function removeIcon(elementID, uniqueIdentifier){
     var divId = "#"+elementID + "_"+uniqueIdentifier;
@@ -435,16 +488,19 @@ function removeIcon(elementID, uniqueIdentifier){
     if (elementID=="vm") {
         index=getObjectById(uniqueIdentifier, currentCanvas.VirtualMachines);
         currentCanvas.VirtualMachines.splice(index, 1);
+        disableRegions();
         return;
     }
     if (elementID=="db") {
         index=getObjectById(uniqueIdentifier, currentCanvas.Databases);
         currentCanvas.Databases.splice(index, 1);
+        disableRegions();
         return;
     }
     if (elementID=="cs") {
         index=getObjectById(uniqueIdentifier, currentCanvas.Storages);
         currentCanvas.Storages.splice(index, 1);
+        disableRegions();
         return;
     }
     console.error("Error removing icon");
@@ -490,7 +546,7 @@ function showSettings(id, uniqueIdentifier){
         $('#vmSettings').find('#save-modal').unbind("click");
         $('#vmSettings').find('#save-modal').click(function(){
             var newVMID=newObjectExists(copy, currentCanvas.VirtualMachines);
-            if (newVMID!=-1 && newVMID!=index) {
+            if (newVMID!=-1 && newVMID!=uniqueIdentifier) {
                 var newVMIndex=getObjectById(newVMID, currentCanvas.VirtualMachines);
                 incrementNrInstances(newVMIndex, copy.nrInstances, currentCanvas.VirtualMachines);
                 changeHTML(newVMIndex, currentCanvas.VirtualMachines, "vm", newVMID);
@@ -500,6 +556,7 @@ function showSettings(id, uniqueIdentifier){
                 currentCanvas.VirtualMachines[index] = copy;
                 changeHTML(index, currentCanvas.VirtualMachines, id, uniqueIdentifier);
                 checkIcon(currentCanvas.VirtualMachines, id, index);
+                disableRegions();
             }
         });
 
@@ -518,7 +575,7 @@ function showSettings(id, uniqueIdentifier){
         $('#dbSettings').find('#save-modal').unbind("click");
         $('#dbSettings').find('#save-modal').click(function(){
             var newDBID=newObjectExists(copy, currentCanvas.Databases);
-            if (newDBID!=-1 && newDBID!=index) {
+            if (newDBID!=-1 && newDBID!=uniqueIdentifier) {
                 var newDBIndex=getObjectById(newDBID, currentCanvas.Databases);
                 incrementNrInstances(newDBIndex, copy.nrInstances, currentCanvas.Databases);
                 changeHTML(newDBIndex, currentCanvas.Databases, "db", newDBID);
@@ -543,7 +600,7 @@ function showSettings(id, uniqueIdentifier){
         $('#csSettings').find('#save-modal').unbind("click");
         $('#csSettings').find('#save-modal').click(function(){
             var newStorageID=newObjectExists(copy, currentCanvas.Storages);
-            if (newStorageID!=-1 && newStorageID!=index) {
+            if (newStorageID!=-1 && newStorageID!=uniqueIdentifier) {
                 var newStorageIndex=getObjectById(newStorageID, currentCanvas.Storages);
                 incrementNrInstances(newStorageIndex, copy.nrInstances, currentCanvas.Storages);
                 changeHTML(newStorageIndex, currentCanvas.Storages, "cs", newStorageID);

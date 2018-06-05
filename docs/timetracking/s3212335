@@ -137,3 +137,44 @@ Fixed bug with incrementing number of objects
 Made graph show up when calculations are being done, else be invisible
 Made graph show up when calculations are being done, else be invisible
 Some small bugfixes
+Worked on some small responsive additions
+Worked on some small responsive additions
+Made the sliders for DB an CS better
+Made the sliders for DB an CS better
+Implemented regions
+Implemented regions
+Made it possible for multiple calculations
+Made it possible for multiple calculations
+Made it possible for multiple calculations frontend part
+Made it possible for multiple calculations frontend part
+Implemented sliders with different memory sizes
+Implemented sliders with different memory sizes frontend
+Fixed accordion issues and a few bug fixes for the sliders
+Added region to calculations
+Added region to calculations
+Helped with dynamic popups
+Helped with dynamic popups
+Helped with dynamic popups
+Bug fixing
+Bug fixing
+Bug fixing
+Bug fixing
+Worked on the reverting canvas with Klaas
+Worked on the reverting canvas with Klaas
+Some frontend changes
+Started working on changing some stuff with the graph
+Added comparing line to popups
+Added comparing line to popups
+Worked on reverting the region if you load a canvas
+Worked on reverting the region if you load a canvas
+Some small changes to the icons
+Some small changes to the icons
+Fixed a bug with allowing the user to enter hours >24 or days >7 or both 0<
+Some small frontend changes
+Implemented nice names for the calculations
+Fixed some slider issues
+Added a box for the current Provider in the canvas
+Added a box for the current Provider in the canvas
+Some small frontend fixes
+Some frontend positioning stuff
+Some small frontend fixes

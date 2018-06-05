@@ -44,7 +44,6 @@ function Canvas() {
 }
 
 function setRegion(selectObject) {
-    console.log(selectObject);
     currentCanvas.region=selectObject.value;
     currentCanvas.regionTitle=selectObject.selectedOptions[0].text;
 }
@@ -216,6 +215,7 @@ function loadDataFromMemory(){
             checkIcon(currentCanvas.Storages, "cs", i);
         }
         localStorage.setItem('curCanvas', null);
+        //disableRegions();
     }
 
     if (localStorage.getItem('idCanvas') && localStorage.getItem('idCanvas')!='null') {
@@ -242,7 +242,8 @@ function loadDataFromMemory(){
     }
 	
 	isOverflown();
-		
+
+
 }
 
 function reAssignCanvas(canvas) {
@@ -264,7 +265,7 @@ $(function() {
     $("#myAccordion").load("accordion-" + service + ".html", function(){
         setupWindow();
     });
-	
+
 	$("#selectRegionID").load("region-" + service + ".html", function(){
         if (currentCanvas!=null) {
             document.getElementById("selectRegionID").value = currentCanvas.region;
@@ -272,11 +273,13 @@ $(function() {
     });
 
     //getCloudwatchData(service);
-    
+
     // call for offline functionality
     getOfflineData(service);
-
-	isOverflown();
+	
+	var serviceName = (service==='google-cloud')?"Google Cloud":(service==='amazon-webservices')?"Amazon Web Services":"Microsoft Azure";
+	document.getElementById("curProv").innerHTML="<h6>"+serviceName+"</h6>";
+    isOverflown();
 });
 
 function isOverflown() {
@@ -314,12 +317,13 @@ function buildDescriptionOfCanvas(canvas){
 // set content of the calculationDiv
 function addCalculationToDiv(canvas){
     // build new list item in HTML
+	var serviceName = (canvas.service==='google-cloud')?"Google Cloud":(canvas.service==='amazon-webservices')?"Amazon Web Services":"Microsoft Azure";
     var newListItem = '<a  id='+"canvas_"+canvas.numId+' class="list-group-item list-group-item-action flex-column align-items-start"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">';
-    newListItem += '<h5 class="mb-1">' + canvas.service + ' calculation</h5>';
+    newListItem += '<h5 class="mb-1">' + serviceName + ' calculation</h5>';
     newListItem += '<small>' + canvas.timestamp + '</small></div>';
     newListItem += '<p class="mb-1">' + canvas.description +  '</p>';
     newListItem += '<small>Cost per year: ' + "$" + canvas.yearlyPrice + '</small>';
-    newListItem +=  '<div id="luc"><p id='+canvas.numId+' style="float:right" href="#" onclick="resetCanvas(id)" ><span class="glyphicon glyphicon-wrench"></span></p>';
+    newListItem +=  '<div id="luc"><p id='+canvas.numId+' style="float:right" href="#" onclick="resetCanvas(id)" ><span class="glyphicon glyphicon-repeat"></span></p>';
     newListItem +=  '<p id='+"graph_"+canvas.numId+' style="float:right;color:red" class="glyphicon glyphicon-signal" href="#" onclick="showGraph(\'' + canvas.timestamp + '\')" >'+" &nbsp"+ '</p>';
     newListItem +=  '<p id='+canvas.numId+' style="float:right" class="glyphicon glyphicon-trash" href="#" onclick="removeCanvas(' + canvas.numId + ')">'+" &nbsp"+ '</p></div>';
     newListItem += '<br><small>Cost per month: ' + "$" + canvas.monthlyPrice+ '</small></a>';
@@ -358,6 +362,7 @@ function getCloudwatchData(service){
         .done(function() {
             pricelist = JSON.parse(result);
             document.getElementById("calculate").disabled = false;
+            disableRegions();
         });
 }
 
@@ -371,6 +376,8 @@ function getOfflineData(service) {
             //callback(xobj.responseText);
             var variable=JSON.parse(xobj.responseText);
             pricelist=variable;
+            disableRegions();
+
         }
     };
     xobj.send(null);
