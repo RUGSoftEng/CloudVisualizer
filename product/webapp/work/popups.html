@@ -1,9 +1,10 @@
 		<!-- POPUP EDIT (GOOGLE) VM -->
 	<div id="google-cloudVMPopup">
+		<table class="table">
 					<h3>Edit selection</h3>
 					<h4>Virtual machine</h4>
 					<form>
-						<table class="table">
+
 							<tr>
 								<td>Number of instances</td>
 								<td><input type="number" id="nrInstances" min="0"></td>
@@ -66,31 +67,44 @@
 								</select>
 							</td>
 						</tr>
-						</table>
 					</form>
-					<h4>Persistent Disk</h4>
+
+					<td><h4>Persistent Disk</h4></td>
 					<form>
-						Persistent disk size (GB)
-						<input type="number" id="PDSize" min="0"><br>
-						Persistent SSD size (GB)
-						<input type="number" id="PDSSDSize" min="0"><br>
-						Snapshot storage size (GB)
-						<input type="number" id="PDSnapshot" min="0"><br>
+
+							<tr>
+								<td>Persistent disk size (GB)</td>
+								<td><input type="number" id="PDSize" min="0"></td>
+							</tr>
+							<tr><td>Persistent SSD size (GB)</td>
+							<td><input type="number" id="PDSSDSize" min="0"></td></tr>
+							<tr>
+								<td>Snapshot storage size (GB)</td>
+								<td><input type="number" id="PDSnapshot" min="0"></td>
+							</tr>
+
 					</form>
 					<h4>Load balancing</h4>
 					<form>
-						Number of load balancing rules
-						<input type="number" id="rules" min="0" disabled>
+
+							<tr>
+								<td>Number of load balancing rules</td>
+								<td><input type="number" id="rules" min="0" disabled></td>
+							</tr>
 					</form>
-					<h4>Cloud TPUs</h4>
+					<td><h4>Cloud TPUs</h4></td>
 					<form>
-						Number of TPUs
-						<input type="number" id="numTPU" min="0"><br>
-						Hours per day used
-						<input type="number" id="TPUHours" min="0">
+							<tr>
+								<td>Number of TPUs</td>
+								<td><input type="number" id="numTPU" min="0"></td>
+							</tr>
+							<tr>
+								<td>Hours per day used</td>
+								<td><input type="number" id="TPUHours" min="0"></td>
+							</tr>
+
 					</form>
-					<br />
-					<br />
+		</table>
 	</div>
 	<!-- POPUP EDIT (AMAZON) VM -->
 
