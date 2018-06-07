@@ -14,7 +14,7 @@ if(process.argv.length <= 3){
     process.exit(1);
 } else {
     if( validateip(nodeFlags.get('a'))){
-        var ipAddressCloudwatch = nodeFlags.get('a');
+        exports.ipAddressCloudwatch = nodeFlags.get('a');
     } else {
         console.error("Please enter a valid IPv4 address");
         process.exit(1);
