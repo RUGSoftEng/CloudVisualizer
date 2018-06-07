@@ -41,7 +41,7 @@ Cloud computing solutions are attractive to cloud customers because they offer t
 
 * install <a href="https://nodejs.org/en/download/">NodeJS</a>
 * navigate to the "product" directory 
-* run "npm install" to get all the dependencies
+* run "npm install --production" to get all the dependencies
 * start the NodeJS server by running "node app.js -a {IP address of cloudwatch API}"
 * visit <a href="http://localhost:3000">localhost:3000</a>
 

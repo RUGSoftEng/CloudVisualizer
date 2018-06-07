@@ -1,19 +1,27 @@
 {
-  "name": "app2",
-  "version": "1.0.0",
-  "description": "Simple first app",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "name": "Cloudvisualizer",
+  "version": "1.1.0",
+  "description": "Cloud computing solutions are attractive to cloud customers because they offer the leasing of computing resources at relatively low costs.",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RUGSoftEng/CloudVisualizer.git"
   },
+  "bugs": {
+    "url": "https://github.com/RUGSoftEng/CloudVisualizer/issues"
+  },
+  "homepage": "https://github.com/RUGSoftEng/CloudVisualizer#readme",
   "dependencies": {
-    "JSONStream": "^1.3.2",
-    "body-parser": "^1.18.2",
-    "browser-sync": "^2.23.6",
-    "cloudwatch": "^0.1.4",
-    "ejs": "^2.5.7",
+    "JSONStream": "^1.3.3",
+    "body-parser": "^1.18.3",
     "express": "^4.16.3",
-    "express-validator": "^5.0.3",
+    "express-validator": "^5.2.0",
+    "node-flag": "^1.5.1",
+    "popper.js": "^1.14.3",
+    "validate-ip": "^1.0.1"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.24.4",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^5.0.0",
     "gulp-cssnano": "^2.1.3",
@@ -22,13 +30,13 @@
     "gulp-imagemin": "^4.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^4.0.1",
-    "gulp-uglify": "^3.0.0",
-    "mongojs": "^2.5.0",
-    "mongoose": "^5.0.10",
-    "node-flag": "^1.5.1",
-    "popper.js": "^1.14.3",
-    "validate-ip": "^1.0.1"
+    "gulp-uglify": "^3.0.0"
   },
-  "author": "Ludger Visser",
+  "scripts": {
+    "start": "node app.js -a 127.0.0.1",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "SE Cloudvisualizer Team",
   "license": "ISC"
 }

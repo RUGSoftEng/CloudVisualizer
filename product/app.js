@@ -2,12 +2,10 @@ const express = require('express');
 const bodyparser = require('body-parser');
 const path = require('path');
 const expressValidator = require('express-validator');
-const mongojs = require('mongojs');
 const app = express();
 const nodeFlags = require('node-flag');
 const JSONStream = require('JSONStream');
 const http = require('http');
-const request = require('request');
 const validateip = require('validate-ip');
 
 // argument validation
@@ -24,8 +22,6 @@ if(process.argv.length <= 3){
 }
 
 // View Engine
-app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'webapp'));
 
 //body parser middleware
