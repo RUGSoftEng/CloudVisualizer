@@ -34,7 +34,7 @@
   },
   "scripts": {
     "start": "node app.js -a 127.0.0.1",
-    "test" : "mocha"
+    "test": "mocha"
   },
   "keywords": [],
   "author": "SE Cloudvisualizer Team",
