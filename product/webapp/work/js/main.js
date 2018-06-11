@@ -272,10 +272,10 @@ $(function() {
         }
     });
 
-    //getCloudwatchData(service);
+    getCloudwatchData(service);
 
     // call for offline functionality
-    getOfflineData(service);
+    //getOfflineData(service);
 	
 	var serviceName = (service==='google-cloud')?"Google Cloud":(service==='amazon-webservices')?"Amazon Web Services":"Microsoft Azure";
 	document.getElementById("curProv").innerHTML="<h6>"+serviceName+"</h6>";
