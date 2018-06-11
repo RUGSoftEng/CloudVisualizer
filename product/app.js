@@ -7,6 +7,7 @@ const nodeFlags = require('node-flag');
 const JSONStream = require('JSONStream');
 const http = require('http');
 const validateip = require('validate-ip');
+var ipAddressCloudwatch;
 
 // argument validation
 if(process.argv.length <= 3){
@@ -14,7 +15,7 @@ if(process.argv.length <= 3){
     process.exit(1);
 } else {
     if( validateip(nodeFlags.get('a'))){
-        exports.ipAddressCloudwatch = nodeFlags.get('a');
+        ipAddressCloudwatch = nodeFlags.get('a');
     } else {
         console.error("Please enter a valid IPv4 address");
         process.exit(1);
@@ -78,3 +79,5 @@ app.listen(process.env.PORT || 3000, function(){
     console.log('[INFO] Serving webpages from localhost:' + (process.env.PORT || 3000) );
     console.log('[INFO] Connected to cloudwatch ' + ipAddressCloudwatch );
 });
+
+exports.ipAddressCloudwatch = ipAddressCloudwatch;

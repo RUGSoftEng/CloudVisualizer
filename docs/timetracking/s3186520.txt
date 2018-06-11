@@ -211,6 +211,9 @@
 - refactoring removing old packages
 - refactoring package.json
 - refactoring package.json
+- debugging product app.js / cloudwatch
+- debugging product app.js / cloudwatch
+- debugging product app.js / cloudwatch
 
 
 
