@@ -507,6 +507,7 @@ function drop(ev) {
         var instance = Object.assign(new Storage(), obj);
         addStorage(instance);
     }
+    disableRegions();
 }
 
 /** Function that deletes every item currently in the canvas and resets the current canvas*/
