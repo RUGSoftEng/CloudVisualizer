@@ -18,6 +18,7 @@
     "express-validator": "^5.2.0",
     "node-flag": "^1.5.1",
     "popper.js": "^1.14.3",
+    "rebuild": "^0.1.2",
     "validate-ip": "^1.0.1"
   },
   "devDependencies": {
