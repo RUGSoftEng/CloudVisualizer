@@ -206,7 +206,20 @@
 - work on main graph unable to disable lines that are enabled by legend click
 - work on main graph unable to disable lines that are enabled by legend click
 - work on main graph unable to disable lines that are enabled by legend click
-
+- why are the new images not working
+- why are the new images not working
+- refactoring removing old packages
+- refactoring package.json
+- refactoring package.json
+- debugging product app.js / cloudwatch
+- debugging product app.js / cloudwatch
+- debugging product app.js / cloudwatch
+- check cloudwatch
+- check cloudwatch
+- preparing demo 
+- preparing demo 
+- preparing demo 
+- preparing demo 
 
 
 

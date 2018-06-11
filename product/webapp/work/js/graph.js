@@ -1,4 +1,4 @@
-var MONTHS = [0,1,2,3,4,5,6,7,8,9,10,11,12];
+var MONTHS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
 var COLORS = [
     '#4dc9f6',
@@ -75,14 +75,14 @@ var vmConfig = {
             data: [],
             fill: false
         },
-		{
-            label: 'Original price',
-            backgroundColor: '#f67019',
-            borderColor: '#f67019',
-			borderDash: [10,5],
-            data: [],
-            fill: false
-        }
+            {
+                label: 'Original price',
+                backgroundColor: '#f67019',
+                borderColor: '#f67019',
+                borderDash: [10, 5],
+                data: [],
+                fill: false
+            }
         ]
     },
     options: {
@@ -128,14 +128,14 @@ var csConfig = {
             data: [],
             fill: false
         },
-		{
-            label: 'Original price',
-            backgroundColor: '#f67019',
-            borderColor: '#f67019',
-			borderDash: [10,5],
-            data: [],
-            fill: false
-        }
+            {
+                label: 'Original price',
+                backgroundColor: '#f67019',
+                borderColor: '#f67019',
+                borderDash: [10, 5],
+                data: [],
+                fill: false
+            }
         ]
     },
     options: {
@@ -181,14 +181,14 @@ var dbConfig = {
             data: [],
             fill: false
         },
-		{
-            label: 'Original price',
-            backgroundColor: '#f67019',
-            borderColor: '#f67019',
-			borderDash: [10,5],
-            data: [],
-            fill: false
-        }
+            {
+                label: 'Original price',
+                backgroundColor: '#f67019',
+                borderColor: '#f67019',
+                borderDash: [10, 5],
+                data: [],
+                fill: false
+            }
         ]
     },
     options: {
@@ -247,93 +247,93 @@ $(function() {
 });
 
 
-function initPopupGraphVM(virtualmachine){
+function initPopupGraphVM(virtualmachine) {
     var monthPrice = virtualmachine.costMonthly();
 
     // add data points
     var newData = [];
     for (var x = 0; x <= 12; x++) {
-        newData.push( (monthPrice*x).toFixed(2) );
+        newData.push((monthPrice * x).toFixed(2));
     }
     vmConfig.data.datasets[1].data = newData;
 
     window.popupGraphVM.update();
 }
 
-function initPopupGraphDB(database){
+function initPopupGraphDB(database) {
     var monthPrice = database.costMonthly();
 
     // add data points
     var newData = [];
     for (var x = 0; x <= 12; x++) {
-        newData.push( (monthPrice*x).toFixed(2) );
+        newData.push((monthPrice * x).toFixed(2));
     }
     dbConfig.data.datasets[1].data = newData;
 
     window.popupGraphVM.update();
 }
 
-function initPopupGraphCS(storage){
+function initPopupGraphCS(storage) {
     var monthPrice = storage.costMonthly();
 
     // add data points
     var newData = [];
     for (var x = 0; x <= 12; x++) {
-        newData.push( (monthPrice*x).toFixed(2) );
+        newData.push((monthPrice * x).toFixed(2));
     }
     csConfig.data.datasets[1].data = newData;
 
     window.popupGraphVM.update();
 }
 
-function updatePopupGraphVM(virtualmachine){
+function updatePopupGraphVM(virtualmachine) {
     var monthPrice = virtualmachine.costMonthly();
 
     // add data points
     var newData = [];
     for (var x = 0; x <= 12; x++) {
-        newData.push( (monthPrice*x).toFixed(2) );
+        newData.push((monthPrice * x).toFixed(2));
     }
     vmConfig.data.datasets[0].data = newData;
 
     window.popupGraphVM.update();
 }
 
-function updatePopupGraphDB(database){
+function updatePopupGraphDB(database) {
     var monthPrice = database.costMonthly();
     // add data points
     var newData = [];
     for (var x = 0; x <= 12; x++) {
-        newData.push((monthPrice*x).toFixed(2));
+        newData.push((monthPrice * x).toFixed(2));
     }
     dbConfig.data.datasets[0].data = newData;
 
     window.popupGraphDB.update();
 }
 
-function updatePopupGraphCS(storage){
+function updatePopupGraphCS(storage) {
     var monthPrice = storage.costMonthly();
 
     // add data points
     var newData = [];
     for (var x = 0; x <= 12; x++) {
-        newData.push((monthPrice*x).toFixed(2));
+        newData.push((monthPrice * x).toFixed(2));
     }
     csConfig.data.datasets[0].data = newData;
 
     window.popupGraphCS.update();
 }
 
-function addCalculationMainGraph(monthPrice, timestamp, graphColor, graphId){
+function addCalculationMainGraph(monthPrice, timestamp, graphColor, graphId) {
     // add dataset
     var colorNames = Object.keys(window.chartColors);
     var colorName = colorNames[config.data.datasets.length % colorNames.length];
     var newColor = window.chartColors[colorName];
-    graphColor=newColor;
-    document.getElementById(graphId).style.color=graphColor;
+    graphColor = newColor;
+    document.getElementById(graphId).style.color = graphColor;
 
     var newDataset = {
-        label:  timestamp,
+        label: timestamp,
         backgroundColor: newColor,
         borderColor: newColor,
         data: [],
@@ -345,20 +345,20 @@ function addCalculationMainGraph(monthPrice, timestamp, graphColor, graphId){
     // add data points
     var newData = [];
     for (var x = 0; x <= 12; x++) {
-        newData.push((monthPrice*x).toFixed(2));
+        newData.push((monthPrice * x).toFixed(2));
     }
     config.data.datasets[config.data.datasets.length - 1].data = newData;
     window.myLine.update();
 }
 
-function clearMainGraph(){
+function clearMainGraph() {
     config.data.datasets = [];
     window.myLine.update();
 }
 
-function removeCalculationMainGraph(timestamp){
-    config.data.datasets.forEach(function(element, index){
-        if(element.label == timestamp ){
+function removeCalculationMainGraph(timestamp) {
+    config.data.datasets.forEach(function(element, index) {
+        if (element.label == timestamp) {
             config.data.datasets.splice(index, 1);
         }
     });
@@ -366,10 +366,10 @@ function removeCalculationMainGraph(timestamp){
     window.myLine.update();
 }
 
-function showGraph(timestamp){
+function showGraph(timestamp) {
     // hide all other plots
-    config.data.datasets.forEach(function(element){
-        if(element.label == timestamp ){
+    config.data.datasets.forEach(function(element) {
+        if (element.label == timestamp) {
             element.hidden = false;
             element._meta[0].hidden = false;
         } else {
@@ -382,6 +382,6 @@ function showGraph(timestamp){
 
     // animation
     $('html, body').animate({
-        scrollTop: $("#graphCanvas").offset().top-100
+        scrollTop: $("#graphCanvas").offset().top - 100
     }, 1300);
 }

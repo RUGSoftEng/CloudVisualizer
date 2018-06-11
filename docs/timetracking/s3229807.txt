@@ -199,6 +199,12 @@
 04-06-2018: Debugging
 04-06-2018: Disabling regions after switching provider
 04-06-2018: Disabling regions after switching provider
+10-06-2018: Refactoring
+10-06-2018: Refactoring
+10-06-2018: Refactoring
+11-06-2018: Refactoring/Debugging
+11-06-2018: Refactoring
+11-06-2018: Refactoring
 
 
 

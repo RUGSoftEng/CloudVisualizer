@@ -8,17 +8,17 @@
     "startwatch": "./node_modules/nodemon/bin/nodemon.js ./bin/www"
   },
   "dependencies": {
-    "body-parser": "^1.18.3",
-    "chromeless": "^1.5.2",
-    "cookie-parser": "^1.4.3",
+    "body-parser": "~1.18.2",
+    "chromeless": "^1.3.0",
+    "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
-    "express": "^4.15.5",
+    "express": "~4.15.5",
     "htmlparser2": "^3.9.2",
     "jade": "~1.11.0",
-    "mongodb": "^2.2.35",
-    "morgan": "^1.9.0",
-    "node-schedule": "^1.3.0",
+    "mongodb": "^2.2.33",
+    "morgan": "~1.9.0",
+    "node-schedule": "^1.2.5",
     "nodemon": "^1.12.1",
-    "serve-favicon": "^2.4.5"
+    "serve-favicon": "~2.4.5"
   }
 }
