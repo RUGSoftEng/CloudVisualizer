@@ -220,6 +220,10 @@
 - preparing demo 
 - preparing demo 
 - preparing demo 
+- trying to run everything with a single command
+- trying to run everything with a single command
+- trying to run everything with a single command
+- trying to run everything with a single command
 
 
 
